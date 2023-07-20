@@ -3,6 +3,7 @@ use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KegiatanController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Kegiatan;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +27,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', function() {
-    return view('home');
+    $all_kegiatan = Kegiatan::all();
+    $kegiatans = Kegiatan::where('tgl_mulai', '>', now())->orderBy('tgl_mulai', 'asc')->get();
+    return view('home', [
+        'kegiatans' => $kegiatans,
+        'all_kegiatan' => $all_kegiatan,
+    ]);
 })->name('home')->middleware('auth');
+
 
 // Route::resource('jabatan', \App\Http\Controllers\JabatanController::class);
 Route::get('/user', [UserController::class, 'index'])->name('user.index');

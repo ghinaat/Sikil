@@ -4,7 +4,7 @@
 
 @section('content_header')
 
-<h1 class="m-0 text-dark">Dashboard</h1>
+{{-- <h1 class="m-0 text-dark">Dashboard</h1> --}}
 <!--  <style>
 .responsive-image {
     max-width: 100%;
@@ -73,10 +73,46 @@
         </div>
     </div>
 </div> --}}
+<div class="container">
+    <h1 class="mb-4">Acara Terkini</h1>
 
-<div class="col">
-    <div class="card pt-2 px-2">
-        <h5>Hello {{ Auth::user()->nama_pegawai }}</h5>
+    <div class="row">
+        @foreach ($kegiatans as $kegiatan)
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 >{{ $kegiatan->nama_kegiatan }}</h3>
+                    <p class="card-text">{{ $kegiatan->tgl_mulai }}</p>
+                    <a class="btn btn-outline-secondary" href="">Lihat Kegiatan</a>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nama Kegiatan</th>
+                <th scope="col">Tanggal Mulai</th>
+                <th scope="col">Tanggal Selesai</th>
+                <th scope="col">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($all_kegiatan as $kegiatan)
+            <tr>
+                <th scope="row">{{ $loop->iteration }}</th>
+                <td>{{ $kegiatan->nama_kegiatan }}</td>
+                <td>{{ $kegiatan->tgl_mulai }}</td>
+                <td>{{ $kegiatan->tgl_selesai }}</td>
+                <td><button class="btn btn-outline-secondary">ok</button></td>
+            </tr>    
+            @endforeach
+        </tbody>
+    </table>      
 </div>
+
+
 @stop
