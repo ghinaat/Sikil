@@ -20,6 +20,16 @@ class KegiatanController extends Controller
     return view('kegiatan.create');
     } 
 
+    public function show($id_kegiatan)
+{
+    // Mengambil kegiatan berdasarkan id_kegiatan
+    $kegiatan = Kegiatan::findOrFail($id_kegiatan);
+
+    return view('kegiatan.show', [
+        'kegiatan' => $kegiatan
+    ]);
+}
+
     public function store(Request $request)
     { 
  //Menyimpan Data User Baru

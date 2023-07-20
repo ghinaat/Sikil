@@ -114,13 +114,32 @@ $('#example2').DataTable({
     "responsive": true,
 });
 
+
 function notificationBeforeDelete(event, el, dt) {
     event.preventDefault();
-    if (confirm('Apakah anda yakin akan menghapus data Kategori Wisata \"' + document.getElementById(dt).innerHTML +
-            '\" ?')) {
-        $("#delete-form").attr('action', $(el).attr('href'));
-        $("#delete-form").submit();
-    }
+
+
+    var kategoriWisata = document.getElementById(dt).innerHTML;
+
+    // Menampilkan SweetAlert dengan opsi konfirmasi
+    Swal.fire({
+        title: 'Apakah Anda Yakin?',
+        text: 'Apakah Anda yakin akan menghapus data User "' + User + '"?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        // Jika pengguna mengklik tombol "Ya, Hapus!"
+        if (result.isConfirmed) {
+            // Ambil atribut href dari elemen yang diklik dan gunakan sebagai action form
+            $("#delete-form").attr('action', $(el).attr('href'));
+            // Submit form
+            $("#delete-form").submit();
+        }
+    });
 }
 </script>
 @endpush
