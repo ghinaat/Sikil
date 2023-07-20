@@ -1,8 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'AdminLTE')
+@section('title', 'SIKLIS')
 
 @section('content_header')
+
 <h1 class="m-0 text-dark">Dashboard</h1>
 <!--  <style>
 .responsive-image {
@@ -26,7 +27,7 @@
 
 
 @section('content')
-<div class="row">
+{{-- <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
@@ -70,6 +71,12 @@
 
             </div>
         </div>
+    </div>
+</div> --}}
+
+<div class="col">
+    <div class="card pt-2 px-2">
+        <h5>Hello {{ Auth::user()->nama_pegawai }}</h5>
     </div>
 </div>
 @stop
