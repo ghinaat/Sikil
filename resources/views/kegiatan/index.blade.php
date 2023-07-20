@@ -1,6 +1,23 @@
 @extends('adminlte::page')
 @section('title', 'List kegiatan')
 @section('content_header')
+<style>
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-label {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.form-input {
+    flex: 2;
+}
+</style>
+
 <h1 class="m-0 text-dark">List kegiatan</h1>
 @stop
 @section('content')
@@ -73,12 +90,15 @@ table-stripped" id="example2">
                         @error('nama_kegiatan') <span class="textdanger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">
-                        <label for="tgl_mulai">Tanggal Mulai Acara</label>
-                        <input type="date" class="form-control"
-                            class="form-control @error('tgl_mulai') is-invalid @enderror" id="tgl_mulai"
-                            placeholder="Tanggal Mulai" name="tgl_mulai" value="{{old('tgl_mulai')}}">
-                        @error('tgl_mulai') <span class="textdanger">{{$message}}</span> @enderror
+                        <label for="tgl_mulai" class="form-label">Tanggal Mulai Acara</label>
+                        <div class="form-input">
+                            <input type="date" class="form-control @error('tgl_mulai') is-invalid @enderror"
+                                id="tgl_mulai" placeholder="Tanggal Mulai" name="tgl_mulai"
+                                value="{{ old('tgl_mulai')}}">
+                            @error('tgl_mulai') <span class="textdanger">{{$message}}</span> @enderror
+                        </div>
                     </div>
+
                     <div class="form-group">
                         <label for="tgl_selesai">Tanggal Selese</label>
                         <input type="date" class="form-control"
@@ -114,6 +134,7 @@ btn-default">
 </div>
 
 <!-- Edit modal -->
+@foreach($kegiatan as $kg)
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -124,7 +145,7 @@ btn-default">
                 </button>
             </div>
             <div class="modal-body">
-                @foreach($kegiatan as $kg)
+
 
                 <form action="{{ route('kegiatan.update', $kg) }}" method="post">
                     @csrf
@@ -175,11 +196,12 @@ btn-default">
                         </a>
                     </div>
                 </form>
-                @endforeach
+
             </div>
         </div>
     </div>
 </div>
+@endforeach
 @push('js')
 <form action="" id="delete-form" method="post">
     @method('delete')

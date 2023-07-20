@@ -35,11 +35,11 @@ table-stripped" id="example2">
                             <td id={{$key+1}}>{{$user->is_deletd}}</td>
                             <td>
                                 <a href="{{route('user.edit',
-                                    $user)}}" class="btn btn-primary btn-xs"><i class="fas fa-pen"
+                                    $user->id_users)}}" class="btn btn-primary btn-xs"><i class="fas fa-pen"
                                         aria-hidden="true"></i>
                                     Edit
                                 </a>
-                                <a href="{{route('user.destroy',  $user)}}"
+                                <a href="{{route('user.destroy',  $user->id_users)}}"
                                     onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
                                     class="btn btn-danger btn-xs"><i class="fa fa-trash" aria-hidden="true"></i>
                                     Delete

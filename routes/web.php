@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\KegiatanController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +30,14 @@ Route::get('/home', function() {
 })->name('home')->middleware('auth');
 
 // Route::resource('jabatan', \App\Http\Controllers\JabatanController::class);
-Route::resource('user', \App\Http\Controllers\UserController::class);
+Route::get('/user', [UserController::class, 'index'])->name('user.index');
+Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+Route::post('/user', [UserController::class, 'store'])->name('user.store');
+Route::get('/user/{id_users}', [UserController::class, 'show'])->name('user.show');
+Route::get('/user/{id_users}/edit', [UserController::class, 'edit'])->name('user.edit');
+Route::put('/user/{id_users}', [UserController::class, 'update'])->name('user.update');
+Route::delete('/user/{id_users}', [UserController::class, 'destroy'])->name('user.destroy');
+// Route::resource('user', \App\Http\Controllers\UserController::class);
 
 Route::get('/jabatan', [JabatanController::class, 'index'])->name('jabatan.index');
 Route::get('/jabatan/create', [JabatanController::class, 'create'])->name('jabatan.create');

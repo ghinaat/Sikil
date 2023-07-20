@@ -24,7 +24,7 @@ class User extends Authenticatable
  
    
     ];
-    protected $primaryKey = 'id_pegawai';
+    protected $primaryKey = 'id_users';
 
     /**
      * The attributes that should be hidden for serialization.
