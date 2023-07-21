@@ -19,10 +19,10 @@
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
         @if(config('adminlte.usermenu_image'))
         <img src="{{ Auth::user()->adminlte_image() }}" class="user-image img-circle elevation-2"
-            alt="{{ Auth::user()->email }}">
+            alt="{{ Auth::user()->nama_pegawai }}">
         @endif
         <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
-            {{ Auth::user()->email }}
+            {{ Auth::user()->nama_pegawai }}
         </span>
     </a>
 
@@ -38,7 +38,7 @@
                 alt="{{ Auth::user()->nama_pegawai }}">
             @endif
             <p class="@if(!config('adminlte.usermenu_image')) mt-0 @endif">
-                {{ Auth::user()->name }}
+                {{ Auth::user()->nama_pegawai }}
                 @if(config('adminlte.usermenu_desc'))
                 <small>{{ Auth::user()->adminlte_desc() }}</small>
                 @endif

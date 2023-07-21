@@ -292,13 +292,19 @@ return [
 
     'menu' => [
         // Navbar items:
+        // [
+        //     'type'         => 'navbar-search',
+        //     'text'         => 'search',
+        //     'topnav_right' => true,
+        // ],
+        //  [
+        //     'type'         => 'fullscreen-widget',
+        //     'topnav_right' => true,
+        // ],
         [
-            'type'         => 'navbar-search',
-            'text'         => 'search',
-            'topnav_right' => true,
-        ],
-        [
-            'type'         => 'fullscreen-widget',
+            'text'  => 'Message',
+            'route' => 'login',
+            'icon'  => 'fas fa-fw fa-envelope',
             'topnav_right' => true,
         ],
 
