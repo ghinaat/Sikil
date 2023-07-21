@@ -30,64 +30,85 @@ class KegiatanController extends Controller
     ]);
 }
 
-    public function store(Request $request)
-    { 
-        //Menyimpan Data User Baru
-        $request->validate([
-            'nama_kegiatan' => 'required', 
-            'tgl_mulai' => 'required|date',
-            'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
-            'lokasi' => 'required', 
-            'peserta' => 'required', 
-        ]);
-       // Proses data dan tentukan status kegiatan
-       $tanggalMulai = Carbon::parse($request->tgl_mulai);
-       $tanggalSelesai = Carbon::parse($request->tgl_selesai);
+public function storeOrUpdate(Request $request, $id_kegiatan = null)
+{
+    $request->validate([
+        'nama_kegiatan' => ['required'],
+        'tgl_mulai' => ['required'],
+        'tgl_selesai' => ['required'],
+        'lokasi' => ['required'],
+        'peserta' => ['required'],
+    ]);
 
-       // Logika untuk menentukan status kegiatan berdasarkan tanggal mulai dan tanggal selesai
-       // Misalnya:
-       if ($tanggalMulai->isPast() && $tanggalSelesai->isPast()) {
-           $status = 'Kegiatan telah selesai';
-       } elseif ($tanggalMulai->isFuture()) {
-           $status = 'Kegiatan belum dimulai';
-       } else {
-           $status = 'Kegiatan sedang berlangsung';
-       }
+    $kegiatan = Kegiatan::where('id_kegiatan', $id_kegiatan)->first();
+    if (!$kegiatan) {
+        $kegiatan = new Kegiatan();
+        $kegiatan->id_kegiatan = $id_kegiatan; // Assign value to id_kegiatan for new kegiatan
+    }
+
+    $kegiatan->nama_kegiatan = $request->nama_kegiatan;
+    $kegiatan->tgl_mulai = $request->tgl_mulai;
+    $kegiatan->tgl_selesai = $request->tgl_selesai;
+    $kegiatan->lokasi = $request->lokasi;
+    $kegiatan->peserta = $request->peserta;
+
+    $kegiatan->save();
+
+    return redirect()->to('/kegiatan')->with('success_message', 'Berhasil menyimpan atau memperbarui kegiatan');
+}
+
+    // public function store(Request $request)
+    // { 
+    //     //Menyimpan Data User Baru
+    //     $request->validate([
+    //         'nama_kegiatan' => 'required', 
+    //         'tgl_mulai' => 'required|date',
+    //         'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
+    //         'lokasi' => 'required', 
+    //         'peserta' => 'required', 
+    //     ]);
+    //     $array = $request->only([
+    //         'nama_kegiatan',
+    //         'tgl_mulai', 
+    //         'tgl_selesai', 
+    //         'lokasi' ,
+    //         'peserta' 
+    //     ]);
         
-        $kegiatan = Kegiatan::create($array);
-        return redirect()->route('kegiatan.index') ->with('success_message', 'Berhasil menambah kegiatan baru');
-    } 
+    //     $kegiatan = Kegiatan::create($array);
+    //     return redirect()->route('kegiatan.index') ->with('success_message', 'Berhasil menambah kegiatan baru');
+    // } 
     
-    public function edit($id_kegiatan)
-    {
-        //Menampilkan Form Edit
-        $kegiatan = Kegiatan::find($id_kegiatan);
-        if (!$kegiatan) return redirect()->route('kegiatan.index')->with('error_message', 'kategori wisata dengan id_kegiatan = '.$id_kegiatan.' tidak ditemukan');
-        return view('kegiatan.edit', [
-            'kegiatan' => $kegiatan
-        ]);
-    }   
+    // public function edit($id_kegiatan)
+    // {
+    //     //Menampilkan Form Edit
+    //     $kegiatan = Kegiatan::find($id_kegiatan);
+    //     if (!$kegiatan) return redirect()->route('kegiatan.index')->with('error_message', 'kategori wisata dengan id_kegiatan = '.$id_kegiatan.' tidak ditemukan');
+    //     return view('kegiatan.edit', [
+    //         'kegiatan' => $kegiatan
+    //     ]);
+    // }   
 
-    public function update(Request $request, $id_kegiatan)
-    {
-        //Mengedit Data Kategori Wisata
-        $request->validate([
-            'nama_kegiatan' => 'required', 
-            'tgl_mulai' => 'required', 
-            'tgl_selesai' => 'required', 
-            'lokasi' => 'required', 
-            'peserta' => 'required', 
-        ]);
-        $kegiatan = Kegiatan::find($id_kegiatan);
+    // public function update(Request $request, $id_kegiatan)
+    // {
+    //     //Mengedit Data Kategori Wisata
+    //     $request->validate([
+    //         'nama_kegiatan' => 'required', 
+    //         'tgl_mulai' => 'required', 
+    //         'tgl_selesai' => 'required', 
+    //         'lokasi' => 'required', 
+    //         'peserta' => 'required', 
+    //     ]);
+    //     $kegiatan = Kegiatan::find($id_kegiatan);
         
-        $kegiatan->nama_kegiatan = $request->nama_kegiatan;
-        $kegiatan->tgl_mulai = $request->tgl_mulai;
-        $kegiatan->tgl_selesai = $request->tgl_selesai;
-        $kegiatan->lokasi = $request->lokasi;
-        $kegiatan->peserta = $request->peserta;
-        $kegiatan->save();
-        return redirect()->route('kegiatan.index')->with('success_message', 'Berhasil mengubah kategori wisata');
-    } 
+    //     $kegiatan->nama_kegiatan = $request->nama_kegiatan;
+    //     $kegiatan->tgl_mulai = $request->tgl_mulai;
+    //     $kegiatan->tgl_selesai = $request->tgl_selesai;
+    //     $kegiatan->lokasi = $request->lokasi;
+    //     $kegiatan->peserta = $request->peserta;
+    //     $kegiatan->save();
+    //     return redirect()->route('kegiatan.index')->with('success_message', 'Berhasil mengubah kategori wisata');
+    // } 
 
     public function destroy($id_kegiatan)
     {
