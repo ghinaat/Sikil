@@ -58,7 +58,7 @@ class KegiatanController extends Controller
     {
         //Menampilkan Form Edit
         $kegiatan = Kegiatan::find($id_kegiatan);
-        if (!$kegiatan) return redirect()->route('kegiatan.index')->with('error_message', 'kategori wisata dengan id_kegiatan = '.$id_kegiatan.' tidak ditemukan');
+        if (!$kegiatan) return redirect()->route('kegiatan.index')->with('error_message', 'kegiatan dengan id_kegiatan = '.$id_kegiatan.' tidak ditemukan');
         return view('kegiatan.edit', [
             'kegiatan' => $kegiatan
         ]);
@@ -66,7 +66,7 @@ class KegiatanController extends Controller
 
     public function update(Request $request, $id_kegiatan)
     {
-        //Mengedit Data Kategori Wisata
+        //Mengedit Data Kegiatan
         $request->validate([
             'nama_kegiatan' => 'required', 
             'tgl_mulai' => 'required', 
@@ -82,7 +82,7 @@ class KegiatanController extends Controller
         $kegiatan->lokasi = $request->lokasi;
         $kegiatan->peserta = $request->peserta;
         $kegiatan->save();
-        return redirect()->route('kegiatan.index')->with('success_message', 'Berhasil mengubah kategori wisata');
+        return redirect()->route('kegiatan.index')->with('success_message', 'Berhasil mengubah Kegiatan');
     } 
 
     public function destroy($id_kegiatan)
@@ -93,6 +93,6 @@ class KegiatanController extends Controller
                 'is_deleted' => '1',
             ]);
         }
-        return redirect()->route('kegiatan.index')->with('success_message', 'Berhasil menghapus kategori wisata');
+        return redirect()->route('kegiatan.index')->with('success_message', 'Berhasil menghapus Kegiatan');
     }
 }
