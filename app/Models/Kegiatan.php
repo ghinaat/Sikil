@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +22,26 @@ class Kegiatan extends Model
         'is_deleted'
        
     ];
+
+    protected $appends = ['status'];
+
+
+    public function getStatusAttribute()
+    {
+        $today = Carbon::now();
+        $start = Carbon::parse($this->attributes['tgl_mulai']);
+        $end = Carbon::parse($this->attributes['tgl_selesai']);
+
+        if ($today->lt($start)) {
+            return 'Belum Dimulai';
+        } elseif ($today->gt($end)) {
+            return 'Selesai';
+        } else {
+            return 'Sedang Berlangsung';
+        }
+    }
+
+    
 
     public function timKegiatan()
     {

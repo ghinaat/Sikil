@@ -64,4 +64,6 @@ Route::get('/kegiatan/{id_kegiatan}/edit', [KegiatanController::class, 'edit'])-
 Route::put('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'update'])->name('kegiatan.update');
 Route::delete('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
 
+Route::post('/kegiatan/{id_kegiatan?}', [KegiatanController::class, 'storeOrUpdate'])->name('kegiatan.storeOrUpdate');
+
 Route::resource('timkegiatan', \App\Http\Controllers\TimKegiatanController::class);

@@ -22,8 +22,8 @@ table-stripped" id="example2">
                                 <th>Nama Kegiatan</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
-                                <th>Lokasi</th>
-                                <th>Peserta</th>
+                                <th>Status</th>
+
                                 <th>Opsi</th>
                             </tr>
                         </thead>
@@ -34,7 +34,7 @@ table-stripped" id="example2">
                                 <td id={{$key+1}}>{{$kg->nama_kegiatan}}</td>
                                 <td id={{$key+1}}>{{$kg->tgl_mulai}}</td>
                                 <td id={{$key+1}}>{{$kg->tgl_selesai}}</td>
-                                <td id={{$key+1}}>{{$kg->lokasi}}</td>
+                                <td id={{$key+1}}>{{$kg->status}}</td>
 
                                 <td>
                                     <a href="{{route('kegiatan.show', $kg->id_kegiatan)}}"
@@ -47,7 +47,7 @@ table-stripped" id="example2">
                                     </button>
                                     <a href="{{route('kegiatan.destroy', $kg->id_kegiatan)}}"
                                         onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                        class="btn btn-danger btn-xs"><i class="fa fa-trash" aria-hidden="true"></i>
+                                        class="btn btn-danger btn-xs">
                                         Delete
                                     </a>
                                 </td>
