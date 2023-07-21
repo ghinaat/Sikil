@@ -27,54 +27,41 @@
 
 
 @section('content')
-{{-- <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img class="d-block w-100"
-                                src="/img/Premium Vector _ Sunset landscape of bali with temple and lake.jpg"
-                                alt="First slide" class='responsive-image'>
-
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100"
-                                src="/img/Premium Vector _ Summer vacation concept on blue background.jpg"
-                                alt="Second slide" class='responsive-image'>
-
-
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100"
-                                src="/img/Sea Mountain Temple Beratan Lake Bedugul Bali Landscape View Illustration.jpg"
-                                alt="Third slide" class='responsive-image'>
-
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="small-box bg-gradient-success">
+                <div class="inner">
+                    <h3>44</h3>
+                    <p>Staff Hadir</p>
                 </div>
-
+                <div class="icon"><i class="fas fa-user"></i></div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="small-box bg-gradient-warning">
+                <div class="inner">
+                    <h3>44</h3>
+                    <p>Staff Ijin</p>
+                </div>
+                <div class="icon"><i class="fas fa-plane-departure"></i></div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="small-box bg-gradient-danger">
+                <div class="inner">
+                    <h3>44</h3>
+                    <p>Staff Sakit</p>
+                </div>
+                <div class="icon"><i class="fas fa-head-side-cough"></i></div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
-</div> --}}
-<div class="container">
-    <h1 class="mb-4">Acara Terkini</h1>
+
+    <h2 class="mb-4">Acara Yang Akan Datang</h2>
 
     <div class="row">
         @foreach ($kegiatans as $kegiatan)
@@ -89,6 +76,9 @@
         </div>
         @endforeach
     </div>
+    <hr>
+
+    <h2 class="mb-4">Acara Tahun Ini</h2>
 
     <table class="table">
         <thead>
