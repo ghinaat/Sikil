@@ -7,14 +7,12 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header py-3">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Tambah</button>
-            </div>
             <div class="card-body">
+                <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#addModal">Tambah</button>
                 <div class="table-responsive">
-                    <table class="table table-hover table-bordered table-stripped border-info" id="example2">
+                    <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
-                            <tr class="table-info">
+                            <tr>
                                 <th>No.</th>
                                 <th>Nama Pegawai</th>
                                 <th>Email</th>
@@ -30,14 +28,19 @@
                                 <td id="{{$key+1}}">{{$user->nama_pegawai}}</td>
                                 <td id="{{$key+1}}">{{$user->email}}</td>
                                 <td id="{{$key+1}}">{{$user->level}}</td>
-                                <td id="{{$key+1}}">{{$user->jabatan->nama_jabatan}}</td>
+                                <td id={{$key+1}}>
+                                    @if($user->jabatan)
+                                    {{ $user->jabatan->nama_jabatan }}
+                                    @else
+                                    N/A
+                                    @endif</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary edit-button" data-toggle="modal"
-                                        data-target="#editModal" data-id="{{$user->id_pegawai}}"
+                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                        data-target="#editModal" data-id="{{$user->id_users}}"
                                         data-nama="{{$user->nama_pegawai}}">Edit</a>
                                     <a href="{{ route('user.destroy', $user) }}"
                                         onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                        class="btn btn-danger">Delete</a>
+                                        class="btn btn-danger btn-xs">Delete</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -125,7 +128,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('user.update', $user->id_pegawai)}}" method="post">
+                <form action="{{ route('user.update', $user->id_users)}}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -192,60 +195,12 @@
     @method('delete')
     @csrf
 </form>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
 $('#example2').DataTable({
     "responsive": true,
 });
-
-$(document).ready(function() {
-    // Ambil pesan sukses dari session (jika ada) dan tampilkan menggunakan SweetAlert2
-    const successMessage = '{{session('
-    success_message ')}}';
-    const successChanged = '{{session('
-    success_changed ')}}';
-    const successDeleted = '{{session('
-    success_deleted ')}}';
-    if (successMessage) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: successMessage,
-        });
-    }
-    if (successChanged) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Changed!',
-            text: successChanged,
-        });
-    }
-    if (successDeleted) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Deleted!',
-            text: successDeleted,
-        });
-    }
-});
-
-function notificationBeforeDelete(event, el, dt) {
-    event.preventDefault();
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Jika pengguna mengonfirmasi penghapusan, lakukan penghapusan dengan mengirimkan form
-            $("#delete-form").attr('action', $(el).attr('href'));
-            $("#delete-form").submit();
-        }
-    });
-}
 </script>
+
+
 @endpush

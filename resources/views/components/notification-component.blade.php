@@ -1,83 +1,54 @@
 <div>
 
 </div>
-@push('js') <script>
-var Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000
+@push('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+$(document).ready(function() {
+    // Ambil pesan sukses dari session (jika ada) dan tampilkan menggunakan SweetAlert2
+    var successMessage = '{{ session('success_message') }}';
+    var successChanged = '{{ session('success_changed') }}';
+    var successDeleted = '{{ session('success_deleted') }}';
+    if (successMessage) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: successMessage,
+        });
+    }
+    if (successChanged) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Changed!',
+            text: successChanged,
+        });
+    }
+    if (successDeleted) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: successDeleted,
+        });
+    }
 });
 
-function toast_show(icon, message) {
-    Toast.fire({
-        icon: icon,
-        title: message
-    })
-}
-
-function success_message(message) {
-    toast_show('success', message);
-}
-
-function info_message(message) {
-    toast_show('info', message);
-}
-
-function error_message(message) {
-    toast_show('error', message);
-}
-
-function warning_message(message) {
-    toast_show('warning', message);
+function notificationBeforeDelete(event, el, dt) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Jika pengguna mengonfirmasi penghapusan, lakukan penghapusan dengan mengirimkan form
+            $("#delete-form").attr('action', $(el).attr('href'));
+            $("#delete-form").submit();
+        }
+    });
 }
 </script>
-@if($message = \Illuminate\Support\Facades\Session::get('success_message'))
-@if(is_iterable($message))
-@foreach($message as $m) <script>
-success_message('{{addslashes($m)}}');
-</script>
-@endforeach
-@else
-<script>
-success_message('{{addslashes($message)}}');
-</script>
-@endif
-@endif
-@if($message = \Illuminate\Support\Facades\Session::get('info_message'))
-@if(is_iterable($message))
-@foreach($message as $m) <script>
-info_message('{{addslashes($m)}}');
-</script>
-@endforeach
-@else
-<script>
-info_message('{{addslashes($message)}}');
-</script>
-@endif
-@endif
-@if($message = \Illuminate\Support\Facades\Session::get('warning_message'))
-@if(is_iterable($message))
-@foreach($message as $m) <script>
-warning_message('{{addslashes($m)}}');
-</script>
-@endforeach
-@else
-<script>
-warning_message('{{addslashes($message)}}');
-</script>
-@endif
-@endif
-@if($message = \Illuminate\Support\Facades\Session::get('error_message'))
-@if(is_iterable($message))
-@foreach($message as $m) <script>
-error_message('{{addslashes($m)}}');
-</script>
-@endforeach
-@else
-<script>
-error_message('{{addslashes($message)}}');
-</script>
-@endif
-@endif
 @endpush

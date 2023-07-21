@@ -21,9 +21,14 @@ class User extends Authenticatable
         'nama_pegawai',
         'email',
         'password',
- 
-   
+        'level',
+        'id_jabatan'
     ];
+
+    public function jabatan(){
+        return $this->belongsTo(Jabatan::class, 'id_jabatan', 'id_jabatan');
+    }
+
     protected $primaryKey = 'id_users';
 
     /**
@@ -46,10 +51,5 @@ class User extends Authenticatable
         'password' => 'hashed',
        
     ];
-
-    public function timkegiatan()
-    {
-        return $this->hasOne(TimKegiatan::class, 'id_pegawai', 'id_users');
-    }
     
 }
