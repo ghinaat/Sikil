@@ -2,6 +2,7 @@
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\TimKegiatanController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Kegiatan;
 
@@ -62,3 +63,5 @@ Route::get('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'show'])->name
 Route::get('/kegiatan/{id_kegiatan}/edit', [KegiatanController::class, 'edit'])->name('kegiatan.edit');
 Route::put('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'update'])->name('kegiatan.update');
 Route::delete('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
+
+Route::resource('timkegiatan', \App\Http\Controllers\TimKegiatanController::class);

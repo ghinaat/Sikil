@@ -46,5 +46,10 @@ class User extends Authenticatable
         'password' => 'hashed',
        
     ];
+
+    public function timkegiatan()
+    {
+        return $this->hasOne(TimKegiatan::class, 'id_pegawai', 'id_users');
+    }
     
 }
