@@ -322,6 +322,11 @@ return [
             'url'  => 'user',
             'can'  => '',
         ],
+        [
+            'text' => 'Tim Kegiatan',
+            'url'  => 'timkegiatan',
+            'can'  => '',
+        ],
         // [
         //     'text'        => 'pages',
         //     'url'         => 'admin/pages',

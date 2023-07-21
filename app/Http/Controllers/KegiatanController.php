@@ -24,7 +24,7 @@ class KegiatanController extends Controller
 {
     // Mengambil kegiatan berdasarkan id_kegiatan
     $kegiatan = Kegiatan::findOrFail($id_kegiatan);
-
+ 
     return view('kegiatan.show', [
         'kegiatan' => $kegiatan
     ]);
@@ -35,18 +35,24 @@ class KegiatanController extends Controller
         //Menyimpan Data User Baru
         $request->validate([
             'nama_kegiatan' => 'required', 
-            'tgl_mulai' => 'required', 
-            'tgl_selesai' => 'required', 
+            'tgl_mulai' => 'required|date',
+            'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
             'lokasi' => 'required', 
             'peserta' => 'required', 
         ]);
-        $array = $request->only([
-            'nama_kegiatan',
-            'tgl_mulai', 
-            'tgl_selesai', 
-            'lokasi' ,
-            'peserta' 
-        ]);
+       // Proses data dan tentukan status kegiatan
+       $tanggalMulai = Carbon::parse($request->tgl_mulai);
+       $tanggalSelesai = Carbon::parse($request->tgl_selesai);
+
+       // Logika untuk menentukan status kegiatan berdasarkan tanggal mulai dan tanggal selesai
+       // Misalnya:
+       if ($tanggalMulai->isPast() && $tanggalSelesai->isPast()) {
+           $status = 'Kegiatan telah selesai';
+       } elseif ($tanggalMulai->isFuture()) {
+           $status = 'Kegiatan belum dimulai';
+       } else {
+           $status = 'Kegiatan sedang berlangsung';
+       }
         
         $kegiatan = Kegiatan::create($array);
         return redirect()->route('kegiatan.index') ->with('success_message', 'Berhasil menambah kegiatan baru');

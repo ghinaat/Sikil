@@ -20,4 +20,9 @@ class Kegiatan extends Model
         'is_deleted'
        
     ];
+
+    public function timKegiatan()
+    {
+        return $this->hasMany(TimKegiatan::class);
+    }
 }

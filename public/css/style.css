@@ -13,3 +13,8 @@
 .form-input {
     flex: 2;
 }
+
+.table-left {
+    /* Tambahkan gaya untuk mengatur tata letak tabel menjadi ke kiri */
+    float: left;
+  }

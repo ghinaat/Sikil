@@ -35,7 +35,7 @@ table-stripped" id="example2">
                                 <td id={{$key+1}}>{{$kg->tgl_mulai}}</td>
                                 <td id={{$key+1}}>{{$kg->tgl_selesai}}</td>
                                 <td id={{$key+1}}>{{$kg->lokasi}}</td>
-                                <td id={{$key+1}}>{{$kg->peserta}}</td>
+
                                 <td>
                                     <a href="{{route('kegiatan.show', $kg->id_kegiatan)}}"
                                         class="btn btn-success btn-xs">

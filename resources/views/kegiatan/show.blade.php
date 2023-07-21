@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="tgl_mulai" class='form-label'>Tanggal Mulai Acara</label>
+                    <label for="tgl_mulai" class='form-label'>Tanggal Mulai</label>
                     <div class="form-input">
                         <input type="date" class="form-control"
                             class="form-control @error('tgl_mulai') is-invalid @enderror" id="tgl_mulai"
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="tgl_selesai" class="form-label">Tanggal Selese</label>
+                    <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                     <div class="form-input">
                         <input type="date" class="form-control"
                             class="form-control @error('tgl_selesai') is-invalid @enderror" id="tgl_selesai"
