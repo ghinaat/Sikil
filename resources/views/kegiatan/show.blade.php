@@ -1,6 +1,9 @@
 @extends('adminlte::page')
 @section('title', 'Detail Kegiatan')
 @section('content_header')
+<style>
+/* Gaya umum */
+</style>
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <h1 class="m-0 text-dark">Detail Kegiatan</h1>
 @stop
@@ -62,7 +65,32 @@
                 </div>
 
                 <div style="margin-top: 30px;"></div>
-                <label for="">Data Tim Seaqil</label>
+                <label>Data Tim SEAQIL</label>
+                <div class="table-container">
+
+                    <table class="table table-hover table-bordered table-stripped">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Nama Kegiatan</th>
+                                <th>Nama pegawai</th>
+                                <th>Peran</th>
+                                <th>Opsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($timkegiatan as $key => $tk)
+                            <tr>
+                                <td>{{$key+1}}</td>
+                                <td>{{$tk->kegiatan->nama_kegiatan }}</td>
+                                <td>{{$tk->user->nama_pegawai}}</td>
+                                <td>{{$tk->peran}}</td>
+                                <td></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
             <div class="modal-footer">
@@ -79,6 +107,8 @@ btn-primary ">
 @push('js')
 
 <script>
-
+$('#example2').DataTable({
+    "responsive": true,
+});
 </script>
 @endpush

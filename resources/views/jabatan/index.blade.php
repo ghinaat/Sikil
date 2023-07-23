@@ -8,46 +8,137 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <a href="{{route('jabatan.create')}}" class="btn
-btn-primary mb-2"><i class="fa fa-plus"></i>
+                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#modal_form"
+                    role="dialog">
                     Tambah
-                </a>
-                <table class="table table-hover table-bordered
-table-stripped" id="example2">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Id Jabatan</th>
-                            <th>Jabatan</th>
-                            <th>Opsi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($jabatan as $key => $kw)
-                        <tr>
-                            <td id={{$key+1}}>{{$key+1}}</td>
-                            <td id={{$key+1}}>{{$kw->id_jabatan}}</td>
-                            <td id={{$key+1}}>{{$kw->nama_jabatan}}</td>
-                            <td>
-                                <a href="{{route('jabatan.edit',
-                                    $kw->id_jabatan)}}" class="btn btn-primary btn-xs"><i class="fas fa-pen"
-                                        aria-hidden="true"></i>
-                                    Edit
-                                </a>
-                                <a href="{{route('jabatan.destroy', $kw->id_jabatan)}}"
-                                    onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                    class="btn btn-danger btn-xs"><i class="fa fa-trash" aria-hidden="true"></i>
-                                    Delete
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                </button>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-stripped" id="example2">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+
+                                <th>Nama Jabatan</th>
+                                <th style="width:189px;">Opsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($jabatan as $key => $jb)
+                            <tr>
+                                <td>{{$key+1}}</td>
+
+                                <td>{{$jb->nama_jabatan}}</td>
+                                <td>
+                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                        data-target="#editModal{{$jb->id_jabatan}}" data-id="{{$jb->id_jabatan}}"
+                                        data-nama="{{$jb->nama_jabatan}}">Edit</a>
+                                    <a href="{{route('jabatan.destroy', $jb->id_jabatan)}}"
+                                        onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<!-- Bootstrap modal Create -->
+<div class="modal fade" id="modal_form" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Tambah Data Jabatan</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body form">
+                <form action="{{ route('jabatan.store') }}" method="POST" id="form" class="form-horizontal"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" value="" name="id">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputName">Nama Jabatan</label>
+                                        <input type="text"
+                                            class="form-control @error('nama_jabatan') is-invalid @enderror"
+                                            id="nama_jabatan" name="nama_jabatan" value="{{old('name')}}">
+                                        @error('name') <span class="text-danger">{{$message}}</span> @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Bootstrap modal Edit -->
+@foreach($jabatan as $jb)
+<div class="modal fade" id="editModal{{$jb->id_jabatan}}" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Edit Data Jabatan</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body form">
+                <form action="{{ route('jabatan.update',$jb->id_jabatan) }}" method="POST" id="form"
+                    class="form-horizontal" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <!-- Ganti menjadi @method('PATCH') jika Anda ingin menggunakan PATCH -->
+                    <input type="hidden" name="id" value="{{ $jb->id_jabatan }}">
+                    <!-- Ganti "value" dengan nilai ID jabatan yang sesuai -->
+                    <div class="form-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="nama_jabatan"> Nama Jabatan</label>
+                                        <input type="text"
+                                            class="form-control @error('nama_jabatan') is-invalid @enderror"
+                                            id="nama_jabatan" placeholder="Masukkan Nama Jabatan" name="nama_jabatan"
+                                            value="{{ $jb->nama_jabatan ?? old('nama_jabatan') }}">
+                                        @error('nama_jabatan')
+                                        <span class="textdanger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
+
+
+
 @stop
 @push('js')
 <form action="" id="delete-form" method="post">
@@ -59,10 +150,9 @@ $('#example2').DataTable({
     "responsive": true,
 });
 
-function notificationBeforeDelete(event, el, dt) {
+function notificationBeforeDelete(event, el) {
     event.preventDefault();
-    if (confirm('Apakah anda yakin akan menghapus data Kategori Wisata \"' + document.getElementById(dt).innerHTML +
-            '\" ?')) {
+    if (confirm('Apakah anda yakin akan menghapus data ? ')) {
         $("#delete-form").attr('action', $(el).attr('href'));
         $("#delete-form").submit();
     }

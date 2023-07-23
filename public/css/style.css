@@ -18,3 +18,22 @@
     /* Tambahkan gaya untuk mengatur tata letak tabel menjadi ke kiri */
     float: left;
   }
+
+  body {
+    font-family: Arial, sans-serif;
+}
+
+/* Gaya untuk div yang berisi tabel */
+.table-container {
+    float: right;
+    width: 65%;
+    /* Lebar tabel */
+    margin-top: 30px;
+}
+
+
+/* Gaya untuk label "Data Tim SEAQIL" */
+.label-title {
+    font-size: 18px;
+    font-weight: bold;
+}

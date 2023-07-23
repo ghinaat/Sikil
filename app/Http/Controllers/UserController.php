@@ -45,23 +45,23 @@ class UserController extends Controller
 
 
         $user = User::create($array);
-        $user->save();
+
         return redirect()->route('user.index')->with([
             'success_message' => 'Your data has been saved.',
         ]);
     }
 
-    public function edit($id_pegawai){
+    public function edit($id_users){
         //Menampilkan Form Edit
-        $user = User::find($id_pegawai);
-        if (!$user) return redirect()->route('user.index')->with('error_message', 'User dengan id'.$id_pegawai.' tidak ditemukan');
+        $user = User::find($id_users);
+        if (!$user) return redirect()->route('user.index')->with('error_message', 'User dengan id'.$id_users.' tidak ditemukan');
         return view('users.edit', [
             'user' => $user,
             'jabatan' => Jabatan::all()
         ]); 
     }
 
-    public function update(Request $request, $id_pegawai){
+    public function update(Request $request, $id_users){
         //Mengedit Data User
         $request->validate([
             'nama_pegawai' => 'required',
@@ -70,7 +70,7 @@ class UserController extends Controller
             'level' => 'required',
              'id_jabatan' => 'required',
         ]);
-        $user = User::find($id_pegawai);
+        $user = User::find($id_users);
         $user->nama_pegawai = $request->nama_pegawai;
         $user->email = $request->email;
         if ($request->password) $user->password = bcrypt($request->password);
@@ -81,8 +81,8 @@ class UserController extends Controller
         ]);
     }
 
-    public function destroy($id){
-        $user = User::find($id);
+    public function destroy($id_users){
+        $user = User::find($id_users);
         if ($user) {
             $user->is_deletd = '1';
             $user->save();

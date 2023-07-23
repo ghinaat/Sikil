@@ -1,43 +1,41 @@
 @extends('adminlte::page')
-@section('title', 'List Tim Kegiatan')
+@section('title', 'Data Tim Kegiatan')
 @section('content_header')
-<h1 class="m-0 text-dark">List Tim Kegiatan</h1>
+<h1 class="m-0 text-dark">Data Tim Kegiatan</h1>
 @stop
 @section('content')
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <a href="{{route('timkegiatan.create')}}" class="btn
-btn-primary mb-2"><i class="fa fa-plus"></i>
+                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#modal_form"
+                    role="dialog">
                     Tambah
-                </a>
-                <table class="table table-hover table-bordered
+                </button>
+                <table class="table table-hover table-bordered 
 table-stripped" id="example2">
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Nama Pegawai</th>
-                            <th>Jabatan</th>
+                            <th>Nama Kegiatan</th>
+                            <th>Nama pegawai</th>
+                            <th>Peran</th>
                             <th>Opsi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($timkegiatan as $key => $tkgtn)
+                        @foreach($timkegiatan as $key => $tk)
                         <tr>
-                            <td id={{$key+1}}>{{$key+1}}</td>
-                            <td id={{$key+1}}>{{$tkgtn->id_pegawai}}</td>
+                            <td>{{$key+1}}</td>
+                            <td>{{$tk->kegiatan->nama_kegiatan }}</td>
+                            <td>{{$tk->user->nama_pegawai}}</td>
+                            <td>{{$tk->peran}}</td>
                             <td>
-                                <a href="{{route('timkegiatan.edit',
-                                    $tkgtn->id_jabatan)}}" class="btn btn-primary btn-xs"><i class="fas fa-pen"
-                                        aria-hidden="true"></i>
-                                    Edit
-                                </a>
-                                <a href="{{route('timkegiatan.destroy', $tkgtn->id_jabatan)}}"
-                                    onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                    class="btn btn-danger btn-xs"><i class="fa fa-trash" aria-hidden="true"></i>
+                                <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                    data-target="#editModal{{$tk->id_tim}}" data-id="{{$tk->id_tim}}">Edit</a>
+                                <button onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
                                     Delete
-                                </a>
+                                </button>
                             </td>
                         </tr>
                         @endforeach
@@ -47,6 +45,145 @@ table-stripped" id="example2">
         </div>
     </div>
 </div>
+
+
+<!-- Bootstrap modal Create -->
+<div class="modal fade" id="modal_form" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Tambah Data Tim Kegiatan</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body form">
+                <form action="{{ route('timkegiatan.store') }}" method="POST" id="form" class="form-horizontal"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" value="" name="id">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6" for="id_kegiatan">Nama Kegiatan</label>
+                                    <select id="id_kegiatan" name="id_kegiatan"
+                                        class="form-control @error('id_kegiatan') is-invalid @enderror">
+                                        @foreach ($kegiatan as $kg)
+                                        <option value="{{ $kg->id_kegiatan }}" @if( old('id_kegiatan')==$kg->id_kegiatan
+                                            ) selected @endif>
+                                            {{ $kg->nama_kegiatan }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6" for="id_pegawai">Nama Pegawai</label>
+                                    <select id="id_pegawai" name="id_pegawai"
+                                        class="form-control @error('id_pegawai') is-invalid @enderror">
+                                        @foreach ($user as $us)
+                                        <option value="{{ $us->id_users }}" @if( old('id_pegawai')==$us->id_users )
+                                            selected @endif">
+                                            {{ $us->nama_pegawai }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6">Peran</label>
+                                    <input type="text" class="form-control
+@error('peran') is-invalid @enderror" id="peran" placeholder="Peran" name="peran" value="{{old('peran')}}">
+                                    @error('peran') <span class="textdanger">{{$message}}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Bootstrap modal Edit -->
+@foreach($timkegiatan as $tk)
+<div class="modal fade" id="editModal{{$tk->id_tim}}" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Edit Data Tim Kegiatan</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body form">
+                <form action="{{ route('timkegiatan.update', $tk->id_tim) }}" method="POST" id="form"
+                    class="form-horizontal" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    <!-- Ganti "value" dengan nilai ID timkegiatan yang sesuai -->
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6" for="id_kegiatan">Nama Kegiatan</label>
+                                    <select id="id_kegiatan" name="id_kegiatan"
+                                        class="form-control @error('id_kegiatan') is-invalid @enderror">
+                                        @foreach ($kegiatan as $kg)
+                                        <option value="{{ $kg->id_kegiatan }}" @if( old('id_kegiatan')==$kg->id_kegiatan
+                                            ) selected @endif>
+                                            {{ $kg->nama_kegiatan }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6" for="id_pegawai">Nama Pegawai</label>
+                                    <select id="id_pegawai" name="id_pegawai"
+                                        class="form-control @error('id_pegawai') is-invalid @enderror">
+                                        @foreach ($user as $us)
+                                        <option value="{{ $us->id_users }}" @if( old('id_pegawai')==$us->id_users )
+                                            selected @endif">
+                                            {{ $us->nama_pegawai }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6">Peran</label>
+                                    <input type="text" class="form-control
+@error('peran') is-invalid @enderror" id="peran" placeholder="Peran" name="peran"
+                                        value="{{$tk -> peran ?? old('peran')}}">
+                                    @error('peran') <span class="textdanger">{{$message}}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
+
+
+
 @stop
 @push('js')
 <form action="" id="delete-form" method="post">
@@ -58,10 +195,9 @@ $('#example2').DataTable({
     "responsive": true,
 });
 
-function notificationBeforeDelete(event, el, dt) {
+function notificationBeforeDelete(event, el) {
     event.preventDefault();
-    if (confirm('Apakah anda yakin akan menghapus data Kategori Wisata \"' + document.getElementById(dt).innerHTML +
-            '\" ?')) {
+    if (confirm('Apakah anda yakin akan menghapus data ? ')) {
         $("#delete-form").attr('action', $(el).attr('href'));
         $("#delete-form").submit();
     }

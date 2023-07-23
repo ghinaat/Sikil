@@ -34,16 +34,18 @@ class JabatanController extends Controller
     ->with('success_message', 'Berhasil menambah jabatan baru');
     } 
 
-    public function edit($id_jabatan)
-{
-    $jabatan = Jabatan::find($id_jabatan);
-    if (!$jabatan) {
-        return redirect()->route('jabatan.index')->with('error_message', 'Jabatan dengan id = '.$id_jabatan.' tidak ditemukan');
-    }
-    return view('jabatan.edit', [
-        'jabatan' => $jabatan
+
+public function update(Request $request, $id_jabatan)
+{ 
+//Mengedit Data Standar Kompetensi
+$request->validate([
+    'nama_jabatan' =>'required',
     ]);
-}
+    $jabatan = Jabatan::find($id_jabatan);
+    $jabatan->nama_jabatan = $request->nama_jabatan;
+    $jabatan->save();
+    return redirect()->route('jabatan.index') ->with('success_message', 'Berhasil mengubah Jabatan');
+    } 
 
 public function destroy($id_jabatan)
 {

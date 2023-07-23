@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Kegiatan;
+use App\Models\TimKegiatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -22,14 +23,18 @@ class KegiatanController extends Controller
     } 
 
     public function show($id_kegiatan)
-{
-    // Mengambil kegiatan berdasarkan id_kegiatan
-    $kegiatan = Kegiatan::findOrFail($id_kegiatan);
- 
-    return view('kegiatan.show', [
-        'kegiatan' => $kegiatan
-    ]);
-}
+    {
+        // Mengambil kegiatan berdasarkan id_kegiatan
+        $kegiatan = Kegiatan::findOrFail($id_kegiatan);
+    
+        // Mengambil tim kegiatan yang memiliki id_kegiatan yang sama dengan $id_kegiatan
+        $timkegiatan = TimKegiatan::where('id_kegiatan', $id_kegiatan)->get();
+    
+        return view('kegiatan.show', [
+            'kegiatan' => $kegiatan,
+            'timkegiatan' => $timkegiatan
+        ]);
+    }
 
     public function store(Request $request)
     { 

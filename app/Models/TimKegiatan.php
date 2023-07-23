@@ -14,15 +14,16 @@ class TimKegiatan extends Model
     protected $fillable = [
         'id_kegiatan',
         'id_pegawai',
+        'peran',
   
     ];
 
-    public function fkegiatan(){
+    public function kegiatan(){
         return $this->belongsTo(Kegiatan::class, 'id_kegiatan', 'id_kegiatan'
     );
         }
 
-    public function fpegawai(){
+    public function user(){
             return $this->belongsTo(User::class, 'id_pegawai', 'id_users'
         );
             }
