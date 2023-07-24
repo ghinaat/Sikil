@@ -12,7 +12,7 @@
             <div class="card-body">
                 <div class="table-responsive">
                     @can('isAdmin')
-                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#createModal">
+                    <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#createModal">
                         Tambah
                     </button>
                     @endcan

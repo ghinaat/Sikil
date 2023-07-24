@@ -30,7 +30,7 @@ class KegiatanController extends Controller
         $kegiatan = Kegiatan::findOrFail($id_kegiatan);
     
         // Mengambil semua data user yang belum terkait dengan TimKegiatan
-        $users = User::where('is_deletd', '0')->get();
+        $users = User::where('is_deleted', '0')->get();
 
     
         // Mengambil tim kegiatan yang terkait dengan kegiatan tertentu dengan eager loading untuk relasi user
