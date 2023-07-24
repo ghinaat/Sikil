@@ -29,6 +29,10 @@ class User extends Authenticatable
     public function jabatan(){
         return $this->belongsTo(Jabatan::class, 'id_jabatan', 'id_jabatan');
     }
+    public function timkegiatans()
+    {
+        return $this->hasMany(TimKegiatan::class, 'id_pegawai', 'id_users');
+    }
 
     protected $primaryKey = 'id_users';
 

@@ -114,8 +114,8 @@
                                                     <select class="form-control @error('jabatan') isinvalid @enderror"
                                                         id="exampleInputJabatan" name="id_jabatan">
                                                         @foreach ($jabatans as $jabatan)
-                                                        <option
-                                                            value="{{ $jabatan->id_jabatan }}  @if( old('id_jabatan')=='direktur' ) selected @endif">
+                                                        <option value="{{ $jabatan->id_jabatan }}" @if(
+                                                            old('id_jabatan')==$jabatan->id_jabatan ) selected @endif">
                                                             {{ $jabatan->nama_jabatan }}</option>
                                                         @endforeach
 
@@ -168,7 +168,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword">Password</label>
-                        <input type="password" name="password" id="exampleInputPassword" class="form-control" required>
+                        <input type="password" name="password" id="exampleInputPasword" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="password_confirmation">Konfirmasi Password</label>
@@ -192,8 +192,8 @@
                         <select class="form-control @error('jabatan') isinvalid @enderror" id="exampleInputJabatan"
                             name="id_jabatan">
                             @foreach ($jabatans as $jabatan)
-                            <option
-                                value="{{ $jabatan->id_jabatan }}  @if( old('id_jabatan')=='direktur' ) selected @endif">
+                            <option value="{{ $jabatan->id_jabatan }}" @if( old('id_jabatan')==$jabatan->id_jabatan )
+                                selected @endif">
                                 {{ $jabatan->nama_jabatan }}</option>
                             @endforeach
 

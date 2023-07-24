@@ -22,6 +22,10 @@ class Kegiatan extends Model
         'is_deleted'
        
     ];
+    public function timkegiatan()
+    {
+        return $this->hasMany(TimKegiatan::class, 'id_kegiatan', 'id_kegiatan');
+    }
 
     protected $appends = ['status'];
 
@@ -43,8 +47,5 @@ class Kegiatan extends Model
 
     
 
-    public function timKegiatan()
-    {
-        return $this->hasMany(TimKegiatan::class);
-    }
+   
 }
