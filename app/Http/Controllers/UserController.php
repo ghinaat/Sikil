@@ -31,7 +31,7 @@ class UserController extends Controller
             'nama_pegawai' => 'required',
             'email' => 'required',
             'password' => 'required',
-            'level' => 'required',
+            'id_jabatan' => 'required',
             'id_jabatan' => 'required'
         ]);
 
@@ -39,7 +39,7 @@ class UserController extends Controller
             'nama_pegawai',
             'email' ,
             'password' ,
-            'level' ,
+            'id_jabatan' ,
             'id_jabatan',
         ]);
 
@@ -75,6 +75,7 @@ class UserController extends Controller
         $user->email = $request->email;
         if ($request->password) $user->password = bcrypt($request->password);
         $user->level = $request->level;
+        $user->id_jabatan = $request->id_jabatan;
         $user->save();
         return redirect()->route('user.index') ->with([
         'success_changed' => 'Your data has been changed.',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Kegiatan;
 use App\Models\TimKegiatan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -12,7 +13,8 @@ class KegiatanController extends Controller
     {
         $kegiatan = Kegiatan::where('is_deleted', '0')->get();
         return view('kegiatan.index', [
-            'kegiatan' => $kegiatan
+            'kegiatan' => $kegiatan,
+            'timkegiatan' => TimKegiatan::all()
         ]);
     }
 
@@ -27,14 +29,22 @@ class KegiatanController extends Controller
         // Mengambil kegiatan berdasarkan id_kegiatan
         $kegiatan = Kegiatan::findOrFail($id_kegiatan);
     
-        // Mengambil tim kegiatan yang memiliki id_kegiatan yang sama dengan $id_kegiatan
-        $timkegiatan = TimKegiatan::where('id_kegiatan', $id_kegiatan)->get();
+        // Mengambil semua data user yang belum terkait dengan TimKegiatan
+        $users = User::where('is_deletd', '0')->get();
+
+    
+        // Mengambil tim kegiatan yang terkait dengan kegiatan tertentu dengan eager loading untuk relasi user
+        $timkegiatan = TimKegiatan::with('user')->where('id_kegiatan', $id_kegiatan)->get();
     
         return view('kegiatan.show', [
             'kegiatan' => $kegiatan,
+            'users' => $users,
             'timkegiatan' => $timkegiatan
         ]);
     }
+   
+    
+    
 
     public function store(Request $request)
     { 
@@ -58,6 +68,26 @@ class KegiatanController extends Controller
         $kegiatan->save();
         return redirect()->route('kegiatan.index') ->with('success_message', 'Berhasil menambah kegiatan baru');
     } 
+
+    public function storeTimKegiatan(Request $request)
+    {
+        // Validasi data yang dikirimkan melalui form
+        $request->validate([
+            'id_kegiatan' => 'required',
+            'id_pegawai' => 'required',
+            'peran' => 'required',
+        ]);
+
+        // Simpan data ke dalam tabel tim_kegiatan
+        $timKegiatan = TimKegiatan::create([
+            'id_kegiatan' => $request->input('id_kegiatan'),
+            'id_pegawai' => $request->input('id_pegawai'),
+            'peran' => $request->input('peran'),
+        ]);
+
+        // Redirect atau lakukan tindakan lain setelah data berhasil disimpan
+        return redirect()->route('kegiatan.show')->with('success_message', 'Berhasil menambah Tim Kegiatan baru');
+    }
     
     public function edit($id_kegiatan)
     {
@@ -100,4 +130,20 @@ class KegiatanController extends Controller
         }
         return redirect()->route('kegiatan.index')->with('success_message', 'Berhasil menghapus Kegiatan');
     }
+
+    public function destroyTimKegiatan($id_tim)
+    {
+        try {
+            // Cari TimKegiatan berdasarkan ID
+            $timKegiatan = TimKegiatan::findOrFail($id_tim);
+
+            // Hapus TimKegiatan
+            $timKegiatan->delete();
+
+            return redirect()->back()->with('success_message', 'Berhasil menghapus Tim Kegiatan');
+        } catch (\Exception $e) {
+            // Handle jika terjadi error saat menghapus
+            return redirect()->back()->with('error_message', 'Gagal menghapus Tim Kegiatan');
+        }
+    }   
 }

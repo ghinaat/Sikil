@@ -62,6 +62,7 @@ class TimKegiatanController extends Controller
         if ($timkegiatan) $timkegiatan->delete();
         return redirect()->route('timkegiatan.index') ->with('success_message', 'Berhasil menghapus timkegiatan');
         }
+
    
 
 

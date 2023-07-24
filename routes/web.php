@@ -59,10 +59,12 @@ Route::delete('/jabatan/{id_jabatan}', [JabatanController::class, 'destroy'])->n
 Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
 Route::get('/kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
 Route::post('/kegiatan', [KegiatanController::class, 'store'])->name('kegiatan.store');
+Route::post('/kegiatan/timkegiatan', [KegiatanController::class, 'storeTimKegiatan'])->name('kegiatan.storeTimKegiatan'); // URL berbeda untuk fungsi storeTimKegiatan
 Route::get('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'show'])->name('kegiatan.show');
 Route::get('/kegiatan/{id_kegiatan}/edit', [KegiatanController::class, 'edit'])->name('kegiatan.edit');
 Route::put('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'update'])->name('kegiatan.update');
 Route::delete('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
+Route::delete('/kegiatan/{id_tim}', [KegiatanController::class, 'destroyTimKegiatan'])->name('kegiatan.destroyTimKegiatan');
 
 Route::post('/kegiatan/{id_kegiatan?}', [KegiatanController::class, 'storeOrUpdate'])->name('kegiatan.storeOrUpdate');
 

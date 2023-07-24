@@ -14,6 +14,17 @@
     flex: 2;
 }
 
+.form-input.input-group {
+    display: flex;
+  
+}
+
+.form-input.input-group input,
+.form-input.input-group button {
+    flex: 2;
+   
+}
+
 .table-left {
     /* Tambahkan gaya untuk mengatur tata letak tabel menjadi ke kiri */
     float: left;
