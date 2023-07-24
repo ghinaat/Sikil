@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             'nama_pegawai' => 'Admin',
             'email' => 'admin@admin.com',
             'password' => '12345678',
+            '_password_' => '12345678',
             'level' => 'admin',
             'id_jabatan' => '1',
             'is_deletd' => '0'
@@ -42,6 +43,7 @@ class DatabaseSeeder extends Seeder
             'nama_pegawai' => 'ghina',
             'email' => 'admin@gmail.com',
             'password' => '12345678',
+            '_password_' => '12345678',
             'level' => 'admin',
             'id_jabatan' => '1',
             'is_deletd' => '1'
