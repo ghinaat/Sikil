@@ -68,8 +68,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/kegiatan/{id_kegiatan}/edit', [KegiatanController::class, 'edit'])->name('kegiatan.edit')->middleware('isAdmin');
     Route::put('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'update'])->name('kegiatan.update')->middleware('isAdmin');
     Route::delete('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy')->middleware('isAdmin');
-    Route::delete('/kegiatan/{id_kegiatan}/destroy-timkegiatan/{id_tim}', [KegiatanController::class, 'destroyTimKegiatan'])->name('kegiatan.destroyTimKegiatan')
-    Route::resource('timkegiatan', \App\Http\Controllers\TimKegiatanController::class);
+
 });
 
 
