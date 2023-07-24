@@ -19,8 +19,8 @@ class TimKegiatanController extends Controller
         $timkegiatan = TimKegiatan::all();
         return view('timkegiatan.index',  [
             'timkegiatan' => $timkegiatan,
-            'user' => User::all(),
-        'kegiatan' => Kegiatan::all(),
+            'user' => User::where('is_deleted', '0')->get(),
+            'kegiatan' => Kegiatan::all(),
         ]);
             
     }

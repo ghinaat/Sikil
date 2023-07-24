@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 @can('isAdmin')
-                <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#addModal">Tambah</button>
+                <button class="btn btn-success mb-2" data-toggle="modal" data-target="#addModal">Tambah</button>
                 @endcan
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-stripped" id="example2">
@@ -20,9 +20,7 @@
                                 <th>Email</th>
                                 <th>Level</th>
                                 <th>Jabatan</th>
-                                @can('isAdmin')
                                 <th>Action</th>
-                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -38,16 +36,17 @@
                                     @else
                                     N/A
                                     @endif</td>
-                                @can('isAdmin')
                                 <td>
+                                    <a href="{{ route('user.show', $user->id_users) }}" class="btn btn-success btn-xs">Detail</a>
+                                    @can('isAdmin')
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                         data-target="#editModal{{$user->id_users}}" data-id="{{$user->id_users}}"
                                         data-nama="{{$user->nama_pegawai}}">Edit</a>
                                     <a href="{{ route('user.destroy', $user) }}"
                                         onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
                                         class="btn btn-danger btn-xs">Delete</a>
+                                    @endcan
                                 </td>    
-                                @endcan
                             </tr>
 
                             @can('isAdmin')

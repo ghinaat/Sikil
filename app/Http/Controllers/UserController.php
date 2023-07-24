@@ -8,13 +8,20 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function index(){
-        $user = User::where('is_deletd', '0')->get();
+        $user = User::where('is_deleted', '0')->get();
 
         return view('users.index', [
             'user' => $user,
             'jabatans' => Jabatan::all()
         ]);
 
+    }
+
+    public function show(Request $request, $id_users){
+        $user = User::where('id_users',$id_users)->where('is_deleted', '0')->get()[0];
+        return view('users.show', [
+            'user' => $user,
+        ]);
     }
     
     public function create()
@@ -86,7 +93,7 @@ class UserController extends Controller
     public function destroy($id_users){
         $user = User::find($id_users);
         if ($user) {
-            $user->is_deletd = '1';
+            $user->is_deleted = '1';
             $user->email = rand() . '_' . $user->email;
             $user->save();
         }

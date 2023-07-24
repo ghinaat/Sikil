@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             '_password_' => '12345678',
             'level' => 'admin',
             'id_jabatan' => '1',
-            'is_deletd' => '0'
+            'is_deleted' => '0'
         ]);
 
         User::create([
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             '_password_' => '12345678',
             'level' => 'admin',
             'id_jabatan' => '1',
-            'is_deletd' => '1'
+            'is_deleted' => '1'
         ]);
     }
 }
