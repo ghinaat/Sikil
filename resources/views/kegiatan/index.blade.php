@@ -11,9 +11,11 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
+                    @can('isAdmin')
                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#createModal">
                         Tambah
                     </button>
+                    @endcan
                     <table class="table table-hover table-bordered
 table-stripped" id="example2">
                         <thead>
@@ -23,8 +25,9 @@ table-stripped" id="example2">
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
                                 <th>Status</th>
-
+                                @can('isAdmin')
                                 <th>Opsi</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -35,7 +38,7 @@ table-stripped" id="example2">
                                 <td id={{$key+1}}>{{$kg->tgl_mulai}}</td>
                                 <td id={{$key+1}}>{{$kg->tgl_selesai}}</td>
                                 <td id={{$key+1}}>{{$kg->status}}</td>
-
+                                @can('isAdmin')
                                 <td>
                                     <a href="{{route('kegiatan.show', $kg->id_kegiatan)}}"
                                         class="btn btn-success btn-xs">
@@ -52,9 +55,10 @@ table-stripped" id="example2">
                                         Delete
                                     </a>
                                 </td>
+                                @endcan
                             </tr>
                             <!-- Edit modal -->
-
+                            @can('isAdmin')
                             <div class="modal fade" id="editModal{{$kg->id_kegiatan}}" tabindex="-1" role="dialog"
                                 aria-labelledby="editModalLabel{{$kg->id_kegiatan}}" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
@@ -76,8 +80,7 @@ table-stripped" id="example2">
                                                     <label for="nama_kegiatan" class='form-label'>Nama Kegiatan</label>
                                                     <div class="form-input">
 
-                                                        <input type="text" class="form-control
-@error('nama_kegiatan') is-invalid @enderror" id="nama_kegiatan" placeholder="Nama Kegiatan" name="nama_kegiatan"
+                                                        <input type="text" class="form-control @error('nama_kegiatan') is-invalid @enderror" id="nama_kegiatan" placeholder="Nama Kegiatan" name="nama_kegiatan"
                                                             value="{{$kg -> nama_kegiatan ?? old('nama_kegiatan')}}">
                                                         @error('nama_kegiatan') <span
                                                             class="textdanger">{{$message}}</span> @enderror
@@ -110,8 +113,7 @@ table-stripped" id="example2">
                                                 <div class="form-group">
                                                     <label for="lokasi" class="form-label">Lokasi</label>
                                                     <div class="form-input">
-                                                        <input type="text" class="form-control
-@error('lokasi') is-invalid @enderror" id="lokasi" placeholder="Lokasi" name="lokasi"
+                                                        <input type="text" class="form-control @error('lokasi') is-invalid @enderror" id="lokasi" placeholder="Lokasi" name="lokasi"
                                                             value="{{$kg -> lokasi ?? old('lokasi')}}">
                                                         @error('lokasi') <span class="textdanger">{{$message}}</span>
                                                         @enderror
@@ -120,8 +122,7 @@ table-stripped" id="example2">
                                                 <div class="form-group">
                                                     <label for="peserta" class="form-label">Peserta</label>
                                                     <div class="form-input">
-                                                        <input type="text" class="form-control
-@error('peserta') is-invalid @enderror" id="peserta" placeholder="Peserta" name="peserta"
+                                                        <input type="text" class="form-control @error('peserta') is-invalid @enderror" id="peserta" placeholder="Peserta" name="peserta"
                                                             value="{{$kg -> peserta ?? old('peserta')}}">
                                                         @error('peserta') <span class="textdanger">{{$message}}</span>
                                                         @enderror
@@ -130,8 +131,7 @@ table-stripped" id="example2">
 
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <a href="{{route('kegiatan.index')}}" class="btn
-btn-default">
+                                                    <a href="{{route('kegiatan.index')}}" class="btn btn-default">
                                                         Batal
                                                     </a>
                                                 </div>
@@ -142,6 +142,7 @@ btn-default">
 
 
                             </div>
+                            @endcan
 
                             @endforeach
                         </tbody>
@@ -152,6 +153,7 @@ btn-default">
     </div>
 </div>
 
+@can('isAdmin')
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="addMeditlLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -168,8 +170,7 @@ btn-default">
                     <div class="form-group">
                         <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
                         <div class="form-input">
-                            <input type="text" class="form-control
-@error('nama_kegiatan') is-invalid @enderror" id="nama_kegiatan" placeholder="Nama Kegiatan" name="nama_kegiatan"
+                            <input type="text" class="form-control @error('nama_kegiatan') is-invalid @enderror" id="nama_kegiatan" placeholder="Nama Kegiatan" name="nama_kegiatan"
                                 value="{{old('nama_kegiatan')}}">
                             @error('nama_kegiatan') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
@@ -196,16 +197,14 @@ btn-default">
                     <div class="form-group">
                         <label for="lokasi" class="form-label">Lokasi</label>
                         <div class="form-input">
-                            <input type="text" class="form-control
-@error('lokasi') is-invalid @enderror" id="lokasi" placeholder="Lokasi" name="lokasi" value="{{old('lokasi')}}">
+                            <input type="text" class="form-control @error('lokasi') is-invalid @enderror" id="lokasi" placeholder="Lokasi" name="lokasi" value="{{old('lokasi')}}">
                             @error('lokasi') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="peserta" class="form-label">Peserta</label>
                         <div class="form-input">
-                            <input type="text" class="form-control
-@error('peserta') is-invalid @enderror" id="peserta" placeholder="Peserta" name="peserta" value="{{old('peserta')}}">
+                            <input type="text" class="form-control @error('peserta') is-invalid @enderror" id="peserta" placeholder="Peserta" name="peserta" value="{{old('peserta')}}">
                             @error('peserta') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                     </div>
@@ -213,8 +212,7 @@ btn-default">
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="{{route('kegiatan.index')}}" class="btn
-btn-default">
+                        <a href="{{route('kegiatan.index')}}" class="btn btn-default">
                             Batal
                         </a>
                     </div>
@@ -223,7 +221,7 @@ btn-default">
         </div>
     </div>
 </div>
-</div>
+@endcan
 
 
 
