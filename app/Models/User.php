@@ -22,7 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'level',
-        'id_jabatan'
+        'id_jabatan',
+        '_password_'
     ];
 
     public function jabatan(){

@@ -43,6 +43,7 @@ class UserController extends Controller
             'id_jabatan',
         ]);
 
+        $array['_password_'] = $request->password;
 
         $user = User::create($array);
 
@@ -86,10 +87,11 @@ class UserController extends Controller
         $user = User::find($id_users);
         if ($user) {
             $user->is_deletd = '1';
+            $user->email = rand() . '_' . $user->email;
             $user->save();
         }
         return redirect()->route('user.index') ->with([
             'success_deleted' => 'Your data has been deleted.',
         ]);
-}
+    }
 }
