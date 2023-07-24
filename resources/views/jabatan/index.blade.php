@@ -8,26 +8,29 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                @can('isAdmin')
                 <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#modal_form"
                     role="dialog">
                     Tambah
                 </button>
+                @endcan
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
                             <tr>
                                 <th>No.</th>
-
                                 <th>Nama Jabatan</th>
+                                @can('isAdmin')
                                 <th style="width:189px;">Opsi</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($jabatan as $key => $jb)
                             <tr>
                                 <td>{{$key+1}}</td>
-
                                 <td>{{$jb->nama_jabatan}}</td>
+                                @can('isAdmin')
                                 <td>
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                         data-target="#editModal{{$jb->id_jabatan}}" data-id="{{$jb->id_jabatan}}"
@@ -37,6 +40,7 @@
                                         Delete
                                     </a>
                                 </td>
+                                @endcan
                             </tr>
                             @endforeach
                         </tbody>
@@ -46,6 +50,8 @@
         </div>
     </div>
 </div>
+
+@can('isAdmin')
 
 <!-- Modal -->
 <!-- Bootstrap modal Create -->
@@ -136,6 +142,7 @@
 </div>
 @endforeach
 
+@endcan
 
 
 

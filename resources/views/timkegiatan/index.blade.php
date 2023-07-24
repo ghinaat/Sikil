@@ -8,19 +8,22 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                @can('isAdmin')
                 <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#modal_form"
                     role="dialog">
                     Tambah
                 </button>
-                <table class="table table-hover table-bordered 
-table-stripped" id="example2">
+                @endcan
+                <table class="table table-hover table-bordered table-stripped" id="example2">
                     <thead>
                         <tr>
                             <th>No.</th>
                             <th>Nama Kegiatan</th>
                             <th>Nama pegawai</th>
                             <th>Peran</th>
+                            @can('isAdmin')
                             <th>Opsi</th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -30,13 +33,17 @@ table-stripped" id="example2">
                             <td>{{$tk->kegiatan->nama_kegiatan }}</td>
                             <td>{{$tk->user->nama_pegawai}}</td>
                             <td>{{$tk->peran}}</td>
+                            @can('isAdmin')
                             <td>
                                 <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                     data-target="#editModal{{$tk->id_tim}}" data-id="{{$tk->id_tim}}">Edit</a>
-                                <button onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
+                                <a href="{{route('timkegiatan.destroy', $tk->id_tim)}}"
+                                    onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
+                                    class="btn btn-danger btn-xs">
                                     Delete
-                                </button>
+                                </a>
                             </td>
+                            @endcan
                         </tr>
                         @endforeach
                     </tbody>
@@ -46,6 +53,7 @@ table-stripped" id="example2">
     </div>
 </div>
 
+@can('isAdmin')
 
 <!-- Bootstrap modal Create -->
 <div class="modal fade" id="modal_form" role="dialog">
@@ -94,8 +102,7 @@ table-stripped" id="example2">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-6">Peran</label>
-                                    <input type="text" class="form-control
-@error('peran') is-invalid @enderror" id="peran" placeholder="Peran" name="peran" value="{{old('peran')}}">
+                                    <input type="text" class="form-control @error('peran') is-invalid @enderror" id="peran" placeholder="Peran" name="peran" value="{{old('peran')}}">
                                     @error('peran') <span class="textdanger">{{$message}}</span> @enderror
                                 </div>
                             </div>
@@ -162,8 +169,7 @@ table-stripped" id="example2">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-6">Peran</label>
-                                    <input type="text" class="form-control
-@error('peran') is-invalid @enderror" id="peran" placeholder="Peran" name="peran"
+                                    <input type="text" class="form-control @error('peran') is-invalid @enderror" id="peran" placeholder="Peran" name="peran"
                                         value="{{$tk -> peran ?? old('peran')}}">
                                     @error('peran') <span class="textdanger">{{$message}}</span> @enderror
                                 </div>
@@ -181,10 +187,11 @@ table-stripped" id="example2">
 </div>
 @endforeach
 
-
+@endcan
 
 
 @stop
+
 @push('js')
 <form action="" id="delete-form" method="post">
     @method('delete')
@@ -195,12 +202,33 @@ $('#example2').DataTable({
     "responsive": true,
 });
 
-function notificationBeforeDelete(event, el) {
+
+
+function notificationBeforeDelete(event, el, dt) {
     event.preventDefault();
-    if (confirm('Apakah anda yakin akan menghapus data ? ')) {
-        $("#delete-form").attr('action', $(el).attr('href'));
-        $("#delete-form").submit();
-    }
+
+
+    var user = document.getElementById(dt).innerHTML;
+
+    // Menampilkan SweetAlert dengan opsi konfirmasi
+    Swal.fire({
+        title: 'Apakah Anda Yakin?',
+        text: 'Apakah Anda yakin akan menghapus data User "' + user + '"?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        // Jika pengguna mengklik tombol "Ya, Hapus!"
+        if (result.isConfirmed) {
+            // Ambil atribut href dari elemen yang diklik dan gunakan sebagai action form
+            $("#delete-form").attr('action', $(el).attr('href'));
+            // Submit form
+            $("#delete-form").submit();
+        }
+    });
 }
 </script>
 @endpush

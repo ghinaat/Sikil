@@ -86,11 +86,11 @@
                                 <td>{{$tk->user->nama_pegawai}}</td>
                                 <td>{{ $tk->user->jabatan->nama_jabatan }}</td>
                                 <td>{{$tk->peran}}</td>
-                                // <td> <a href="{{route(' kegiatan.destroyTimKegiatan', $tk->id_tim)}}"
-                                //         onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                //         class="btn btn-danger btn-xs">
-                                //         Delete
-                                //     </a></td>
+                                <td> <a href="{{route('timkegiatan.destroy', $tk->id_tim)}}"
+                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)" //
+                                        class="btn btn-danger btn-xs">
+                                        Delete
+                                    </a></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -144,7 +144,12 @@ btn-primary ">
                                             <td>{{ $user->nama_pegawai }}</td>
                                             <td>{{ $user->jabatan?->nama_jabatan }}</td>
                                             <td>
-                                                @if($user->timkegiatans->isEmpty())
+                                                @php
+                                                // Check if the user is already selected for the current $id_kegiatan
+                                                $isUserSelected = $timkegiatan->contains('user.id_users',
+                                                $user->id_users);
+                                                @endphp
+                                                @if (!$isUserSelected)
                                                 <button type="button" class="btn btn-primary btn-xs"
                                                     onclick="pilih('{{ $user->id_users }}','{{ $user->nama_pegawai }}', '{{ $user->jabatan?->nama_jabatan }}')"
                                                     data-bs-dismiss="modal">
@@ -240,17 +245,20 @@ btn-primary ">
 <!-- End Modal -->
 @stop
 @push('js')
-
+<form action="" id="delete-form" method="post">
+    @method('delete')
+    @csrf
+</form>
 <script>
 $('#example2').DataTable({
     "responsive": true,
 });
 </script>
 <script>
-function pilih(id, nama_pegawai, jabatan) {
+function pilih(id, nama_pegawai) {
     // Mengisi nilai input dengan data yang dipilih dari tabel
     document.getElementById('selected_id_users').value = id;
-    document.getElementById('pegawai').value = nama_pegawai + ' - ' + jabatan;
+    document.getElementById('pegawai').value = nama_pegawai;
 }
 </script>
 

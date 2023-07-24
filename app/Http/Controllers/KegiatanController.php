@@ -86,7 +86,7 @@ class KegiatanController extends Controller
         ]);
 
         // Redirect atau lakukan tindakan lain setelah data berhasil disimpan
-        return redirect()->route('kegiatan.show')->with('success_message', 'Berhasil menambah Tim Kegiatan baru');
+        return redirect()->route('kegiatan.index')->with('success_message', 'Berhasil menambah Tim Kegiatan baru');
     }
     
     public function edit($id_kegiatan)

@@ -8,7 +8,9 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                @can('isAdmin')
                 <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#addModal">Tambah</button>
+                @endcan
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
@@ -18,7 +20,9 @@
                                 <th>Email</th>
                                 <th>Level</th>
                                 <th>Jabatan</th>
+                                @can('isAdmin')
                                 <th>Action</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -34,6 +38,7 @@
                                     @else
                                     N/A
                                     @endif</td>
+                                @can('isAdmin')
                                 <td>
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                         data-target="#editModal{{$user->id_users}}" data-id="{{$user->id_users}}"
@@ -41,8 +46,11 @@
                                     <a href="{{ route('user.destroy', $user) }}"
                                         onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
                                         class="btn btn-danger btn-xs">Delete</a>
-                                </td>
+                                </td>    
+                                @endcan
                             </tr>
+
+                            @can('isAdmin')
                             <!-- Modal Edit Pegawai -->
                             <div class="modal fade" id="editModal{{$user->id_users}}" tabindex="-1" role="dialog"
                                 aria-labelledby="editModalLabel" aria-hidden="true">
@@ -125,6 +133,8 @@
                                     </div>
                                 </div>
                             </div>
+                            @endcan
+
                             @endforeach
                         </tbody>
                     </table>
@@ -134,6 +144,7 @@
     </div>
 </div>
 
+@can('isAdmin')
 <!-- Modal Tambah Pegawai -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -198,6 +209,7 @@
         </div>
     </div>
 </div>
+@endcan
 
 
 @stop
