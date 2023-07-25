@@ -40,7 +40,7 @@ class TimKegiatanController extends Controller
         ]);
 
         $timkegiatan = TimKegiatan::create($array);
-        return redirect()->route('timkegiatan.index') ->with('success_message', 'Berhasil menambah Tim Kegiatan baru');
+        return redirect()->route('timkegiatan.index') ->with('success_message', 'Data telah tersimpan');
     } 
 
     public function update(Request $request, $id_tim)
@@ -57,7 +57,7 @@ class TimKegiatanController extends Controller
         $timkegiatan->id_pegawai = $request->id_pegawai;
         $timkegiatan->peran = $request->peran;
         $timkegiatan->save();
-        return redirect()->route('timkegiatan.index') ->with('success_message', 'Berhasil mengubah timkegiatan');
+        return redirect()->route('timkegiatan.index') ->with('success_message', 'Data telah tersimpan');
     } 
 
     public function destroy(Request $request, $id_tim)
@@ -65,7 +65,7 @@ class TimKegiatanController extends Controller
 
         $timkegiatan = timkegiatan::find($id_tim);
         if ($timkegiatan) $timkegiatan->delete();
-        return redirect()->back()->with('success_message', 'Berhasil menghapus timkegiatan');
+        return redirect()->back()->with('success_message', 'Data telah terhapus');
 
     }
 
