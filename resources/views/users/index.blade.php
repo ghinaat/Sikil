@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 @can('isAdmin')
-                <button class="btn btn-success mb-2" data-toggle="modal" data-target="#addModal">Tambah</button>
+                <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#addModal">Tambah</button>
                 @endcan
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-stripped" id="example2">
@@ -37,7 +37,8 @@
                                     N/A
                                     @endif</td>
                                 <td>
-                                    <a href="{{ route('user.show', $user->id_users) }}" class="btn btn-success btn-xs">Detail</a>
+                                    <a href="{{ route('user.show', $user->id_users) }}"
+                                        class="btn btn-success btn-xs">Detail</a>
                                     @can('isAdmin')
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                         data-target="#editModal{{$user->id_users}}" data-id="{{$user->id_users}}"
@@ -46,7 +47,7 @@
                                         onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
                                         class="btn btn-danger btn-xs">Delete</a>
                                     @endcan
-                                </td>    
+                                </td>
                             </tr>
 
                             @can('isAdmin')
@@ -101,9 +102,9 @@
                                                         <option value="ddo" @if($user->level == 'ddo' ||
                                                             old('level')=='ddo' )selected @endif>DDO
                                                         </option>
-                                                        <option value="staff" @if($user->level == 'staff' ||
-                                                            old('level')=='staff' )selected
-                                                            @endif>STAFF</option>
+                                                        <option value="staf" @if($user->level == 'staf' ||
+                                                            old('level')=='staf' )selected
+                                                            @endif>STAF</option>
                                                     </select>
                                                     @error('level') <span class="textdanger">{{$message}}</span>
                                                     @enderror
@@ -123,9 +124,9 @@
                                                     @enderror
                                                 </div>
                                                 <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Simpan</button>
                                                     <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-success">Save</button>
+                                                        data-dismiss="modal">Batal</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -182,7 +183,7 @@
                             <option value="kadiv" @if(old('level')=='kadiv' )selected @endif>Kadiv</option>
                             <option value="dda" @if(old('level')=='dda' )selected @endif>DDA</option>
                             <option value="ddo" @if(old('level')=='ddo' )selected @endif>DDO</option>
-                            <option value="staff" @if(old('level')=='staff' )selected @endif>STAFF</option>
+                            <option value="staf" @if(old('level')=='staf' )selected @endif>STAF</option>
                         </select>
                         @error('level') <span class="textdanger">{{$message}}</span> @enderror
                     </div>
@@ -200,8 +201,8 @@
                         @error('level') <span class="textdanger">{{$message}}</span> @enderror
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success" id="submitBtn">Save</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                     </div>
                 </form>
             </div>
@@ -219,9 +220,10 @@
 </form>
 
 <script>
-$('#example2').DataTable({
-    "responsive": true,
-});
+    $('#example2').DataTable({
+        "responsive": true,
+    });
+
 </script>
 
 

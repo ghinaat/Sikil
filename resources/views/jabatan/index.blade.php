@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 @can('isAdmin')
-                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#modal_form"
+                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
                     role="dialog">
                     Tambah
                 </button>
