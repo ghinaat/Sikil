@@ -12,31 +12,31 @@ $(document).ready(function() {
     if (successMessage) {
         Swal.fire({
             icon: 'success',
-            title: 'Success!',
+            title: 'Sukses!',
             text: successMessage,
         });
     }
-    if (successChanged) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Changed!',
-            text: successChanged,
-        });
-    }
-    if (successDeleted) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Deleted!',
-            text: successDeleted,
-        });
-    }
+    // if (successChanged) {
+    //     Swal.fire({
+    //         icon: 'success',
+    //         title: 'Sukses!',
+    //         text: successChanged,
+    //     });
+    // }
+    // if (successDeleted) {
+    //     Swal.fire({
+    //         icon: 'success',
+    //         title: 'Deleted!',
+    //         text: successDeleted,
+    //     });
+    // }
 });
 
 function notificationBeforeDelete(event, el, dt) {
     event.preventDefault();
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: 'Apa Kamu Yakin?',
+        text: "Untuk Menghapus Data Ini!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',

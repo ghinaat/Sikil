@@ -66,7 +66,7 @@ class KegiatanController extends Controller
         $kegiatan->peserta = $request->peserta;
 
         $kegiatan->save();
-        return redirect()->route('kegiatan.index') ->with('success_message', 'Berhasil menambah kegiatan baru');
+        return redirect()->route('kegiatan.index') ->with('success_message', 'Data telah tersimpan');
     } 
 
     public function storeTimKegiatan(Request $request)
@@ -86,7 +86,7 @@ class KegiatanController extends Controller
         ]);
 
         // Redirect atau lakukan tindakan lain setelah data berhasil disimpan
-        return redirect()->route('kegiatan.index')->with('success_message', 'Berhasil menambah Tim Kegiatan baru');
+        return redirect()->route('kegiatan.index')->with('success_message', 'Data telah tersimpan');
     }
     
     public function edit($id_kegiatan)
@@ -117,7 +117,7 @@ class KegiatanController extends Controller
         $kegiatan->lokasi = $request->lokasi;
         $kegiatan->peserta = $request->peserta;
         $kegiatan->save();
-        return redirect()->route('kegiatan.index')->with('success_message', 'Berhasil mengubah Kegiatan');
+        return redirect()->route('kegiatan.index')->with('success_message', 'Data telah tersimpan');
     } 
 
     public function destroy($id_kegiatan)
@@ -128,7 +128,7 @@ class KegiatanController extends Controller
                 'is_deleted' => '1',
             ]);
         }
-        return redirect()->route('kegiatan.index')->with('success_message', 'Berhasil menghapus Kegiatan');
+        return redirect()->route('kegiatan.index')->with('success_message', 'Data telah terhapus');
     }
 
     public function destroyTimKegiatan($id_tim)
@@ -140,7 +140,7 @@ class KegiatanController extends Controller
             // Hapus TimKegiatan
             $timKegiatan->delete();
 
-            return redirect()->back()->with('success_message', 'Berhasil menghapus Tim Kegiatan');
+            return redirect()->back()->with('success_message', 'Data telah terhapus');
         } catch (\Exception $e) {
             // Handle jika terjadi error saat menghapus
             return redirect()->back()->with('error_message', 'Gagal menghapus Tim Kegiatan');

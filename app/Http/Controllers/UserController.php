@@ -55,7 +55,7 @@ class UserController extends Controller
         $user = User::create($array);
 
         return redirect()->route('user.index')->with([
-            'success_message' => 'Your data has been saved.',
+            'success_message' => 'Data telah tersimpan',
         ]);
     }
 
@@ -86,7 +86,7 @@ class UserController extends Controller
         $user->id_jabatan = $request->id_jabatan;
         $user->save();
         return redirect()->route('user.index') ->with([
-        'success_changed' => 'Your data has been changed.',
+        'success_message' => 'Data telah tersimpan',
         ]);
     }
 
@@ -98,7 +98,7 @@ class UserController extends Controller
             $user->save();
         }
         return redirect()->route('user.index') ->with([
-            'success_deleted' => 'Your data has been deleted.',
+            'success_message' => 'Data telah terhapus',
         ]);
     }
 }
