@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama', 100);
             $table->date('tanggal_lahir');
             $table->enum('gender', ['laki-laki', 'perempuan']);
-            $table->enum('status', ['laki-hidup', 'meninggal']);
+            $table->enum('status', ['hidup', 'meninggal']);
             $table->unsignedInteger('id_users');
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->unsignedInteger('id_hubungan');

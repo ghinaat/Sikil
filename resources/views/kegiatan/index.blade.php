@@ -70,8 +70,6 @@ table-stripped" id="example2">
                                             </button>
                                         </div>
                                         <div class="modal-body">
-
-
                                             <form action="{{ route('kegiatan.update', $kg->id_kegiatan) }}"
                                                 method="post">
                                                 @csrf
@@ -128,7 +126,6 @@ table-stripped" id="example2">
                                                         @enderror
                                                     </div>
                                                 </div>
-
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                                     <a href="{{route('kegiatan.index')}}" class="btn btn-default">
@@ -139,11 +136,8 @@ table-stripped" id="example2">
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                             @endcan
-
                             @endforeach
                         </tbody>
                     </table>
@@ -184,9 +178,8 @@ table-stripped" id="example2">
                             @error('tgl_mulai') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label for="tgl_selesai" class="form-label">Tanggal Selese</label>
+                        <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                         <div class="form-input">
                             <input type="date" class="form-control"
                                 class="form-control @error('tgl_selesai') is-invalid @enderror" id="tgl_selesai"
@@ -208,13 +201,9 @@ table-stripped" id="example2">
                             @error('peserta') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                     </div>
-
-
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="{{route('kegiatan.index')}}" class="btn btn-default">
-                            Batal
-                        </a>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                     </div>
                 </form>
             </div>
@@ -222,9 +211,6 @@ table-stripped" id="example2">
     </div>
 </div>
 @endcan
-
-
-
 @stop
 @push('js')
 <form action="" id="delete-form" method="post">
@@ -235,34 +221,5 @@ table-stripped" id="example2">
 $('#example2').DataTable({
     "responsive": true,
 });
-
-
-
-function notificationBeforeDelete(event, el, dt) {
-    event.preventDefault();
-
-
-    var user = document.getElementById(dt).innerHTML;
-
-    // Menampilkan SweetAlert dengan opsi konfirmasi
-    Swal.fire({
-        title: 'Apakah Anda Yakin?',
-        text: 'Apakah Anda yakin akan menghapus data User "' + user + '"?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya, Hapus!',
-        cancelButtonText: 'Batal'
-    }).then((result) => {
-        // Jika pengguna mengklik tombol "Ya, Hapus!"
-        if (result.isConfirmed) {
-            // Ambil atribut href dari elemen yang diklik dan gunakan sebagai action form
-            $("#delete-form").attr('action', $(el).attr('href'));
-            // Submit form
-            $("#delete-form").submit();
-        }
-    });
-}
 </script>
 @endpush
