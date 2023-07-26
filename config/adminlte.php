@@ -333,6 +333,18 @@ return [
             'url'  => 'timkegiatan',
             'can'  => '',
         ],
+        [
+            'text' => 'Hubungan Keluarga',
+            'url'  => '/hubkel',
+            'can'  => '',
+        ],
+        [
+            'text' => 'Keluarga',
+            'url'  => '/keluarga',
+            'can'  => '',
+        ],
+
+
         // [
         //     'text'        => 'pages',
         //     'url'         => 'admin/pages',
