@@ -79,4 +79,5 @@ Route::put('/profile/{id_profile}', [profileController::class, 'update'])->name(
 Route::resource('timkegiatan', \App\Http\Controllers\TimKegiatanController::class)->middleware('auth');
 Route::resource('hubkel', \App\Http\Controllers\HubunganKeluargaController::class)->middleware('auth');
 Route::resource('keluarga', \App\Http\Controllers\KeluargaController::class)->middleware('auth');
+Route::resource('arsip', \App\Http\Controllers\ArsipController::class)->middleware('auth');
 Route::resource('penker', \App\Http\Controllers\PengalamanKerjaController::class)->middleware('auth');
