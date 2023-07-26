@@ -328,6 +328,11 @@ return [
             'can'  => '',
         ],
         [
+            'text' => 'Arsip',
+            'url'  => '/arsip',
+            'can'  => '',
+        ],
+        [
             'text' => 'Hubungan Keluarga',
             'url'  => '/hubkel',
             'can'  => '',
