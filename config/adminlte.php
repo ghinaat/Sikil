@@ -343,6 +343,11 @@ return [
             'url'  => '/keluarga',
             'can'  => '',
         ],
+        [
+            'text' => 'Tingkat Pendidikan',
+            'url'  => '/tingkatpendidikan',
+            'can'  => '',
+        ],
 
 
         // [
