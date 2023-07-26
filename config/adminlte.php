@@ -343,6 +343,11 @@ return [
             'url'  => '/keluarga',
             'can'  => '',
         ],
+        [
+            'text' => 'Pengalaman Kerja',
+            'url'  => '/penker',
+            'can'  => '',
+        ],
 
 
         // [
