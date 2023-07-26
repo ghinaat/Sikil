@@ -333,6 +333,16 @@ return [
             'url'  => 'timkegiatan',
             'can'  => '',
         ],
+        [
+            'text' => 'Jenis Diklat',
+            'url'  => 'jenisdiklat',
+            'can'  => '',
+        ],
+        [
+            'text' => 'Diklat',
+            'url'  => 'diklat',
+            'can'  => '',
+        ],
         // [
         //     'text'        => 'pages',
         //     'url'         => 'admin/pages',

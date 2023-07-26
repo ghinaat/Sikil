@@ -1,8 +1,11 @@
 <?php
+use App\Http\Controllers\DiklatController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\JenisDiklatController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\TimKegiatanController;
+use App\Models\JenisDiklat;
 use Illuminate\Support\Facades\Route;
 use App\Models\Kegiatan;
 
@@ -60,7 +63,6 @@ Route::group(['middleware' => ['auth']], function() {
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
-
     Route::get('/kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
     Route::post('/kegiatan', [KegiatanController::class, 'store'])->name('kegiatan.store')->middleware('isAdmin');
     Route::post('/kegiatan/timkegiatan', [KegiatanController::class, 'storeTimKegiatan'])->name('kegiatan.storeTimKegiatan')->middleware('isAdmin'); // URL berbeda untuk fungsi storeTimKegiatan
@@ -70,6 +72,21 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy')->middleware('isAdmin');
 
 });
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/jenisdiklat', [JenisDiklatController::class, 'index'])->name('jenisdiklat.index');
+    Route::post('/jenisdiklat', [JenisDiklatController::class, 'store'])->name('jenisdiklat.store')->middleware('isAdmin');
+    Route::put('/jenisdiklat/{id_jenis_diklat}', [JenisDiklatController::class, 'update'])->name('jenisdiklat.update')->middleware('isAdmin');
+    Route::delete('/jenisdiklat/{id_jenis_diklat}', [JenisDiklatController::class, 'destroy'])->name('jenisdiklat.destroy')->middleware('isAdmin');
+});
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/diklat', [DiklatController::class, 'index'])->name('diklat.index');
+    Route::post('/diklat', [DiklatController::class, 'store'])->name('diklat.store')->middleware('isAdmin');
+    Route::put('/diklat/{id_diklat}', [DiklatController::class, 'update'])->name('diklat.update')->middleware('isAdmin');
+    Route::delete('/diklat/{id_diklat}', [DiklatController::class, 'destroy'])->name('diklat.destroy')->middleware('isAdmin');
+});
+
 
 
 Route::resource('timkegiatan', \App\Http\Controllers\TimKegiatanController::class)->middleware('auth');

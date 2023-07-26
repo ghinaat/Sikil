@@ -12,54 +12,52 @@ class JenisDiklatController extends Controller
      */
     public function index()
     {
-        //
+        $jenisdiklat = JenisDiklat::where('is_deleted', '0')->get();
+        return view('jenisdiklat.index', [
+        'jenisdiklat' => $jenisdiklat
+        ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
+        /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_jenis_diklat' => 'required', 
+            ]);
+            $array = $request->only([
+            'nama_jenis_diklat'
+            ]);
+            $jenisdiklat = JenisDiklat::create($array);
+            return redirect()->route('jenisdiklat.index') 
+            ->with('success_message', 'Data telah tersimpan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(JenisDiklat $jenisDiklat)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(JenisDiklat $jenisDiklat)
+    public function update(Request $request, $id_jenis_diklat)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, JenisDiklat $jenisDiklat)
-    {
-        //
+        $request->validate([
+            'nama_jenis_diklat' =>'required',
+            ]);
+            $jenisdiklat = JenisDiklat::find($id_jenis_diklat);
+            $jenisdiklat->nama_jenis_diklat = $request->nama_jenis_diklat;
+            $jenisdiklat->save();
+            return redirect()->route('jenisdiklat.index') ->with('success_message', 'Data telah tersimpan');
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(JenisDiklat $jenisDiklat)
-    {
-        //
+    public function destroy($id_jenis_diklat)
+{
+    $jenisdiklat = JenisDiklat::find($id_jenis_diklat);
+    if ($jenisdiklat) {
+        $jenisdiklat->update([
+            'is_deleted' => '1',
+        ]);
     }
+    return redirect()->route('jenisdiklat.index')->with('success_message', 'Data telah terhapus');
+}
+
 }
