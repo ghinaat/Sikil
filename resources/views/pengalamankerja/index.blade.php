@@ -21,6 +21,9 @@ table-stripped" id="example2">
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                @if(auth()->user()->level=='admin' )
+                                <th>Nama Pegawai</th>
+                                @endif
                                 <th>Perusahaan/Instansi</th>
                                 <th>Masa Kerja</th>
                                 <th>Posisi</th>
@@ -34,6 +37,9 @@ table-stripped" id="example2">
                             @foreach($penker as $key => $pk)
                             <tr>
                                 <td id={{$key+1}}>{{$key+1}}</td>
+                                @if(auth()->user()->level=='admin' )
+                                <td id={{$key+1}}>{{$pk->users->nama_pegawai}}</td>
+                                @endif
                                 <td id={{$key+1}}>{{$pk->nama_perusahaan}}</td>
                                 <td id={{$key+1}}>{{$pk->masa_kerja}}</td>
                                 <td id={{$key+1}}>{{$pk->posisi}}</td>
@@ -60,7 +66,7 @@ table-stripped" id="example2">
                             </tr>
                             <!-- Edit modal -->
 
-                            <!-- <div class="modal fade" id="editModal{{$pk->id_pengalaman_kerja}}" tabindex="-1"
+                            <div class="modal fade" id="editModal{{$pk->id_pengalaman_kerja}}" tabindex="-1"
                                 role="dialog" aria-labelledby="editModalLabel{{$pk->id_pengalaman_kerja}}"
                                 aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
@@ -72,68 +78,57 @@ table-stripped" id="example2">
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{ route('kegiatan.update', $pk->id_pengalaman_kerja) }}"
+                                            <form action="{{ route('penker.update', $pk->id_pengalaman_kerja) }}"
                                                 method="post">
                                                 @csrf
                                                 @method('PUT')
+                                                <input type="hidden" name="id_users"
+                                                    value="{{ Auth::user()->id_users}}">
                                                 <div class="form-group">
-                                                    <label for="nama_kegiatan" class='form-label'>Nama Pengalaman Kerja</label>
-                                                    <div class="form-input">
+                                                    <label for="nama_perusahaan" class="form-label">Nama
+                                                        Perusahaan</label>
+                                                    <input type="text"
+                                                        class="form-control @error('nama_perusahaan') is-invalid @enderror"
+                                                        id="nama_perusahaan" placeholder="Nama Perusahaan"
+                                                        name="nama_perusahaan"
+                                                        value="{{$pk ->nama_perusahaan ?? old('nama_perusahaan')}}">
+                                                    @error('nama_perusahaan') <span
+                                                        class="textdanger">{{$message}}</span> @enderror
 
-                                                        <input type="text"
-                                                            class="form-control @error('nama_kegiatan') is-invalid @enderror"
-                                                            id="nama_kegiatan" placeholder="Nama Pengalaman Kerja"
-                                                            name="nama_kegiatan"
-                                                            value="{{$pk -> nama_kegiatan ?? old('nama_kegiatan')}}">
-                                                        @error('nama_kegiatan') <span
-                                                            class="textdanger">{{$message}}</span> @enderror
-                                                    </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="tgl_mulai" class='form-label'>Tanggal Mulai
-                                                        Acara</label>
-                                                    <div class="form-input">
-                                                        <input type="date" class="form-control"
-                                                            class="form-control @error('tgl_mulai') is-invalid @enderror"
-                                                            id="tgl_mulai" placeholder="Tanggal Mulai" name="tgl_mulai"
-                                                            value="{{$pk -> tgl_mulai ?? old('tgl_mulai')}}">
-                                                        @error('tgl_mulai') <span class="textdanger">{{$message}}</span>
-                                                        @enderror
-                                                    </div>
+                                                    <label for="masa_kerja" class="form-label">Masa Kerja</label>
+
+                                                    <input type="text"
+                                                        class="form-control @error('masa_kerja') is-invalid @enderror"
+                                                        id="masa_kerja" placeholder="Masa Kerja" name="masa_kerja"
+                                                        value="{{$pk ->masa_kerja ?? old('masa_kerja')}}">
+                                                    @error('masa_kerja') <span class="textdanger">{{$message}}</span>
+                                                    @enderror
+
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="tgl_selesai" class="form-label">Tanggal Selese</label>
-                                                    <div class="form-input">
-                                                        <input type="date" class="form-control"
-                                                            class="form-control @error('tgl_selesai') is-invalid @enderror"
-                                                            id="tgl_selesai" placeholder="Tanggal Mulai"
-                                                            name="tgl_selesai"
-                                                            value="{{$pk -> tgl_selesai ?? old('tgl_selesai')}}">
-                                                        @error('tgl_selesai') <span
-                                                            class="textdanger">{{$message}}</span> @enderror
-                                                    </div>
+                                                    <label for="posisi" class="form-label">Posisi</label>
+
+                                                    <input type="text"
+                                                        class="form-control @error('posisi') is-invalid @enderror"
+                                                        id="posisi" placeholder="Posisi" name="posisi"
+                                                        value="{{$pk ->posisi ?? old('posisi')}}">
+                                                    @error('posisi') <span class="textdanger">{{$message}}</span>
+                                                    @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="lokasi" class="form-label">Lokasi</label>
-                                                    <div class="form-input">
-                                                        <input type="text"
-                                                            class="form-control @error('lokasi') is-invalid @enderror"
-                                                            id="lokasi" placeholder="Lokasi" name="lokasi"
-                                                            value="{{$pk -> lokasi ?? old('lokasi')}}">
-                                                        @error('lokasi') <span class="textdanger">{{$message}}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="peserta" class="form-label">Peserta</label>
-                                                    <div class="form-input">
-                                                        <input type="text"
-                                                            class="form-control @error('peserta') is-invalid @enderror"
-                                                            id="peserta" placeholder="Peserta" name="peserta"
-                                                            value="{{$pk -> peserta ?? old('peserta')}}">
-                                                        @error('peserta') <span class="textdanger">{{$message}}</span>
-                                                        @enderror
-                                                    </div>
+                                                    <label for="file_kerja">Surat Pengalaman</label>
+                                                    @if ($pk->file_kerja)
+                                                    <p>Previous File: <a
+                                                            href="{{ asset('/storage/Pengalaman Kerja/' . $pk->file_kerja) }}"
+                                                            target="_blank">{{ $pk->file_kerja }}</a></p>
+                                                    @endif
+                                                    <input type="file" name="file_kerja" id="file_kerja"
+                                                        class="form-control">
+                                                    @error('file_kerja')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -145,7 +140,7 @@ table-stripped" id="example2">
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
                             @endforeach
                         </tbody>
@@ -217,6 +212,17 @@ table-stripped" id="example2">
     @csrf
 </form>
 <script>
+$(document).ready(function() {
+    // Check if there is a previous file
+    var hasPreviousFile = "{{ $pk->file_kerja ? 'true' : 'false' }}";
+
+    // Update the 'required' attribute of the file input based on the previous file's existence
+    if (hasPreviousFile === 'true') {
+        $('#file_kerja').removeAttr('required');
+    } else {
+        $('#file_kerja').prop('required', true);
+    }
+});
 $('#example2').DataTable({
     "responsive": true,
 });

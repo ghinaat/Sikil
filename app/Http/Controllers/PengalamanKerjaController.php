@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\PengalamanKerja;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class PengalamanKerjaController extends Controller
@@ -11,31 +12,26 @@ class PengalamanKerjaController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    if (Auth::user()->id) {
-        $idUsers = Auth::user()->id;
-        $penker = PengalamanKerja::where('id_users', $idUsers)->get();
-    } else {
-        $penker = PengalamanKerja::where('is_deleted', '0')->get();
+    {
+        $user = Auth::user();
+    
+        if ($user->level == "admin") {
+            // Fetch the user's own work experiences
+            $penker = PengalamanKerja::where('is_deleted', '0')->get();
+           
+        } else {
+            // User is not logged in, show all non-deleted work experiences
+            $penker = PengalamanKerja::where('id_users', $user->id)
+            ->where('is_deleted', '0')
+            ->get();
+        }
+    
+        return view('pengalamankerja.index', [
+            'penker' => $penker,
+            'users' => User::all() // This line fetches all users. Is this needed for the view?
+        ]);
     }
-
-    return view('pengalamankerja.index', [
-        'penker' => $penker,
-        'users' => User::all()
-    ]);
-}
-    // public function index()
-    // {
-    //     if(Auth::user()->id){
-    //         $penker = PengalamanKerja::where('id_users', 'id_users')->get();
-    //     }else{
-    //     $penker = PengalamanKerja::where('is_deleted', '0')->get();
-    // }
-    //     return view('pengalamankerja.index', [
-    //         'penker' => $penker,
-    //         'users' => User::all()
-    //     ]);
-    // }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -72,7 +68,7 @@ class PengalamanKerjaController extends Controller
     
         $penker->save();
     
-        return redirect()->back()->with('success', 'Data pengalaman kerja berhasil disimpan.');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
     
 
@@ -95,9 +91,30 @@ class PengalamanKerjaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PengalamanKerja $pengalamanKerja)
+    public function update(Request $request, $id_pengalaman_kerja)
     {
-        //
+        $request->validate([
+            'nama_perusahaan' => 'required', 
+            'masa_kerja' => 'required', 
+            'file_kerja' => 'required|mimes:pdf,doc,docx,png,jpg,jpeg', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
+            'posisi' => 'required', 
+            'id_users' => 'required', 
+        ]);
+        
+        $penker = PengalamanKerja::find( $id_pengalaman_kerja);
+    
+        $file = $request->file('file_kerja');
+        $fileName = $file->getClientOriginalName();
+        $file->storeAs('Pengalaman Kerja', $fileName, 'public'); // Simpan file di dalam folder public/Pengalaman Kerja
+    
+        $penker->nama_perusahaan = $request->nama_perusahaan;
+        $penker->masa_kerja = $request->masa_kerja;
+        $penker->posisi = $request->posisi;
+        $penker->id_users = $request->id_users;
+        $penker->file_kerja = $fileName; // Simpan nama file ke dalam kolom 'file_kerja'
+    
+        $penker->save();
+        return redirect()->route('penker.index') ->with('success_message', 'Data telah tersimpan');
     }
 
     /**
