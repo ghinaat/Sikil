@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama_perusahaan', 100);
             $table->string('masa_kerja', 20);
             $table->string('file_kerja', 255);
+            $table->string('posisi', 255);
             $table->unsignedInteger('id_users');
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->enum('is_deleted', ['0', '1'])->default('0');
