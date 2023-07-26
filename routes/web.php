@@ -74,3 +74,4 @@ Route::group(['middleware' => ['auth']], function() {
 Route::resource('timkegiatan', \App\Http\Controllers\TimKegiatanController::class)->middleware('auth');
 Route::resource('hubkel', \App\Http\Controllers\HubunganKeluargaController::class)->middleware('auth');
 Route::resource('keluarga', \App\Http\Controllers\KeluargaController::class)->middleware('auth');
+Route::resource('arsip', \App\Http\Controllers\ArsipController::class)->middleware('auth');
