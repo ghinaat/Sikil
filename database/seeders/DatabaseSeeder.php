@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use App\Models\Jabatan;
+use App\Models\Profile;
+use App\Models\TingkatPendidikan;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,6 +31,10 @@ class DatabaseSeeder extends Seeder
             'nama_jabatan' => 'Direktur',
         ]);
 
+        TingkatPendidikan::create([
+            'nama_tingkat_pendidikan' => 'Sarjana Terapan'
+        ]);
+
         User::create([
             'nama_pegawai' => 'Admin',
             'email' => 'admin@admin.com',
@@ -39,6 +45,10 @@ class DatabaseSeeder extends Seeder
             'is_deleted' => '0'
         ]);
 
+        Profile::create([
+            'id_users' => '1',
+        ]);
+
         User::create([
             'nama_pegawai' => 'ghina',
             'email' => 'admin@gmail.com',
@@ -47,6 +57,10 @@ class DatabaseSeeder extends Seeder
             'level' => 'admin',
             'id_jabatan' => '1',
             'is_deleted' => '1'
+        ]);
+
+        Profile::create([
+            'id_users' => '2',
         ]);
     }
 }

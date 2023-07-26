@@ -3,6 +3,7 @@ use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\TimKegiatanController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Kegiatan;
 
@@ -60,7 +61,6 @@ Route::group(['middleware' => ['auth']], function() {
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
-
     Route::get('/kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
     Route::post('/kegiatan', [KegiatanController::class, 'store'])->name('kegiatan.store')->middleware('isAdmin');
     Route::post('/kegiatan/timkegiatan', [KegiatanController::class, 'storeTimKegiatan'])->name('kegiatan.storeTimKegiatan')->middleware('isAdmin'); // URL berbeda untuk fungsi storeTimKegiatan
@@ -71,7 +71,13 @@ Route::group(['middleware' => ['auth']], function() {
 
 });
 
+// Route::resource('profile', ProfileController::class)->middleware('auth');
+Route::get('/profile', [profileController::class, 'index'])->name('profile.index');
+Route::put('/profile/{id_profile}', [profileController::class, 'update'])->name('profile.update');
+
+
 Route::resource('timkegiatan', \App\Http\Controllers\TimKegiatanController::class)->middleware('auth');
 Route::resource('hubkel', \App\Http\Controllers\HubunganKeluargaController::class)->middleware('auth');
 Route::resource('keluarga', \App\Http\Controllers\KeluargaController::class)->middleware('auth');
 Route::resource('arsip', \App\Http\Controllers\ArsipController::class)->middleware('auth');
+Route::resource('penker', \App\Http\Controllers\PengalamanKerjaController::class)->middleware('auth');
