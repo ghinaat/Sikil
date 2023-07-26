@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Profile;
 use Illuminate\Http\Request;
+use App\Models\Profile;
+use App\Models\TingkatPendidikan;
 
 class ProfileController extends Controller
 {
@@ -12,7 +13,14 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        $user = Profile::where('id_users', auth()->user()->id_users)->first();
+
+        $tingkat_pendidikan = TingkatPendidikan::all();
+        
+        return view('profile.index', [
+            'user' => $user,
+            'tingkat_pendidikans' => $tingkat_pendidikan,
+        ]);
     }
 
     /**
@@ -28,7 +36,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -44,7 +52,7 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        //
+        return view('profile.index');
     }
 
     /**
@@ -52,7 +60,46 @@ class ProfileController extends Controller
      */
     public function update(Request $request, Profile $profile)
     {
-        //
+        $request->validate([
+            'nip' => 'required',
+            'nik' => 'required',
+            'kk' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'alamat' => 'required',
+            'no_hp' => 'required',
+            'agama' => 'required',
+            'gender' => 'required',
+            'pendidikan' => 'required',
+            'tmt' => 'required',
+            'status_kawin' => 'required',
+            'bpjs' => 'required',
+            'id_tingkat_pendidikan' => 'required',
+        ]);
+
+        $array = $request->only([
+            'nip',
+            'nik',
+            'kk',
+            'tempat_lahir',
+            'tanggal_lahir',
+            'alamat',
+            'no_hp',
+            'agama',
+            'gender',
+            'pendidikan',
+            'tmt',
+            'status_kawin',
+            'bpjs',
+            'id_tingkat_pendidikan',
+        ]);
+
+        $array['id_users'] = auth()->user()->id_users;
+
+        $test = Profile::where('id_users', auth()->user()->id_users)->update($array);
+        dd($test);
+
+        return redirect()->route('profile.index');
     }
 
     /**
