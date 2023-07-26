@@ -343,6 +343,12 @@ return [
             'can'  => '',
         ],
         [
+
+            'text' => 'Tingkat Pendidikan',
+            'url'  => '/tingkatpendidikan',
+            'can'  => '',
+        ],
+        [
             'text' => 'Pengalaman Kerja',
             'url'  => '/penker',
             'can'  => '',
