@@ -97,7 +97,6 @@ class ProfileController extends Controller
         $array['id_users'] = auth()->user()->id_users;
 
         $test = Profile::where('id_users', auth()->user()->id_users)->update($array);
-        dd($test);
 
         return redirect()->route('profile.index');
     }
