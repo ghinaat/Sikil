@@ -24,7 +24,7 @@ class Diklat extends Model
         return $this->belongsTo(JenisDiklat::class, 'id_jenis_diklat', 'id_jenis_diklat');
         }
 
-    public function user(){
+    public function users(){
         return $this->belongsTo(User::class, 'id_users', 'id_users');
         }
 }
