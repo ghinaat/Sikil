@@ -30,7 +30,7 @@ class ArsipController extends Controller
 
     public function store(Request $request)
     {
-        //Menyimpan Data Keluarga Baru
+        //Menyimpan Data Arsip
         $request->validate([
             'id_users' => 'required',
             'jenis'  => 'required',
@@ -49,7 +49,7 @@ class ArsipController extends Controller
             $arsip->file = $fileName; // Simpan nama file ke dalam kolom 'file_kerja'
         
             $arsip->save();
-            return redirect()->route('arsip.index')->with('success_messege', 'Data telah tersimpan');
+            return redirect()->route('arsip.index')->with('success_message', 'Data telah tersimpan');
         }
 
         public function edit($id_arsip){
@@ -69,7 +69,7 @@ class ArsipController extends Controller
                 'id_users' => 'required',
                 'jenis'  => 'required',
                 'keterangan'  => 'required',
-                'file'  => 'required|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048'
+                'file'  => 'mimes:jpg,jpeg,png,pdf,doc,docx|max:2048'
                     ]);
     
                 $arsip = Arsip::find($id_arsip);

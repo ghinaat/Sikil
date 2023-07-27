@@ -82,8 +82,7 @@
                                         <select class="form-select @error('nama_pegawai') isinvalid @enderror"
                                             id="exampleInputUsers" name="id_users">
                                             @foreach ($users as $user)
-                                            <option value="{{ $user->id_users }}" @if( old('id_users')==$user->id_users
-                                                )
+                                            <option value="{{ $user->id_users }}" @if( old('id_users')==$user->id_users)
                                                 selected @endif">
                                                 {{ $user->nama_pegawai }}</option>
                                             @endforeach
@@ -171,10 +170,12 @@
                                         @error('keterangan')<span class="textdanger">{{ $message }}</span>@enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="file">File</label>
+                                        <label for="file">File</label><br>
+                                        <p>Previous File: <a href="{{ asset('/storage/Arsip/'. $ap->file) }}"
+                                                target="_blank">{{ $ap->file }}</a></p>
                                         <input type="file" name="file" id="file"
-                                            accept=".jpg, .jpeg, .png, .pdf, .doc, .docx" required> @error('file')<span
-                                            class="textdanger">{{ $message }}</span>@enderror
+                                            accept=".jpg, .jpeg, .png, .pdf, .doc, .docx">
+                                        @error('file')<span class="textdanger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                             </div>
