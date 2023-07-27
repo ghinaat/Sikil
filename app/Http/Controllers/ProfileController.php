@@ -94,6 +94,14 @@ class ProfileController extends Controller
             'id_tingkat_pendidikan',
         ]);
 
+        if($request->file('photo')){
+            if($profile->photo){
+                Storage::delete($profile->photo);
+            }
+            
+            $array['photo'] =  str_replace("public/profile/", "",$request->file('photo')->store('public/profile'));
+        }
+
         $array['id_users'] = auth()->user()->id_users;
 
         $test = Profile::where('id_users', auth()->user()->id_users)->update($array);

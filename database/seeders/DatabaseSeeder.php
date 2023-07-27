@@ -45,10 +45,6 @@ class DatabaseSeeder extends Seeder
             'is_deleted' => '0'
         ]);
 
-        Profile::create([
-            'id_users' => '1',
-        ]);
-
         User::create([
             'nama_pegawai' => 'ghina',
             'email' => 'admin@gmail.com',
@@ -57,10 +53,6 @@ class DatabaseSeeder extends Seeder
             'level' => 'admin',
             'id_jabatan' => '1',
             'is_deleted' => '1'
-        ]);
-
-        Profile::create([
-            'id_users' => '2',
         ]);
     }
 }

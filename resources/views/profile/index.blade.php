@@ -12,7 +12,23 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col">
+            <div class="col-md-3">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                        <img class="profile-user-img img-fluid img-rounded"
+                            src="{{ asset( 'storage/profile/' . $user->photo)  }}"
+                            alt="User profile picture">
+                        </div>
+        
+                        <h3 class="profile-username text-center">{{ Auth::user()->nama_pegawai }}</h3>
+        
+                        <p class="text-muted text-center">{{ Auth::user()->jabatan->nama_jabatan }}</p>
+        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
                 <div class="card">
                     <div class="card-header p-2">
                     <ul class="nav nav-pills">
@@ -188,7 +204,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form action="{{ route('profile.update', Auth::user()->id_users ) }}" method="post">
+                                                        <form action="{{ route('profile.update', Auth::user()->id_users ) }}" method="post" enctype="multipart/form-data">
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="my-2">
@@ -345,6 +361,23 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
+                                                            </div>
+                                                            <div class="my-2">
+                                                                <label for="photo">Photo Profile</label>
+                                                                @if ($user->photo === 'no_pp.png')
+                                                                <p>Previous File: <a
+                                                                    href="{{ asset('/public/' . $user->photo) }}"
+                                                                    target="_blank">{{ $user->photo }}</a></p>    
+                                                                @elseif ( isset($user->photo) )
+                                                                <p>Previous File: <a
+                                                                        href="{{ asset('/storage/profile/' . $user->photo) }}"
+                                                                        target="_blank">{{ $user->photo }}</a></p>
+                                                                @endif
+                                                                <input type="file" name="photo" id="photo"
+                                                                    class="form-control">
+                                                                @error('photo')
+                                                                <span class="text-danger">{{ $message }}</span>
+                                                                @enderror
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="submit" class="btn btn-primary">Simpan</button>
