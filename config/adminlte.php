@@ -308,52 +308,64 @@ return [
         ],
         'MAIN NAVIGATION',
         [
-            'text' => 'jabatan',
-            'url'  => 'jabatan',
-            'can'  => '',
+            'icon' => 'fas fa-home',
+            'text'    => 'Admin Management',
+            'submenu' => [
+                [
+                    'text' => 'Kegiatan',
+                    'url'  => '/kegiatan',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Pegawai',
+                    'url'  => 'user',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Tim Kegiatan',
+                    'url'  => 'timkegiatan',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Arsip',
+                    'url'  => '/arsip',
+                    'can'  => '',
+                ],
+                
+                [
+                    'text' => 'Keluarga',
+                    'url'  => '/keluarga',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Pengalaman Kerja',
+                    'url'  => '/penker',
+                    'can'  => '',
+                ],
+            ],
         ],
+        'ADMIN',
         [
-            'text' => 'Kegiatan',
-            'url'  => '/kegiatan',
-            'can'  => '',
-        ],
-        [
-            'text' => 'user',
-            'url'  => 'user',
-            'can'  => '',
-        ],
-        [
-            'text' => 'Tim Kegiatan',
-            'url'  => 'timkegiatan',
-            'can'  => '',
-        ],
-        [
-            'text' => 'Arsip',
-            'url'  => '/arsip',
-            'can'  => '',
-        ],
-        [
-            'text' => 'Hubungan Keluarga',
-            'url'  => '/hubkel',
-            'can'  => '',
-        ],
-        [
-            'text' => 'Keluarga',
-            'url'  => '/keluarga',
-            'can'  => '',
-        ],
-        [
-
-            'text' => 'Tingkat Pendidikan',
-            'url'  => '/tingkatpendidikan',
-            'can'  => '',
-        ],
-        [
-            'text' => 'Pengalaman Kerja',
-            'url'  => '/penker',
-            'can'  => '',
-        ],
-
+            'icon' => 'fas fa-user-cog',
+            'text'    => 'Admin Management',
+            'submenu' => [
+                [
+                    'text' => 'Jabatan',
+                    'url'  => 'jabatan',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Tingkat Pendidikan',
+                    'url'  => '/tingkatpendidikan',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Hubungan Keluarga',
+                    'url'  => '/hubkel',
+                    'can'  => '',
+                ],
+            ],
+        ]
 
     ],
 

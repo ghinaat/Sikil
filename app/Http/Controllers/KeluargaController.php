@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Keluarga;
 use App\Models\User;
 use App\Models\HubunganKeluarga;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 
 class KeluargaController extends Controller
@@ -12,8 +13,10 @@ class KeluargaController extends Controller
     public function index()
     {
         //Menampilkan data Keluarga
+        $user = Profile::where('id_users', auth()->user()->id_users)->first();
         $keluarga = Keluarga::where('is_deleted', '0')->get();
         return view('keluarga.index', [
+            'user' => $user,
             'keluarga' => $keluarga,
             'users' => User::where('is_deleted', '0')->get(),
             'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get()
