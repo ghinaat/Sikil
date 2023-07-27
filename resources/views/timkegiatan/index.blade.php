@@ -32,7 +32,7 @@
                             <td>{{$key+1}}</td>
                             <td>{{$tk->kegiatan->nama_kegiatan }}</td>
                             <td>{{$tk->user->nama_pegawai}}</td>
-                            <td>{{$tk->peran}}</td>
+                            <td>{{$tk->peran->nama_peran}}</td>
                             @can('isAdmin')
                             <td>
                                 <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
@@ -101,10 +101,18 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-6">Peran</label>
-                                    <input type="text" class="form-control @error('peran') is-invalid @enderror"
-                                        id="peran" placeholder="Peran" name="peran" value="{{old('peran')}}">
-                                    @error('peran') <span class="textdanger">{{$message}}</span> @enderror
+                                    <label for="id_peran">Peran</label>
+                                    <select class="form-select @error('nama') isinvalid @enderror" id="id_peran"
+                                        name="id_peran">
+                                        @foreach ($peran as $p)
+                                        <option value="{{ $p->id_peran }}" @if( old('id_peran')==$p->
+                                            id_peran )
+                                            selected @endif">
+                                            {{ $p->nama_peran }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('level') <span class="textdanger">{{$message}}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -169,11 +177,18 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-6">Peran</label>
-                                    <input type="text" class="form-control @error('peran') is-invalid @enderror"
-                                        id="peran" placeholder="Peran" name="peran"
-                                        value="{{$tk -> peran ?? old('peran')}}">
-                                    @error('peran') <span class="textdanger">{{$message}}</span> @enderror
+                                    <label for="id_peran">Peran</label>
+                                    <select class="form-select @error('nama') isinvalid @enderror" id="id_peran"
+                                        name="id_peran">
+                                        @foreach ($peran as $p)
+                                        <option value="{{ $p->id_peran }}" @if( old('id_peran')==$p->
+                                            id_peran )
+                                            selected @endif">
+                                            {{ $p->nama_peran }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('level') <span class="textdanger">{{$message}}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

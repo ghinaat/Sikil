@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\TimKegiatan;
 use App\Models\User;
+use App\Models\Peran;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,7 @@ class TimKegiatanController extends Controller
             'timkegiatan' => $timkegiatan,
             'user' => User::where('is_deleted', '0')->get(),
             'kegiatan' => Kegiatan::all(),
+            'peran' => Peran::all(),
         ]);
             
     }
@@ -30,12 +32,12 @@ class TimKegiatanController extends Controller
         $request->validate([
         'id_kegiatan' => 'required', 
         'id_pegawai' => 'required', 
-        'peran' => 'required', 
+        'id_peran' => 'required', 
         ]);
         $array = $request->only([
             'id_kegiatan',
             'id_pegawai' ,
-            'peran' ,
+            'id_peran' ,
         
         ]);
 
@@ -49,13 +51,13 @@ class TimKegiatanController extends Controller
         $request->validate([
             'id_kegiatan' => 'required', 
             'id_pegawai' => 'required', 
-            'peran' => 'required', 
+            'id_peran' => 'required', 
         ]);
         
         $timkegiatan = TimKegiatan::find($id_tim);
         $timkegiatan->id_kegiatan = $request->id_kegiatan;
         $timkegiatan->id_pegawai = $request->id_pegawai;
-        $timkegiatan->peran = $request->peran;
+        $timkegiatan->id_peran = $request->id_peran;
         $timkegiatan->save();
         return redirect()->route('timkegiatan.index') ->with('success_message', 'Data telah tersimpan');
     } 

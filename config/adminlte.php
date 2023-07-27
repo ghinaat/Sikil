@@ -380,6 +380,11 @@ return [
                     'url'  => '/hubkel',
                     'can'  => '',
                 ],
+                [
+                    'text' => 'Peran',
+                    'url'  => '/peran',
+                    'can'  => '',
+                ],
             ],
         ]
 
