@@ -38,7 +38,7 @@ class UserController extends Controller
             'nama_pegawai' => 'required',
             'email' => 'required',
             'password' => 'required',
-            'id_jabatan' => 'required',
+            'level' => 'required',
             'id_jabatan' => 'required'
         ]);
 
@@ -46,7 +46,7 @@ class UserController extends Controller
             'nama_pegawai',
             'email' ,
             'password' ,
-            'id_jabatan' ,
+            'level' ,
             'id_jabatan',
         ]);
 

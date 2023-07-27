@@ -76,7 +76,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-6" for="id_kegiatan">Nama Kegiatan</label>
                                     <select id="id_kegiatan" name="id_kegiatan"
-                                        class="form-control @error('id_kegiatan') is-invalid @enderror">
+                                        class="form-select @error('id_kegiatan') is-invalid @enderror">
                                         @foreach ($kegiatan as $kg)
                                         <option value="{{ $kg->id_kegiatan }}" @if( old('id_kegiatan')==$kg->id_kegiatan
                                             ) selected @endif>
@@ -90,7 +90,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-6" for="id_pegawai">Nama Pegawai</label>
                                     <select id="id_pegawai" name="id_pegawai"
-                                        class="form-control @error('id_pegawai') is-invalid @enderror">
+                                        class="form-select @error('id_pegawai') is-invalid @enderror">
                                         @foreach ($user as $us)
                                         <option value="{{ $us->id_users }}" @if( old('id_pegawai')==$us->id_users )
                                             selected @endif">
@@ -144,7 +144,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-6" for="id_kegiatan">Nama Kegiatan</label>
                                     <select id="id_kegiatan" name="id_kegiatan"
-                                        class="form-control @error('id_kegiatan') is-invalid @enderror">
+                                        class="form-select @error('id_kegiatan') is-invalid @enderror">
                                         @foreach ($kegiatan as $kg)
                                         <option value="{{ $kg->id_kegiatan }}" @if( old('id_kegiatan')==$kg->id_kegiatan
                                             ) selected @endif>
@@ -158,7 +158,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-6" for="id_pegawai">Nama Pegawai</label>
                                     <select id="id_pegawai" name="id_pegawai"
-                                        class="form-control @error('id_pegawai') is-invalid @enderror">
+                                        class="form-select @error('id_pegawai') is-invalid @enderror">
                                         @foreach ($user as $us)
                                         <option value="{{ $us->id_users }}" @if( old('id_pegawai')==$us->id_users )
                                             selected @endif">

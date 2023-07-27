@@ -20,7 +20,7 @@
                                 <th>Email</th>
                                 <th>Level</th>
                                 <th>Jabatan</th>
-                                <th>Action</th>
+                                <th>Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,7 +88,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputlevel">Level</label>
-                                                    <select class="form-control @error('level') isinvalid @enderror"
+                                                    <select class="form-select @error('level') isinvalid @enderror"
                                                         id="exampleInputlevel" name="level">
                                                         <option value="admin" @if($user->level == 'admin' ||
                                                             old('level')=='admin' )selected
@@ -111,7 +111,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputJabatan">Jabatan</label>
-                                                    <select class="form-control @error('jabatan') isinvalid @enderror"
+                                                    <select class="form-select @error('jabatan') isinvalid @enderror"
                                                         id="exampleInputJabatan" name="id_jabatan">
                                                         @foreach ($jabatans as $jabatan)
                                                         <option value="{{ $jabatan->id_jabatan }}" @if(
@@ -177,7 +177,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputlevel">Level</label>
-                        <select class="form-control @error('level') isinvalid @enderror" id="exampleInputlevel"
+                        <select class="form-select @error('level') isinvalid @enderror" id="exampleInputlevel"
                             name="level">
                             <option value="admin" @if(old('level')=='admin' )selected @endif>Admin</option>
                             <option value="kadiv" @if(old('level')=='kadiv' )selected @endif>Kadiv</option>
@@ -189,7 +189,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputJabatan">Jabatan</label>
-                        <select class="form-control @error('jabatan') isinvalid @enderror" id="exampleInputJabatan"
+                        <select class="form-select @error('jabatan') isinvalid @enderror" id="exampleInputJabatan"
                             name="id_jabatan">
                             @foreach ($jabatans as $jabatan)
                             <option value="{{ $jabatan->id_jabatan }}" @if( old('id_jabatan')==$jabatan->id_jabatan )

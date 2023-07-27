@@ -292,15 +292,6 @@ return [
 
     'menu' => [
         // Navbar items:
-        // [
-        //     'type'         => 'navbar-search',
-        //     'text'         => 'search',
-        //     'topnav_right' => true,
-        // ],
-        //  [
-        //     'type'         => 'fullscreen-widget',
-        //     'topnav_right' => true,
-        // ],
         [
             'text'  => 'Message',
             'route' => 'login',
@@ -309,112 +300,90 @@ return [
         ],
 
         // Sidebar items:
-        // [
-        //     'type' => 'sidebar-menu-search',
-        //     'text' => 'search',
-        // ],
+        'ACCOUNT SETTINGS',
         [
-            'text' => 'jabatan',
-            'url'  => 'jabatan',
-            'can'  => '',
+            'text'  => 'Profile',
+            'route' => 'profile.index',
+            'icon'  => 'fas fa-fw fa-user',
         ],
+        'MAIN NAVIGATION',
         [
-            'text' => 'Kegiatan',
-            'url'  => '/kegiatan',
-            'can'  => '',
+            'icon' => 'fas fa-home',
+            'text'    => 'Admin Management',
+            'submenu' => [
+                [
+                    'text' => 'Kegiatan',
+                    'url'  => '/kegiatan',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Pegawai',
+                    'url'  => 'user',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Tim Kegiatan',
+                    'url'  => 'timkegiatan',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Arsip',
+                    'url'  => '/arsip',
+                    'can'  => '',
+                ],
+                 [
+                    'text' => 'Diklat',
+                    'url'  => 'diklat',
+                    'can'  => '',
+                ],
+                
+                [
+                    'text' => 'Keluarga',
+                    'url'  => '/keluarga',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Pengalaman Kerja',
+                    'url'  => '/penker',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Pendidikan',
+                    'url' => '/pendidikan',
+                    'can' => '',
+                ],
+            ],
         ],
+        'ADMIN',
         [
-            'text' => 'user',
-            'url'  => 'user',
-            'can'  => '',
-        ],
-        [
-            'text' => 'Tim Kegiatan',
-            'url'  => 'timkegiatan',
-            'can'  => '',
-        ],
-        [
-            'text' => 'Jenis Diklat',
-            'url'  => 'jenisdiklat',
-            'can'  => '',
-        ],
-        [
-            'text' => 'Diklat',
-            'url'  => 'diklat',
-            'can'  => '',
-        ],
-        // [
-        //     'text'        => 'pages',
-        //     'url'         => 'admin/pages',
-        //     'icon'        => 'far fa-fw fa-file',
-        //     'label'       => 4,
-        //     'label_color' => 'success',
-        // ],
-        // ['header' => 'account_settings'],
-        // [
-        //     'text' => 'profile',
-        //     'url'  => 'admin/settings',
-        //     'icon' => 'fas fa-fw fa-user',
-        // ],
-        // [
-        //     'text' => 'change_password',
-        //     'url'  => 'admin/settings',
-        //     'icon' => 'fas fa-fw fa-lock',
-        // ],
-        // [
-        //     'text'    => 'multilevel',
-        //     'icon'    => 'fas fa-fw fa-share',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'level_one',
-        //             'url'  => '#',
-        //         ],
-        //         [
-        //             'text'    => 'level_one',
-        //             'url'     => '#',
-        //             'submenu' => [
-        //                 [
-        //                     'text' => 'level_two',
-        //                     'url'  => '#',
-        //                 ],
-        //                 [
-        //                     'text'    => 'level_two',
-        //                     'url'     => '#',
-        //                     'submenu' => [
-        //                         [
-        //                             'text' => 'level_three',
-        //                             'url'  => '#',
-        //                         ],
-        //                         [
-        //                             'text' => 'level_three',
-        //                             'url'  => '#',
-        //                         ],
-        //                     ],
-        //                 ],
-        //             ],
-        //         ],
-        //         [
-        //             'text' => 'level_one',
-        //             'url'  => '#',
-        //         ],
-        //     ],
-        // ],
-        // ['header' => 'labels'],
-        // [
-        //     'text'       => 'important',
-        //     'icon_color' => 'red',
-        //     'url'        => '#',
-        // ],
-        // [
-        //     'text'       => 'warning',
-        //     'icon_color' => 'yellow',
-        //     'url'        => '#',
-        // ],
-        // [
-        //     'text'       => 'information',
-        //     'icon_color' => 'cyan',
-        //     'url'        => '#',
-        // ],
+
+            'icon' => 'fas fa-user-cog',
+            'text'    => 'Admin Management',
+            'submenu' => [
+                [
+                    'text' => 'Jabatan',
+                    'url'  => 'jabatan',
+                    'can'  => '',
+                ],
+                 [
+                    'text' => 'Jenis Diklat',
+                    'url'  => 'jenisdiklat',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Tingkat Pendidikan',
+                    'url'  => '/tingkatpendidikan',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Hubungan Keluarga',
+                    'url'  => '/hubkel',
+                    'can'  => '',
+                ],
+            ],
+        ]
+
+
     ],
 
     /*

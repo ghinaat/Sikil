@@ -87,7 +87,7 @@
                                 <td>{{ $tk->user->jabatan->nama_jabatan }}</td>
                                 <td>{{$tk->peran}}</td>
                                 <td> <a href="{{route('timkegiatan.destroy', $tk->id_tim)}}"
-                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)" //
+                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
                                         class="btn btn-danger btn-xs">
                                         Delete
                                     </a></td>

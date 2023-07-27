@@ -13,7 +13,7 @@ SIKLIS merupakan suatu sistem informasi yang digunakan untuk mengelola data pega
 1. Clone repo ini
 
 ```bash
-git clone https://github.com/ghinaat/Sikil.git
+git clone https://github.com/[USERNAME]/Sikil.git
 ```
 
 2. Install dependesi composer

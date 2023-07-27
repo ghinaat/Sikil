@@ -6,6 +6,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\TimKegiatanController;
 use App\Models\JenisDiklat;
+use App\Http\Controllers\TingkatPendidikanController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Kegiatan;
 
@@ -72,6 +74,17 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy')->middleware('isAdmin');
 
 });
+Route::post('/tingkatpendidikan', [TingkatPendidikanController::class, 'store'])->name('tingkatpendidikan.store')->middleware('isAdmin');
+Route::get('/tingkatpendidikan', [TingkatPendidikanController::class, 'index'])->name('tingkatpendidikan.index');
+Route::get('/tingkatpendidikan/{tingkatPendidikan}/edit', [TingkatPendidikanController::class, 'edit'])->name('tingkatpendidikan.edit');
+Route::put('/tingkatpendidikan/{tingkatPendidikan}', [TingkatPendidikanController::class, 'update'])->name('tingkatpendidikan.update');
+Route::delete('/tingkatpendidikan/{id_tingkat_pendidikan}', [TingkatPendidikanController::class, 'destroy'])->name('tingkatpendidikan.destroy');
+
+
+
+// Route::resource('profile', ProfileController::class)->middleware('auth');
+Route::get('/profile', [profileController::class, 'index'])->name('profile.index');
+Route::put('/profile/{id_profile}', [profileController::class, 'update'])->name('profile.update');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/jenisdiklat', [JenisDiklatController::class, 'index'])->name('jenisdiklat.index');
@@ -90,3 +103,8 @@ Route::group(['middleware' => ['auth']], function() {
 
 
 Route::resource('timkegiatan', \App\Http\Controllers\TimKegiatanController::class)->middleware('auth');
+Route::resource('hubkel', \App\Http\Controllers\HubunganKeluargaController::class)->middleware('auth');
+Route::resource('keluarga', \App\Http\Controllers\KeluargaController::class)->middleware('auth');
+Route::resource('arsip', \App\Http\Controllers\ArsipController::class)->middleware('auth');
+Route::resource('penker', \App\Http\Controllers\PengalamanKerjaController::class)->middleware('auth');
+Route::resource('pendidikan', \App\Http\Controllers\PendidikanController::class)->middleware('auth');

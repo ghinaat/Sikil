@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('hubungan_keluarga', function (Blueprint $table) {
             $table->increments('id_hubungan');
             $table->integer('urutan');
-            $table->enum('nama',['ayah', 'ibu', 'suami', 'istri', 'anak kandung', 'anak angkat']);
+            $table->string('nama', 256);
             $table->enum('is_deleted', ['0', '1'])->default('0');
             $table->timestamps();
         });
