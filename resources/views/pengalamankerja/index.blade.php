@@ -206,6 +206,10 @@ table-stripped" id="example2">
 </div>
 
 @stop
+
+@if (isset($pk))
+    
+
 @push('js')
 <form action="" id="delete-form" method="post">
     @method('delete')
@@ -217,3 +221,5 @@ $('#example2').DataTable({
 });
 </script>
 @endpush
+
+@endif

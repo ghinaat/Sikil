@@ -308,10 +308,48 @@ return [
         ],
         'MAIN NAVIGATION',
         [
-            'text' => 'jabatan',
-            'url'  => 'jabatan',
-            'can'  => '',
+            'icon' => 'fas fa-home',
+            'text'    => 'Admin Management',
+            'submenu' => [
+                [
+                    'text' => 'Kegiatan',
+                    'url'  => '/kegiatan',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Pegawai',
+                    'url'  => 'user',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Tim Kegiatan',
+                    'url'  => 'timkegiatan',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Arsip',
+                    'url'  => '/arsip',
+                    'can'  => '',
+                ],
+                
+                [
+                    'text' => 'Keluarga',
+                    'url'  => '/keluarga',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Pengalaman Kerja',
+                    'url'  => '/penker',
+                    'can'  => '',
+                ],
+                [
+                    'text' => 'Pendidikan',
+                    'url'  => '/pendidikan',
+                    'can'  => '',
+                ],
+            ],
         ],
+        'ADMIN',
         [
             'text' => 'Kegiatan',
             'url'  => '/kegiatan',
@@ -358,7 +396,6 @@ return [
             'url'  => '/pendidikan',
             'can'  => '',
         ],
-
 
     ],
 
