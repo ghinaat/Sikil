@@ -26,6 +26,7 @@ return new class extends Migration
             $table->date('tmt')->nullable();
             $table->enum('status_kawin', ['menikah', 'belum_menikah'])->nullable();
             $table->string('bpjs', 20)->nullable();
+            $table->string('photo', 255)->default('no_pp.png');
             $table->unsignedInteger('id_users');
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->unsignedInteger('id_jabatan')->nullable();

@@ -16,4 +16,6 @@ class Profile extends Model
     public function tingkat_pendidikan(){
         return $this->belongsTo(TingkatPendidikan::class, 'id_tingkat_pendidikan', 'id_tingkat_pendidikan');
     } 
+
+    protected $guarded = ['id_profile_user'];
 }
