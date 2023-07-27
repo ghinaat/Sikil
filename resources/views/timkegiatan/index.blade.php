@@ -102,7 +102,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-6">Peran</label>
-                                    <input type="text" class="form-control @error('peran') is-invalid @enderror" id="peran" placeholder="Peran" name="peran" value="{{old('peran')}}">
+                                    <input type="text" class="form-control @error('peran') is-invalid @enderror"
+                                        id="peran" placeholder="Peran" name="peran" value="{{old('peran')}}">
                                     @error('peran') <span class="textdanger">{{$message}}</span> @enderror
                                 </div>
                             </div>
@@ -169,7 +170,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-6">Peran</label>
-                                    <input type="text" class="form-control @error('peran') is-invalid @enderror" id="peran" placeholder="Peran" name="peran"
+                                    <input type="text" class="form-control @error('peran') is-invalid @enderror"
+                                        id="peran" placeholder="Peran" name="peran"
                                         value="{{$tk -> peran ?? old('peran')}}">
                                     @error('peran') <span class="textdanger">{{$message}}</span> @enderror
                                 </div>

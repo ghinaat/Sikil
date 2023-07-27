@@ -331,6 +331,11 @@ return [
                     'url'  => '/arsip',
                     'can'  => '',
                 ],
+                 [
+                    'text' => 'Diklat',
+                    'url'  => 'diklat',
+                    'can'  => '',
+                ],
                 
                 [
                     'text' => 'Keluarga',
@@ -351,12 +356,18 @@ return [
         ],
         'ADMIN',
         [
+
             'icon' => 'fas fa-user-cog',
             'text'    => 'Admin Management',
             'submenu' => [
                 [
                     'text' => 'Jabatan',
                     'url'  => 'jabatan',
+                    'can'  => '',
+                ],
+                 [
+                    'text' => 'Jenis Diklat',
+                    'url'  => 'jenisdiklat',
                     'can'  => '',
                 ],
                 [
@@ -371,6 +382,7 @@ return [
                 ],
             ],
         ]
+
 
     ],
 

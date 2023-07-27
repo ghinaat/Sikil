@@ -14,12 +14,6 @@ class JabatanController extends Controller
     ]);
     }
 
-    public function create()
-    { 
-    //Menampilkan Form Tambah User
-    return view('jabatan.create');
-    } 
-
     public function store(Request $request)
     { 
  //Menyimpan Data User Baru
@@ -45,7 +39,7 @@ $request->validate([
     $jabatan->nama_jabatan = $request->nama_jabatan;
     $jabatan->save();
     return redirect()->route('jabatan.index') ->with('success_message', 'Data telah tersimpan');
-    } 
+} 
 
 public function destroy($id_jabatan)
 {

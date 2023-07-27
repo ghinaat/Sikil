@@ -1,8 +1,11 @@
 <?php
+use App\Http\Controllers\DiklatController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\JenisDiklatController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\TimKegiatanController;
+use App\Models\JenisDiklat;
 use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -82,6 +85,21 @@ Route::delete('/tingkatpendidikan/{id_tingkat_pendidikan}', [TingkatPendidikanCo
 // Route::resource('profile', ProfileController::class)->middleware('auth');
 Route::get('/profile', [profileController::class, 'index'])->name('profile.index');
 Route::put('/profile/{id_profile}', [profileController::class, 'update'])->name('profile.update');
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/jenisdiklat', [JenisDiklatController::class, 'index'])->name('jenisdiklat.index');
+    Route::post('/jenisdiklat', [JenisDiklatController::class, 'store'])->name('jenisdiklat.store')->middleware('isAdmin');
+    Route::put('/jenisdiklat/{id_jenis_diklat}', [JenisDiklatController::class, 'update'])->name('jenisdiklat.update')->middleware('isAdmin');
+    Route::delete('/jenisdiklat/{id_jenis_diklat}', [JenisDiklatController::class, 'destroy'])->name('jenisdiklat.destroy')->middleware('isAdmin');
+});
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/diklat', [DiklatController::class, 'index'])->name('diklat.index');
+    Route::post('/diklat', [DiklatController::class, 'store'])->name('diklat.store')->middleware('isAdmin');
+    Route::put('/diklat/{id_diklat}', [DiklatController::class, 'update'])->name('diklat.update')->middleware('isAdmin');
+    Route::delete('/diklat/{id_diklat}', [DiklatController::class, 'destroy'])->name('diklat.destroy')->middleware('isAdmin');
+});
+
 
 
 Route::resource('timkegiatan', \App\Http\Controllers\TimKegiatanController::class)->middleware('auth');
