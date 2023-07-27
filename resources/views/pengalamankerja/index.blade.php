@@ -54,7 +54,7 @@ table-stripped" id="example2">
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                         data-target="#editModal{{$pk->id_pengalaman_kerja}}"
                                         data-id="{{$pk->id_pengalaman_kerja}}"
-                                        data-nama="{{$pk->nama_kegiatan}}">Edit</a>
+                                        data-nama="{{$pk->nama_perusahaan}}">Edit</a>
 
                                     <a href="{{route('penker.destroy', $pk->id_pengalaman_kerja)}}"
                                         onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
@@ -79,7 +79,7 @@ table-stripped" id="example2">
                                         </div>
                                         <div class="modal-body">
                                             <form action="{{ route('penker.update', $pk->id_pengalaman_kerja) }}"
-                                                method="post">
+                                                method="post" enctype="multipart/form-data">
                                                 @csrf
                                                 @method('PUT')
                                                 <input type="hidden" name="id_users"
@@ -132,7 +132,7 @@ table-stripped" id="example2">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <a href="{{route('kegiatan.index')}}" class="btn btn-default">
+                                                    <a href="{{route('pendidikan.index')}}" class="btn btn-default">
                                                         Batal
                                                     </a>
                                                 </div>
@@ -212,17 +212,6 @@ table-stripped" id="example2">
     @csrf
 </form>
 <script>
-$(document).ready(function() {
-    // Check if there is a previous file
-    var hasPreviousFile = "{{ $pk->file_kerja ? 'true' : 'false' }}";
-
-    // Update the 'required' attribute of the file input based on the previous file's existence
-    if (hasPreviousFile === 'true') {
-        $('#file_kerja').removeAttr('required');
-    } else {
-        $('#file_kerja').prop('required', true);
-    }
-});
 $('#example2').DataTable({
     "responsive": true,
 });

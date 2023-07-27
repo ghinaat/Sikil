@@ -15,7 +15,8 @@ class PengalamanKerja extends Model
         'masa_kerja',
         'file_kerja',
         'posisi',
-        'id_users'
+        'id_users',
+        'is_deleted'
     ];
 
     public function users(){

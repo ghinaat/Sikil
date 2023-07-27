@@ -34,6 +34,17 @@ class User extends Authenticatable
         return $this->hasMany(TimKegiatan::class, 'id_pegawai', 'id_users');
     }
 
+    public function pengalamanKerja()
+    {
+        return $this->hasMany(PengalamanKerja::class, 'id_users', 'id_users');
+    }
+
+    public function Pendidikan()
+    {
+        return $this->hasMany(Pendidikan::class, 'id_users', 'id_users');
+    }
+
+
     protected $primaryKey = 'id_users';
 
     /**

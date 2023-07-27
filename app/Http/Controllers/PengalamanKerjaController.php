@@ -12,25 +12,22 @@ class PengalamanKerjaController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $user = Auth::user();
-    
-        if ($user->level == "admin") {
-            // Fetch the user's own work experiences
-            $penker = PengalamanKerja::where('is_deleted', '0')->get();
-           
-        } else {
-            // User is not logged in, show all non-deleted work experiences
-            $penker = PengalamanKerja::where('id_users', $user->id)
-            ->where('is_deleted', '0')
-            ->get();
-        }
-    
-        return view('pengalamankerja.index', [
-            'penker' => $penker,
-            'users' => User::all() // This line fetches all users. Is this needed for the view?
-        ]);
+{
+    $user = Auth::user();
+
+    if ($user->level == "admin") {
+        // Fetch all work experiences for admin
+        $penker = PengalamanKerja::where('is_deleted', '0')->get();
+    } else {
+        // Fetch user's own work experiences using the relationship
+        $penker = $user->pengalamanKerja()->where('is_deleted', '0')->get();
     }
+
+    return view('pengalamankerja.index', [
+        'penker' => $penker,
+    ]);
+}
+    
     
 
     /**
@@ -96,22 +93,32 @@ class PengalamanKerjaController extends Controller
         $request->validate([
             'nama_perusahaan' => 'required', 
             'masa_kerja' => 'required', 
-            'file_kerja' => 'required|mimes:pdf,doc,docx,png,jpg,jpeg', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
+            'file_kerja' => 'mimes:|mimes:pdf,doc,docx,png,jpg,jpeg', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
             'posisi' => 'required', 
             'id_users' => 'required', 
         ]);
         
         $penker = PengalamanKerja::find( $id_pengalaman_kerja);
     
-        $file = $request->file('file_kerja');
-        $fileName = $file->getClientOriginalName();
-        $file->storeAs('Pengalaman Kerja', $fileName, 'public'); // Simpan file di dalam folder public/Pengalaman Kerja
-    
+      // Cek apakah ada file yang diunggah oleh pengguna
+   
+      if ($request->hasFile('file_kerja')) {
+        // Menghapus file file_kerja sebelumnya
+        if ($penker->file_kerja) {
+            Storage::disk('public')->delete('Pengalaman Kerja/' . $penker->file_kerja);
+        }
+
+        // Upload file file_kerja baru
+        $file_kerja = $request->file('file_kerja');
+        $namafile_kerja = time() . '.' . $file_kerja->getClientOriginalExtension();
+        Storage::disk('public')->put('Pengalaman Kerja/' . $namafile_kerja, file_get_contents($file_kerja));
+        $penker->file_kerja = $namafile_kerja;
+    }
+
         $penker->nama_perusahaan = $request->nama_perusahaan;
         $penker->masa_kerja = $request->masa_kerja;
         $penker->posisi = $request->posisi;
         $penker->id_users = $request->id_users;
-        $penker->file_kerja = $fileName; // Simpan nama file ke dalam kolom 'file_kerja'
     
         $penker->save();
         return redirect()->route('penker.index') ->with('success_message', 'Data telah tersimpan');
@@ -120,8 +127,14 @@ class PengalamanKerjaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PengalamanKerja $pengalamanKerja)
+    public function destroy($id_pengalaman_kerja)
     {
-        //
+        $penker =  PengalamanKerja::find($id_pengalaman_kerja);
+        if ($penker) {
+            $penker->update([
+                'is_deleted' => '1',
+            ]);
+        }
+        return redirect()->route('penker.index')->with('success_message', 'Data telah terhapus');
     }
 }

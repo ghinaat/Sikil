@@ -89,3 +89,4 @@ Route::resource('hubkel', \App\Http\Controllers\HubunganKeluargaController::clas
 Route::resource('keluarga', \App\Http\Controllers\KeluargaController::class)->middleware('auth');
 Route::resource('arsip', \App\Http\Controllers\ArsipController::class)->middleware('auth');
 Route::resource('penker', \App\Http\Controllers\PengalamanKerjaController::class)->middleware('auth');
+Route::resource('pendidikan', \App\Http\Controllers\PendidikanController::class)->middleware('auth');

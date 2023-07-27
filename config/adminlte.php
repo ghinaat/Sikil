@@ -353,6 +353,11 @@ return [
             'url'  => '/penker',
             'can'  => '',
         ],
+        [
+            'text' => 'Pendidikan',
+            'url'  => '/pendidikan',
+            'can'  => '',
+        ],
 
 
     ],
