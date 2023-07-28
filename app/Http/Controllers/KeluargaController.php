@@ -7,16 +7,23 @@ use App\Models\User;
 use App\Models\HubunganKeluarga;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KeluargaController extends Controller
 {
     public function index()
     {
-        //Menampilkan data Keluarga
-        $user = Profile::where('id_users', auth()->user()->id_users)->first();
-        $keluarga = Keluarga::where('is_deleted', '0')->get();
+        $user = Auth::user();
+    
+        if ($user->level == "admin") {
+            // Fetch all work experiences for admin
+            $keluarga = Keluarga::where('is_deleted', '0')->get();
+        } else {
+            // Fetch user's own work experiences using the relationship
+            $keluarga = $user->keluarga()->where('is_deleted', '0')->get();
+        }
+    
         return view('keluarga.index', [
-            'user' => $user,
             'keluarga' => $keluarga,
             'users' => User::where('is_deleted', '0')->get(),
             'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get()
