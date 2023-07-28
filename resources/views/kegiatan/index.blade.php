@@ -100,7 +100,7 @@ table-stripped" id="example2">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="tgl_selesai" class="form-label">Tanggal Selese</label>
+                                                    <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                                                     <div class="form-input">
                                                         <input type="date" class="form-control"
                                                             class="form-control @error('tgl_selesai') is-invalid @enderror"

@@ -84,31 +84,25 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title" id="exampleModalLabel">Tambah Data Keluarga</h4>
-                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true"></span>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body form">
                                                 <form action="{{ route('keluarga.store') }}" method="POST" id="form" class="form-horizontal"
                                                     enctype="multipart/form-data">
                                                     @csrf
-                                                    <input type="hidden" value="" name="id">
+                                                    <input type="hidden" name="id_users" value="{{ Auth::user()->id_users}}">
                                                     <div class="form-body">
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                         <label for="exampleInputUsers">Nama Pegawai</label>
-                                                                        <select class="form-select @error('nama_pegawai') isinvalid @enderror"
-                                                                            id="exampleInputUsers" name="id_users">
-                                                                            @foreach ($users as $user)
-                                                                            <option value="{{ $user->id_users }}" @if( old('id_users')==$user->id_users)
-                                                                                selected @endif">
-                                                                                {{ $user->nama_pegawai }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        @error('level') <span class="textdanger">{{$message}}</span> @enderror
-                                                                    </div>
+                                                                        <input type="text" class="form-control @error('nama_pegawai') is-invalid @enderror"
+                                                                            id="nama_pegawai" name="nama_pegawai" value="{{ Auth::user()->nama_pegawai}}" readonly>
+                                                                        @error('nama_pegawai')<span class="textdanger">{{ $message }}</span>@enderror
+                                                                    </div> -->
                                                                     <div class="form-group">
                                                                         <label for="exampleInputUsersHubkel">Hubungan Keluarga</label>
                                                                         <select class="form-select @error('nama') isinvalid @enderror"
@@ -177,8 +171,8 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title" id="exampleModalLabel">Edit Data Keluarga</h4>
-                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true"></span>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body form">
@@ -186,30 +180,23 @@
                                                     class="form-horizontal" enctype="multipart/form-data">
                                                     @csrf
                                                     @method('PUT')
-                                                    <input type="hidden" name="id" value="{{ $kel->id_keluarga }}">
+                                                    <input type="hidden" name="id_users" value="{{ Auth::user()->id_users}}">
                                                     <div class="form-body">
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <div class="form-group">
+                                                                <!-- <div class="form-group">
                                                                         <label for="exampleInputUsers">Nama Pegawai</label>
-                                                                        <select class="form-select @error('nama_pegawai') isinvalid @enderror"
-                                                                            id="exampleInputUsers" name="id_users">
-                                                                            @foreach ($users as $user)
-                                                                            <option value="{{ $user->id_users }}" @if( old('id_users')==$user->id_users)
-                                                                                selected @endif">
-                                                                                {{ $user->nama_pegawai }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        @error('level') <span class="textdanger">{{$message}}</span> @enderror
-                                                                    </div>
+                                                                        <input type="text" class="form-control @error('nama_pegawai') is-invalid @enderror"
+                                                                            id="nama_pegawai" name="nama_pegawai" value="{{ Auth::user()->nama_pegawai}}" readonly>
+                                                                        @error('nama_pegawai')<span class="textdanger">{{ $message }}</span>@enderror
+                                                                    </div> -->
                                                                     <div class="form-group">
                                                                         <label for="exampleInputUsersHubkel">Hubungan Keluarga</label>
                                                                         <select class="form-select @error('nama') isinvalid @enderror"
                                                                             id="exampleInputHubkel" name="id_hubungan">
                                                                             @foreach ($hubkel as $hk)
-                                                                            <option value="{{ $hk->id_hubungan }}" @if( old('id_hubungan')==$hk->id_hubungan )
-                                                                                selected @endif">
+                                                                            <option value="{{ $hk->id_hubungan }}" @if($kel->id_hubungan == $hk->id_hubungan) selected @endif> 
                                                                                 {{ $hk->nama }}</option>
                                                                             @endforeach
                                                                         </select>
@@ -232,9 +219,9 @@
                                                                         <label for="exampleInputgender">Jenis Kelamin</label>
                                                                         <select class="form-select @error('gender') isinvalid @enderror"
                                                                             id="exampleInputgender" name="gender">
-                                                                            <option value="laki-laki" @if(old('gender')=='laki-laki' )selected @endif>
+                                                                            <option value="laki-laki" @if(old('gender', $kel->gender) == 'laki-laki' ) selected @endif>
                                                                                 Laki-laki</option>
-                                                                            <option value="perempuan" @if(old('gender')=='perempuan' )selected @endif>
+                                                                            <option value="perempuan" @if(old('gender', $kel->gender) == 'perempuan' ) selected @endif>
                                                                                 Perempuan</option>
                                                                         </select>
                                                                         @error('gender') <span class="textdanger">{{$message}}</span> @enderror
@@ -243,9 +230,9 @@
                                                                         <label for="exampleInputstatus">Status</label>
                                                                         <select class="form-select @error('status') isinvalid @enderror"
                                                                             id="exampleInputstatus" name="status">
-                                                                            <option value="hidup" @if(old('status')=='hidup' )selected @endif>Hidup
+                                                                            <option value="hidup" @if(old('status', $kel->status) == 'hidup' ) selected @endif>Hidup
                                                                             </option>
-                                                                            <option value="meninggal" @if(old('status')=='meninggal' )selected @endif>
+                                                                            <option value="meninggal" @if(old('status', $kel->status) == 'meninggal' ) selected @endif>
                                                                                 Meninggal</option>
                                                                         </select>
                                                                         @error('status') <span class="textdanger">{{$message}}</span> @enderror

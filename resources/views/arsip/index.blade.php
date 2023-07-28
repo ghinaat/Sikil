@@ -15,7 +15,9 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                @can('isAdmin')
                                 <th>Nama Pegawai</th>
+                                @endcan
                                 <th>Jenis Arsip</th>
                                 <th>Keterangan</th>
                                 <th>File</th>
@@ -26,7 +28,9 @@
                             @foreach($arsip as $key => $ap)
                             <tr>
                                 <td>{{$key+1}}</td>
+                                @can('isAdmin')
                                 <td>{{$ap->users->nama_pegawai}}</td>
+                                @endcan
                                 <td>{{$ap->jenis}}</td>
                                 <td>{{$ap->keterangan}}</td>
                                 <td id={{$key+1}}>
@@ -57,20 +61,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="exampleModalLabel">Tambah Data Arsip</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body form">
                 <form action="{{ route('arsip.store') }}" method="POST" id="form" class="form-horizontal"
                     enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" value="" name="id">
+                    <input type="hidden" name="id_users" value="{{ Auth::user()->id_users}}">
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="exampleInputUsers">Nama Pegawai</label>
                                         <select class="form-select @error('nama_pegawai') isinvalid @enderror"
                                             id="exampleInputUsers" name="id_users">
@@ -81,7 +85,7 @@
                                             @endforeach
                                         </select>
                                         @error('level') <span class="textdanger">{{$message}}</span> @enderror
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label for="jenis">Jenis Arsip</label>
                                         <input type="text" class="form-control @error('jenis') is-invalid @enderror"
@@ -122,8 +126,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="exampleModalLabel">Edit Data Arsip</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body form">
@@ -131,12 +135,12 @@
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="id" value="{{ $ap->id_arsip }}">
+                    <input type="hidden" name="id_users" value="{{ Auth::user()->id_users}}">
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="exampleInputUsers">Nama Pegawai</label>
                                         <select class="form-select @error('nama_pegawai') isinvalid @enderror"
                                             id="exampleInputUsers" name="id_users">
@@ -148,7 +152,7 @@
                                             @endforeach
                                         </select>
                                         @error('level') <span class="textdanger">{{$message}}</span> @enderror
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label for="jenis">Jenis Arsip</label>
                                         <input type="text" class="form-control @error('jenis') is-invalid @enderror"
