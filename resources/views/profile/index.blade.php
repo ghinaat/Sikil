@@ -16,28 +16,38 @@
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                        <img class="profile-user-img img-fluid img-rounded"
-                            src="{{ asset( 'storage/profile/' . $user->photo)  }}"
-                            alt="User profile picture">
+                            @if ($user->photo === 'no_pp.png')
+                            <img class="profile-user-img img-fluid img-rounded"
+                                src="{{ asset( 'images/' . $user->photo)  }}"
+                                alt="User profile picture">    
+                            @else
+                            <img class="profile-user-img img-fluid img-rounded"
+                                src="{{ asset( 'storage/profile/' . $user->photo)  }}"
+                                alt="User profile picture">
+                            @endif
+        
+                            <h3 class="profile-username text-center">{{ Auth::user()->nama_pegawai }}</h3>
+            
+                            <p class="text-muted text-center">{{ Auth::user()->jabatan->nama_jabatan }}</p>
                         </div>
-        
-                        <h3 class="profile-username text-center">{{ Auth::user()->nama_pegawai }}</h3>
-        
-                        <p class="text-muted text-center">{{ Auth::user()->jabatan->nama_jabatan }}</p>
-        
                     </div>
                 </div>
             </div>
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="{{ route('profile.index') }}">Data Pribadi</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('keluarga.index') }}" >Keluarga</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('profile.pdf') }}" >Unduh CV</a></li>
+                        </ul>
                     <ul class="nav nav-pills">
                         <li class="nav-item"><a class="nav-link active" href="{{ route('profile.index') }}">Data Pribadi</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('keluarga.index') }}" >Keluarga</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('pendidikan.index') }}" >Pendidikan</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('penker.index') }}" >Pengalaman Kerja</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('diklat.index') }}" >Diklat</a></li>
-                        
+                        <li class="nav-item"><a class="nav-link" href="{{ route('profile.pdf') }}" >Unduh CV</a></li>
                     </ul>
                     </div><!-- /.card-header -->
                     <div class="card-body">
@@ -58,14 +68,6 @@
                                             <input type="text" class="form-control @error('jabatan') is-invalid @enderror" id="jabatan" placeholder="jabatan" name="jabatan"
                                                 value="{{ Auth::user()->jabatan->nama_jabatan }}" readonly>
                                             @error('jabatan') <span class="textdanger">{{$message}}</span> @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nip" class='form-label'>NIP</label>
-                                        <div class="form-input">
-                                            <input type="text" class="form-control @error('nip') is-invalid @enderror" id="nip" placeholder="NIP" name="nip"
-                                                value="{{$user->nip ?? old('nip')}}" readonly>
-                                            @error('nip') <span class="textdanger">{{$message}}</span> @enderror
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -416,6 +418,7 @@
         </div>
         <!-- /.row -->
     </div><!-- /.container-fluid -->
+
 </section>
 <!-- /.content -->
 

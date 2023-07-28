@@ -83,8 +83,11 @@ Route::delete('/tingkatpendidikan/{id_tingkat_pendidikan}', [TingkatPendidikanCo
 
 
 // Route::resource('profile', ProfileController::class)->middleware('auth');
-Route::get('/profile', [profileController::class, 'index'])->name('profile.index');
-Route::put('/profile/{id_profile}', [profileController::class, 'update'])->name('profile.update');
+Route::get('/profile', [profileController::class, 'index'])->name('profile.index')->middleware('auth');
+Route::put('/profile/{id_profile}', [profileController::class, 'update'])->name('profile.update')->middleware('auth');
+Route::get('/profile/pdf', [profileController::class, 'createPdf'])->name('profile.pdf')->middleware('auth');
+Route::get('/profile/test', [profileController::class, 'show'])->name('profile.show')->middleware('auth');
+
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/jenisdiklat', [JenisDiklatController::class, 'index'])->name('jenisdiklat.index');
