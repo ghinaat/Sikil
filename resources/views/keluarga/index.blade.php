@@ -17,6 +17,9 @@
                     <ul class="nav nav-pills">
                         <li class="nav-item"><a class="nav-link" href="{{ route('profile.index') }}">Profile</a></li>
                         <li class="nav-item"><a class="nav-link active" href="{{ route('keluarga.index') }}" >Keluarga</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('pendidikan.index') }}" >Pendidikan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('penker.index') }}" >Pengalaman Kerja</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('diklat.index') }}" >Diklat</a></li>
                     </ul>
                     </div><!-- /.card-header -->
                     <div class="card-body">
