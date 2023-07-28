@@ -26,37 +26,36 @@
                                     <div class="col-12">
                                         <div class="card">
                                             <div class="card-body">
-                                                @can('isAdmin')
                                                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
                                                     role="dialog">Tambah</button>
-                                                @endcan
                                                 <div class="table-responsive">
                                                     <table class="table table-hover table-bordered table-stripped" id="example2">
                                                         <thead>
                                                             <tr>
                                                                 <th>No.</th>
+                                                                @can('isAdmin')
                                                                 <th>Nama Pegawai</th>
+                                                                @endcan
                                                                 <th>Hubungan Keluarga</th>
                                                                 <th>Nama Lengkap</th>
                                                                 <th>Tanggal Lahir</th>
-                                                                <th>Gender</th>
+                                                                <th>Jenis Kelamin</th>
                                                                 <th>Status</th>
-                                                                @can('isAdmin')
                                                                 <th>Opsi</th>
-                                                                @endcan
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach($keluarga as $key => $kel)
                                                             <tr>
                                                                 <td>{{$key+1}}</td>
+                                                                @can('isAdmin')
                                                                 <td>{{$kel->users->nama_pegawai}}</td>
+                                                                @endcan
                                                                 <td>{{$kel->hubkel->nama}}</td>
                                                                 <td>{{$kel->nama}}</td>
                                                                 <td>{{$kel->tanggal_lahir}}</td>
                                                                 <td>{{$kel->gender}}</td>
                                                                 <td>{{$kel->status}}</td>
-                                                                @can('isAdmin')
                                                                 <td>
                                                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                                                         data-target="#editModal{{$kel->id_keluarga}}" data-id="{{$kel->id_keluarga}}"
@@ -66,7 +65,6 @@
                                                                         Delete
                                                                     </a>
                                                                 </td>
-                                                                @endcan
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
@@ -77,7 +75,6 @@
                                     </div>
                                 </div>
                                 
-                                @can('isAdmin')
                                 <!-- Modal Tambah Keluarga -->
                                 <div class="modal fade" id="modal_form" role="dialog">
                                     <div class="modal-dialog modal-lg">
@@ -102,8 +99,7 @@
                                                                         <select class="form-select @error('nama_pegawai') isinvalid @enderror"
                                                                             id="exampleInputUsers" name="id_users">
                                                                             @foreach ($users as $user)
-                                                                            <option value="{{ $user->id_users }}" @if( old('id_users')==$user->id_users
-                                                                                )
+                                                                            <option value="{{ $user->id_users }}" @if( old('id_users')==$user->id_users)
                                                                                 selected @endif">
                                                                                 {{ $user->nama_pegawai }}</option>
                                                                             @endforeach
@@ -115,8 +111,7 @@
                                                                         <select class="form-select @error('nama') isinvalid @enderror"
                                                                             id="exampleInputHubkel" name="id_hubungan">
                                                                             @foreach ($hubkel as $hk)
-                                                                            <option value="{{ $hk->id_hubungan }}" @if( old('id_hubungan')==$hk->
-                                                                                id_hubungan )
+                                                                            <option value="{{ $hk->id_hubungan }}" @if( old('id_hubungan')==$hk->id_hubungan )
                                                                                 selected @endif">
                                                                                 {{ $hk->nama }}</option>
                                                                             @endforeach
@@ -137,7 +132,7 @@
                                                                         @error('tanggal_lahir') <span class="textdanger">{{$message}}</span> @enderror
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label for="exampleInputgender">Gender</label>
+                                                                        <label for="exampleInputgender">Jenis Kelamin</label>
                                                                         <select class="form-select @error('gender') isinvalid @enderror"
                                                                             id="exampleInputgender" name="gender">
                                                                             <option value="laki-laki" @if(old('gender')=='laki-laki' )selected @endif>
@@ -231,7 +226,7 @@
                                                                         @error('tanggal_lahir') <span class="textdanger">{{$message}}</span> @enderror
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label for="exampleInputgender">Gender</label>
+                                                                        <label for="exampleInputgender">Jenis Kelamin</label>
                                                                         <select class="form-select @error('gender') isinvalid @enderror"
                                                                             id="exampleInputgender" name="gender">
                                                                             <option value="laki-laki" @if(old('gender')=='laki-laki' )selected @endif>
@@ -266,23 +261,14 @@
                                     </div>
                                 </div>
                                 @endforeach
-                                @endcan
                             </div>
                         </div>
-                    <!-- /.tab-content -->
-                    </div><!-- /.card-body -->
+                    </div>
                 </div>
-                <!-- /.card -->
             </div>
-            <!-- /.col -->
         </div>
-        <!-- /.row -->
-    </div><!-- /.container-fluid -->
+    </div>
 </section>
-<!-- /.content -->
-
-
-
 @stop
 @push('js')
 <form action="" id="delete-form" method="post">
