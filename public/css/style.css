@@ -1,4 +1,3 @@
-
 .form-group {
     display: flex;
     align-items: center;
@@ -16,21 +15,19 @@
 
 .form-input.input-group {
     display: flex;
-  
 }
 
 .form-input.input-group input,
 .form-input.input-group button {
     flex: 2;
-   
 }
 
 .table-left {
     /* Tambahkan gaya untuk mengatur tata letak tabel menjadi ke kiri */
     float: left;
-  }
+}
 
-  body {
+body {
     font-family: Arial, sans-serif;
 }
 
@@ -41,7 +38,6 @@
     /* Lebar tabel */
     margin-top: 30px;
 }
-
 
 /* Gaya untuk label "Data Tim SEAQIL" */
 .label-title {

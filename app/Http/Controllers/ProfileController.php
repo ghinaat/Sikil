@@ -5,9 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Profile;
 use App\Models\TingkatPendidikan;
+use PDF;
 
 class ProfileController extends Controller
 {
+    public function createPdf(){
+        $user = Profile::where('id_users', auth()->user()->id_users)->first();
+        $tingkat_pendidikan = TingkatPendidikan::all();
+
+        $pdf = PDF::loadView('layouts.cv',  [
+            'user' => $user,
+            'tingkat_pendidikans' => $tingkat_pendidikan,
+        ]);
+        // download PDF file with download method
+        return $pdf->download('pdf_file.pdf');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -44,7 +57,13 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        //
+        $user = Profile::where('id_users', auth()->user()->id_users)->first();
+        $tingkat_pendidikan = TingkatPendidikan::all();
+
+        return view('layouts.cv',  [
+            'user' => $user,
+            'tingkat_pendidikans' => $tingkat_pendidikan,
+        ]);
     }
 
     /**
