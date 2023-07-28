@@ -57,13 +57,7 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        $user = Profile::where('id_users', auth()->user()->id_users)->first();
-        $tingkat_pendidikan = TingkatPendidikan::all();
-
-        return view('layouts.cv',  [
-            'user' => $user,
-            'tingkat_pendidikans' => $tingkat_pendidikan,
-        ]);
+        
     }
 
     /**
