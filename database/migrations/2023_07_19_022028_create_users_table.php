@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedInteger('id_jabatan')->nullable();
             $table->enum('level', ['admin', 'kadiv', 'dda','ddo', 'staf']);
             $table->enum('is_deleted', ['0', '1'])->default('0');
-            $table->foreign('id_jabatan')->references('id_jabatan')->on('tb_jabatan')->onDelete('cascade');
+            $table->foreign('id_jabatan')->references('id_jabatan')->on('jabatan')->onDelete('cascade');
             $table->timestamps();
         });
     }

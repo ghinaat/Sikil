@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kegiatan extends Model
 {
     use HasFactory;
-    protected $table = 'tb_kegiatan';
+    protected $table = 'kegiatan';
  
     protected $primaryKey = 'id_kegiatan';
     protected $fillable = [

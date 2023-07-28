@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tim_kegiatan', function (Blueprint $table) {
             $table->increments('id_tim');
             $table->unsignedInteger('id_kegiatan');
-            $table->foreign('id_kegiatan')->references('id_kegiatan')->on('tb_kegiatan')->onDelete('cascade');
+            $table->foreign('id_kegiatan')->references('id_kegiatan')->on('kegiatan')->onDelete('cascade');
             $table->unsignedInteger('id_pegawai');
             $table->foreign('id_pegawai')->references('id_users')->on('users') ->onDelete('cascade');
             $table->unsignedInteger('id_peran');
