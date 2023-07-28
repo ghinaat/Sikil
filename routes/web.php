@@ -112,3 +112,4 @@ Route::resource('arsip', \App\Http\Controllers\ArsipController::class)->middlewa
 Route::resource('penker', \App\Http\Controllers\PengalamanKerjaController::class)->middleware('auth');
 Route::resource('pendidikan', \App\Http\Controllers\PendidikanController::class)->middleware('auth');
 Route::resource('peran', \App\Http\Controllers\PeranController::class)->middleware('auth');
+Route::get('/laporan', [App\Http\Controllers\TimKegiatanController::class, 'laporan'])->name('laporan')->middleware('auth');

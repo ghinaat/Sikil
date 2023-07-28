@@ -352,6 +352,11 @@ return [
                     'url' => '/pendidikan',
                     'can' => '',
                 ],
+                [
+                    'text' => 'Laporan',
+                    'url' => '/laporan',
+                    'can' => '',
+                ],
             ],
         ],
         'ADMIN',

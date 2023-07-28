@@ -87,4 +87,5 @@ class PeranController extends Controller
         }
         return redirect()->route('peran.index')->with('success_message', 'Data telah terhapus');
     }
+
 }

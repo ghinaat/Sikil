@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Kegiatan;
 use App\Models\TimKegiatan;
 use App\Models\User;
+use App\Models\Peran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -32,6 +33,8 @@ class KegiatanController extends Controller
         // Mengambil semua data user yang belum terkait dengan TimKegiatan
         $users = User::where('is_deleted', '0')->get();
 
+        $peran = Peran::where('is_deleted', '0')->get();
+
     
         // Mengambil tim kegiatan yang terkait dengan kegiatan tertentu dengan eager loading untuk relasi user
         $timkegiatan = TimKegiatan::with('user')->where('id_kegiatan', $id_kegiatan)->get();
@@ -39,7 +42,8 @@ class KegiatanController extends Controller
         return view('kegiatan.show', [
             'kegiatan' => $kegiatan,
             'users' => $users,
-            'timkegiatan' => $timkegiatan
+            'timkegiatan' => $timkegiatan,
+            'peran' => $peran
         ]);
     }
    

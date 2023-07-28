@@ -21,8 +21,8 @@ class TimKegiatanController extends Controller
         return view('timkegiatan.index',  [
             'timkegiatan' => $timkegiatan,
             'user' => User::where('is_deleted', '0')->get(),
-            'kegiatan' => Kegiatan::all(),
-            'peran' => Peran::all(),
+            'kegiatan' => Kegiatan::where('is_deleted', '0')->get(),
+            'peran' => Peran::where('is_deleted', '0')->get(),
         ]);
             
     }
@@ -71,7 +71,31 @@ class TimKegiatanController extends Controller
 
     }
 
-   
+    public function laporan(Request $request)
+{
+    $pegawai = $request->input('id_pegawai');
+    $peran = $request->input('id_peran');
+    
+    if ($pegawai && $peran) {
+        $timkegiatan = TimKegiatan::whereIn('id_pegawai', [$pegawai])
+            ->where('id_peran', $peran)
+            ->get();
+    } elseif ($pegawai) {
+        $timkegiatan = TimKegiatan::where('id_pegawai', $pegawai)
+            ->get();
+    } elseif ($peran) {
+        $timkegiatan = TimKegiatan::where('id_peran', $peran)
+            ->get();
+    } else {
+        $timkegiatan = TimKegiatan::get();
+    }
+
+    return view('timkegiatan.laporan', [
+        'timkegiatan' => $timkegiatan,
+        'user' => User::where('is_deleted', '0')->get(),
+        'peran' => Peran::where('is_deleted', '0')->get(),
+    ]);
+}
 
 
 }
