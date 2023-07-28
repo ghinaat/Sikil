@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->hasMany(Pendidikan::class, 'id_users', 'id_users');
     }
 
+    public function keluarga()
+    {
+        return $this->hasMany(Keluarga::class, 'id_users', 'id_users');
+    }
+
 
     protected $primaryKey = 'id_users';
 
