@@ -5,13 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Arsip;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArsipController extends Controller
 {
     public function index()
     {
-        //Menampilkan Data Arsip
-        $arsip = Arsip::where('is_deleted', '0')->get();
+        $user = Auth::user();
+    
+        if ($user->level == "admin") {
+            // Fetch all work experiences for admin
+            $arsip = Arsip::where('is_deleted', '0')->get();
+        } else {
+            // Fetch user's own work experiences using the relationship
+            $arsip = $user->arsip()->where('is_deleted', '0')->get();
+        }
+    
         return view('arsip.index', [
             'arsip' => $arsip,
             'users' => User::where('is_deleted', '0')->get(),
@@ -21,10 +30,10 @@ class ArsipController extends Controller
     public function create()
     {
         //Menampilkan Form Tambah Arsip
-        return view(
-            'arsip.create', [
-            'users' => User::where('is_deleted', '0')->get(),
-        ]);
+        // return view(
+        //     'arsip.create', [
+        //     'users' => User::where('is_deleted', '0')->get(),
+        // ]);
 
     }
 

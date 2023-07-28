@@ -49,6 +49,11 @@ class User extends Authenticatable
         return $this->hasMany(Keluarga::class, 'id_users', 'id_users');
     }
 
+    public function arsip()
+    {
+        return $this->hasMany(Arsip::class, 'id_users', 'id_users');
+    }
+
 
     protected $primaryKey = 'id_users';
 

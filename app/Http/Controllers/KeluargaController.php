@@ -33,11 +33,11 @@ class KeluargaController extends Controller
     public function create()
     {
         //Menampilkan Form Tambah Keluarga
-        return view(
-            'keluarga.create', [
-            'users' => User::where('is_deleted', '0')->get(),
-            'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get()
-        ]);
+        // return view(
+        //     'keluarga.create', [
+        //     'users' => User::where('is_deleted', '0')->get(),
+        //     'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get()
+        // ]);
     }
 
     public function store(Request $request)
@@ -95,7 +95,7 @@ class KeluargaController extends Controller
         $keluarga->nama = $request->nama;
         $keluarga->tanggal_lahir = $request->tanggal_lahir;
         $keluarga->gender = $request->gender;
-        $keluarga->status = $request->id_users;
+        $keluarga->status = $request->status;
         $keluarga->save();
         return redirect()->route('keluarga.index') ->with('success_message', 'Data telah tersimpan');
     } 
