@@ -85,7 +85,7 @@
 
                                 <td>{{$tk->user->nama_pegawai}}</td>
                                 <td>{{ $tk->user->jabatan->nama_jabatan }}</td>
-                                <td>{{$tk->peran}}</td>
+                                <td>{{$tk->peran->nama_peran}}</td>
                                 <td> <a href="{{route('timkegiatan.destroy', $tk->id_tim)}}"
                                         onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
                                         class="btn btn-danger btn-xs">
@@ -179,10 +179,18 @@ btn-primary ">
 
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label col-md-6">Peran</label>
-                                <input type="text" class="form-control @error('peran') is-invalid @enderror" id="peran"
-                                    placeholder="Peran" name="peran" value="{{old('peran')}}">
-                                @error('peran') <span class="textdanger">{{$message}}</span> @enderror
+                                <label for="id_peran">Peran</label>
+                                <select class="form-select @error('nama') isinvalid @enderror" id="id_peran"
+                                    name="id_peran">
+                                    @foreach ($peran as $p)
+                                    <option value="{{ $p->id_peran }}" @if( old('id_peran')==$p->
+                                        id_peran )
+                                        selected @endif">
+                                        {{ $p->nama_peran }}</option>
+                                    @endforeach
+                                </select>
+                                @error('level') <span class="textdanger">{{$message}}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>

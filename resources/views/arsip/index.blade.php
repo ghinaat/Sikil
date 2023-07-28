@@ -8,10 +8,8 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                @can('isAdmin')
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
                     role="dialog">Tambah</button>
-                @endcan
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
@@ -21,9 +19,7 @@
                                 <th>Jenis Arsip</th>
                                 <th>Keterangan</th>
                                 <th>File</th>
-                                @can('isAdmin')
                                 <th>Opsi</th>
-                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -37,7 +33,6 @@
                                     <a href="{{ asset('/storage/Arsip/'. $ap->file) }}"
                                         target="_blank">Lihat Dokumen</a>
                                 </td>
-                                @can('isAdmin')
                                 <td>
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                         data-target="#editModal{{$ap->id_arsip}}" data-id="{{$ap->id_arsip}}">Edit</a>
@@ -46,7 +41,6 @@
                                         Delete
                                     </a>
                                 </td>
-                                @endcan
                             </tr>
                             @endforeach
                         </tbody>
@@ -57,7 +51,6 @@
     </div>
 </div>
 
-@can('isAdmin')
 <!-- Modal Tambah Arsip -->
 <div class="modal fade" id="modal_form" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -191,7 +184,6 @@
     </div>
 </div>
 @endforeach
-@endcan
 @stop
 @push('js')
 <form action="" id="delete-form" method="post">

@@ -101,7 +101,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/diklat', [DiklatController::class, 'store'])->name('diklat.store')->middleware('isAdmin');
     Route::put('/diklat/{id_diklat}', [DiklatController::class, 'update'])->name('diklat.update')->middleware('isAdmin');
     Route::delete('/diklat/{id_diklat}', [DiklatController::class, 'destroy'])->name('diklat.destroy')->middleware('isAdmin');
-});
+}); 
 
 
 
@@ -111,3 +111,4 @@ Route::resource('keluarga', \App\Http\Controllers\KeluargaController::class)->mi
 Route::resource('arsip', \App\Http\Controllers\ArsipController::class)->middleware('auth');
 Route::resource('penker', \App\Http\Controllers\PengalamanKerjaController::class)->middleware('auth');
 Route::resource('pendidikan', \App\Http\Controllers\PendidikanController::class)->middleware('auth');
+Route::resource('peran', \App\Http\Controllers\PeranController::class)->middleware('auth');
