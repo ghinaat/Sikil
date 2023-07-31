@@ -31,12 +31,12 @@ class TimKegiatanController extends Controller
     { 
         $request->validate([
         'id_kegiatan' => 'required', 
-        'id_pegawai' => 'required', 
+        'id_users' => 'required', 
         'id_peran' => 'required', 
         ]);
         $array = $request->only([
             'id_kegiatan',
-            'id_pegawai' ,
+            'id_users' ,
             'id_peran' ,
         
         ]);
@@ -50,13 +50,13 @@ class TimKegiatanController extends Controller
  
         $request->validate([
             'id_kegiatan' => 'required', 
-            'id_pegawai' => 'required', 
+            'id_users' => 'required', 
             'id_peran' => 'required', 
         ]);
         
         $timkegiatan = TimKegiatan::find($id_tim);
         $timkegiatan->id_kegiatan = $request->id_kegiatan;
-        $timkegiatan->id_pegawai = $request->id_pegawai;
+        $timkegiatan->id_users = $request->id_users;
         $timkegiatan->id_peran = $request->id_peran;
         $timkegiatan->save();
         return redirect()->route('timkegiatan.index') ->with('success_message', 'Data telah tersimpan');

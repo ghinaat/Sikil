@@ -8,7 +8,9 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
+
             @include('partials.nav-pills-profile')
+
             <div class="card-body">
                 <div class="table-responsive">
 
@@ -135,6 +137,9 @@ table-stripped" id="example2">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="ijazah">Surat Pengalaman</label>
+                                                    <small class="form-text text-muted">Allow file extensions : .jpeg
+                                                        .jpg .png .pdf
+                                                        .docx</small>
                                                     @if ($pd->ijazah)
                                                     <p>Previous File: <a
                                                             href="{{ asset('/storage/pendidikan/' . $pd->ijazah) }}"
@@ -147,7 +152,7 @@ table-stripped" id="example2">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <a href="{{route('pendidikan.index')}}" class="btn btn-default">
+                                                    <a href="{{route('pendidikan.index')}}" class="btn btn-danger">
                                                         Batal
                                                     </a>
                                                 </div>
@@ -226,6 +231,9 @@ table-stripped" id="example2">
                     </div>
                     <div class="form-group">
                         <label for="ijazah">Surat Pengalaman</label>
+                        <small class="form-text text-muted">Allow file extensions : .jpeg
+                            .jpg .png .pdf
+                            .docx</small>
                         <input type="file" name="ijazah" id="ijazah" class="form-control"> @error('ijazah')
                         <span class="textdanger">{{$message}}</span> @enderror
                     </div>
