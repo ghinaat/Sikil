@@ -141,14 +141,15 @@
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="exampleInputstatus">Status</label>
-                                                                        <select class="form-select @error('status') isinvalid @enderror"
-                                                                            id="exampleInputstatus" name="status">
-                                                                            <option value="hidup" @if(old('status')=='hidup' )selected @endif>Hidup
-                                                                            </option>
-                                                                            <option value="meninggal" @if(old('status')=='meninggal' )selected @endif>
-                                                                                Meninggal</option>
-                                                                        </select>
-                                                                        @error('status') <span class="textdanger">{{$message}}</span> @enderror
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="radio" name="status" value="hidup" id="hidupRadio">
+                                                                            <label class="form-check-label" for="hidupRadio">Hidup</label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="radio" name="status" value="meninggal" id="meninggalRadio">
+                                                                            <label class="form-check-label" for="meninggalRadio">Meninggal</label>
+                                                                        </div>
+                                                                        @error('status') <span class="text-danger">{{ $message }}</span> @enderror
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -228,14 +229,15 @@
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="exampleInputstatus">Status</label>
-                                                                        <select class="form-select @error('status') isinvalid @enderror"
-                                                                            id="exampleInputstatus" name="status">
-                                                                            <option value="hidup" @if(old('status', $kel->status) == 'hidup' ) selected @endif>Hidup
-                                                                            </option>
-                                                                            <option value="meninggal" @if(old('status', $kel->status) == 'meninggal' ) selected @endif>
-                                                                                Meninggal</option>
-                                                                        </select>
-                                                                        @error('status') <span class="textdanger">{{$message}}</span> @enderror
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="radio" name="status" value="hidup" id="hidupRadio">
+                                                                            <label class="form-check-label" for="hidupRadio">Hidup</label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="radio" name="status" value="meninggal" id="meninggalRadio">
+                                                                            <label class="form-check-label" for="meninggalRadio">Meninggal</label>
+                                                                        </div>
+                                                                        @error('status') <span class="text-danger">{{ $message }}</span> @enderror
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -279,5 +281,4 @@
     }
 
 </script>
-
 @endpush

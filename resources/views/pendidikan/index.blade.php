@@ -143,7 +143,7 @@ table-stripped" id="example2">
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="ijazah">Surat Pengalaman</label>
+                                                    <label for="ijazah">Ijazah Kelulusan</label>
                                                     @if ($pd->ijazah)
                                                     <p>Previous File: <a
                                                             href="{{ asset('/storage/pendidikan/' . $pd->ijazah) }}"
@@ -234,7 +234,7 @@ table-stripped" id="example2">
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="ijazah">Surat Pengalaman</label>
+                        <label for="ijazah">Ijazah Kelulusan</label>
                         <input type="file" name="ijazah" id="ijazah" class="form-control"> @error('ijazah')
                         <span class="textdanger">{{$message}}</span> @enderror
                     </div>
