@@ -14,7 +14,7 @@ class TimKegiatan extends Model
     protected $primaryKey = 'id_tim';
     protected $fillable = [
         'id_kegiatan',
-        'id_pegawai',
+        'id_users',
         'id_peran',
         
   
@@ -31,7 +31,7 @@ class TimKegiatan extends Model
         }
 
     public function user(){
-            return $this->belongsTo(User::class, 'id_pegawai', 'id_users'
+            return $this->belongsTo(User::class, 'id_users', 'id_users'
         );
             }
 }

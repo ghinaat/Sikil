@@ -34,8 +34,8 @@
                                 <td>{{$ap->jenis}}</td>
                                 <td>{{$ap->keterangan}}</td>
                                 <td id={{$key+1}}>
-                                    <a href="{{ asset('/storage/Arsip/'. $ap->file) }}"
-                                        target="_blank">Lihat Dokumen</a>
+                                    <a href="{{ asset('/storage/Arsip/'. $ap->file) }}" target="_blank">Lihat
+                                        Dokumen</a>
                                 </td>
                                 <td>
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
@@ -101,6 +101,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="file">File</label><br>
+                                        <small class="form-text text-muted">Allow file extensions : .jpeg
+                                            .jpg .png .pdf
+                                            .docx</small>
                                         <input type="file" name="file" id="file"
                                             accept=".jpg, .jpeg, .png, .pdf, .doc, .docx" required> @error('file')<span
                                             class="textdanger">{{ $message }}</span>@enderror
@@ -163,11 +166,15 @@
                                         <label for="keterangan">Keterangan</label>
                                         <input type="text"
                                             class="form-control @error('keterangan') is-invalid @enderror"
-                                            id="keterangan" name="keterangan" value="{{$ap->keterangan ??old('keterangan')}}">
+                                            id="keterangan" name="keterangan"
+                                            value="{{$ap->keterangan ??old('keterangan')}}">
                                         @error('keterangan')<span class="textdanger">{{ $message }}</span>@enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="file">File</label><br>
+                                        <small class="form-text text-muted">Allow file extensions : .jpeg
+                                            .jpg .png .pdf
+                                            .docx</small>
                                         <p>Previous File: <a href="{{ asset('/storage/Arsip/'. $ap->file) }}"
                                                 target="_blank">{{ $ap->file }}</a></p>
                                         <input type="file" name="file" id="file"
@@ -195,17 +202,16 @@
     @csrf
 </form>
 <script>
-    $('#example2').DataTable({
-        "responsive": true,
-    });
+$('#example2').DataTable({
+    "responsive": true,
+});
 
-    function notificationBeforeDelete(event, el) {
-        event.preventDefault();
-        if (confirm('Apakah anda yakin akan menghapus data ? ')) {
-            $("#delete-form").attr('action', $(el).attr('href'));
-            $("#delete-form").submit();
-        }
+function notificationBeforeDelete(event, el) {
+    event.preventDefault();
+    if (confirm('Apakah anda yakin akan menghapus data ? ')) {
+        $("#delete-form").attr('action', $(el).attr('href'));
+        $("#delete-form").submit();
     }
-
+}
 </script>
 @endpush
