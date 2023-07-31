@@ -11,37 +11,43 @@
                 <div class="card-body">
                     <form method="get" action="{{ route('laporan') }}" class="form-inline">
                         <div class="col-md-12">
-                            <div class="form-group ">
-                                <label class="control-label " for="id_pegawai">Nama Pegawai</label>
+                            <div class="form-group">
+                                <label class="control-label" for="id_pegawai">Nama Pegawai</label>
                                 <select id="id_pegawai" name="id_pegawai"
                                     class="form-select @error('id_pegawai') is-invalid @enderror">
-                                    @foreach ($user as $us)
-                                    <option value="{{ $us->id_users }}" @if(old('id_pegawai')==$us->id_users) selected
-                                        @endif>
-                                        {{ $us->nama_pegawai }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-2">
-                            <div class="form-group ">
-                                <label for="id_peran">Peran</label>
-                                <select id="id_peran" name="id_peran"
-                                    class="form-select @error('id_peran') is-invalid @enderror">
-                                    @foreach ($peran as $p)
-                                    <option value="{{ $p->id_peran }}" @if(old('id_peran')==$p->id_peran) selected
-                                        @endif>
-                                        {{ $p->nama_peran }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
 
-                        <button type="submit" class="btn btn-primary mb-2">
-                            <i class="fa fa-filter"></i> &nbsp; Filter
-                        </button>
+                                    <!-- Tambahkan opsi All dengan value 0 -->
+                                    <option value="0" @if(old('id_pegawai')==0) selected @endif>All</option>
+                                    @foreach ($user as $us)
+                                    @if ($us->id_users == request('user'))
+                                    <option value="{{ $us->id_users }}" selected> {{ $us->nama_pegawai }}</option>
+                                    @else
+                                    <option value="{{ $us->id_users }}"> {{ $us->nama_pegawai }}</option>
+                                    @endif
+
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group">
+                                    <label for="id_peran">Peran</label>
+                                    <select id="id_peran" name="id_peran"
+                                        class="form-select @error('id_peran') is-invalid @enderror">
+                                        <!-- Tambahkan opsi All dengan value 0 -->
+                                        <option value="0" @if(old('id_peran')==0) selected @endif>All</option>
+                                        @foreach ($peran as $p)
+                                        <option value="{{ $p->id_peran }}" @if(old('id_peran')==$p->id_peran) selected
+                                            @endif>
+                                            {{ $p->nama_peran }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary mb-2">
+                                <i class="fa fa-filter"></i> &nbsp; Filter
+                            </button>
                     </form>
 
 

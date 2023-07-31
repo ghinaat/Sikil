@@ -75,8 +75,9 @@ class TimKegiatanController extends Controller
 {
     $pegawai = $request->input('id_pegawai');
     $peran = $request->input('id_peran');
-    
-    if ($pegawai && $peran) {
+    if ($pegawai == 0) {
+        $timkegiatan = TimKegiatan::get();   
+}elseif ($pegawai && $peran && $peran != 0) {
         $timkegiatan = TimKegiatan::whereIn('id_pegawai', [$pegawai])
             ->where('id_peran', $peran)
             ->get();
@@ -86,7 +87,11 @@ class TimKegiatanController extends Controller
     } elseif ($peran) {
         $timkegiatan = TimKegiatan::where('id_peran', $peran)
             ->get();
-    } else {
+    } elseif ($peran == 0) {
+    // Jika memilih "All", ambil semua data dengan id_pegawai tertentu tanpa memperdulikan id_peran.
+    $timkegiatan = TimKegiatan::where('id_pegawai', $pegawai)
+        ->get();
+} else {
         $timkegiatan = TimKegiatan::get();
     }
 
