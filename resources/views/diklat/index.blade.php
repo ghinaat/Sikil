@@ -7,15 +7,16 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-        <div class="card-header p-2">
-                    <ul class="nav nav-pills">
-                        <li class="nav-item"><a class="nav-link" href="{{ route('profile.index') }}">Profile</a></li>
-                        <li class="nav-item"><a class="nav-link " href="{{ route('keluarga.index') }}" >Keluarga</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('pendidikan.index') }}" >Pendidikan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('penker.index') }}" >Pengalaman Kerja</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="{{ route('diklat.index') }}" >Diklat</a></li>
-                    </ul>
-                    </div><!-- /.card-header -->
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('profile.index') }}">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link " href="{{ route('keluarga.index') }}">Keluarga</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('pendidikan.index') }}">Pendidikan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('penker.index') }}">Pengalaman Kerja</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ route('diklat.index') }}">Diklat</a></li>
+                </ul>
+            </div><!-- /.card-header -->
             <div class="card-body">
 
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
@@ -53,7 +54,7 @@
                                 <td id={{$key+1}}>{{$dk->tanggal_diklat}}</td>
                                 <td id={{$key+1}}>{{$dk->jp}}</td>
                                 <td id={{$key+1}}>
-                                    <a href="{{ asset('/storage/Sertifikat/'. $dk->file_sertifikat) }}"
+                                    <a href="{{ asset('/storage/File Sertifikat/'. $dk->file_sertifikat) }}"
                                         target="_blank">Lihat Dokumen</a>
                                 </td>
                                 <td>
@@ -153,19 +154,18 @@
                                                         .docx</small>
                                                     @if ($dk->file_sertifikat)
                                                     <p>Previous File: <a
-                                                            href="{{ asset('/storage/Sertifikat/' . $dk->file_sertifikat) }}"
+                                                            href="{{ asset('/storage/File Sertifikat/' . $dk->file_sertifikat) }}"
                                                             target="_blank">{{ $dk->file_sertifikat }}</a></p>
                                                     @endif
                                                     <input type="file" class="form-control" id="file_sertifikat"
-                                                        enctype="multipart/form-data"
-                                                        accept="image/*,.pdf, .doc, .docx, .png, .jpg, .jpeg"
-                                                        name="file_sertifikat" @error('file_sertifikat') <span
-                                                        class="invalid" role="alert">{{$message}}</span>
+                                                        enctype="multipart/form-data" name="file_sertifikat"
+                                                        @error('file_sertifikat') <span class="invalid"
+                                                        role="alert">{{$message}}</span>
                                                     @enderror
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <a href="{{route('kegiatan.index')}}" class="btn btn-default">
+                                                    <a href="{{route('kegiatan.index')}}" class="btn btn-danger">
                                                         Batal
                                                     </a>
                                                 </div>
@@ -239,9 +239,8 @@
                                 <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf
                                     .docx</small>
                                 <input type="file" class="form-control" id="file_sertifikat"
-                                    enctype="multipart/form-data" accept="image/*,.pdf, .doc, .docx, .png, .jpg, .jpeg"
-                                    name="file_sertifikat" @error('file_sertifikat') <span class="invalid"
-                                    role="alert">{{$message}}</span>
+                                    enctype="multipart/form-data" name="file_sertifikat" @error('file_sertifikat') <span
+                                    class="invalid" role="alert">{{$message}}</span>
                                 @enderror
                             </div>
                         </div>
