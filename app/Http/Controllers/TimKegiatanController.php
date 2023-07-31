@@ -73,19 +73,28 @@ class TimKegiatanController extends Controller
 
     public function laporan(Request $request)
 {
+   
     $pegawai = $request->input('id_users');
     $peran = $request->input('id_peran');
+    
+   
+    // Store the selected values in session
+    session()->put('selected_id_users', $pegawai);
+    session()->put('selected_id_peran', $peran);
     
     if ($pegawai && $peran && $peran != 0) {
         $timkegiatan = TimKegiatan::whereIn('id_users', [$pegawai])
             ->where('id_peran', $peran)
             ->get();
+  
     } elseif ($pegawai) {
         $timkegiatan = TimKegiatan::where('id_users', $pegawai)
             ->get();
     } elseif ($peran) {
         $timkegiatan = TimKegiatan::where('id_peran', $peran)
             ->get();
+        
+   
     } else {
         $timkegiatan = TimKegiatan::get();
     }

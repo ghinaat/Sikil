@@ -69,6 +69,7 @@
                 <form action="{{ route('timkegiatan.store') }}" method="POST" id="form" class="form-horizontal"
                     enctype="multipart/form-data">
                     @csrf
+
                     <input type="hidden" value="" name="id">
                     <div class="form-body">
                         <div class="row">
