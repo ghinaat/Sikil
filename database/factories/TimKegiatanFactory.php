@@ -18,7 +18,7 @@ class TimKegiatanFactory extends Factory
     {
         return [
             'id_kegiatan' => random_int(1,40), 
-            'id_pegawai' => random_int(1,12), 
+            'id_users' => random_int(1,12), 
             'id_peran' => random_int(1,2), 
         ];
     }
