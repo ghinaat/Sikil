@@ -8,17 +8,8 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header p-2">
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('profile.index') }}">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link " href="{{ route('keluarga.index') }}">Keluarga</a></li>
-                    <li class="nav-item"><a class="nav-link active"
-                            href="{{ route('pendidikan.index') }}">Pendidikan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('penker.index') }}">Pengalaman Kerja</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('diklat.index') }}">Diklat</a></li>
-                </ul>
-            </div><!-- /.card-header -->
+
+            @include('partials.nav-pills-profile')
 
             <div class="card-body">
                 <div class="table-responsive">

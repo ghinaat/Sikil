@@ -13,15 +13,7 @@
         <div class="row">
             <div class="col">
                 <div class="card">
-                    <div class="card-header p-2">
-                    <ul class="nav nav-pills">
-                        <li class="nav-item"><a class="nav-link" href="{{ route('profile.index') }}">Profile</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="{{ route('keluarga.index') }}" >Keluarga</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('pendidikan.index') }}" >Pendidikan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('penker.index') }}" >Pengalaman Kerja</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('diklat.index') }}" >Diklat</a></li>
-                    </ul>
-                    </div><!-- /.card-header -->
+                    @include('partials.nav-pills-profile')
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="active tab-pane" id="data-pribadi">
