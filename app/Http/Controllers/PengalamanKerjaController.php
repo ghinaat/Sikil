@@ -12,23 +12,34 @@ class PengalamanKerjaController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    if ($user->level == "admin") {
-        // Fetch all work experiences for admin
-        $penker = PengalamanKerja::where('is_deleted', '0')->get();
-    } else {
-        // Fetch user's own work experiences using the relationship
-        $penker = $user->pengalamanKerja()->where('is_deleted', '0')->get();
+        if ($user->level == "admin") {
+            // Fetch all work experiences for admin
+            $penker = PengalamanKerja::where('is_deleted', '0')->get();
+        } else {
+            // Fetch user's own work experiences using the relationship
+            $penker = $user->pengalamanKerja()->where('is_deleted', '0')->get();
+        }
+
+        return view('pengalamankerja.index', [
+            'penker' => $penker,
+        ]);
     }
+    
+    public function showAdmin(Request $request, $id_users)
+    {
+        $user = User::where('id_users', $id_users)->first();
 
-    return view('pengalamankerja.index', [
-        'penker' => $penker,
-    ]);
-}
-    
-    
+        
+        $penker = $user->pengalamanKerja()->where('is_deleted', '0')->get();
+
+        return view('pengalamankerja.index', [
+            'id_users' => $id_users,
+            'penker' => $penker,
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
