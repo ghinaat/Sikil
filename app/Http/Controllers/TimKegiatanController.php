@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 class TimKegiatanController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('isAdmin', ['except' => ['index']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('isAdmin', ['except' => ['index']]);
+    // }
     
     public function index()
     {
@@ -73,25 +73,20 @@ class TimKegiatanController extends Controller
 
     public function laporan(Request $request)
 {
-    $pegawai = $request->input('id_pegawai');
+    $pegawai = $request->input('id_users');
     $peran = $request->input('id_peran');
-    if ($pegawai == 0) {
-        $timkegiatan = TimKegiatan::get();   
-}elseif ($pegawai && $peran && $peran != 0) {
-        $timkegiatan = TimKegiatan::whereIn('id_pegawai', [$pegawai])
+    
+    if ($pegawai && $peran && $peran != 0) {
+        $timkegiatan = TimKegiatan::whereIn('id_users', [$pegawai])
             ->where('id_peran', $peran)
             ->get();
     } elseif ($pegawai) {
-        $timkegiatan = TimKegiatan::where('id_pegawai', $pegawai)
+        $timkegiatan = TimKegiatan::where('id_users', $pegawai)
             ->get();
     } elseif ($peran) {
         $timkegiatan = TimKegiatan::where('id_peran', $peran)
             ->get();
-    } elseif ($peran == 0) {
-    // Jika memilih "All", ambil semua data dengan id_pegawai tertentu tanpa memperdulikan id_peran.
-    $timkegiatan = TimKegiatan::where('id_pegawai', $pegawai)
-        ->get();
-} else {
+    } else {
         $timkegiatan = TimKegiatan::get();
     }
 
