@@ -10,33 +10,61 @@ SIKLIS merupakan suatu sistem informasi yang digunakan untuk mengelola data pega
 
 ## Pengunaan
 
-1. Clone repo ini
+1. Fork repo ini
+2. Clone repo milikmu
 
 ```bash
 git clone https://github.com/[USERNAME]/Sikil.git
 ```
 
-2. Install dependesi composer
+3. Install dependesi composer
 
 ```bash
 composer install
 ```
 
-3. Siapkan environment variable
+4. Siapkan environment variable
 
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
-4. Migrasi dan Seed
+5. Migrasi dan Seed
 
 ```bash
 php artisan migrate --seed
 ```
 
-5. Jalankan aplikasi
+6. Jalankan aplikasi
 
 ```bash
 php artisan serve
 ```
+
+## Kontribusi
+
+Berikut adalah tahap-tahap untuk mengembakan fitur terbaru dan berktrbusi dalam proyek ini.
+
+1. Fork repo ini
+2. Clone milikmu fork
+3. Checkout branch baru
+
+```bash
+git checkout YOUR-NEW-FEATURE
+```
+
+4. Lakukan beberapa pekerjaan
+5. Commit
+
+```bash
+git commit -m "[Your message] -yourname"
+```
+
+6. Push branch milikmu ke fork milikmu
+
+```bash
+git push -u origin --set-upstream YOUR-NEW-FEATURE
+```
+
+7. Pergi ke github UI dan buat a PR dari fork milikmu dan branch, dan merge dengan MAIN upstream kita

@@ -5,8 +5,13 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use App\Models\Jabatan;
-use App\Models\Profile;
 use App\Models\TingkatPendidikan;
+use App\Models\JenisDiklat;
+use App\Models\HubunganKeluarga;
+use App\Models\Kegiatan;
+use App\Models\peran;
+use App\Models\TimKegiatan;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,13 +21,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         Jabatan::create([
             'nama_jabatan' => 'Admin',
         ]);
@@ -31,8 +29,55 @@ class DatabaseSeeder extends Seeder
             'nama_jabatan' => 'Direktur',
         ]);
 
+        Jabatan::create([
+            'nama_jabatan' => 'Staf',
+        ]);
+
         TingkatPendidikan::create([
-            'nama_tingkat_pendidikan' => 'Sarjana Terapan'
+            'nama_tingkat_pendidikan' => 'Sarjana'
+        ]);
+
+        TingkatPendidikan::create([
+            'nama_tingkat_pendidikan' => 'Magister'
+        ]);
+        
+        TingkatPendidikan::create([
+            'nama_tingkat_pendidikan' => 'Doktor'
+        ]);
+
+        JenisDiklat::create([
+            'nama_jenis_diklat' => 'Diklat kepemimpinan'
+        ]);
+        
+        JenisDiklat::create([
+            'nama_jenis_diklat' => 'Diklat Fungsional'
+        ]);
+        
+        JenisDiklat::create([
+            'nama_jenis_diklat' => 'Diklat Teknis'
+        ]);
+
+        HubunganKeluarga::create([
+            'urutan' => '1',
+            'nama' => 'Ibu',
+        ]);
+
+        HubunganKeluarga::create([
+            'urutan' => '2',
+            'nama' => 'Ayah',
+        ]);
+
+        HubunganKeluarga::create([
+            'urutan' => '3',
+            'nama' => 'Anak Kandung',
+        ]);
+
+        peran::create([
+            'nama_peran' => 'Pembawa Acara',
+        ]);
+
+        peran::create([
+            'nama_peran' => 'Panitia',
         ]);
 
         User::create([
@@ -54,5 +99,19 @@ class DatabaseSeeder extends Seeder
             'id_jabatan' => '1',
             'is_deleted' => '1'
         ]);
+
+        User::create([
+            'nama_pegawai' => 'kevin',
+            'email' => 'kevin@gmail.com',
+            'password' => '12345678',
+            '_password_' => '12345678',
+            'level' => 'staf',
+            'id_jabatan' => '2',
+            'is_deleted' => '0'
+        ]);
+
+        User::factory(10)->create();
+        Kegiatan::factory(40)->create();
+        TimKegiatan::factory(40)->create();
     }
 }
