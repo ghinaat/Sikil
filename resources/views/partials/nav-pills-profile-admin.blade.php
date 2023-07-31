@@ -40,6 +40,6 @@
             <li class="nav-item"><a class="nav-link active" href="{{ route('diklat.showAdmin', $id_users) }}" >Diklat</a></li>
         @endif
 
-        <li class="nav-item"><a class="nav-link" href="{{ route('profile.pdf') }}" >Unduh CV</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('profile.pdfAdmin', $id_users) }}" >Unduh CV</a></li>
     </ul>
 </div><!-- /.card-header -->
