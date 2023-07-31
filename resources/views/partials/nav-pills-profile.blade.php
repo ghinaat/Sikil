@@ -1,6 +1,6 @@
 <div class="card-header p-2">
     <ul class="nav nav-pills">
-        @if (Route::currentRouteName() === 'profile.index' or Route::currentRouteName() === 'user.showAdmin' )
+        @if (Route::currentRouteName() === 'profile.index')
             <li class="nav-item"><a class="nav-link active" href="{{ route('profile.index') }}">Data Pribadi</a></li>
         @else
             <li class="nav-item"><a class="nav-link" href="{{ route('profile.index') }}">Data Pribadi</a></li>
@@ -18,7 +18,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('pendidikan.index') }}" >Pendidikan</a></li>
         @endif
 
-        @if (Route::currentRouteName() === 'panker.index')
+        @if (Route::currentRouteName() === 'penker.index')
             <li class="nav-item"><a class="nav-link active" href="{{ route('penker.index') }}" >Pengalaman Kerja</a></li>
         @else
             <li class="nav-item"><a class="nav-link" href="{{ route('penker.index') }}" >Pengalaman Kerja</a></li>

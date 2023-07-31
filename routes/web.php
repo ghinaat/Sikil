@@ -5,6 +5,9 @@ use App\Http\Controllers\JenisDiklatController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\TimKegiatanController;
+use App\Http\Controllers\KeluargaController;
+use App\Http\Controllers\PendidikanController;
+use App\Http\Controllers\PengalamanKerjaController;
 use App\Models\JenisDiklat;
 use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\ProfileController;
@@ -99,7 +102,8 @@ Route::group(['middleware' => ['auth']], function() {
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/diklat', [DiklatController::class, 'index'])->name('diklat.index');
-    Route::post('/diklat', [DiklatController::class, 'store'])->name('diklat.store')->middleware('isAdmin');
+    Route::get('/diklat/{id_users}/profile', [DiklatController::class, 'showAdmin'])->name('diklat.showAdmin');
+    Route::post('/diklat', [DiklatController::class, 'store'])->name('diklat.store');
     Route::put('/diklat/{id_diklat}', [DiklatController::class, 'update'])->name('diklat.update')->middleware('isAdmin');
     Route::delete('/diklat/{id_diklat}', [DiklatController::class, 'destroy'])->name('diklat.destroy')->middleware('isAdmin');
 }); 
@@ -107,10 +111,20 @@ Route::group(['middleware' => ['auth']], function() {
 
 
 Route::resource('timkegiatan', \App\Http\Controllers\TimKegiatanController::class)->middleware('auth');
+
 Route::resource('hubkel', \App\Http\Controllers\HubunganKeluargaController::class)->middleware('auth');
+
+Route::get('keluarga/{id_users}/profile', [KeluargaController::class, 'showAdmin'])->name('keluarga.showAdmin')->middleware('auth');
 Route::resource('keluarga', \App\Http\Controllers\KeluargaController::class)->middleware('auth');
+
 Route::resource('arsip', \App\Http\Controllers\ArsipController::class)->middleware('auth');
+
+Route::get('penker/{id_users}/profile', [PengalamanKerjaController::class, 'showAdmin'])->name('penker.showAdmin')->middleware('auth');
 Route::resource('penker', \App\Http\Controllers\PengalamanKerjaController::class)->middleware('auth');
+
+Route::get('pendidikan/{id_users}/profile', [PendidikanController::class, 'showAdmin'])->name('pendidikan.showAdmin')->middleware('auth');
 Route::resource('pendidikan', \App\Http\Controllers\PendidikanController::class)->middleware('auth');
+
 Route::resource('peran', \App\Http\Controllers\PeranController::class)->middleware('auth');
+
 Route::get('/laporan', [App\Http\Controllers\TimKegiatanController::class, 'laporan'])->name('laporan')->middleware('auth');

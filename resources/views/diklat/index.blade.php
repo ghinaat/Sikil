@@ -7,16 +7,11 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header p-2">
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('profile.index') }}">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link " href="{{ route('keluarga.index') }}">Keluarga</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('pendidikan.index') }}">Pendidikan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('penker.index') }}">Pengalaman Kerja</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link active" href="{{ route('diklat.index') }}">Diklat</a></li>
-                </ul>
-            </div><!-- /.card-header -->
+            @if (Route::currentRouteName() === 'diklat.showAdmin')
+                @include('partials.nav-pills-profile-admin', ['id_users' => $id_users])
+            @else
+                @include('partials.nav-pills-profile')
+            @endcan
             <div class="card-body">
 
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
