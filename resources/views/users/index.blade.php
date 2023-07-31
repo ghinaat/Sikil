@@ -37,6 +37,10 @@
                                     N/A
                                     @endif</td>
                                 <td>
+                                    @can('isAdmin')
+                                    <a href="{{ route('user.showAdmin', $user->id_users) }}"
+                                        class="btn btn-dark btn-xs">Profile</a>    
+                                    @endcan
                                     <a href="{{ route('user.show', $user->id_users) }}"
                                         class="btn btn-success btn-xs">Detail</a>
                                     @can('isAdmin')

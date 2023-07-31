@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Jabatan;
+use App\Models\Profile;
+use App\Models\TingkatPendidikan;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -14,7 +16,19 @@ class UserController extends Controller
             'user' => $user,
             'jabatans' => Jabatan::all()
         ]);
+    }
 
+    public function showAdmin(Request $request, $id_users){
+        $user = User::where('id_users', $id_users)->first();
+        $user_profile = Profile::where('id_users', $id_users)->first();
+
+        $tingkat_pendidikan = TingkatPendidikan::all();
+        
+        return view('profile.index', [
+            'main_user' => $user,
+            'user' => $user_profile,
+            'tingkat_pendidikans' => $tingkat_pendidikan,
+        ]);
     }
 
     public function show(Request $request, $id_users){

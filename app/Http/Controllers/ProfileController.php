@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Profile;
+use App\Models\User;
 use App\Models\TingkatPendidikan;
 use PDF;
 
@@ -26,12 +27,14 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $user = Profile::where('id_users', auth()->user()->id_users)->first();
+        $user = User::where('id_users', auth()->user()->id_users)->first();
+        $user_profile = Profile::where('id_users', auth()->user()->id_users)->first();
 
         $tingkat_pendidikan = TingkatPendidikan::all();
         
         return view('profile.index', [
-            'user' => $user,
+            'main_user' => $user,
+            'user' => $user_profile,
             'tingkat_pendidikans' => $tingkat_pendidikan,
         ]);
     }
