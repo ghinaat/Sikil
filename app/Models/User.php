@@ -53,6 +53,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Arsip::class, 'id_users', 'id_users');
     }
+    public function diklat()
+    {
+        return $this->hasMany(Diklat::class, 'id_users', 'id_users');
+    }
 
 
     protected $primaryKey = 'id_users';

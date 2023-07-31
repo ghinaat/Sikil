@@ -47,9 +47,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/user/create', [UserController::class, 'create'])->name('user.create')->middleware('isAdmin');
     Route::post('/user', [UserController::class, 'store'])->name('user.store')->middleware('isAdmin');
     Route::get('/user/{id_users}', [UserController::class, 'show'])->name('user.show');
+    Route::get('/user/{id_users}/profile', [UserController::class, 'showAdmin'])->name('user.showAdmin')->middleware('isAdmin');
     Route::get('/user/{id_users}/edit', [UserController::class, 'edit'])->name('user.edit')->middleware('isAdmin');
     Route::put('/user/{id_users}', [UserController::class, 'update'])->name('user.update')->middleware('isAdmin');
     Route::delete('/user/{id_users}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('isAdmin');
+    
 });
 
 Route::group(['middleware' => ['auth']], function() {

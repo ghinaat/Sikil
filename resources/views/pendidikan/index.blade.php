@@ -8,17 +8,10 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header p-2">
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('profile.index') }}">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link " href="{{ route('keluarga.index') }}">Keluarga</a></li>
-                    <li class="nav-item"><a class="nav-link active"
-                            href="{{ route('pendidikan.index') }}">Pendidikan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('penker.index') }}">Pengalaman Kerja</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('diklat.index') }}">Diklat</a></li>
-                </ul>
-            </div><!-- /.card-header -->
+
+
+            @include('partials.nav-pills-profile')
+
 
             <div class="card-body">
                 <div class="table-responsive">
@@ -145,20 +138,28 @@ table-stripped" id="example2">
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="ijazah">Ijazah</label>
-                                                    @if ($pd->ijazah)
-                                                    <p>Previous File: <a
-                                                            href="{{ asset('/storage/pendidikan/' . $pd->ijazah) }}"
-                                                            target="_blank">{{ $pd->ijazah }}</a></p>
-                                                    @endif
-                                                    <input type="file" name="ijazah" id="ijazah" class="form-control">
-                                                    @error('ijazah')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
+                                                    <<<<<<< HEAD <label for="ijazah">Ijazah</label>
+                                                        =======
+                                                        <label for="ijazah">Surat Pengalaman</label>
+                                                        <small class="form-text text-muted">Allow file extensions :
+                                                            .jpeg
+                                                            .jpg .png .pdf
+                                                            .docx</small>
+                                                        >>>>>>> c28495dad44457c4f7c4dbf012e7b20910ca28c5
+                                                        @if ($pd->ijazah)
+                                                        <p>Previous File: <a
+                                                                href="{{ asset('/storage/pendidikan/' . $pd->ijazah) }}"
+                                                                target="_blank">{{ $pd->ijazah }}</a></p>
+                                                        @endif
+                                                        <input type="file" name="ijazah" id="ijazah"
+                                                            class="form-control">
+                                                        @error('ijazah')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <a href="{{route('pendidikan.index')}}" class="btn btn-default">
+                                                    <a href="{{route('pendidikan.index')}}" class="btn btn-danger">
                                                         Batal
                                                     </a>
                                                 </div>
@@ -236,9 +237,15 @@ table-stripped" id="example2">
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="ijazah">Ijazah</label>
-                        <input type="file" name="ijazah" id="ijazah" class="form-control"> @error('ijazah')
-                        <span class="textdanger">{{$message}}</span> @enderror
+                        <<<<<<< HEAD <label for="ijazah">Ijazah</label>
+                            =======
+                            <label for="ijazah">Surat Pengalaman</label>
+                            <small class="form-text text-muted">Allow file extensions : .jpeg
+                                .jpg .png .pdf
+                                .docx</small>
+                            >>>>>>> c28495dad44457c4f7c4dbf012e7b20910ca28c5
+                            <input type="file" name="ijazah" id="ijazah" class="form-control"> @error('ijazah')
+                            <span class="textdanger">{{$message}}</span> @enderror
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>

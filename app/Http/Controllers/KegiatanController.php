@@ -78,14 +78,14 @@ class KegiatanController extends Controller
         // Validasi data yang dikirimkan melalui form
         $request->validate([
             'id_kegiatan' => 'required',
-            'id_pegawai' => 'required',
+            'id_users' => 'required',
             'id_peran' => 'required',
         ]);
 
         // Simpan data ke dalam tabel tim_kegiatan
         $timKegiatan = TimKegiatan::create([
             'id_kegiatan' => $request->input('id_kegiatan'),
-            'id_pegawai' => $request->input('id_pegawai'),
+            'id_users' => $request->input('id_users'),
             'id_peran' => $request->input('id_peran'),
         ]);
 
