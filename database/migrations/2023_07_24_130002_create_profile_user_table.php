@@ -30,7 +30,7 @@ return new class extends Migration
             $table->unsignedInteger('id_users');
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->unsignedInteger('id_jabatan')->nullable();
-            $table->foreign('id_jabatan')->references('id_jabatan')->on('tb_jabatan')->onDelete('cascade')->nullable();
+            $table->foreign('id_jabatan')->references('id_jabatan')->on('jabatan')->onDelete('cascade')->nullable();
             $table->unsignedInteger('id_tingkat_pendidikan')->nullable();
             $table->foreign('id_tingkat_pendidikan')->references('id_tingkat_pendidikan')->on('tingkat_pendidikan')->onDelete('cascade');
             $table->enum('is_deleted', ['0', '1'])->default('0');

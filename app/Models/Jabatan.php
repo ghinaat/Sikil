@@ -9,7 +9,7 @@ class Jabatan extends Model
 {
     use HasFactory;
     
-    protected $table = 'tb_jabatan';
+    protected $table = 'jabatan';
  
     protected $primaryKey = 'id_jabatan';
     protected $fillable = [
