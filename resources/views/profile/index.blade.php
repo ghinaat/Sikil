@@ -26,25 +26,19 @@
                                 alt="User profile picture">
                             @endif
         
-                            <h3 class="profile-username text-center">{{ Auth::user()->nama_pegawai }}</h3>
-            
-                            <p class="text-muted text-center">{{ Auth::user()->jabatan->nama_jabatan }}</p>
+                            <h3 class="profile-username text-center">{{ $main_user->nama_pegawai }}</h3>
+                            <p class="text-muted text-center">{{ $main_user->jabatan->nama_jabatan }}</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header p-2">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item"><a class="nav-link active" href="{{ route('profile.index') }}">Data Pribadi</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('keluarga.index') }}" >Keluarga</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('pendidikan.index') }}" >Pendidikan</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('penker.index') }}" >Pengalaman Kerja</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('diklat.index') }}" >Diklat</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('profile.pdf') }}" >Unduh CV</a></li>
-                        </ul>
-                    </div><!-- /.card-header -->
+                    @can('isAdmin')
+                        @include('partials.nav-pills-profile-admin', ['id_users' => $main_user->id_users])
+                    @else
+                        @include('partials.nav-pills-profile')
+                    @endcan
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="active tab-pane" id="data-pribadi">
@@ -53,7 +47,7 @@
                                         <label for="nama" class='form-label'>Nama</label>
                                         <div class="form-input">
                                             <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" placeholder="Nama" name="nama"
-                                                value="{{ Auth::user()->nama_pegawai }}" readonly>
+                                                value="{{ $main_user->nama_pegawai }}" readonly>
                                             @error('nama') <span class="textdanger">{{$message}}</span> @enderror
                                         </div>
                                     </div>
@@ -61,7 +55,7 @@
                                         <label for="jabatan" class='form-label'>jabatan</label>
                                         <div class="form-input">
                                             <input type="text" class="form-control @error('jabatan') is-invalid @enderror" id="jabatan" placeholder="jabatan" name="jabatan"
-                                                value="{{ Auth::user()->jabatan->nama_jabatan }}" readonly>
+                                                value="{{ $main_user->jabatan->nama_jabatan }}" readonly>
                                             @error('jabatan') <span class="textdanger">{{$message}}</span> @enderror
                                         </div>
                                     </div>
@@ -205,7 +199,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form action="{{ route('profile.update', Auth::user()->id_users ) }}" method="post" enctype="multipart/form-data">
+                                                        <form action="{{ route('profile.update', $main_user->id_users ) }}" method="post" enctype="multipart/form-data">
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="my-2">

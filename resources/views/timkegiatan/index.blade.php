@@ -88,11 +88,11 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-6" for="id_pegawai">Nama Pegawai</label>
-                                    <select id="id_pegawai" name="id_pegawai"
-                                        class="form-select @error('id_pegawai') is-invalid @enderror">
+                                    <label class="control-label col-md-6" for="id_users">Nama Pegawai</label>
+                                    <select id="id_users" name="id_users"
+                                        class="form-select @error('id_users') is-invalid @enderror">
                                         @foreach ($user as $us)
-                                        <option value="{{ $us->id_users }}" @if( old('id_pegawai')==$us->id_users )
+                                        <option value="{{ $us->id_users }}" @if( old('id_users')==$us->id_users )
                                             selected @endif">
                                             {{ $us->nama_pegawai }}</option>
                                         @endforeach
@@ -164,11 +164,11 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-6" for="id_pegawai">Nama Pegawai</label>
-                                    <select id="id_pegawai" name="id_pegawai"
-                                        class="form-select @error('id_pegawai') is-invalid @enderror">
+                                    <label class="control-label col-md-6" for="id_users">Nama Pegawai</label>
+                                    <select id="id_users" name="id_users"
+                                        class="form-select @error('id_users') is-invalid @enderror">
                                         @foreach ($user as $us)
-                                        <option value="{{ $us->id_users }}" @if( old('id_pegawai')==$us->id_users )
+                                        <option value="{{ $us->id_users }}" @if( old('id_users')==$us->id_users )
                                             selected @endif">
                                             {{ $us->nama_pegawai }}</option>
                                         @endforeach
