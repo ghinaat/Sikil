@@ -136,10 +136,13 @@ table-stripped" id="example2">
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="ijazah">Surat Pengalaman</label>
+
+                                                    <label for="ijazah">Ijazah Kelulusan</label>
+
                                                     <small class="form-text text-muted">Allow file extensions : .jpeg
                                                         .jpg .png .pdf
                                                         .docx</small>
+
                                                     @if ($pd->ijazah)
                                                     <p>Previous File: <a
                                                             href="{{ asset('/storage/pendidikan/' . $pd->ijazah) }}"
@@ -230,10 +233,13 @@ table-stripped" id="example2">
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="ijazah">Surat Pengalaman</label>
+
+                        <label for="ijazah">Ijazah Kelulusan</label>
+
                         <small class="form-text text-muted">Allow file extensions : .jpeg
                             .jpg .png .pdf
                             .docx</small>
+                            
                         <input type="file" name="ijazah" id="ijazah" class="form-control"> @error('ijazah')
                         <span class="textdanger">{{$message}}</span> @enderror
                     </div>
