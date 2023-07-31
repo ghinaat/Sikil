@@ -13,7 +13,12 @@
         <div class="row">
             <div class="col">
                 <div class="card">
-                    @include('partials.nav-pills-profile')
+                    @if (Route::currentRouteName() === 'keluarga.showAdmin')
+                        @include('partials.nav-pills-profile-admin', ['id_users' => $id_users])
+                    @else
+                        @include('partials.nav-pills-profile')
+                    @endcan
+
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="active tab-pane" id="data-pribadi">

@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-9">
                 <div class="card">
-                    @can('isAdmin')
+                    @if (Route::currentRouteName() === 'user.showAdmin')
                         @include('partials.nav-pills-profile-admin', ['id_users' => $main_user->id_users])
                     @else
                         @include('partials.nav-pills-profile')

@@ -9,8 +9,12 @@
     <div class="col-12">
         <div class="card">
 
-
+            @if (Route::currentRouteName() === 'pendidikan.showAdmin')
+            @include('partials.nav-pills-profile-admin', ['id_users' => $id_users])
+            @else
             @include('partials.nav-pills-profile')
+            @endcan
+
 
 
             <div class="card-body">
