@@ -312,6 +312,11 @@ return [
             'text'    => 'Admin Management',
             'submenu' => [
                 [
+                    'text' => 'Home',
+                    'url'  => '/home',
+                    'can'  => '',
+                ],
+                [
                     'text' => 'Kegiatan',
                     'url'  => '/kegiatan',
                     'can'  => '',

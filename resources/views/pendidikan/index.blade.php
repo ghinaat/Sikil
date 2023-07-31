@@ -138,24 +138,23 @@ table-stripped" id="example2">
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <<<<<<< HEAD <label for="ijazah">Ijazah</label>
-                                                        =======
-                                                        <label for="ijazah">Surat Pengalaman</label>
-                                                        <small class="form-text text-muted">Allow file extensions :
-                                                            .jpeg
-                                                            .jpg .png .pdf
-                                                            .docx</small>
-                                                        >>>>>>> c28495dad44457c4f7c4dbf012e7b20910ca28c5
-                                                        @if ($pd->ijazah)
-                                                        <p>Previous File: <a
-                                                                href="{{ asset('/storage/pendidikan/' . $pd->ijazah) }}"
-                                                                target="_blank">{{ $pd->ijazah }}</a></p>
-                                                        @endif
-                                                        <input type="file" name="ijazah" id="ijazah"
-                                                            class="form-control">
-                                                        @error('ijazah')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
+
+                                                    <label for="ijazah">Ijazah Kelulusan</label>
+
+                                                    <small class="form-text text-muted">Allow file extensions : .jpeg
+                                                        .jpg .png .pdf
+                                                        .docx</small>
+
+                                                    @if ($pd->ijazah)
+                                                    <p>Previous File: <a
+                                                            href="{{ asset('/storage/pendidikan/' . $pd->ijazah) }}"
+                                                            target="_blank">{{ $pd->ijazah }}</a></p>
+                                                    @endif
+                                                    <input type="file" name="ijazah" id="ijazah" class="form-control">
+                                                    @error('ijazah')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -237,15 +236,17 @@ table-stripped" id="example2">
                         @enderror
                     </div>
                     <div class="form-group">
-                        <<<<<<< HEAD <label for="ijazah">Ijazah</label>
-                            =======
-                            <label for="ijazah">Surat Pengalaman</label>
-                            <small class="form-text text-muted">Allow file extensions : .jpeg
-                                .jpg .png .pdf
-                                .docx</small>
-                            >>>>>>> c28495dad44457c4f7c4dbf012e7b20910ca28c5
-                            <input type="file" name="ijazah" id="ijazah" class="form-control"> @error('ijazah')
-                            <span class="textdanger">{{$message}}</span> @enderror
+
+
+                        <label for="ijazah">Ijazah Kelulusan</label>
+
+                        <small class="form-text text-muted">Allow file extensions : .jpeg
+                            .jpg .png .pdf
+                            .docx</small>
+
+                        <input type="file" name="ijazah" id="ijazah" class="form-control"> @error('ijazah')
+                        <span class="textdanger">{{$message}}</span> @enderror
+
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
