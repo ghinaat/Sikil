@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content=", initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>CV</title>
+    <title>{{ $main_user->nama_pegawai }}'s CV</title>
     <style>
         *{
             padding: 0;
@@ -58,11 +58,11 @@
                 <table style="width:100%;margin-top:20px;margin-left:150px;">
                     <tr>
                         <td style="width: 30%;">1. Nama</td>
-                        <td style="width: 40%;">: {{ Auth::user()->nama_pegawai }}</td>
+                        <td style="width: 40%;">: {{ $main_user->nama_pegawai }}</td>
                     </tr>
                     <tr>
                         <td style="width: 30%;">2. Jabatan</td>
-                        <td style="width: 40%;">: {{ Auth::user()->jabatan->nama_jabatan  }}</td>
+                        <td style="width: 40%;">: {{ $main_user->jabatan->nama_jabatan  }}</td>
                     </tr>
                     <tr>
                         <td style="width: 30%;">3. NIP</td>

@@ -91,6 +91,8 @@ Route::delete('/tingkatpendidikan/{id_tingkat_pendidikan}', [TingkatPendidikanCo
 Route::get('/profile', [profileController::class, 'index'])->name('profile.index')->middleware('auth');
 Route::put('/profile/{id_profile}', [profileController::class, 'update'])->name('profile.update')->middleware('auth');
 Route::get('/profile/pdf', [profileController::class, 'createPdf'])->name('profile.pdf')->middleware('auth');
+Route::get('/profile/{id_users}/pdf', [profileController::class, 'createPdfAdmin'])->name('profile.pdfAdmin')->middleware('auth')->middleware('isAdmin');
+
 
 
 Route::group(['middleware' => ['auth']], function() {
