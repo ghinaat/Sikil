@@ -58,12 +58,9 @@ table-stripped" id="example2">
                                         Dokumen</a>
 
                                 </td>
-
-                                @can('isAdmin')
                             <td>
                                 @include('components.action-buttons', ['id' => $pd->id_pendidikan, 'key' => $key, 'route' => 'pendidikan'])
                             </td>
-                            @endcan
 
                             </tr>
                             <!-- Edit modal -->

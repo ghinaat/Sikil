@@ -20,9 +20,7 @@
                                 <th>Email</th>
                                 <th>Level</th>
                                 <th>Jabatan</th>
-                                @can('isAdmin')
                                 <th>Opsi</th>
-                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -36,15 +34,21 @@
                                 <td id="{{$key+1}}">{{$user->level}}</td>
                                 <td id={{$key+1}}>
                                     @if($user->jabatan)
-                                    {{ $user->jabatan->nama_jabatan }}
+                                        {{ $user->jabatan->nama_jabatan }}
                                     @else
-                                    N/A
-                                    @endif</td>
-                                    @can('isAdmin')
-                                    <td>
+                                        N/A
+                                    @endif
+                                </td>
+                                <td>
+                                   
+                                    @can('isAdmin') 
                                         @include('components.action-buttons', ['id' => $user->id_users, 'key' => $key, 'route' => 'user'])
-                                    </td>
+                                    @else
+                                        <a href="{{ route('user.show', $user->id_users) }}" class="btn btn-info btn-xs mx-1">
+                                            <i class="fa fa-info"></i>
+                                        </a>
                                     @endcan
+                                </td>
                             </tr>
 
                             @can('isAdmin')

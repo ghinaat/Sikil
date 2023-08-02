@@ -42,11 +42,9 @@
                                     <a href="{{ asset('/storage/Arsip/'. $ap->file) }}" target="_blank">Lihat
                                         Dokumen</a>
                                 </td>
-                                @can('isAdmin')
                             <td>
                                 @include('components.action-buttons', ['id' => $ap->id_arsip, 'key' => $key, 'route' => 'arsip'])
                             </td>
-                            @endcan
                             </tr>
                             @endforeach
                         </tbody>

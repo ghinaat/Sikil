@@ -56,11 +56,9 @@
                                                                 <td>{{$kel->tanggal_lahir}}</td>
                                                                 <td>{{$kel->gender}}</td>
                                                                 <td>{{$kel->status}}</td>
-                                                                @can('isAdmin')
                             <td>
                                 @include('components.action-buttons', ['id' => $kel->id_keluarga, 'key' => $key, 'route' => 'keluarga'])
                             </td>
-                            @endcan
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
