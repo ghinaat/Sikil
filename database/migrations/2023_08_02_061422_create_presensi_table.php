@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('presensi', function (Blueprint $table) {
             $table->increments('id_presensi');
-            $table->string('kode_finger');
             $table->date('tanggal');
             $table->unsignedInteger('kode_finger')->nullable();
             $table->foreign('kode_finger')->references('kode_finger')->on('users')->onDelete('cascade');
