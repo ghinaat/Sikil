@@ -9,7 +9,13 @@
     <div class="col-12">
         <div class="card">
 
+            @if (Route::currentRouteName() === 'pendidikan.showAdmin')
+            @include('partials.nav-pills-profile-admin', ['id_users' => $id_users])
+            @else
             @include('partials.nav-pills-profile')
+            @endcan
+
+
 
             <div class="card-body">
                 <div class="table-responsive">
@@ -152,6 +158,7 @@ table-stripped" id="example2">
                                                     @error('ijazah')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
+
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -234,14 +241,16 @@ table-stripped" id="example2">
                     </div>
                     <div class="form-group">
 
+
                         <label for="ijazah">Ijazah Kelulusan</label>
 
                         <small class="form-text text-muted">Allow file extensions : .jpeg
                             .jpg .png .pdf
                             .docx</small>
-                            
+
                         <input type="file" name="ijazah" id="ijazah" class="form-control"> @error('ijazah')
                         <span class="textdanger">{{$message}}</span> @enderror
+
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>

@@ -11,16 +11,33 @@ use PDF;
 class ProfileController extends Controller
 {
     public function createPdf(){
+        $main_user = User::where('id_users', auth()->user()->id_users)->first();
         $user = Profile::where('id_users', auth()->user()->id_users)->first();
         $tingkat_pendidikan = TingkatPendidikan::all();
 
         $pdf = PDF::loadView('layouts.cv',  [
+            'main_user' => $main_user,
             'user' => $user,
             'tingkat_pendidikans' => $tingkat_pendidikan,
         ]);
         // download PDF file with download method
-        return $pdf->download('pdf_file.pdf');
+        return $pdf->download($main_user->nama_pegawai . '\'s cv.pdf');
     }
+
+    public function createPdfAdmin(Request $request, $id_users){
+        $main_user = User::where('id_users', $id_users)->first();
+        $user = Profile::where('id_users', $id_users)->first();
+        $tingkat_pendidikan = TingkatPendidikan::all();
+
+        $pdf = PDF::loadView('layouts.cv',  [
+            'main_user' => $main_user,
+            'user' => $user,
+            'tingkat_pendidikans' => $tingkat_pendidikan,
+        ]);
+        // download PDF file with download method
+        return $pdf->download($main_user->nama_pegawai . '\'s cv.pdf');
+    }
+
 
     /**
      * Display a listing of the resource.

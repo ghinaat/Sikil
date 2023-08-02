@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 class TimKegiatanController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('isAdmin', ['except' => ['index']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('isAdmin', ['except' => ['index']]);
+    // }
     
     public function index()
     {
@@ -73,19 +73,28 @@ class TimKegiatanController extends Controller
 
     public function laporan(Request $request)
 {
-    $pegawai = $request->input('id_pegawai');
+   
+    $pegawai = $request->input('id_users');
     $peran = $request->input('id_peran');
     
-    if ($pegawai && $peran) {
-        $timkegiatan = TimKegiatan::whereIn('id_pegawai', [$pegawai])
+   
+    // Store the selected values in session
+    session()->put('selected_id_users', $pegawai);
+    session()->put('selected_id_peran', $peran);
+    
+    if ($pegawai && $peran && $peran != 0) {
+        $timkegiatan = TimKegiatan::whereIn('id_users', [$pegawai])
             ->where('id_peran', $peran)
             ->get();
+  
     } elseif ($pegawai) {
-        $timkegiatan = TimKegiatan::where('id_pegawai', $pegawai)
+        $timkegiatan = TimKegiatan::where('id_users', $pegawai)
             ->get();
     } elseif ($peran) {
         $timkegiatan = TimKegiatan::where('id_peran', $peran)
             ->get();
+        
+   
     } else {
         $timkegiatan = TimKegiatan::get();
     }

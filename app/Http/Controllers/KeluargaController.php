@@ -110,6 +110,18 @@ class KeluargaController extends Controller
         return redirect()->route('keluarga.index')->with('success_message', 'Data telah terhapus');
     }
 
+    public function showAdmin(Request $request, $id_users){
+        $user = User::where('id_users', $id_users)->first();
+        $keluarga = $user->keluarga()->where('is_deleted', '0')->get();
+    
+        return view('keluarga.index', [
+            'id_users' => $id_users,
+            'keluarga' => $keluarga,
+            'users' => User::where('is_deleted', '0')->get(),
+            'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get()
+        ]);
+    }
+
     
 
     // public function show(Keluarga $keluarga)

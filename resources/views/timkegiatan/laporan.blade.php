@@ -11,15 +11,16 @@
                 <div class="card-body">
                     <form method="get" action="{{ route('laporan') }}" class="form-inline">
                         <div class="col-md-12">
-                            <div class="form-group ">
-                                <label class="control-label " for="id_pegawai">Nama Pegawai</label>
-                                <select id="id_pegawai" name="id_pegawai"
-                                    class="form-select @error('id_pegawai') is-invalid @enderror">
-                                    @foreach ($user as $us)
-                                    <option value="{{ $us->id_users }}" @if(old('id_pegawai')==$us->id_users) selected
-                                        @endif>
-                                        {{ $us->nama_pegawai }}
+                            <div class="form-group">
+                                <label class="control-label" for="id_users">Nama Pegawai</label>
+                                <select id="id_users" name="id_users"
+                                    class="form-select @error('id_users') is-invalid @enderror">
+                                    <!-- Tambahkan opsi All dengan value 0 -->
+                                    <option value="0" @if(session('selected_id_users', 0)==0) selected @endif>All
                                     </option>
+                                    @foreach ($user as $us)
+                                    <option value="{{ $us->id_users }}" @if($us->id_users ==
+                                        session('selected_id_users')) selected @endif>{{ $us->nama_pegawai }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -29,20 +30,25 @@
                                 <label for="id_peran">Peran</label>
                                 <select id="id_peran" name="id_peran"
                                     class="form-select @error('id_peran') is-invalid @enderror">
+                                    <option value="0" @if(session('selected_id_peran', 0)==0) selected @endif>All
+                                    </option>
                                     @foreach ($peran as $p)
-                                    <option value="{{ $p->id_peran }}" @if(old('id_peran')==$p->id_peran) selected
-                                        @endif>
+                                    <option value="{{ $p->id_peran }}" @if($p->id_peran ==
+                                        session('selected_id_peran')) selected @endif>
                                         {{ $p->nama_peran }}
                                     </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-primary mb-2">
-                            <i class="fa fa-filter"></i> &nbsp; Filter
-                        </button>
+                        <br>
+                        <div class="col-md-12 mb-2">
+                            <button type="submit" class="btn btn-primary mb-2">
+                                <i class="fa fa-filter"></i> &nbsp; Filter
+                            </button>
+                        </div>
                     </form>
+                    <br>
 
 
                     <div class="table-responsive">
@@ -53,7 +59,7 @@
                                     <th>Nama Kegiatan</th>
                                     <th>Nama pegawai</th>
                                     <th>Peran</th>
-                                    <th>Opsi</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,15 +69,7 @@
                                     <td>{{$tk->kegiatan->nama_kegiatan }}</td>
                                     <td>{{$tk->user->nama_pegawai}}</td>
                                     <td>{{$tk->peran->nama_peran}}</td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                            data-target="#editModal{{$tk->id_tim}}" data-id="{{$tk->id_tim}}">Edit</a>
-                                        <a href="{{route('timkegiatan.destroy', $tk->id_tim)}}"
-                                            onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                            class="btn btn-danger btn-xs">
-                                            Delete
-                                        </a>
-                                    </td>
+
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -81,24 +79,16 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.print.min.js"></script>
-    <script>
-    $(document).ready(function() {
-        $('table:not(#laporan)').DataTable();
 
-        $('#laporan').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'pdfHtml5',
-                'print'
-            ],
-            footer: true
-        });
-    });
-    </script>
+
 </div>
 
-@endsection
+@stop
+@push('js')
+
+<script>
+$('#example2').DataTable({
+    "responsive": true,
+});
+</script>
+@endpush

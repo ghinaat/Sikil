@@ -30,6 +30,18 @@ class PendidikanController extends Controller
         ]);
     }
 
+    public function showAdmin(Request $request, $id_users){
+        $user = User::where('id_users', $id_users)->first();
+        
+        $pendidikan = $user->pendidikan()->where('is_deleted', '0')->get();
+    
+        return view('pendidikan.index', [
+            'id_users' => $id_users,
+            'pendidikan' => $pendidikan,
+            'tingpen' => TingkatPendidikan::where('is_deleted', '0')->get(),
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

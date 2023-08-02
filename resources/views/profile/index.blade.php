@@ -32,11 +32,11 @@
             </div>
             <div class="col-md-9">
                 <div class="card">
-                    @can('isAdmin')
-                    @include('partials.nav-pills-profile-admin', ['id_users' => $main_user->id_users])
+                    @if (Route::currentRouteName() === 'user.showAdmin')
+                        @include('partials.nav-pills-profile-admin', ['id_users' => $main_user->id_users])
                     @else
-                    @include('partials.nav-pills-profile')
-                    @endcan
+                         @include('partials.nav-pills-profile')
+                    @endif
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="active tab-pane" id="data-pribadi">

@@ -167,7 +167,7 @@ btn-primary ">
                                     <div class="form-group ">
                                         <label class="control-label col-md-6">Nama Pegawai</label>
                                         <!-- Tambahkan input tersembunyi untuk menyimpan data yang dipilih -->
-                                        <input type="hidden" id="selected_id_users" name="id_pegawai" value="">
+                                        <input type="hidden" id="selected_id_users" name="id_users" value="">
                                         <input type="text" class="form-control @error('pegawai') is-invalid @enderror"
                                             placeholder="pegawai" id="pegawai" name="pegawai" aria-label="pegawai"
                                             aria-describedby="cari" readonly>
