@@ -52,11 +52,9 @@
                                     <a href="{{ asset('/storage/File Sertifikat/'. $dk->file_sertifikat) }}"
                                         target="_blank">Lihat Dokumen</a>
                                 </td>
-                                @can('isAdmin')
                             <td>
                                 @include('components.action-buttons', ['id' => $dk->id_diklat, 'key' => $key, 'route' => 'diklat'])
                             </td>
-                            @endcan
                             </tr>
                             <!-- Edit modal -->
                             <div class="modal fade" id="editModal{{$dk->id_diklat}}" tabindex="-1" role="dialog"
