@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('/user/{id_users}', [UserController::class, 'update'])->name('user.update')->middleware('isAdmin');
     Route::delete('/user/{id_users}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('isAdmin');
     
+    
 });
 
 Route::group(['middleware' => ['auth']], function() {

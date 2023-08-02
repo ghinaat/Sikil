@@ -41,10 +41,12 @@
                                     N/A
                                     @endif</td>
                                     @can('isAdmin')
+
                                     <td>
                                         @include('components.action-buttons', ['id' => $user->id_users, 'key' => $key, 'route' => 'user'])
                                     </td>
                                     @endcan
+
                             </tr>
 
                             @can('isAdmin')
