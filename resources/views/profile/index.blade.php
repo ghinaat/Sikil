@@ -518,6 +518,10 @@
                                             </div>
                                         </div>
                                         {{-- @endif --}}
+
+                                        <a href="http://127.0.0.1:8000/profile/pdf" class="btn btn-primary ">
+                                            Unduh CV
+                                        </a>
                                     </div>
                                 </div>
 
