@@ -117,9 +117,6 @@ Route::resource('hubkel', \App\Http\Controllers\HubunganKeluargaController::clas
 Route::get('keluarga/{id_users}/profile', [KeluargaController::class, 'showAdmin'])->name('keluarga.showAdmin')->middleware('auth');
 Route::resource('keluarga', \App\Http\Controllers\KeluargaController::class)->middleware('auth');
 
-Route::get('arsip/{id_users}/profile', [ArsipController::class, 'showAdmin'])->name('arsip.showAdmin')->middleware('auth');
-Route::resource('arsip', \App\Http\Controllers\ArsipController::class)->middleware('auth');
-
 Route::get('penker/{id_users}/profile', [PengalamanKerjaController::class, 'showAdmin'])->name('penker.showAdmin')->middleware('auth');
 Route::resource('penker', \App\Http\Controllers\PengalamanKerjaController::class)->middleware('auth');
 

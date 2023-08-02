@@ -56,10 +56,11 @@
                                     <div class="form-group">
                                         <label for="email" class='form-label'>Email</label>
                                         <div class="form-input">
-                                            <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                            : {{ $main_user->email }}
+                                            <!-- <input type="text" class="form-control @error('email') is-invalid @enderror"
                                                 id="email" placeholder="Email" name="email"
                                                 value="{{ $main_user->email }}" readonly>
-                                            @error('email') <span class="textdanger">{{$message}}</span> @enderror
+                                            @error('email') <span class="textdanger">{{$message}}</span> @enderror -->
                                         </div>
                                     </div>
 
@@ -134,6 +135,8 @@
                                         <div class="form-input">
                                         @if (isset($user->tmt))
                                         : {{ date_format( new DateTime(date('Y-m-d', strtotime('+2 year', strtotime($user->tmt) ))) ,'d F Y')}}
+                                        @else
+                                        :
                                         @endif
                                         </div>
                                     </div>
@@ -224,7 +227,7 @@
                                                             <div class="form-group">
                                                                 <label for="tanggal_lahir" class='form-label'>Tanggal Lahir</label>
                                                                 <div class="form-input">
-                                                                 <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" placeholder="Tanggal Lahir" name="tanggal_lahir" value="{{ $tanggal_lahir ? $tanggal_lahir->format('Y-m-d') : '' }}" >
+                                                                 <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" placeholder="Tanggal Lahir" name="tanggal_lahir" value="{{$user -> tanggal_lahir ?? old('tanggal_lahir')}}" >
                                                                     @error('tanggal_lahir') <span class="text-danger">{{ $message }}</span> @enderror
                                                                 </div>
                                                             </div>
