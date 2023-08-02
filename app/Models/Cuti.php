@@ -9,5 +9,7 @@ class Cuti extends Model
 {
     use HasFactory;
     protected $primarykey = 'id_cuti';
+    protected $table = 'cuti';
+
 
 }
