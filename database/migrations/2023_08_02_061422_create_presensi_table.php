@@ -15,6 +15,8 @@ return new class extends Migration
             $table->increments('id_presensi');
             $table->string('kode_finger');
             $table->date('tanggal');
+            $table->unsignedInteger('kode_finger')->nullable();
+            $table->foreign('kode_finger')->references('kode_finger')->on('users')->onDelete('cascade');
             $table->time('jam_masuk');
             $table->time('jam_pulang');
             $table->time('terlambat');
