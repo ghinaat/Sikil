@@ -39,10 +39,8 @@
                                 <td>
                                     @can('isAdmin')
                                     <a href="{{ route('user.showAdmin', $user->id_users) }}"
-                                        class="btn btn-dark btn-xs">Profile</a>    
+                                        class="btn btn-success btn-xs">Detail</a>    
                                     @endcan
-                                    <a href="{{ route('user.show', $user->id_users) }}"
-                                        class="btn btn-success btn-xs">Detail</a>
                                     @can('isAdmin')
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                         data-target="#editModal{{$user->id_users}}" data-id="{{$user->id_users}}"
