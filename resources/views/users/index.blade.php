@@ -24,6 +24,8 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php $showDetail = true; @endphp
+                            @php $showAdmin = true; @endphp
                             @foreach($user as $key => $user)
                             <tr>
                                 <td id="{{$key+1}}">{{$key+1}}</td>
@@ -32,28 +34,21 @@
                                 <td id="{{$key+1}}">{{$user->level}}</td>
                                 <td id={{$key+1}}>
                                     @if($user->jabatan)
-                                    {{ $user->jabatan->nama_jabatan }}
+                                        {{ $user->jabatan->nama_jabatan }}
                                     @else
-                                    N/A
-                                    @endif</td>
+                                        N/A
+                                    @endif
+                                </td>
                                 <td>
-                                    @can('isAdmin')
-                                    <a href="{{ route('user.showAdmin', $user->id_users) }}"
-                                        class="btn btn-dark btn-xs">Profile</a>    
-                                    @endcan
-                                    <a href="{{ route('user.show', $user->id_users) }}"
-                                        class="btn btn-success btn-xs">Detail</a>
-                                    @can('isAdmin')
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                        data-target="#editModal{{$user->id_users}}" data-id="{{$user->id_users}}"
-                                        data-nama="{{$user->nama_pegawai}}">Edit</a>
-                                    <a href="{{ route('user.destroy', $user) }}"
-                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                        class="btn btn-danger btn-xs">Delete</a>
+                                    @can('isAdmin') 
+                                        @include('components.action-buttons', ['id' => $user->id_users, 'key' => $key, 'route' => 'user'])
+                                    @else
+                                        <a href="{{ route('user.show', $user->id_users) }}" class="btn btn-info btn-xs mx-1">
+                                            <i class="fa fa-info"></i>
+                                        </a>
                                     @endcan
                                 </td>
                             </tr>
-
                             @can('isAdmin')
                             <!-- Modal Edit Pegawai -->
                             <div class="modal fade" id="editModal{{$user->id_users}}" tabindex="-1" role="dialog"

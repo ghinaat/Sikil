@@ -52,15 +52,9 @@
                                     <a href="{{ asset('/storage/File Sertifikat/'. $dk->file_sertifikat) }}"
                                         target="_blank">Lihat Dokumen</a>
                                 </td>
-                                <td>
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                        data-target="#editModal{{$dk->id_diklat}}" data-id="{{$dk->id_diklat}}"
-                                        data-nama="{{$dk->nama_diklat}}">Edit</a>
-                                    <a href="{{route('diklat.destroy', $dk->id_diklat)}}"
-                                        onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
-                                        Delete
-                                    </a>
-                                </td>
+                            <td>
+                                @include('components.action-buttons', ['id' => $dk->id_diklat, 'key' => $key, 'route' => 'diklat'])
+                            </td>
                             </tr>
                             <!-- Edit modal -->
                             <div class="modal fade" id="editModal{{$dk->id_diklat}}" tabindex="-1" role="dialog"

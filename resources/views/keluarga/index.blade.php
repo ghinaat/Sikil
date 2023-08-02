@@ -56,15 +56,9 @@
                                                                 <td>{{$kel->tanggal_lahir}}</td>
                                                                 <td>{{$kel->gender}}</td>
                                                                 <td>{{$kel->status}}</td>
-                                                                <td>
-                                                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                                                        data-target="#editModal{{$kel->id_keluarga}}" data-id="{{$kel->id_keluarga}}"
-                                                                        data-nama="{{$kel->nama}}">Edit</a>
-                                                                    <a href="{{route('keluarga.destroy', $kel->id_keluarga)}}"
-                                                                        onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
-                                                                        Delete
-                                                                    </a>
-                                                                </td>
+                            <td>
+                                @include('components.action-buttons', ['id' => $kel->id_keluarga, 'key' => $key, 'route' => 'keluarga'])
+                            </td>
                                                             </tr>
                                                             @endforeach
                                                         </tbody>

@@ -29,11 +29,11 @@
         @else
             <li class="nav-item"><a class="nav-link" href="{{ route('diklat.index') }}" >Diklat</a></li>
         @endif
-
-        @if (Route::currentRouteName() === 'profile.pdf')
-            <li class="nav-item"><a class="nav-link active" href="{{ route('profile.pdf') }}" >Unduh CV</a></li>
+        @if (Route::currentRouteName() === 'arsip.index')
+            <li class="nav-item"><a class="nav-link active" href="{{ route('arsip.index') }}">Arsip</a></li>
         @else
-            <li class="nav-item"><a class="nav-link" href="{{ route('profile.pdf') }}" >Unduh CV</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('arsip.index') }}">Arsip</a></li>
         @endif
+        
     </ul>
 </div><!-- /.card-header -->

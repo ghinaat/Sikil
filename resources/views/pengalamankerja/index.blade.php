@@ -54,19 +54,9 @@ table-stripped" id="example2">
                                         Dokumen</a>
 
                                 </td>
-
-                                <td>
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                        data-target="#editModal{{$pk->id_pengalaman_kerja}}"
-                                        data-id="{{$pk->id_pengalaman_kerja}}"
-                                        data-nama="{{$pk->nama_perusahaan}}">Edit</a>
-
-                                    <a href="{{route('penker.destroy', $pk->id_pengalaman_kerja)}}"
-                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                        class="btn btn-danger btn-xs">
-                                        Delete
-                                    </a>
-                                </td>
+                            <td>
+                                @include('components.action-buttons', ['id' => $pk->id_pengalaman_kerja, 'key' => $key, 'route' => 'penker'])
+                            </td>
 
                             </tr>
                             <!-- Edit modal -->
@@ -94,7 +84,7 @@ table-stripped" id="example2">
                                                         Perusahaan</label>
                                                     <input type="text"
                                                         class="form-control @error('nama_perusahaan') is-invalid @enderror"
-                                                        id="nama_perusahaan" placeholder="Nama Perusahaan"
+                                                        id="nama_perusahaan" 
                                                         name="nama_perusahaan"
                                                         value="{{$pk ->nama_perusahaan ?? old('nama_perusahaan')}}">
                                                     @error('nama_perusahaan') <span
@@ -106,7 +96,7 @@ table-stripped" id="example2">
 
                                                     <input type="text"
                                                         class="form-control @error('masa_kerja') is-invalid @enderror"
-                                                        id="masa_kerja" placeholder="Masa Kerja" name="masa_kerja"
+                                                        id="masa_kerja" name="masa_kerja"
                                                         value="{{$pk ->masa_kerja ?? old('masa_kerja')}}">
                                                     @error('masa_kerja') <span class="textdanger">{{$message}}</span>
                                                     @enderror
@@ -117,7 +107,7 @@ table-stripped" id="example2">
 
                                                     <input type="text"
                                                         class="form-control @error('posisi') is-invalid @enderror"
-                                                        id="posisi" placeholder="Posisi" name="posisi"
+                                                        id="posisi" name="posisi"
                                                         value="{{$pk ->posisi ?? old('posisi')}}">
                                                     @error('posisi') <span class="textdanger">{{$message}}</span>
                                                     @enderror
@@ -178,7 +168,7 @@ table-stripped" id="example2">
                         <label for="nama_perusahaan" class="form-label">Nama Perusahaan</label>
 
                         <input type="text" class="form-control @error('nama_perusahaan') is-invalid @enderror"
-                            id="nama_perusahaan" placeholder="Nama Perusahaan" name="nama_perusahaan"
+                            id="nama_perusahaan"  name="nama_perusahaan"
                             value="{{old('nama_perusahaan')}}">
                         @error('nama_perusahaan') <span class="textdanger">{{$message}}</span> @enderror
 
@@ -187,7 +177,7 @@ table-stripped" id="example2">
                         <label for="masa_kerja" class="form-label">Masa Kerja</label>
 
                         <input type="text" class="form-control @error('masa_kerja') is-invalid @enderror"
-                            id="masa_kerja" placeholder="Masa Kerja" name="masa_kerja" value="{{old('masa_kerja')}}">
+                            id="masa_kerja" name="masa_kerja" value="{{old('masa_kerja')}}">
                         @error('masa_kerja') <span class="textdanger">{{$message}}</span> @enderror
 
                     </div>
@@ -195,7 +185,7 @@ table-stripped" id="example2">
                         <label for="posisi" class="form-label">Posisi</label>
 
                         <input type="text" class="form-control @error('posisi') is-invalid @enderror" id="posisi"
-                            placeholder="Posisi" name="posisi" value="{{old('posisi')}}">
+                            name="posisi" value="{{old('posisi')}}">
                         @error('posisi') <span class="textdanger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">

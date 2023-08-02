@@ -5,10 +5,12 @@ SIKLIS merupakan suatu sistem informasi yang digunakan untuk mengelola data pega
 ## Teknologi
 
 -   php 8.x
--   Laravel 10.x
+-   [Laravel 10.x](https://laravel.com)
 -   [Admin-LTE](https://github.com/jeroennoten/Laravel-AdminLTE)
 
 ## Pengunaan
+
+Berikut adalah tahap-tahap untuk mengunakan dan menjalankan aplikasi ini
 
 1. Fork repo ini
 2. Clone repo milikmu
@@ -48,16 +50,19 @@ Berikut adalah tahap-tahap untuk mengembakan fitur terbaru dan berktrbusi dalam 
 
 1. Fork repo ini
 2. Clone milikmu fork
-3. Checkout branch baru
+3. Lakukan beberapa pekerjaan
+4. Checkout branch baru
 
 ```bash
+git branch YOUR-NEW-FEATURE
 git checkout YOUR-NEW-FEATURE
 ```
 
-4. Lakukan beberapa pekerjaan
 5. Commit
 
 ```bash
+git init
+git add .
 git commit -m "[Your message] -yourname"
 ```
 
