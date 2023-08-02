@@ -4,30 +4,25 @@
 
 @section('content_header')
 
-{{-- <h1 class="m-0 text-dark">Dashboard</h1> --}}
-<!--  <style>
-.responsive-image {
-    max-width: 100%;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-
-}
+<style>
+    @media(max-width:512px){
+        .header-text-home{
+            font-size: 24px;
+        }
+    }
 </style>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-</script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-</script> -->
+
 @stop
+
 
 
 @section('content')
 <div class="container" style="overflow:scroll; height:90vh;">
+
+    <h1 class="mb-4 header-text-home">Sistem Informasi Kepegawaian & Layanan Internal SEAQIL</h1>
+
+    <hr>
+
     <div class="row">
         <div class="col-md-4">
             <div class="small-box bg-gradient-success">
@@ -61,21 +56,23 @@
         </div>
     </div>
 
-    <h2 class="mb-4">Acara Yang Akan Datang</h2>
+    <hr>
 
+    <h2 class="mb-4">Kegiatan Yang Sedang Berlangsung</h2>
+    @foreach ($kegiatans as $kegiatan)
     <div class="row">
-        @foreach ($kegiatans as $kegiatan)
-        <div class="col-md-6">
+        <div class="col">
             <div class="card">
                 <div class="card-body">
                     <h3 >{{ $kegiatan->nama_kegiatan }}</h3>
-                    <p class="card-text">{{ $kegiatan->tgl_mulai }}</p>
-                    <a class="btn btn-outline-secondary" href="">Lihat Kegiatan</a>
+                    <p class="card-text">Tanggal Mulai: {{ $kegiatan->tgl_mulai }} <br> Tanggal Selesai: {{ $kegiatan->tgl_selesai }} <br> Lokasi : {{ $kegiatan->lokasi }}</p>
+                    <a class="btn btn-outline-dark" href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}">Lihat Kegiatan</a>
                 </div>
             </div>
         </div>
-        @endforeach
     </div>
+    @endforeach
+
     <hr>
 
     <h2 class="mb-4">Acara Tahun Ini</h2>
@@ -97,7 +94,7 @@
                 <td>{{ $kegiatan->nama_kegiatan }}</td>
                 <td>{{ $kegiatan->tgl_mulai }}</td>
                 <td>{{ $kegiatan->tgl_selesai }}</td>
-                <td><button class="btn btn-outline-secondary">ok</button></td>
+                <td><a href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}" class="btn btn-outline-secondary">Lihat</a></td>
             </tr>    
             @endforeach
         </tbody>

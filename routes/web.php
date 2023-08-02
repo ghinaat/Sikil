@@ -8,11 +8,12 @@ use App\Http\Controllers\TimKegiatanController;
 use App\Http\Controllers\KeluargaController;
 use App\Http\Controllers\PendidikanController;
 use App\Http\Controllers\PengalamanKerjaController;
-use App\Models\JenisDiklat;
 use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
+use App\Models\JenisDiklat;
+
 use Illuminate\Support\Facades\Route;
-use App\Models\Kegiatan;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,30 +32,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', function() {
-    $all_kegiatan = Kegiatan::all();
-    $kegiatans = Kegiatan::where('tgl_mulai', '>', now())->orderBy('tgl_mulai', 'asc')->get();
-    return view('home', [
-        'kegiatans' => $kegiatans,
-        'all_kegiatan' => $all_kegiatan,
-    ]);
-})->name('home')->middleware('auth');
-
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
     Route::get('/user/create', [UserController::class, 'create'])->name('user.create')->middleware('isAdmin');
     Route::post('/user', [UserController::class, 'store'])->name('user.store')->middleware('isAdmin');
+    Route::get('/user/change-password', [UserController::class, 'changePassword'])->name('user.changePassword');
+    Route::post('/user/change-password', [UserController::class, 'saveChangePassword'])->name('user.saveChangePassword');
     Route::get('/user/{id_users}', [UserController::class, 'show'])->name('user.show');
     Route::get('/user/{id_users}/profile', [UserController::class, 'showAdmin'])->name('user.showAdmin')->middleware('isAdmin');
     Route::get('/user/{id_users}/edit', [UserController::class, 'edit'])->name('user.edit')->middleware('isAdmin');
     Route::put('/user/{id_users}', [UserController::class, 'update'])->name('user.update')->middleware('isAdmin');
     Route::delete('/user/{id_users}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('isAdmin');
-    
 });
 
 Route::group(['middleware' => ['auth']], function() {
