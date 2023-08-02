@@ -10,8 +10,10 @@ use App\Http\Controllers\PendidikanController;
 use App\Http\Controllers\PengalamanKerjaController;
 use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\HomeController;
 use App\Models\JenisDiklat;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -99,7 +101,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('/diklat/{id_diklat}', [DiklatController::class, 'update'])->name('diklat.update')->middleware('isAdmin');
     Route::delete('/diklat/{id_diklat}', [DiklatController::class, 'destroy'])->name('diklat.destroy')->middleware('isAdmin');
 }); 
-
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/arsip', [ArsipController::class, 'index'])->name('arsip.index');
+    Route::get('/arsip/{id_users}/profile', [ArsipController::class, 'showAdmin'])->name('arsip.showAdmin');
+    Route::post('/arsip', [ArsipController::class, 'store'])->name('arsip.store');
+    Route::put('/arsip/{id_arsip}', [ArsipController::class, 'update'])->name('arsip.update')->middleware('isAdmin');
+    Route::delete('/arsip/{id_arsip}', [ArsipController::class, 'destroy'])->name('arsip.destroy')->middleware('isAdmin');
+}); 
 
 
 Route::resource('timkegiatan', \App\Http\Controllers\TimKegiatanController::class)->middleware('auth');
@@ -109,6 +117,7 @@ Route::resource('hubkel', \App\Http\Controllers\HubunganKeluargaController::clas
 Route::get('keluarga/{id_users}/profile', [KeluargaController::class, 'showAdmin'])->name('keluarga.showAdmin')->middleware('auth');
 Route::resource('keluarga', \App\Http\Controllers\KeluargaController::class)->middleware('auth');
 
+Route::get('arsip/{id_users}/profile', [ArsipController::class, 'showAdmin'])->name('arsip.showAdmin')->middleware('auth');
 Route::resource('arsip', \App\Http\Controllers\ArsipController::class)->middleware('auth');
 
 Route::get('penker/{id_users}/profile', [PengalamanKerjaController::class, 'showAdmin'])->name('penker.showAdmin')->middleware('auth');
