@@ -31,9 +31,13 @@ table-stripped" id="example2">
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($kegiatan as $key => $kg)
+                            @php
+                            $sortedKegiatan = $kegiatan->sortByDesc('tgl_mulai');
+                            $nomor = 1; // Initialize a variable to keep track of the sequence
+                            @endphp
+                            @foreach($sortedKegiatan as $key => $kg)
                             <tr>
-                                <td id={{$key+1}}>{{$key+1}}</td>
+                                <td id={{$key+1}}>{{$nomor}}</td>
                                 <td id={{$key+1}}>{{$kg->nama_kegiatan}}</td>
                                 <td id={{$key+1}}>{{$kg->tgl_mulai}}</td>
                                 <td id={{$key+1}}>{{$kg->tgl_selesai}}</td>
@@ -57,6 +61,9 @@ table-stripped" id="example2">
                                 </td>
                                 @endcan
                             </tr>
+                            @php
+                            $nomor++; // Increment the sequence for the next row
+                            @endphp
                             <!-- Edit modal -->
                             @can('isAdmin')
                             <div class="modal fade" id="editModal{{$kg->id_kegiatan}}" tabindex="-1" role="dialog"
@@ -79,7 +86,7 @@ table-stripped" id="example2">
                                                     <div class="form-input">
 
                                                         <input type="text"
-                                                            class="form-control @error('nama_kegiatan') is-invalid @enderror"
+                                                            class="form-control @error('nama_kegiatan') is-invalid @enderror "
                                                             id="nama_kegiatan" placeholder="Nama Kegiatan"
                                                             name="nama_kegiatan"
                                                             value="{{$kg -> nama_kegiatan ?? old('nama_kegiatan')}}">
@@ -228,8 +235,13 @@ table-stripped" id="example2">
     @csrf
 </form>
 <script>
-$('#example2').DataTable({
-    "responsive": true,
+$(document).ready(function() {
+    $('#example2').DataTable({
+        "responsive": true,
+        "order": [
+            [2, "desc"]
+        ] // Sort the first column (Tanggal Mulai) in descending order
+    });
 });
 </script>
 @endpush
