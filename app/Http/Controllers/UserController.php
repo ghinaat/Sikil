@@ -6,6 +6,7 @@ use App\Models\Jabatan;
 use App\Models\Profile;
 use App\Models\TingkatPendidikan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -114,5 +115,30 @@ class UserController extends Controller
         return redirect()->route('user.index') ->with([
             'success_message' => 'Data telah terhapus',
         ]);
+    }
+
+    public function changePassword(Request $request){
+        return view('users.change-pass');
+    }
+
+    public function saveChangePassword(Request $request){
+        $request->validate([
+            'old_password' => 'required',
+            'password' => 'required|string|confirmed',
+        ]);
+
+        // Get the authenticated user
+        $user = auth()->user();
+
+        // Check if the current password matches the user's password in the database
+        if (!Hash::check($request->input('old_password'), $user->password)) {
+            return back()->withErrors(['old_password' => 'The current password is incorrect.']);
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+
+        return redirect()->route('user.changePassword')->with('success', 'Password changed successfully.');
     }
 }

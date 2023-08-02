@@ -40,7 +40,6 @@
                                     @endif
                                 </td>
                                 <td>
-                                   
                                     @can('isAdmin') 
                                         @include('components.action-buttons', ['id' => $user->id_users, 'key' => $key, 'route' => 'user'])
                                     @else
@@ -50,7 +49,6 @@
                                     @endcan
                                 </td>
                             </tr>
-
                             @can('isAdmin')
                             <!-- Modal Edit Pegawai -->
                             <div class="modal fade" id="editModal{{$user->id_users}}" tabindex="-1" role="dialog"

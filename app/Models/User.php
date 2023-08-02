@@ -31,7 +31,7 @@ class User extends Authenticatable
     }
     public function timkegiatans()
     {
-        return $this->hasMany(TimKegiatan::class, 'id_pegawai', 'id_users');
+        return $this->hasMany(TimKegiatan::class, 'id_users', 'id_users');
     }
 
     public function pengalamanKerja()

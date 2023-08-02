@@ -103,7 +103,7 @@ table-stripped" id="example2">
                                                         Pendidikan</label>
                                                     <input type="text"
                                                         class="form-control @error('nama_sekolah') is-invalid @enderror"
-                                                        id="nama_sekolah" placeholder="Nama Pendidikan"
+                                                        id="nama_sekolah" 
                                                         name="nama_sekolah"
                                                         value="{{$pd ->nama_sekolah ?? old('nama_sekolah')}}">
                                                     @error('nama_sekolah') <span class="textdanger">{{$message}}</span>
@@ -115,7 +115,7 @@ table-stripped" id="example2">
 
                                                     <input type="text"
                                                         class="form-control @error('jurusan') is-invalid @enderror"
-                                                        id="jurusan" placeholder="Jurusan" name="jurusan"
+                                                        id="jurusan" name="jurusan"
                                                         value="{{$pd ->jurusan ?? old('jurusan')}}">
                                                     @error('jurusan') <span class="textdanger">{{$message}}</span>
                                                     @enderror
@@ -126,7 +126,7 @@ table-stripped" id="example2">
 
                                                     <input type="text"
                                                         class="form-control @error('tahun_lulus') is-invalid @enderror"
-                                                        id="tahun_lulus" placeholder="Tahun Lulus" name="tahun_lulus"
+                                                        id="tahun_lulus" name="tahun_lulus"
                                                         value="{{$pd ->tahun_lulus ?? old('tahun_lulus')}}"
                                                         maxlength="4">
                                                     @error('tahun_lulus') <span class="textdanger">{{$message}}</span>
@@ -206,7 +206,7 @@ table-stripped" id="example2">
                         <label for="nama_sekolah" class="form-label">Nama
                             Sekolah</label>
                         <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror"
-                            id="nama_sekolah" placeholder="Nama Sekolah" name="nama_sekolah"
+                            id="nama_sekolah" name="nama_sekolah"
                             value="{{old('nama_sekolah')}}">
                         @error('nama_sekolah') <span class="textdanger">{{$message}}</span>
                         @enderror
@@ -216,7 +216,7 @@ table-stripped" id="example2">
                         <label for="jurusan" class="form-label"> Jurusan</label>
 
                         <input type="text" class="form-control @error('jurusan') is-invalid @enderror" id="jurusan"
-                            placeholder="Jurusan" name="jurusan" value="{{ old('jurusan')}}">
+                         name="jurusan" value="{{ old('jurusan')}}">
                         @error('jurusan') <span class="textdanger">{{$message}}</span>
                         @enderror
 
@@ -225,7 +225,7 @@ table-stripped" id="example2">
                         <label for="tahun_lulus" class="form-label">Tahun Lulus</label>
 
                         <input type="text" class="form-control @error('tahun_lulus') is-invalid @enderror"
-                            id="tahun_lulus" placeholder="Tahun Lulus" name="tahun_lulus"
+                            id="tahun_lulus" name="tahun_lulus"
                             value="{{  old('tahun_lulus')}}" maxlength="4">
                         @error('tahun_lulus') <span class="textdanger">{{$message}}</span>
                         @enderror
