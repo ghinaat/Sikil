@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Profile;
 use App\Models\User;
 use App\Models\TingkatPendidikan;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 
 class ProfileController extends Controller
@@ -137,7 +139,7 @@ class ProfileController extends Controller
 
         $array['id_users'] = auth()->user()->id_users;
 
-        $test = Profile::where('id_users', auth()->user()->id_users)->update($array);
+        Profile::where('id_users', auth()->user()->id_users)->update($array);
 
         return redirect()->route('profile.index');
     }

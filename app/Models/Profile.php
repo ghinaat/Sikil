@@ -13,6 +13,8 @@ class Profile extends Model
 
     protected $primaryKey = 'id_profile_user';
 
+    protected $date = 'tanggal_lahir';
+
     public function tingkat_pendidikan(){
         return $this->belongsTo(TingkatPendidikan::class, 'id_tingkat_pendidikan', 'id_tingkat_pendidikan');
     } 
