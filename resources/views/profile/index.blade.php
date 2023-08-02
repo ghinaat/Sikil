@@ -519,9 +519,15 @@
                                         </div>
                                         {{-- @endif --}}
 
-                                        <a href="http://127.0.0.1:8000/profile/pdf" class="btn btn-primary ">
-                                            Unduh CV
-                                        </a>
+                                        @if(strpos(Route::currentRouteName(), 'showAdmin') !== false)
+                                            <a href="{{ route('profile.pdfAdmin', $main_user->id_users) }}" class="btn btn-primary ">
+                                                Unduh CV
+                                            </a>
+                                        @else
+                                            <a href="{{ route('profile.pdf') }}" class="btn btn-primary ">
+                                                Unduh CV
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
 
