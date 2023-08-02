@@ -20,10 +20,14 @@
                                 <th>Email</th>
                                 <th>Level</th>
                                 <th>Jabatan</th>
+                                @can('isAdmin')
                                 <th>Opsi</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
+                            @php $showDetail = true; @endphp
+                            @php $showAdmin = true; @endphp
                             @foreach($user as $key => $user)
                             <tr>
                                 <td id="{{$key+1}}">{{$key+1}}</td>
@@ -36,22 +40,11 @@
                                     @else
                                     N/A
                                     @endif</td>
-                                <td>
                                     @can('isAdmin')
-                                    <a href="{{ route('user.showAdmin', $user->id_users) }}"
-                                        class="btn btn-dark btn-xs">Profile</a>    
+                                    <td>
+                                        @include('components.action-buttons', ['id' => $user->id_users, 'key' => $key, 'route' => 'user'])
+                                    </td>
                                     @endcan
-                                    <a href="{{ route('user.show', $user->id_users) }}"
-                                        class="btn btn-success btn-xs">Detail</a>
-                                    @can('isAdmin')
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                        data-target="#editModal{{$user->id_users}}" data-id="{{$user->id_users}}"
-                                        data-nama="{{$user->nama_pegawai}}">Edit</a>
-                                    <a href="{{ route('user.destroy', $user) }}"
-                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                        class="btn btn-danger btn-xs">Delete</a>
-                                    @endcan
-                                </td>
                             </tr>
 
                             @can('isAdmin')

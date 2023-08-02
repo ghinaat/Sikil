@@ -31,17 +31,10 @@
                                 <td>{{$key+1}}</td>
                                 <td>{{$jd->nama_jenis_diklat}}</td>
                                 @can('isAdmin')
-                                <td>
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                        data-target="#editModal{{$jd->id_jenis_diklat}}"
-                                        data-id="{{$jd->id_jenis_diklat}}"
-                                        data-nama="{{$jd->nama_jenis_diklat}}">Edit</a>
-                                    <a href="{{route('jenisdiklat.destroy', $jd->id_jenis_diklat)}}"
-                                        onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
-                                        Delete
-                                    </a>
-                                </td>
-                                @endcan
+                            <td>
+                                @include('components.action-buttons', ['id' => $jd->id_jenis_diklat, 'key' => $key, 'route' => 'jenisdiklat'])
+                            </td>
+                            @endcan
                             </tr>
                             @endforeach
                         </tbody>

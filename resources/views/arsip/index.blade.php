@@ -7,6 +7,11 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
+            @if (Route::currentRouteName() === 'arsip.showAdmin')
+                @include('partials.nav-pills-profile-admin', ['id_users' => $id_users])
+            @else
+                @include('partials.nav-pills-profile')
+            @endcan
             <div class="card-body">
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
                     role="dialog">Tambah</button>
@@ -37,14 +42,11 @@
                                     <a href="{{ asset('/storage/Arsip/'. $ap->file) }}" target="_blank">Lihat
                                         Dokumen</a>
                                 </td>
-                                <td>
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                        data-target="#editModal{{$ap->id_arsip}}" data-id="{{$ap->id_arsip}}">Edit</a>
-                                    <a href="{{route('arsip.destroy', $ap->id_arsip)}}"
-                                        onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
-                                        Delete
-                                    </a>
-                                </td>
+                                @can('isAdmin')
+                            <td>
+                                @include('components.action-buttons', ['id' => $ap->id_arsip, 'key' => $key, 'route' => 'arsip'])
+                            </td>
+                            @endcan
                             </tr>
                             @endforeach
                         </tbody>
