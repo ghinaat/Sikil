@@ -86,9 +86,8 @@ table-stripped" id="example2">
                                                     <div class="form-input">
 
                                                         <input type="text"
-                                                            class="form-control @error('nama_kegiatan') is-invalid @enderror "
-                                                            id="nama_kegiatan" placeholder="Nama Kegiatan"
-                                                            name="nama_kegiatan"
+                                                            class="form-control @error('nama_kegiatan') is-invalid @enderror"
+                                                            id="nama_kegiatan" name="nama_kegiatan"
                                                             value="{{$kg -> nama_kegiatan ?? old('nama_kegiatan')}}">
                                                         @error('nama_kegiatan') <span
                                                             class="textdanger">{{$message}}</span> @enderror
@@ -100,7 +99,7 @@ table-stripped" id="example2">
                                                     <div class="form-input">
                                                         <input type="date" class="form-control"
                                                             class="form-control @error('tgl_mulai') is-invalid @enderror"
-                                                            id="tgl_mulai" placeholder="Tanggal Mulai" name="tgl_mulai"
+                                                            id="tgl_mulai" name="tgl_mulai"
                                                             value="{{$kg -> tgl_mulai ?? old('tgl_mulai')}}">
                                                         @error('tgl_mulai') <span class="textdanger">{{$message}}</span>
                                                         @enderror
@@ -111,8 +110,7 @@ table-stripped" id="example2">
                                                     <div class="form-input">
                                                         <input type="date" class="form-control"
                                                             class="form-control @error('tgl_selesai') is-invalid @enderror"
-                                                            id="tgl_selesai" placeholder="Tanggal Mulai"
-                                                            name="tgl_selesai"
+                                                            id="tgl_selesai" name="tgl_selesai"
                                                             value="{{$kg -> tgl_selesai ?? old('tgl_selesai')}}">
                                                         @error('tgl_selesai') <span
                                                             class="textdanger">{{$message}}</span> @enderror
@@ -123,7 +121,7 @@ table-stripped" id="example2">
                                                     <div class="form-input">
                                                         <input type="text"
                                                             class="form-control @error('lokasi') is-invalid @enderror"
-                                                            id="lokasi" placeholder="Lokasi" name="lokasi"
+                                                            id="lokasi" name="lokasi"
                                                             value="{{$kg -> lokasi ?? old('lokasi')}}">
                                                         @error('lokasi') <span class="textdanger">{{$message}}</span>
                                                         @enderror
@@ -134,7 +132,7 @@ table-stripped" id="example2">
                                                     <div class="form-input">
                                                         <input type="text"
                                                             class="form-control @error('peserta') is-invalid @enderror"
-                                                            id="peserta" placeholder="Peserta" name="peserta"
+                                                            id="peserta" name="peserta"
                                                             value="{{$kg -> peserta ?? old('peserta')}}">
                                                         @error('peserta') <span class="textdanger">{{$message}}</span>
                                                         @enderror
@@ -179,8 +177,7 @@ table-stripped" id="example2">
                         <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
                         <div class="form-input">
                             <input type="text" class="form-control @error('nama_kegiatan') is-invalid @enderror"
-                                id="nama_kegiatan" placeholder="Nama Kegiatan" name="nama_kegiatan"
-                                value="{{old('nama_kegiatan')}}">
+                                id="nama_kegiatan" name="nama_kegiatan" value="{{old('nama_kegiatan')}}">
                             @error('nama_kegiatan') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                     </div>
@@ -188,8 +185,7 @@ table-stripped" id="example2">
                         <label for="tgl_mulai" class="form-label">Tanggal Mulai Acara</label>
                         <div class="form-input">
                             <input type="date" class="form-control @error('tgl_mulai') is-invalid @enderror"
-                                id="tgl_mulai" placeholder="Tanggal Mulai" name="tgl_mulai"
-                                value="{{ old('tgl_mulai')}}">
+                                id="tgl_mulai" name="tgl_mulai" value="{{ old('tgl_mulai')}}">
                             @error('tgl_mulai') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                     </div>
@@ -198,7 +194,7 @@ table-stripped" id="example2">
                         <div class="form-input">
                             <input type="date" class="form-control"
                                 class="form-control @error('tgl_selesai') is-invalid @enderror" id="tgl_selesai"
-                                placeholder="Tanggal Mulai" name="tgl_selesai" value="{{old('tgl_selesai')}}">
+                                name="tgl_selesai" value="{{old('tgl_selesai')}}">
                             @error('tgl_selesai') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                     </div>
@@ -206,7 +202,7 @@ table-stripped" id="example2">
                         <label for="lokasi" class="form-label">Lokasi</label>
                         <div class="form-input">
                             <input type="text" class="form-control @error('lokasi') is-invalid @enderror" id="lokasi"
-                                placeholder="Lokasi" name="lokasi" value="{{old('lokasi')}}">
+                                name="lokasi" value="{{old('lokasi')}}">
                             @error('lokasi') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                     </div>
@@ -214,7 +210,7 @@ table-stripped" id="example2">
                         <label for="peserta" class="form-label">Peserta</label>
                         <div class="form-input">
                             <input type="text" class="form-control @error('peserta') is-invalid @enderror" id="peserta"
-                                placeholder="Peserta" name="peserta" value="{{old('peserta')}}">
+                                name="peserta" value="{{old('peserta')}}">
                             @error('peserta') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                     </div>
