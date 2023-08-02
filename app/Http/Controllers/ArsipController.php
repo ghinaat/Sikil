@@ -10,23 +10,35 @@ use Illuminate\Support\Facades\Auth;
 class ArsipController extends Controller
 {
     public function index()
-    {
-        $user = Auth::user();
-    
-        if ($user->level == "admin") {
-            // Fetch all work experiences for admin
-            $arsip = Arsip::where('is_deleted', '0')->get();
-        } else {
-            // Fetch user's own work experiences using the relationship
-            $arsip = $user->arsip()->where('is_deleted', '0')->get();
-        }
-    
-        return view('arsip.index', [
-            'arsip' => $arsip,
-            'users' => User::where('is_deleted', '0')->get(),
-        ]);
+{
+    $user = Auth::user();
+
+    if ($user->level == "admin") {
+        // Fetch all work experiences for admin
+        $arsip = Arsip::where('is_deleted', '0')->get();
+    } else {
+        // Fetch user's own work experiences using the relationship
+        $arsip = $user->arsip()->where('is_deleted', '0')->get();
     }
 
+    return view('arsip.index', [
+        'arsip' => $arsip,
+        'users' => User::where('is_deleted', '0')->get(),
+    ]);
+}
+
+
+public function showAdmin(Request $request, $id_users)
+{
+    $user = User::where('id_users', $id_users)->first();
+    $arsip = Arsip::where('id_users', $user->id_users)->where('is_deleted', '0')->get();
+
+    return view('arsip.index', [
+        'id_users' => $id_users,
+        'arsip' => $arsip,
+        'users' => User::where('is_deleted', '0')->get(), // Tambahkan ini untuk data pegawai
+    ]);
+}
     public function create()
     {
         //Menampilkan Form Tambah Arsip

@@ -55,18 +55,11 @@ table-stripped" id="example2">
 
                                 </td>
 
-                                <td>
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                        data-target="#editModal{{$pk->id_pengalaman_kerja}}"
-                                        data-id="{{$pk->id_pengalaman_kerja}}"
-                                        data-nama="{{$pk->nama_perusahaan}}">Edit</a>
-
-                                    <a href="{{route('penker.destroy', $pk->id_pengalaman_kerja)}}"
-                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                        class="btn btn-danger btn-xs">
-                                        Delete
-                                    </a>
-                                </td>
+                                @can('isAdmin')
+                            <td>
+                                @include('components.action-buttons', ['id' => $pk->id_pengalaman_kerja, 'key' => $key, 'route' => 'penker'])
+                            </td>
+                            @endcan
 
                             </tr>
                             <!-- Edit modal -->

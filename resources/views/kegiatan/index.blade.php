@@ -43,23 +43,10 @@ table-stripped" id="example2">
                                 <td id={{$key+1}}>{{$kg->tgl_selesai}}</td>
                                 <td id={{$key+1}}>{{$kg->status}}</td>
                                 @can('isAdmin')
-                                <td>
-                                    <a href="{{route('kegiatan.show', $kg->id_kegiatan)}}"
-                                        class="btn btn-success btn-xs">
-                                        Detail
-                                    </a>
-
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                        data-target="#editModal{{$kg->id_kegiatan}}" data-id="{{$kg->id_kegiatan}}"
-                                        data-nama="{{$kg->nama_kegiatan}}">Edit</a>
-
-                                    <a href="{{route('kegiatan.destroy', $kg->id_kegiatan)}}"
-                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                        class="btn btn-danger btn-xs">
-                                        Delete
-                                    </a>
-                                </td>
-                                @endcan
+                            <td>
+                                @include('components.action-buttons', ['id' => $kg->id_kegiatan, 'key' => $key+1, 'showDetail' => true, 'route' => 'kegiatan' ])
+                            </td>
+                            @endcan
                             </tr>
                             @php
                             $nomor++; // Increment the sequence for the next row

@@ -35,13 +35,7 @@
                             <td>{{$tk->peran->nama_peran}}</td>
                             @can('isAdmin')
                             <td>
-                                <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                    data-target="#editModal{{$tk->id_tim}}" data-id="{{$tk->id_tim}}">Edit</a>
-                                <a href="{{route('timkegiatan.destroy', $tk->id_tim)}}"
-                                    onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                    class="btn btn-danger btn-xs">
-                                    Delete
-                                </a>
+                                @include('components.action-buttons', ['id' => $tk->id_tim, 'key' => $key, 'route' => 'timkegiatan'])
                             </td>
                             @endcan
                         </tr>
