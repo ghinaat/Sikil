@@ -44,20 +44,13 @@
                                     <div class="form-group">
                                         <label for="nama" class='form-label'>Nama</label>
                                         <div class="form-input">
-                                            <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                                id="nama" placeholder="Nama" name="nama"
-                                                value="{{ $main_user->nama_pegawai }}" readonly>
-                                            @error('nama') <span class="textdanger">{{$message}}</span> @enderror
+                                            : {{ $main_user->nama_pegawai }}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="jabatan" class='form-label'>jabatan</label>
                                         <div class="form-input">
-                                            <input type="text"
-                                                class="form-control @error('jabatan') is-invalid @enderror" id="jabatan"
-                                                placeholder="jabatan" name="jabatan"
-                                                value="{{ $main_user->jabatan->nama_jabatan }}" readonly>
-                                            @error('jabatan') <span class="textdanger">{{$message}}</span> @enderror
+                                            : {{ $main_user->jabatan->nama_jabatan }}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -73,158 +66,93 @@
                                     <div class="form-group">
                                         <label for="nip" class='form-label'>NIP</label>
                                         <div class="form-input">
-                                            <input type="text" class="form-control @error('nip') is-invalid @enderror"
-                                                id="nip" placeholder="NIP" name="nip"
-                                                value="{{$user->nip ?? old('nip')}}" readonly>
-                                            @error('nip') <span class="textdanger">{{$message}}</span> @enderror
+                                        : {{ $user->nip }}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="nik" class='form-label'>NIK</label>
                                         <div class="form-input">
-                                            <input type="text" class="form-control @error('nik') is-invalid @enderror"
-                                                id="nik" placeholder="NIK" name="nik"
-                                                value="{{$user->nik ?? old('nik')}}" readonly>
-                                            @error('nik') <span class="textdanger">{{$message}}</span> @enderror
+                                        : {{ $user->nik }}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="kk" class='form-label'>KK</label>
                                         <div class="form-input">
-                                            <input type="text" class="form-control @error('kk') is-invalid @enderror"
-                                                id="kk" placeholder="KK" name="kk" value="{{$user->kk ?? old('kk')}}"
-                                                readonly>
-                                            @error('kk') <span class="textdanger">{{$message}}</span> @enderror
+                                        : {{ $user->kk }}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="tempat_lahir" class='form-label'>Tempat Lahir</label>
                                         <div class="form-input">
-                                            <input type="text"
-                                                class="form-control @error('tempat_lahir') is-invalid @enderror"
-                                                id="tempat_lahir" placeholder="Tempat Lahir" name="tempat_lahir"
-                                                value="{{$user->tempat_lahir ?? old('tempat_lahir')}}" readonly>
-                                            @error('tempat_lahir') <span class="textdanger">{{$message}}</span>
-                                            @enderror
+                                        : {{ $user->tempat_lahir }}
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group"> 
                                         <label for="tanggal_lahir" class='form-label'>Tanggal Lahir</label>
                                         <div class="form-input">
-                                            <input type="text"
-                                                class="form-control @error('tanggal_lahir') is-invalid @enderror"
-                                                id="tanggal_lahir" placeholder="Tanggal Lahir" name="tanggal_lahir"
-                                                value="{{$user->tanggal_lahir ?? old('tanggal_lahir')}}" readonly>
-                                            @error('tanggal_lahir') <span class="textdanger">{{$message}}</span>
-                                            @enderror
+                                        : {{ date_format( new DateTime($user->tanggal_lahir), 'd F Y')}}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="alamat" class='form-label'>Alamat</label>
                                         <div class="form-input">
-                                            <input type="text"
-                                                class="form-control @error('alamat') is-invalid @enderror" id="alamat"
-                                                placeholder="Alamat" name="alamat"
-                                                value="{{$user->alamat ?? old('alamat')}}" readonly>
-                                            @error('alamat') <span class="textdanger">{{$message}}</span> @enderror
+                                        : {{ $user->alamat }}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="no_hp" class='form-label'>No HP</label>
                                         <div class="form-input">
-                                            <input type="text" class="form-control @error('no_hp') is-invalid @enderror"
-                                                id="no_hp" placeholder="No HP" name="no_hp"
-                                                value="{{$user->no_hp ?? old('no_hp')}}" readonly>
-                                            @error('no_hp') <span class="textdanger">{{$message}}</span> @enderror
-                                        </div>
+                                        : {{ $user->no_hp }}
+                                       </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="agama" class='form-label'>Agama</label>
                                         <div class="form-input">
-                                            <input type="text" class="form-control @error('agama') is-invalid @enderror"
-                                                id="agama" placeholder="Agama" name="agama"
-                                                value="{{$user->agama ?? old('agama')}}" readonly>
-                                            @error('agama') <span class="textdanger">{{$message}}</span> @enderror
+                                        : {{ $user->agama }}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="gender" class='form-label'>Gender</label>
                                         <div class="form-input">
-                                            <input type="text"
-                                                class="form-control @error('gender') is-invalid @enderror" id="gender"
-                                                placeholder="Gender" name="gender"
-                                                value="{{$user->gender ?? old('gender')}}" readonly>
-                                            @error('gender') <span class="textdanger">{{$message}}</span> @enderror
+                                        : {{ $user->gender }}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="pendidikan" class='form-label'>Pendidikan</label>
                                         <div class="form-input">
-                                            <input type="text"
-                                                class="form-control @error('pendidikan') is-invalid @enderror"
-                                                id="pendidikan" placeholder="Pendidikan" name="pendidikan"
-                                                value="{{$user->pendidikan ?? old('pendidikan')}}" readonly>
-                                            @error('pendidikan') <span class="textdanger">{{$message}}</span> @enderror
+                                        : {{ $user->pendidikan }}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="tmt" class='form-label'>Tanggal Mulai Tugas</label>
                                         <div class="form-input">
-                                            <input type="text" class="form-control @error('tmt') is-invalid @enderror"
-                                                id="tmt" placeholder="Tanggal Mulai Tugas" name="tmt"
-                                                value="{{$user->tmt ?? old('tmt')}}" readonly>
-                                            @error('tmt') <span class="textdanger">{{$message}}</span> @enderror
+                                        : {{ date_format( new DateTime($user->tmt), 'd F Y')}}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="masa_kerja" class='form-label'>Masa Kerja</label>
                                         <div class="form-input">
-                                            @if (isset($user->tmt))
-                                            <input type="text"
-                                                class="form-control @error('masa_kerja') is-invalid @enderror"
-                                                id="masa_kerja" placeholder="Masa Kerja" name="masa_kerja"
-                                                value="{{date('Y-m-d', strtotime('+2 year', strtotime($user->tmt) )) ?? old('masa_kerja')}}"
-                                                readonly>
-                                            @error('masa_kerja') <span class="textdanger">{{$message}}</span> @enderror
-                                            @else
-                                            <input type="text"
-                                                class="form-control @error('masa_kerja') is-invalid @enderror"
-                                                id="masa_kerja" placeholder="Masa Kerja" name="masa_kerja" value=""
-                                                readonly>
-                                            @endif
+                                        @if (isset($user->tmt))
+                                        : {{ date_format( new DateTime(date('Y-m-d', strtotime('+2 year', strtotime($user->tmt) ))) ,'d F Y')}}
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="status_kawin" class='form-label'>Status Kawin</label>
                                         <div class="form-input">
-                                            <input type="text"
-                                                class="form-control @error('status_kawin') is-invalid @enderror"
-                                                id="status_kawin" placeholder="Status Kawin" name="status_kawin"
-                                                value="{{$user->status_kawin ?? old('status_kawin')}}" readonly>
-                                            @error('status_kawin') <span class="textdanger">{{$message}}</span>
-                                            @enderror
+                                        : {{ $user->status_kawin }}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="bpjs" class='form-label'>BPJS</label>
                                         <div class="form-input">
-                                            <input type="text" class="form-control @error('bpjs') is-invalid @enderror"
-                                                id="bpjs" placeholder="BPJS" name="bpjs"
-                                                value="{{$user->bpjs ?? old('bpjs')}}" readonly>
-                                            @error('bpjs') <span class="textdanger">{{$message}}</span> @enderror
+                                        : {{ $user->bpjs }}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="tingkat_pendidikan" class='form-label'>Tingkat Pendidikan</label>
                                         <div class="form-input">
-                                            <input type="text"
-                                                class="form-control @error('tingkat_pendidikan') is-invalid @enderror"
-                                                id="tingkat_pendidikan" placeholder="Tingkat Pendidikan"
-                                                name="tingkat_pendidikan"
-                                                value="{{$user->tingkat_pendidikan->nama_tingkat_pendidikan ?? old('tingkat_pendidikan')}}"
-                                                readonly>
-                                            @error('tingkat_pendidikan') <span class="textdanger">{{$message}}</span>
-                                            @enderror
+                                        : {{ $user->tingkat_pendidikan?->nama_tingkat_pendidikan }}
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -248,7 +176,7 @@
                                                             method="post" enctype="multipart/form-data">
                                                             @csrf
                                                             @method('PUT')
-                                                            <div class="my-2">
+                                                            <div class="form-group">
                                                                 <label for="nip" class='form-label'>NIP</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
@@ -259,7 +187,7 @@
                                                                         class="textdanger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
-                                                            <div class="my-2">
+                                                            <div class="form-group">
                                                                 <label for="nik" class='form-label'>NIK</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
@@ -270,7 +198,7 @@
                                                                         class="textdanger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
-                                                            <div class="my-2">
+                                                            <div class="form-group form-group">
                                                                 <label for="kk" class='form-label'>KK</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
@@ -281,9 +209,8 @@
                                                                         class="textdanger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
-                                                            <div class="my-2">
-                                                                <label for="tempat_lahir" class='form-label'>Tempat
-                                                                    Lahir</label>
+                                                            <div class="form-group">
+                                                                <label for="tempat_lahir" class='form-label'>Tempat Lahir</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
                                                                         class="form-control @error('tempat_lahir') is-invalid @enderror"
@@ -294,20 +221,14 @@
                                                                         class="textdanger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
-                                                            <div class="my-2">
-                                                                <label for="tanggal_lahir" class='form-label'>Tanggal
-                                                                    Lahir</label>
+                                                            <div class="form-group">
+                                                                <label for="tanggal_lahir" class='form-label'>Tanggal Lahir</label>
                                                                 <div class="form-input">
-                                                                    <input type="date"
-                                                                        class="form-control @error('tanggal_lahir') is-invalid @enderror"
-                                                                        id="tanggal_lahir" placeholder="Tanggal Lahir"
-                                                                        name="tanggal_lahir"
-                                                                        value="{{$user->tanggal_lahir ?? old('tanggal_lahir')}}">
-                                                                    @error('tanggal_lahir') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                 <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" placeholder="Tanggal Lahir" name="tanggal_lahir" value="{{ $tanggal_lahir ? $tanggal_lahir->format('Y-m-d') : '' }}" >
+                                                                    @error('tanggal_lahir') <span class="text-danger">{{ $message }}</span> @enderror
                                                                 </div>
                                                             </div>
-                                                            <div class="my-2">
+                                                            <div class="form-group">
                                                                 <label for="alamat" class='form-label'>Alamat</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
@@ -318,7 +239,7 @@
                                                                         class="textdanger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
-                                                            <div class="my-2">
+                                                            <div class="form-group">
                                                                 <label for="no_hp" class='form-label'>No HP</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
@@ -329,8 +250,9 @@
                                                                         class="textdanger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
-                                                            <div class="my-2">
-                                                                <label for="exampleInputagama">Agama</label>
+                                                            <div class="form-group">
+                                                                <label for="exampleInputagama" class='form-label'>Agama</label>
+                                                                <div class="form-input">
                                                                 @if (isset($user->agama))
                                                                 <select
                                                                     class="form-select @error('agama') isinvalid @enderror"
@@ -372,10 +294,11 @@
                                                                     class="textdanger">{{$message}}</span>
                                                                 @enderror
                                                                 @endif
-
+                                                                </div>
                                                             </div>
-                                                            <div class="my-2">
-                                                                <label for="exampleInputgender">gender</label>
+                                                            <div class="form-group">
+                                                                <label for="exampleInputgender"class='form-label'>gender</label>
+                                                                <div class="form-input">
                                                                 @if (isset($user->gander))
                                                                 <select
                                                                     class="form-select @error('gender') isinvalid @enderror"
@@ -401,10 +324,10 @@
                                                                     class="textdanger">{{$message}}</span>
                                                                 @enderror
                                                                 @endif
+                                                                </div>
                                                             </div>
-                                                            <div class="my-2">
-                                                                <label for="pendidikan"
-                                                                    class='form-label'>Pendidikan</label>
+                                                            <div class="form-group">
+                                                                <label for="pendidikan" class='form-label'>Pendidikan</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
                                                                         class="form-control @error('pendidikan') is-invalid @enderror"
@@ -415,9 +338,8 @@
                                                                         class="textdanger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
-                                                            <div class="my-2">
-                                                                <label for="tmt" class='form-label'>Tanggal Mulai
-                                                                    Tugas</label>
+                                                            <div class="form-group">
+                                                                <label for="tmt" class='form-label'>Tanggal Mulai Tugas</label>
                                                                 <div class="form-input">
                                                                     <input type="date"
                                                                         class="form-control @error('tmt') is-invalid @enderror"
@@ -427,9 +349,9 @@
                                                                         class="textdanger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
-                                                            <div class="my-2">
-                                                                <label for="exampleInputstatus_kawin">Status
-                                                                    Kawin</label>
+                                                            <div class="form-group">
+                                                                <label for="exampleInputstatus_kawin" class='form-label'>Status Kawin</label>
+                                                                <div class="form-input">
                                                                 @if (isset($user->status_kawin))
                                                                 <select
                                                                     class="form-select @error('status_kawin') isinvalid @enderror"
@@ -456,8 +378,9 @@
                                                                     class="textdanger">{{$message}}</span>
                                                                 @enderror
                                                                 @endif
+                                                                </div>
                                                             </div>
-                                                            <div class="my-2">
+                                                            <div class="form-group">
                                                                 <label for="bpjs" class='form-label'>BPJS</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
@@ -468,9 +391,8 @@
                                                                         class="textdanger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
-                                                            <div class="my-2">
-                                                                <label for="tingkat_pendidikan"
-                                                                    class='form-label'>Tingkat Pendidikan</label>
+                                                            <div class="form-group">
+                                                                <label for="tingkat_pendidikan" class='form-label'>Tingkat Pendidikan</label>
                                                                 <div class="form-input">
                                                                     <select
                                                                         class="form-select @error('tingkat_pendidikan') isinvalid @enderror"
@@ -505,10 +427,8 @@
                                                                 @enderror
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
-                                                                <a href="{{route('profile.index')}}"
-                                                                    class="btn btn-danger">
+                                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                                                <a href="{{route('kegiatan.index')}}" class="btn btn-danger">
                                                                     Batal
                                                                 </a>
                                                             </div>
