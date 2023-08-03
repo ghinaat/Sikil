@@ -289,7 +289,6 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Menu-Configuration
     |
     */
-
     'menu' => [
         // Navbar items:
         [
@@ -298,7 +297,12 @@ return [
             'icon'  => 'fas fa-fw fa-envelope',
             'topnav_right' => true,
         ],
-
+        [
+            'text' => 'Home',
+            'url'  => '/home',
+            'icon' => 'fas fa-home',
+            'can'  => '',
+        ],
         // Sidebar items:
         'ACCOUNT SETTINGS',
         [
@@ -311,11 +315,7 @@ return [
             'icon' => 'fas fa-home',
             'text'    => 'Admin Management',
             'submenu' => [
-                [
-                    'text' => 'Home',
-                    'url'  => '/home',
-                    'can'  => '',
-                ],
+
                 [
                     'text' => 'Kegiatan',
                     'url'  => '/kegiatan',
@@ -336,7 +336,7 @@ return [
                     'url'  => '/arsip',
                     'can'  => '',
                 ],
-                 [
+                [
                     'text' => 'Diklat',
                     'url'  => 'diklat',
                     'can'  => '',
@@ -375,7 +375,7 @@ return [
                     'url'  => 'jabatan',
                     'can'  => '',
                 ],
-                 [
+                [
                     'text' => 'Jenis Diklat',
                     'url'  => 'jenisdiklat',
                     'can'  => '',

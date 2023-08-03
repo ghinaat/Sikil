@@ -2,6 +2,7 @@
     {{ config('adminlte.classes_topnav_nav', 'navbar-expand') }}
     {{ config('adminlte.classes_topnav', 'navbar-white navbar-light') }}">
 
+
     {{-- Navbar left links --}}
     <ul class="navbar-nav">
         {{-- Left sidebar toggler link --}}
@@ -13,6 +14,7 @@
         {{-- Custom left links --}}
         @yield('content_top_nav_left')
     </ul>
+    <h2 style="text-align: center; font-size: 27px;">Sistem Informasi Kepegawaian & Layanan Internal SEAQIL</h2>
 
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto">
@@ -36,5 +38,6 @@
             @include('adminlte::partials.navbar.menu-item-right-sidebar-toggler')
         @endif
     </ul>
+    
 
 </nav>
