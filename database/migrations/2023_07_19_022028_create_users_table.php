@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('level', ['admin', 'kadiv', 'dda','ddo', 'staf']);
             $table->enum('is_deleted', ['0', '1'])->default('0');
             $table->foreign('id_jabatan')->references('id_jabatan')->on('jabatan')->onDelete('cascade');
+            $table->unsignedInteger('kode_finger')->nullable()->index();
             $table->timestamps();
         });
     }

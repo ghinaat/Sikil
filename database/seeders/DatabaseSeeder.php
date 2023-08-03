@@ -9,6 +9,7 @@ use App\Models\TingkatPendidikan;
 use App\Models\JenisDiklat;
 use App\Models\HubunganKeluarga;
 use App\Models\Kegiatan;
+use App\Models\Presensi;
 use App\Models\peran;
 use App\Models\TimKegiatan;
 
@@ -113,5 +114,6 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         Kegiatan::factory(40)->create();
         TimKegiatan::factory(40)->create();
+        Presensi::factory(100)->create();
     }
 }
