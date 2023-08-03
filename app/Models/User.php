@@ -19,11 +19,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'nama_pegawai',
+        'kode_finger',
         'email',
         'password',
         'level',
         'id_jabatan',
-        '_password_'
+         '_password_'
     ];
 
     public function jabatan(){

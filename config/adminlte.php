@@ -362,6 +362,12 @@ return [
                     'url' => '/laporan',
                     'can' => '',
                 ],
+                [
+                    'text' => 'Import',
+                    'url' => '/import',
+                    'can' => '',
+                ],
+
             ],
         ],
         'ADMIN',

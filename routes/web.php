@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/user/{id_users}/edit', [UserController::class, 'edit'])->name('user.edit')->middleware('isAdmin');
     Route::put('/user/{id_users}', [UserController::class, 'update'])->name('user.update')->middleware('isAdmin');
     Route::delete('/user/{id_users}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('isAdmin');
+    Route::post('/import', [UserController::class, 'import'])->name('import');
+    Route::get('/import', [UserController::class, 'showImportForm'])->name('import.form');
 });
 
 Route::group(['middleware' => ['auth']], function() {
