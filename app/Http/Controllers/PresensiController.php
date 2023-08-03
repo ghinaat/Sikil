@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Presensi;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PresensiController extends Controller
 {
@@ -12,7 +13,34 @@ class PresensiController extends Controller
      */
     public function index()
     {
-        //
+
+        $presensi = Presensi::all();
+        return view('presensi.index', [
+            'presensi' => $presensi,
+            // 'presensi' => Presensi::all()
+        ]);
+    }
+
+    public function filter(Request $request)
+    {
+        // $all_kegiatan = Kegiatan::all();
+        // $kegiatans = Kegiatan::where('tgl_mulai', '<=', now())->where('tgl_selesai', '>=', now())->get();
+        // return view('home', [
+        //     'kegiatans' => $kegiatans,
+        //     'all_kegiatan' => $all_kegiatan,
+        // ]);
+        // return view('home');
+        
+        $selectedDate = $request->input('tanggalFilter');
+        $selectedDate = Carbon::parse($selectedDate)->format('Y-m-d');
+        // $presensi = Presensi::whereDate('tanggal', $selectedDate)->get();
+        $presensi = Presensi::whereDate('tanggal', $selectedDate )->get();
+        // $presensi = Presensi::where('tanggal', '20');
+        // dd($presensi);
+
+        return view('presensi.index',  [
+            'presensi' => $presensi,
+        ]);
     }
 
     /**
@@ -20,7 +48,10 @@ class PresensiController extends Controller
      */
     public function create()
     {
-        //
+        return view(
+            'presensi.create', [
+            'presensi' => Presensi::all()
+        ]);
     }
 
     /**
