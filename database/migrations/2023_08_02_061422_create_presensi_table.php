@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('presensi', function (Blueprint $table) {
             $table->increments('id_presensi');
-            $table->date('tanggal');
             $table->unsignedInteger('kode_finger')->nullable();
-            $table->foreign('kode_finger')->references('kode_finger')->on('users')->onDelete('cascade');
-            $table->time('jam_masuk');
-            $table->time('jam_pulang');
-            $table->time('terlambat');
-            $table->time('pulang_cepat');
-            $table->time('kehadiran');
+            $table->foreign('kode_finger')->references('kode_finger')->on('users');
+            $table->date('tanggal');
+            $table->time('jam_masuk')->nullable();
+            $table->time('jam_pulang')->nullable();
+            $table->time('terlambat')->nullable();
+            $table->time('pulang_cepat')->nullable();
+            $table->boolean('kehadiran');
             $table->enum('jenis_perizinan', ['I', 'DL', 'S', 'CS', 'Prajab', 'CT', 'CM', 'CAP', 'CH', 'CB', 'A', 'TB']);
             $table->enum('is_deleted', ['0', '1'])->default('0');
             $table->timestamps();

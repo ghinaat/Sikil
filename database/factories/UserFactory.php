@@ -23,6 +23,7 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             '_password_' => 'password',
             'level' => 'staf',
+            'kode_finger' => str_pad(fake()->randomNumber(5), 5, '0', STR_PAD_LEFT),
             'id_jabatan' => random_int(1,3),
             'is_deleted' => '0',
         ];
