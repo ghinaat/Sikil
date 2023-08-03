@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Presensi;
 use Illuminate\Http\Request;
+use App\Imports\PresensiImport;
 
 class PresensiController extends Controller
 {
@@ -12,7 +13,17 @@ class PresensiController extends Controller
      */
     public function index()
     {
-        //
+        return view('presensi.users');
+    }
+    
+
+    public function presensi(Request $request)
+    {
+        $tglawal = $request->input('tglawal');
+        $tglakhir = date('Y-m-d', strtotime($request->input('tglakhir') . ' +1 day'));
+        $presensi = Presensi::whereBetween('tanggal', [$tglawal, $tglakhir])->orderBy('tanggal', 'desc')->get();
+
+        return view('presensi.users', compact('presensi', 'tglawal', 'tglakhir'));
     }
 
     /**

@@ -20,7 +20,4 @@ class Presensi extends Model
         'kehadiran',
         'jenis_perizinan'
     ];
-
-
-
 }

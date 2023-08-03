@@ -362,6 +362,11 @@ return [
                     'url' => '/laporan',
                     'can' => '',
                 ],
+                [
+                    'text' => 'Presensi',
+                    'url' => '/presensi',
+                    'can' => '',
+                ],
             ],
         ],
         'ADMIN',
