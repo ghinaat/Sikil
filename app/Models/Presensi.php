@@ -21,6 +21,8 @@ class Presensi extends Model
         'jenis_perizinan'
     ];
 
-
-
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'kode_finger', 'kode_finger');
+    }
 }

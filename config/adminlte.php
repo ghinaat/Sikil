@@ -317,6 +317,11 @@ return [
                     'can'  => '',
                 ],
                 [
+                    'text' => 'Presensi',
+                    'url' => '/presensi',
+                    'can' => '',
+                ],
+                [
                     'text' => 'Kegiatan',
                     'url'  => '/kegiatan',
                     'can'  => '',
