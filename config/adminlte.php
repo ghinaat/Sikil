@@ -317,6 +317,11 @@ return [
                     'can'  => '',
                 ],
                 [
+                    'text' => 'Presensi',
+                    'url' => '/presensi',
+                    'can' => '',
+                ],
+                [
                     'text' => 'Kegiatan',
                     'url'  => '/kegiatan',
                     'can'  => '',
@@ -362,6 +367,12 @@ return [
                     'url' => '/laporan',
                     'can' => '',
                 ],
+                [
+                    'text' => 'Import Presensi',
+                    'url' => '/import/presensi',
+                    'can' => '',
+                ],
+
             ],
         ],
         'ADMIN',

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Presensi;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\PresensiImport;
 
 use App\Exports\PresensiExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,7 +19,24 @@ class PresensiController extends Controller
      */
     public function index()
     {
-        //
+
+        $presensi = Presensi::all();
+        return view('presensi.index', [
+            'presensi' => $presensi,
+            // 'presensi' => Presensi::all()
+        ]);
+    }
+
+    public function filter(Request $request)
+    {   
+        $selectedDate = $request->input('tanggalFilter');
+        $selectedDate = Carbon::parse($selectedDate)->format('Y-m-d');
+        
+        $presensi = Presensi::whereDate('tanggal', $selectedDate )->get();
+
+        return view('presensi.index',  [
+            'presensi' => $presensi,
+        ]);
     }
 
     /**
@@ -24,7 +44,10 @@ class PresensiController extends Controller
      */
     public function create()
     {
-        //
+        return view(
+            'presensi.create', [
+            'presensi' => Presensi::all()
+        ]);
     }
 
     /**
@@ -70,4 +93,25 @@ class PresensiController extends Controller
     public function export(){
         return Excel::download(new PresensiExport, 'presensi_pegawai.xlsx');
     }
+
+    public function showImportForm(Request $request)
+    {
+        $presensi = Presensi::where('is_deleted', '0')->get();
+
+        return view('presensi.import', [
+            'presensi' => $presensi,
+            
+        ]);
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new PresensiImport, $request->file('file')->store('presensi'));
+
+        return redirect()->back()->with([
+            'success_message' => 'Data telah Tersimpan',
+        ]);
+    }
+
+
 }
