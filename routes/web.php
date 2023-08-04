@@ -129,8 +129,13 @@ Route::resource('peran', \App\Http\Controllers\PeranController::class)->middlewa
 
 Route::get('/laporan', [App\Http\Controllers\TimKegiatanController::class, 'laporan'])->name('laporan')->middleware('auth');
 
-Route::get('/presensi', [PresensiController::class, 'index'])->name('presensi.index');
-Route::get('/presensi/filter', [PresensiController::class, 'filter'])->name('presensi.filter');
-Route::resource('presensi', \App\Http\Controllers\PresensiController::class)->middleware('auth');
-Route::post('/import/presensi', [PresensiController::class, 'import'])->name('presensi.import')->middleware('auth');
-Route::get('/import/presensi', [PresensiController::class, 'showImportForm'])->name('import.presensi')->middleware('auth');
+
+Route::group(['middleware' => ['auth']], function() {
+  Route::get('/presensi', [PresensiController::class, 'index'])->name('presensi.index');
+  Route::get('/presensi/filter', [PresensiController::class, 'filter'])->name('presensi.filter');
+  Route::resource('presensi', \App\Http\Controllers\PresensiController::class)->middleware('auth');
+  Route::get('presensi/export/', [PresensiController::class, 'export'])->name('presensi.export')->middleware('isAdmin');
+  Route::post('/presensi/import', [PresensiController::class, 'import'])->name('presensi.import')->middleware('isAdmin');
+  Route::get('/presensi/import', [PresensiController::class, 'showImportForm'])->name('import.presensi')->middleware('isAdmin');
+});
+

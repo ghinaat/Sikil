@@ -8,6 +8,10 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PresensiImport;
 
+use App\Exports\PresensiExport;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 class PresensiController extends Controller
 {
     /**
@@ -24,21 +28,11 @@ class PresensiController extends Controller
     }
 
     public function filter(Request $request)
-    {
-        // $all_kegiatan = Kegiatan::all();
-        // $kegiatans = Kegiatan::where('tgl_mulai', '<=', now())->where('tgl_selesai', '>=', now())->get();
-        // return view('home', [
-        //     'kegiatans' => $kegiatans,
-        //     'all_kegiatan' => $all_kegiatan,
-        // ]);
-        // return view('home');
-        
+    {   
         $selectedDate = $request->input('tanggalFilter');
         $selectedDate = Carbon::parse($selectedDate)->format('Y-m-d');
-        // $presensi = Presensi::whereDate('tanggal', $selectedDate)->get();
+        
         $presensi = Presensi::whereDate('tanggal', $selectedDate )->get();
-        // $presensi = Presensi::where('tanggal', '20');
-        // dd($presensi);
 
         return view('presensi.index',  [
             'presensi' => $presensi,
@@ -94,6 +88,10 @@ class PresensiController extends Controller
     public function destroy(Presensi $presensi)
     {
         //
+    }
+
+    public function export(){
+        return Excel::download(new PresensiExport, 'presensi_pegawai.xlsx');
     }
 
     public function showImportForm(Request $request)
