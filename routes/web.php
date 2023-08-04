@@ -135,7 +135,6 @@ Route::get('/presensi/filter', [App\Http\Controllers\PresensiController::class, 
 Route::resource('presensi', \App\Http\Controllers\PresensiController::class)->middleware('auth');
 
 
-
 Route::group(['middleware' => ['auth']], function() {
   Route::get('/presensi', [PresensiController::class, 'index'])->name('presensi.index');
   Route::get('/presensi/filter', [PresensiController::class, 'filter'])->name('presensi.filter');

@@ -58,8 +58,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Diklat::class, 'id_users', 'id_users');
     }
+    public function presensi()
+    {
+        return $this->hasMany(Presensi::class, 'kode_finger', 'kode_finger');
+    }
 
-
+    
     protected $primaryKey = 'id_users';
 
     /**
