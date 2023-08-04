@@ -126,4 +126,7 @@ Route::resource('pendidikan', \App\Http\Controllers\PendidikanController::class)
 Route::resource('peran', \App\Http\Controllers\PeranController::class)->middleware('auth');
 
 Route::get('/laporan', [App\Http\Controllers\TimKegiatanController::class, 'laporan'])->name('laporan')->middleware('auth');
-Route::get('/presensi', [App\Http\Controllers\PresensiController::class, 'presensi'])->name('presensi');
+Route::get('/presensi/filteruser', [App\Http\Controllers\PresensiController::class, 'filteruser'])->name('presensi.user');
+Route::get('/presensi', [App\Http\Controllers\PresensiController::class, 'index'])->name('presensi.index');
+Route::get('/presensi/filter', [App\Http\Controllers\PresensiController::class, 'filter'])->name('presensi.filter');
+Route::resource('presensi', \App\Http\Controllers\PresensiController::class)->middleware('auth');

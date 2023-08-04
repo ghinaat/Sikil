@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
 use App\Imports\PresensiImport;
+use Carbon\Carbon;
 
 class PresensiController extends Controller
 {
@@ -13,17 +14,31 @@ class PresensiController extends Controller
      */
     public function index()
     {
-        return view('presensi.users');
+        $presensi = Presensi::all();
+        return view('presensi.index', [
+            'presensi' => $presensi,
+            // 'presensi' => Presensi::all()
+        ]);
     }
-    
 
-    public function presensi(Request $request)
+    public function filter(Request $request)
+    {        
+        $selectedDate = $request->input('tanggalFilter');
+        $selectedDate = Carbon::parse($selectedDate)->format('Y-m-d');
+
+        $presensi = Presensi::whereDate('tanggal', $selectedDate )->get();
+        return view('presensi.index',  [
+            'presensi' => $presensi,
+        ]);
+    }
+
+    public function filteruser(Request $request)
     {
         $tglawal = $request->input('tglawal');
         $tglakhir = date('Y-m-d', strtotime($request->input('tglakhir') . ' +1 day'));
         $presensi = Presensi::whereBetween('tanggal', [$tglawal, $tglakhir])->orderBy('tanggal', 'desc')->get();
 
-        return view('presensi.users', compact('presensi', 'tglawal', 'tglakhir'));
+        return view('presensi.index', compact('presensi', 'tglawal', 'tglakhir'));
     }
 
     /**
@@ -31,7 +46,10 @@ class PresensiController extends Controller
      */
     public function create()
     {
-        //
+        return view(
+            'presensi.create', [
+            'presensi' => Presensi::all()
+        ]);
     }
 
     /**

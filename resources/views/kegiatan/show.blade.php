@@ -12,9 +12,6 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-
-
-
                 <div class="form-group">
                     <label for="nama_kegiatan" class='form-label'>Nama Kegiatan</label>
                     <div class="form-input">
@@ -81,9 +78,7 @@
 
             </div>
             <div class="modal-footer">
-
-                <a href="{{route('kegiatan.index')}}" class="btn
-btn-primary ">
+                <a href="{{route('kegiatan.index')}}" class="btn btn-primary ">
                     Kembali
                 </a>
             </div>
@@ -108,7 +103,6 @@ btn-primary ">
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-12">
-
                                 <input type="hidden" name="id_kegiatan" value="{{ $kegiatan->id_kegiatan }}">
                                 <table class="table table-hover table-bordered table-stripped" id="example2">
                                     <thead>
