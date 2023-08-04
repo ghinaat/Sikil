@@ -368,8 +368,8 @@ return [
                     'can' => '',
                 ],
                 [
-                    'text' => 'Import',
-                    'url' => '/import',
+                    'text' => 'Import Presensi',
+                    'url' => '/import/presensi',
                     'can' => '',
                 ],
 

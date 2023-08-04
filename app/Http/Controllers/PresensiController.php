@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\PresensiImport;
 
 class PresensiController extends Controller
 {
@@ -93,4 +95,25 @@ class PresensiController extends Controller
     {
         //
     }
+
+    public function showImportForm(Request $request)
+    {
+        $presensi = Presensi::where('is_deleted', '0')->get();
+
+        return view('presensi.import', [
+            'presensi' => $presensi,
+            
+        ]);
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new PresensiImport, $request->file('file')->store('presensi'));
+
+        return redirect()->back()->with([
+            'success_message' => 'Data telah Tersimpan',
+        ]);
+    }
+
+
 }

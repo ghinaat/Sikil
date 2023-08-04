@@ -144,15 +144,6 @@ class UserController extends Controller
         return redirect()->route('user.changePassword')->with('success', 'Password changed successfully.');
     }
 
-    public function showImportForm(Request $request)
-    {
-        $user = User::where('is_deleted', '0')->get();
-
-        return view('users.import', [
-            'user' => $user,
-            
-        ]);
-    }
 
     public function import(Request $request)
     {

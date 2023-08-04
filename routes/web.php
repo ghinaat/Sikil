@@ -49,7 +49,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('/user/{id_users}', [UserController::class, 'update'])->name('user.update')->middleware('isAdmin');
     Route::delete('/user/{id_users}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('isAdmin');
     Route::post('/import', [UserController::class, 'import'])->name('import');
-    Route::get('/import', [UserController::class, 'showImportForm'])->name('import.form');
 });
 
 Route::group(['middleware' => ['auth']], function() {
@@ -133,3 +132,5 @@ Route::get('/laporan', [App\Http\Controllers\TimKegiatanController::class, 'lapo
 Route::get('/presensi', [PresensiController::class, 'index'])->name('presensi.index');
 Route::get('/presensi/filter', [PresensiController::class, 'filter'])->name('presensi.filter');
 Route::resource('presensi', \App\Http\Controllers\PresensiController::class)->middleware('auth');
+Route::post('/import/presensi', [PresensiController::class, 'import'])->name('presensi.import')->middleware('auth');
+Route::get('/import/presensi', [PresensiController::class, 'showImportForm'])->name('import.presensi')->middleware('auth');
