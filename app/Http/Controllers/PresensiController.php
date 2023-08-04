@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
 
+use App\Exports\PresensiExport;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 class PresensiController extends Controller
 {
     /**
@@ -61,5 +65,9 @@ class PresensiController extends Controller
     public function destroy(Presensi $presensi)
     {
         //
+    }
+
+    public function export(){
+        return Excel::download(new PresensiExport, 'presensi_pegawai.xlsx');
     }
 }
