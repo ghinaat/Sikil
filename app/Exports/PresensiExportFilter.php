@@ -12,12 +12,19 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 
 
-class PresensiExport implements FromView
+class PresensiExportFilter implements FromView
 {
+    protected $presensis;
+
+    public function __construct($presensis)
+    {
+        $this->presensis = $presensis;
+    }
+    
     public function view(): View
     {
-        return view('layouts.excel', [
-            'presensis' => Presensi::all()
+        return view('presensi.export_filter', [
+            'presensis' => $this->presensis
         ]);
     }
 }

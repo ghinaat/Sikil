@@ -114,6 +114,6 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         Kegiatan::factory(40)->create();
         TimKegiatan::factory(40)->create();
-        Presensi::factory(100)->create();
+        // Presensi::factory(100)->create();
     }
 }

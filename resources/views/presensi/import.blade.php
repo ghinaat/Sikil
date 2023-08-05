@@ -27,6 +27,9 @@
                                     </div>
                                 </form>
                             </div>
+                            <div class="col-md-6 mb-3">
+                                <a href="{{ route('presensi.export') }}" class="btn btn-primary">Export</a>
+                            </div>
                         </div>
 
                         <div class="table-responsive">
