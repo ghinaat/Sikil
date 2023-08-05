@@ -309,7 +309,7 @@ return [
         'MAIN NAVIGATION',
         [
             'icon' => 'fas fa-home',
-            'text'    => 'Admin Management',
+            'text'    => 'User Management',
             'submenu' => [
                 [
                     'text' => 'Home',
@@ -367,19 +367,12 @@ return [
                     'url' => '/laporan',
                     'can' => '',
                 ],
-                    'text' => 'Import Presensi',
-                    'url' => '/import/presensi',
-                    'can' => '',
-                ],
-
-
             ],
         ],
-        'ADMIN',
         [
-
             'icon' => 'fas fa-user-cog',
             'text'    => 'Admin Management',
+            'can' => 'isAdmin',
             'submenu' => [
                 [
                     'text' => 'Jabatan',
@@ -406,8 +399,15 @@ return [
                     'url'  => '/peran',
                     'can'  => '',
                 ],
+                [
+                    'text' => 'Kelola Presensi',
+                    'url'  => '/presensi/admin',
+                    'can'  => '',
+                ],
             ],
-        ],
+        ]
+    ],
+
 
     /*
     |--------------------------------------------------------------------------
