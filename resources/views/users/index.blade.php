@@ -51,7 +51,7 @@
                                     @if($user->jabatan)
                                     {{ $user->jabatan->nama_jabatan }}
                                     @else
-                                    N/A
+                                    Data Kosong
                                     @endif
                                 </td>
                                 <td>
