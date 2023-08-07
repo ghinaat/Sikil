@@ -23,7 +23,7 @@ class PresensiImport implements ToModel, WithStartRow
     {
         $formattedDate = date_create_from_format('m/d/Y', $row[2]);
         $tanggal = date_format($formattedDate, 'Y-m-d');
-        $isPresent = !empty($row[5]) && !empty($row[6]); // Check if jam_masuk and jam_pulang are not empty
+   
         return new Presensi([
             'kode_finger'   => $row[0], 
             'tanggal'       => $tanggal,
@@ -31,7 +31,7 @@ class PresensiImport implements ToModel, WithStartRow
             'jam_pulang'    => $row[6], 
             'terlambat'     => $row[7], 
             'pulang_cepat'  => $row[8], 
-            'kehadiran'     => $isPresent,
+            'kehadiran'     => $row[12],
         ]);
     }
 }

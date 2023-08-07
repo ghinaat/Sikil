@@ -19,7 +19,7 @@
                                 @csrf
                                 <div class="input-group">
                                     <label for="import" class="my-label mr-2 mt-1">Import Presensi:</label>&nbsp;&nbsp;
-                                    <input type="file" name="file" id="file" class="form-control">
+                                    <input type="file" name="file" id="file" class="form-control" required>
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-primary">Import</button>
 
@@ -27,8 +27,11 @@
                                 </div>
                             </form>
                         </div>
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                        </div>
                         <form action="{{ route('presensi.filterAdmin') }}" method="GET" class="form-inline mb-3">
-                            <div class="form-group mb-2">
+                            <div class="form-group mb-2 ">
 
                                 <label for="start_date" class="my-label mr-2">Tanggal
                                     Awal:&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -41,7 +44,6 @@
 
 
                                 <button type="submit" class="btn btn-primary">&nbsp;Tampilkan</button>
-
                                 <a href="{{ route('presensi.filterDataAdmin', ['start_date' => request()->input('start_date'), 'end_date' => request()->input('end_date')]) }}"
                                     class="btn btn-danger" style="margin-left: 250px;">Export
                                     Data</a>
@@ -49,6 +51,7 @@
                             </div>
 
                         </form>
+
 
 
                         <div class="table-responsive">

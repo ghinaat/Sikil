@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Pendidikan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PendidikanController extends Controller
 {
@@ -67,7 +68,7 @@ class PendidikanController extends Controller
         $pendidikan = new Pendidikan();
     
         $file = $request->file('ijazah');
-        $fileName = $file->getClientOriginalName();
+        $fileName = Str::random(5) . '.' . $file->getClientOriginalExtension();
         $file->storeAs('Pendidikan', $fileName, 'public'); // Simpan file di dalam folder public/ Kerja
     
         $pendidikan->nama_sekolah = $request->nama_sekolah;
@@ -121,7 +122,7 @@ class PendidikanController extends Controller
     
             // Upload file ijazah baru
             $ijazah = $request->file('ijazah');
-            $namafile_kerja = time() . '.' . $ijazah->getClientOriginalExtension();
+            $namafile_kerja =  $fileName = Str::random(5) . '.' . $ijazah->getClientOriginalExtension();
             Storage::disk('public')->put(' pendidikan/' . $namafile_kerja, file_get_contents($ijazah));
             $pendidikan->ijazah = $namafile_kerja;
         }

@@ -15,31 +15,31 @@
                 <div class="form-group">
                     <label for="nama_kegiatan" class='form-label'>Nama Kegiatan</label>
                     <div class="form-input">
-                    : {{$kegiatan -> nama_kegiatan ?? old('nama_kegiatan')}}
+                        : {{$kegiatan -> nama_kegiatan ?? old('nama_kegiatan')}}
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="tgl_mulai" class='form-label'>Tanggal Mulai</label>
                     <div class="form-input">
-                    : {{$kegiatan -> tgl_mulai ?? old('tgl_mulai')}}
+                        : {{$kegiatan -> tgl_mulai ?? old('tgl_mulai')}}
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                     <div class="form-input">
-                      : {{$kegiatan -> tgl_selesai ?? old('tgl_selesai')}}
+                        : {{$kegiatan -> tgl_selesai ?? old('tgl_selesai')}}
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="lokasi" class="form-label">Lokasi</label>
                     <div class="form-input">
-                    : {{$kegiatan -> lokasi ?? old('lokasi')}}
+                        : {{$kegiatan -> lokasi ?? old('lokasi')}}
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="peserta" class="form-label">Peserta</label>
                     <div class="form-input">
-                    : {{$kegiatan -> peserta ?? old('peserta')}}
+                        : {{$kegiatan -> peserta ?? old('peserta')}}
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@
             </div>
             <div class="modal-footer">
                 <a href="{{route('kegiatan.index')}}" class="btn btn-primary ">
-                    Kembali
+                    Daftar Kegiatan
                 </a>
             </div>
         </div>

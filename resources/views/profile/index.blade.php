@@ -25,7 +25,11 @@
                             @endif
 
                             <h3 class="profile-username text-center">{{ $main_user->nama_pegawai }}</h3>
-                            <p class="text-muted text-center">{{ $main_user->jabatan->nama_jabatan }}</p>
+                            <p class="text-muted text-center">      @if(isset($main_user?->jabatan))
+                                            {{ $main_user->jabatan->nama_jabatan }}
+                                        @else
+                                           Data jabatan tidak tersedia
+                                        @endif</p>
                         </div>
                     </div>
                 </div>
@@ -50,7 +54,11 @@
                                     <div class="form-group">
                                         <label for="jabatan" class='form-label'>jabatan</label>
                                         <div class="form-input">
+                                        @if(isset($main_user?->jabatan))
                                             : {{ $main_user->jabatan->nama_jabatan }}
+                                        @else
+                                            : Data jabatan tidak tersedia
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">

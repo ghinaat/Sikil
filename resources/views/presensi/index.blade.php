@@ -17,7 +17,7 @@
                     <form action="{{ route('presensi.filter') }}" method="GET" class="form-inline mb-3">
                         <div class="input-group">
                             <label for="tanggalFilter" class="my-label mr-2">Tanggal :</label>
-                            <input type="date" class="form-control" name="tanggalFilter" id="tanggalFilter" value="{{request()->input('tanggalFilter')}}">
+                            <input type="date" class="form-control" name="tanggalFilter" id="tanggalFilter" value="{{request()->input('tanggalFilter')}}" required>
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-primary">Cari</button>
                             </div>
@@ -28,11 +28,11 @@
                         <div class="form-group mb-2">
                             <label for="tanggal">Tanggal Awal :</label> &nbsp;&nbsp;
                             <input type="date" class="form-control border-primary @error('tglawal') is-invalid @enderror"
-                                id="tglawal" name="tglawal" value="{{request()->input('tglawal')}}"> &nbsp; &nbsp;&nbsp;
+                                id="tglawal" name="tglawal" value="{{request()->input('tglawal')}}" required> &nbsp; &nbsp;&nbsp;
 
                             <label for="tanggal">Tanggal Akhir :</label> &nbsp;&nbsp;
                             <input type="date" class="form-control border-primary @error('tglakhir') is-invalid @enderror"
-                                id="tglakhir" name="tglakhir" value="{{request()->input('tglakhir')}}"> &nbsp; &nbsp;
+                                id="tglakhir" name="tglakhir" value="{{request()->input('tglakhir')}}" required> &nbsp; &nbsp;
 
                             <button type="submit" class="btn btn-primary">&nbsp;Tampilkan</button>       
                         </div>
@@ -47,9 +47,8 @@
                                     <th>No.</th>
                                     @if(auth()->user()->level === 'admin')
                                     <th>Nama Pegawai</th>
-                                    @else
-                                    <th>Tanggal</th>
                                     @endif
+                                    <th>Tanggal</th>
                                     <th>Jam Masuk</th>
                                     <th>Jam Keluar</th>
                                     <th>Terlambat</th>
@@ -63,9 +62,8 @@
                                     <td>{{$key+1}}</td>
                                     @if(auth()->user()->level === 'admin') 
                                     <td>{{optional($pn->user)->nama_pegawai}}</td>
-                                    @else 
-                                    <td>{{$pn->tanggal}}</td>
                                     @endif
+                                    <td>{{$pn->tanggal}}</td>
                                     <td>{{$pn->jam_masuk}}</td>
                                     <td>{{$pn->jam_pulang}}</td>
                                     <td>{{$pn->terlambat}}</td>
