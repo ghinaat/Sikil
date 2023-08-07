@@ -59,7 +59,7 @@ class DiklatController extends Controller
         $file = $request->file('file_sertifikat');
         $extension = $file->getClientOriginalExtension();
         $hashedName = Str::random(40) . '.' . $extension;
-        $path = $file->storeAs('public/File Sertifikat', $hashedName);
+        $path = $file->storeAs('public/file_sertifikat', $hashedName);
             
         $diklat->id_users = $request->id_users;
         $diklat->id_jenis_diklat = $request->id_jenis_diklat;
@@ -120,13 +120,13 @@ class DiklatController extends Controller
         if ($request->hasFile('file_sertifikat')) {
             // Menghapus file file_sertifikat sebelumnya
             if ($diklat->file_sertifikat) {
-                Storage::disk('public')->delete('Diklat/' . $diklat->file_sertifikat);
+                Storage::disk('public')->delete('file_sertifikat/' . $diklat->file_sertifikat);
             }
     
             // Upload file file_sertifikat baru
             $file_sertifikat = $request->file('file_sertifikat');
             $namafile_sertifikat = time() . '.' . $file_sertifikat->getClientOriginalExtension();
-            Storage::disk('public')->put('Diklat/' . $namafile_sertifikat, file_get_contents($file_sertifikat));
+            Storage::disk('public')->put('file_sertifikat/' . $namafile_sertifikat, file_get_contents($file_sertifikat));
             $diklat->file_sertifikat = $namafile_sertifikat;
         }
     
