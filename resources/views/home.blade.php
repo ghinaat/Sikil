@@ -5,11 +5,11 @@
 @section('content_header')
 
 <style>
-    @media(max-width:512px){
-        .header-text-home{
-            font-size: 24px;
-        }
+@media(max-width:512px) {
+    .header-text-home {
+        font-size: 24px;
     }
+}
 </style>
 
 @stop
@@ -62,9 +62,20 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h3 >{{ $kegiatan->nama_kegiatan }}</h3>
-                    <p class="card-text">Tanggal Mulai : {{ date_format( new DateTime($kegiatan->tgl_mulai), 'd F Y')}} &nbsp; &nbsp;  Tanggal Selesai : {{ date_format( new DateTime($kegiatan->tgl_selesai), 'd F Y')}} <br> Lokasi : {{ $kegiatan->lokasi }}</p>
-                    <a class="btn btn-outline-dark" href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}">Lihat Kegiatan</a>
+                    <h3>{{ $kegiatan->nama_kegiatan }}</h3>
+                    <p class="card-text">
+                        Tanggal Kegiatan:
+                        @if($kegiatan->tgl_mulai === $kegiatan->tgl_selesai)
+                        {{ date_format(new DateTime($kegiatan->tgl_mulai), 'd F Y') }}
+                        @else
+                        {{ date_format(new DateTime($kegiatan->tgl_mulai), 'd F Y') }} &nbsp; s.d. &nbsp;
+                        {{ date_format(new DateTime($kegiatan->tgl_selesai), 'd F Y') }}
+                        @endif
+                        <br> Lokasi: {{ $kegiatan->lokasi }}
+                    </p>
+
+                    <a class="btn btn-outline-dark" href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}">Lihat
+                        Kegiatan</a>
                 </div>
             </div>
         </div>
@@ -104,7 +115,7 @@
             @endif
             @endforeach
         </tbody>
-    </table>      
+    </table>
 </div>
 
 

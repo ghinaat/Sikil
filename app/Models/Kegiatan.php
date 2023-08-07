@@ -35,7 +35,13 @@ class Kegiatan extends Model
         $today = Carbon::now();
         $start = Carbon::parse($this->attributes['tgl_mulai']);
         $end = Carbon::parse($this->attributes['tgl_selesai']);
-
+    
+        // Pertama, periksa apakah tanggal mulai dan tanggal selesai sama
+        if ($start->eq($end)) {
+            return 'Sedang Berlangsung';
+        }
+        
+        // Kedua, periksa kondisi jika tanggal mulai dan tanggal selesai berbeda
         if ($today->lt($start)) {
             return 'Belum Dimulai';
         } elseif ($today->gt($end)) {
@@ -44,7 +50,7 @@ class Kegiatan extends Model
             return 'Sedang Berlangsung';
         }
     }
-
+    
     
 
    
