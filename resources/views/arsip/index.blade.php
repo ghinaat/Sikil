@@ -39,7 +39,7 @@
                                 <td>{{$ap->jenis}}</td>
                                 <td>{{$ap->keterangan}}</td>
                                 <td id={{$key+1}}>
-                                    <a href="{{ asset('/storage/Arsip/'. $ap->file) }}" target="_blank">Lihat
+                                    <a href="{{ asset('/storage/arsip/'. $ap->file) }}" target="_blank">Lihat
                                         Dokumen</a>
                                 </td>
                             <td>
@@ -175,7 +175,7 @@
                                         <small class="form-text text-muted">Allow file extensions : .jpeg
                                             .jpg .png .pdf
                                             .docx</small>
-                                        <p>Previous File: <a href="{{ asset('/storage/Arsip/'. $ap->file) }}"
+                                        <p>Previous File: <a href="{{ asset('/storage/arsip/'. $ap->file) }}"
                                                 target="_blank">{{ $ap->file }}</a></p>
                                         <input type="file" name="file" id="file"
                                             accept=".jpg, .jpeg, .png, .pdf, .doc, .docx">
