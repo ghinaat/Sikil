@@ -97,15 +97,22 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $nomor_urutan = 1;
+            @endphp
             @foreach ($all_kegiatan as $kegiatan)
+            @if ($kegiatan->tgl_mulai > now()) 
             <tr>
-                <th scope="row">{{ $loop->iteration }}</th>
+                <th scope="row">{{ $nomor_urutan }}</th>
                 <td>{{ $kegiatan->nama_kegiatan }}</td>
                 <td>{{ $kegiatan->tgl_mulai }}</td>
                 <td>{{ $kegiatan->tgl_selesai }}</td>
-                <td><a href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}"
-                        class="btn btn-outline-secondary">Lihat</a></td>
+                <td><a href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}" class="btn btn-outline-secondary">Lihat</a></td>
             </tr>
+            @php
+                $nomor_urutan++;
+            @endphp
+            @endif
             @endforeach
         </tbody>
     </table>

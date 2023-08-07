@@ -112,16 +112,16 @@ class DatabaseSeeder extends Seeder
             'is_deleted' => '0'
         ]);
 
-        GeneralSetting::create([
-            'tahun_aktif' => '2023',
-            'id_users' => null,
-            'status' => '0',
-        ]);
+        // GeneralSetting::create([
+        //     'tahun_aktif' => '2023',
+        //     'id_users' => null,
+        //     'status' => '0',
+        // ]);
         
 
         User::factory(10)->create();
         Kegiatan::factory(40)->create();
         TimKegiatan::factory(40)->create();
-        Presensi::factory(100)->create();
+        // Presensi::factory(100)->create();
     }
 }

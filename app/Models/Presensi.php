@@ -22,5 +22,9 @@ class Presensi extends Model
     ];
 
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'kode_finger', 'kode_finger');
+    }
 
 }

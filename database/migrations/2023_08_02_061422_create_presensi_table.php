@@ -20,7 +20,7 @@ return new class extends Migration
             $table->time('jam_pulang')->nullable();
             $table->time('terlambat')->nullable();
             $table->time('pulang_cepat')->nullable();
-            $table->boolean('kehadiran');
+            $table->boolean('kehadiran')->nullable();
             $table->enum('jenis_perizinan', ['I', 'DL', 'S', 'CS', 'Prajab', 'CT', 'CM', 'CAP', 'CH', 'CB', 'A', 'TB']);
             $table->enum('is_deleted', ['0', '1'])->default('0');
             $table->timestamps();

@@ -8,9 +8,24 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                @can('isAdmin')
-                <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#addModal">Tambah</button>
-                @endcan
+                <div class="d-flex">
+                    <div class="col-md-6">
+                        @can('isAdmin')
+                        <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#addModal">Tambah</button>
+                        @endcan
+                    </div>
+                    <div class="col-md-6">
+                        <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="input-group">
+                                <input type="file" name="file" id="file" class="form-control">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary">Import</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
@@ -34,18 +49,20 @@
                                 <td id="{{$key+1}}">{{$user->level}}</td>
                                 <td id={{$key+1}}>
                                     @if($user->jabatan)
-                                        {{ $user->jabatan->nama_jabatan }}
+                                    {{ $user->jabatan->nama_jabatan }}
                                     @else
-                                        N/A
+                                    Data Kosong
                                     @endif
                                 </td>
                                 <td>
-                                    @can('isAdmin') 
-                                        @include('components.action-buttons', ['id' => $user->id_users, 'key' => $key, 'route' => 'user'])
+                                    @can('isAdmin')
+                                    @include('components.action-buttons', ['id' => $user->id_users, 'key' => $key,
+                                    'route' => 'user'])
                                     @else
-                                        <a href="{{ route('user.show', $user->id_users) }}" class="btn btn-info btn-xs mx-1">
-                                            <i class="fa fa-info"></i>
-                                        </a>
+                                    <a href="{{ route('user.show', $user->id_users) }}"
+                                        class="btn btn-info btn-xs mx-1">
+                                        <i class="fa fa-info"></i>
+                                    </a>
                                     @endcan
                                 </td>
                             </tr>
@@ -114,7 +131,8 @@
                                                         id="exampleInputJabatan" name="id_jabatan">
                                                         @foreach ($jabatans as $jabatan)
                                                         <option value="{{ $jabatan->id_jabatan }}" @if(
-                                                            old('id_jabatan')==$jabatan->id_jabatan ) selected @endif">
+                                                            old('id_jabatan')==$jabatan->id_jabatan ) selected
+                                                            @endif">
                                                             {{ $jabatan->nama_jabatan }}</option>
                                                         @endforeach
 
@@ -191,7 +209,8 @@
                         <select class="form-select @error('jabatan') isinvalid @enderror" id="exampleInputJabatan"
                             name="id_jabatan">
                             @foreach ($jabatans as $jabatan)
-                            <option value="{{ $jabatan->id_jabatan }}" @if( old('id_jabatan')==$jabatan->id_jabatan )
+                            <option value="{{ $jabatan->id_jabatan }}" @if( old('id_jabatan')==$jabatan->id_jabatan
+                                )
                                 selected @endif">
                                 {{ $jabatan->nama_jabatan }}</option>
                             @endforeach
@@ -219,10 +238,9 @@
 </form>
 
 <script>
-    $('#example2').DataTable({
-        "responsive": true,
-    });
-
+$('#example2').DataTable({
+    "responsive": true,
+});
 </script>
 
 
