@@ -112,11 +112,11 @@ class DatabaseSeeder extends Seeder
             'is_deleted' => '0'
         ]);
 
-        GeneralSetting::create([
-            'tahun_aktif' => '2023',
-            'id_users' => null,
-            'status' => '0',
-        ]);
+        // GeneralSetting::create([
+        //     'tahun_aktif' => '2023',
+        //     'id_users' => null,
+        //     'status' => '0',
+        // ]);
         
 
         User::factory(10)->create();
