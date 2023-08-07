@@ -1,3 +1,18 @@
+<style>
+    #navbar-navbar{
+        line-height: 50px;
+        font-size: 25px;
+        text-align: center;
+    }
+
+    @media(max-width:512px){
+        #navbar-navbar{
+            line-height: normal;
+            font-size: 16px;
+            text-align: center;
+        }   
+    }
+</style>
 <nav class="main-header navbar
     {{ config('adminlte.classes_topnav_nav', 'navbar-expand') }}
     {{ config('adminlte.classes_topnav', 'navbar-white navbar-light') }}">
@@ -14,7 +29,7 @@
         {{-- Custom left links --}}
         @yield('content_top_nav_left')
     </ul>
-    <h2 style="text-align: center; font-size: 26px;">Sistem Informasi Kepegawaian & Layanan Internal SEAQIL</h2>
+    <h2 id="navbar-navbar">Sistem Informasi Kepegawaian & Layanan Internal SEAQIL</h2>
 
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto">
