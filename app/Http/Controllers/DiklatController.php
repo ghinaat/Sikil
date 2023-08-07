@@ -6,6 +6,7 @@ use App\Models\Diklat;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Storage;
 
 class DiklatController extends Controller
@@ -56,17 +57,17 @@ class DiklatController extends Controller
         $diklat = new Diklat();
     
         $file = $request->file('file_sertifikat');
-        $fileName = $file->getClientOriginalName();
-        $file->storeAs('File Sertifikat', $fileName, 'public'); // Simpan file di dalam folder public/Pengalaman Kerja
-    
+        $extension = $file->getClientOriginalExtension();
+        $hashedName = Str::random(40) . '.' . $extension;
+        $path = $file->storeAs('public/File Sertifikat', $hashedName);
+            
         $diklat->id_users = $request->id_users;
         $diklat->id_jenis_diklat = $request->id_jenis_diklat;
         $diklat->nama_diklat = $request->nama_diklat;
         $diklat->penyelenggara = $request->penyelenggara;
         $diklat->tanggal_diklat = $request->tanggal_diklat;
         $diklat->jp = $request->jp;
-        $diklat->file_sertifikat = $fileName; // Simpan nama file ke dalam kolom 'file_sertifikat'
-    
+        $diklat->file_sertifikat = $hashedName;    
         $diklat->save();
     
         return redirect()->back()->with('success', 'Data telah tersimpan.');
