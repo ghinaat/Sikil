@@ -99,6 +99,8 @@ class ProfileController extends Controller
             'nip' => 'required',
             'nik' => 'required',
             'kk' => 'required',
+            'gelar_depan' => 'required',
+            'gelar_belakang' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'alamat' => 'required',
@@ -114,8 +116,10 @@ class ProfileController extends Controller
 
         $array = $request->only([
             'nip',
-            'nik',
+            'nik', 
             'kk',
+            'gelar_depan',
+            'gelar_belakang',
             'tempat_lahir',
             'tanggal_lahir',
             'alamat',

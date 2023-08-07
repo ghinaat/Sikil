@@ -6,6 +6,7 @@ use App\Models\Arsip;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ArsipController extends Controller
 {
@@ -61,9 +62,10 @@ public function showAdmin(Request $request, $id_users)
 
             $arsip = new Arsip();
             $file = $request->file('file');
-            $fileName = $file->getClientOriginalName();
-            $file->storeAs('Arsip', $fileName, 'public'); // Simpan file di dalam folder public/Pengalaman Kerja
-        
+            $fileExtension = $file->getClientOriginalExtension();
+            $fileName = Str::random(20) . '.' . $fileExtension; // Nama file acak dengan ekstensi asli
+            $file->storeAs('arsip', $fileName, 'public'); // Simpan file di dalam folder public/arsip
+
             $arsip->id_users = $request->id_users;
             $arsip->jenis = $request->jenis;
             $arsip->keterangan = $request->keterangan;
@@ -99,14 +101,14 @@ public function showAdmin(Request $request, $id_users)
                 $arsip->id_users = $request->id_users;
                 $arsip->jenis = $request->jenis;
                 $arsip->keterangan = $request->keterangan;
-            
+
                 if ($request->hasFile('file')) {
                     $file = $request->file('file');
-                    $fileName = time() . '_' . $file->getClientOriginalName();
-                    $file->storeAs('Arsip', $fileName, 'public'); // Simpan file di dalam folder public/Arsip
+                    $fileExtension = $file->getClientOriginalExtension();
+                    $fileName = Str::random(20) . '.' . $fileExtension; // Nama file acak dengan ekstensi asli
+                    $file->storeAs('arsip', $fileName, 'public'); // Simpan file di dalam folder public/arsip
                     $arsip->file = $fileName; // Simpan nama file ke dalam kolom 'file'
-                }
-            
+                }                            
                 $arsip->save();
                 return redirect()->route('arsip.index')->with('success_message', 'Data telah tersimpan');
         }    

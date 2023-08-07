@@ -48,7 +48,7 @@
                                     <div class="form-group">
                                         <label for="nama" class='form-label'>Nama</label>
                                         <div class="form-input">
-                                            : {{ $main_user->nama_pegawai }}
+                                            : {{ $user->gelar_depan }}. {{ $main_user->nama_pegawai }} {{ $user->gelar_belakang }}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -88,6 +88,18 @@
                                         <label for="kk" class='form-label'>KK</label>
                                         <div class="form-input">
                                         : {{ $user->kk }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gelar_depan" class='form-label'>Gelar Depan</label>
+                                        <div class="form-input">
+                                        : {{ $user->gelar_depan }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gelar_belakang" class='form-label'>Gelar Belakang</label>
+                                        <div class="form-input">
+                                        : {{ $user->gelar_belakang }}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -175,7 +187,7 @@
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="editModalLabel">Edit Kegiatan</h5>
+                                                        <h5 class="modal-title" id="editModalLabel">Edit Profile</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -217,6 +229,28 @@
                                                                         id="kk" placeholder="KK" name="kk"
                                                                         value="{{$user->kk ?? old('kk')}}">
                                                                     @error('kk') <span
+                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group form-group">
+                                                                <label for="gelar_depan" class='form-label'>Gelar Depan</label>
+                                                                <div class="form-input">
+                                                                    <input type="text"
+                                                                        class="form-control @error('gelar_depan') is-invalid @enderror"
+                                                                        id="gelar_depan" placeholder="Gelar Depan" name="gelar_depan"
+                                                                        value="{{$user->gelar_depan ?? old('gelar_depan')}}">
+                                                                    @error('gelar_depan') <span
+                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group form-group">
+                                                                <label for="gelar_belakang" class='form-label'>Gelar Belakang</label>
+                                                                <div class="form-input">
+                                                                    <input type="text"
+                                                                        class="form-control @error('gelar_belakang') is-invalid @enderror"
+                                                                        id="gelar_belakang" placeholder="Gelar Belakang" name="gelar_belakang"
+                                                                        value="{{$user->gelar_belakang ?? old('gelar_belakang')}}">
+                                                                    @error('gelar_belakang') <span
                                                                         class="textdanger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
@@ -439,9 +473,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="submit" class="btn btn-primary">Simpan</button>
-                                                                <a href="{{route('kegiatan.index')}}" class="btn btn-danger">
-                                                                    Batal
-                                                                </a>
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                                             </div>
                                                         </form>
                                                     </div>

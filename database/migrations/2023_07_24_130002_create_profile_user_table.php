@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nip', 20)->nullable();
             $table->string('nik', 20)->nullable();
             $table->string('kk', 20)->nullable();
+            $table->string('gelar_depan', 20)->nullable();
+            $table->string('gelar_belakang', 20)->nullable();
             $table->string('tempat_lahir', 50)->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->string('alamat', 255)->nullable();
