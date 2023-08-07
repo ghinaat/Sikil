@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\DiklatController;
+use App\Http\Controllers\GeneralSettingController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\JenisDiklatController;
 use App\Http\Controllers\UserController;
@@ -110,6 +111,16 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('/arsip/{id_arsip}', [ArsipController::class, 'update'])->name('arsip.update')->middleware('isAdmin');
     Route::delete('/arsip/{id_arsip}', [ArsipController::class, 'destroy'])->name('arsip.destroy')->middleware('isAdmin');
 }); 
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/generalsetting', [GeneralSettingController::class, 'index'])->name('generalsetting.index');
+    Route::post('/generalsetting', [GeneralSettingController::class, 'store'])->name('generalsetting.store');
+    Route::put('/generalsetting/{id_general}', [GeneralSettingController::class, 'update'])->name('generalsetting.update')->middleware('isAdmin');
+}); 
+
+// Route::get('/generalsetting', [GeneralSettingController::class, 'index'])->name('generalsetting.index')->middleware('auth');
+// Route::put('/generalsetting/{id_profile}', [GeneralSettingController::class, 'update'])->name('generalsetting.update')->middleware('auth');
+
 
 
 Route::resource('timkegiatan', \App\Http\Controllers\TimKegiatanController::class)->middleware('auth');

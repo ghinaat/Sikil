@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\GeneralSetting;
 use App\Models\User;
 use App\Models\Jabatan;
 use App\Models\TingkatPendidikan;
@@ -110,6 +111,13 @@ class DatabaseSeeder extends Seeder
             'id_jabatan' => '2',
             'is_deleted' => '0'
         ]);
+
+        GeneralSetting::create([
+            'tahun_aktif' => '2023',
+            'id_users' => null,
+            'status' => '0',
+        ]);
+        
 
         User::factory(10)->create();
         Kegiatan::factory(40)->create();
