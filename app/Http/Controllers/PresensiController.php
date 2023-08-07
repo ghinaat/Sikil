@@ -9,6 +9,7 @@ use App\Imports\PresensiImport;
 use App\Exports\PresensiExportFilter;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PresensiController extends Controller
 {
@@ -28,46 +29,6 @@ class PresensiController extends Controller
             'presensi' => $presensi,
             'users' => User::where('is_deleted', '0')->get(),
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    
-    public function filter(Request $request)
-    {        
-        $selectedDate = $request->input('tanggalFilter');
-        $selectedDate = Carbon::parse($selectedDate)->format('Y-m-d');
-    
-        $user = Auth::user();
-        if ($user->level == "admin") {
-            $presensi = Presensi::whereDate('tanggal', $selectedDate)->get();
-        } else {
-            $presensi = $user->presensi()->whereDate('tanggal', $selectedDate)->get();
-        }
-    
-        return view('presensi.index', [
-            'presensi' => $presensi,
-        ]);
-    }
-    
-    public function filteruser(Request $request)
-    {
-        $user = Auth::user();
-        if ($user->level == "admin") {
-            $kode_finger = $request->input('kode_finger');
-        } else {
-            $kode_finger = $user->kode_finger;
-        }
-        $tglawal = $request->input('tglawal');
-        $tglakhir = date('Y-m-d', strtotime($request->input('tglakhir') . ' +1 day'));
-    
-        $presensi = Presensi::where('kode_finger', $kode_finger)
-                            ->whereBetween('tanggal', [$tglawal, $tglakhir])
-                            ->orderBy('tanggal', 'desc')
-                            ->get();
-    
-        return view('presensi.index', compact('presensi', 'tglawal', 'tglakhir'));
     }
 
     public function create()
@@ -113,6 +74,46 @@ class PresensiController extends Controller
     public function destroy(Presensi $presensi)
     {
         //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    
+    public function filter(Request $request)
+    {        
+        $selectedDate = $request->input('tanggalFilter');
+        $selectedDate = Carbon::parse($selectedDate)->format('Y-m-d');
+    
+        $user = Auth::user();
+        if ($user->level == "admin") {
+            $presensi = Presensi::whereDate('tanggal', $selectedDate)->get();
+        } else {
+            $presensi = $user->presensi()->whereDate('tanggal', $selectedDate)->get();
+        }
+    
+        return view('presensi.index', [
+            'presensi' => $presensi,
+        ]);
+    }
+    
+    public function filteruser(Request $request)
+    {
+        $user = Auth::user();
+        if ($user->level == "admin") {
+            $kode_finger = $request->input('kode_finger');
+        } else {
+            $kode_finger = $user->kode_finger;
+        }
+        $tglawal = $request->input('tglawal');
+        $tglakhir = date('Y-m-d', strtotime($request->input('tglakhir') . ' +1 day'));
+    
+        $presensi = Presensi::where('kode_finger', $kode_finger)
+                            ->whereBetween('tanggal', [$tglawal, $tglakhir])
+                            ->orderBy('tanggal', 'desc')
+                            ->get();
+    
+        return view('presensi.index', compact('presensi', 'tglawal', 'tglakhir'));
     }
 
     // filter data for export
