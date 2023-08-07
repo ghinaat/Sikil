@@ -211,7 +211,7 @@ class PresensiController extends Controller
                 }
             }
 
-            $presensis[] = [
+            $presensis['data'][] = [
                 'user' => $user->nama_pegawai,
                 'kehadiran' => $kehadiran,
                 'terlambat' => $terlambat,
@@ -228,6 +228,11 @@ class PresensiController extends Controller
             ];
             
         }  
+
+        $presensis['start_date'] = $start_date;
+        $presensis['end_date'] = $end_date;
+
+
         return Excel::download(new PresensiExportFilter($presensis), 'presensi.xlsx');
     }
 

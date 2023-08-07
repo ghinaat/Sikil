@@ -1,6 +1,8 @@
 <table>
     <thead>
         <tr><td>Data Rekap Presensi Pegawai SEAMEO QITEP in Language</td></tr>
+        <tr><td>Periode: {{ $presensis['start_date'] }} s.d. {{ $presensis['end_date'] }}</td></tr>
+        <tr></tr>
         <tr>
             <th>No.</th>
             <th>Nama Pegawai</th>
@@ -19,7 +21,7 @@
         </tr>
     </thead>
         <tbody>
-            @foreach($presensis as $key => $presensi)
+            @foreach($presensis['data'] as $key => $presensi)
             <tr>
                 <td>{{$key + 1}}</td>
                 <td>{{ $presensi['user'] }}</td>
