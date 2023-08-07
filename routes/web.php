@@ -13,6 +13,7 @@ use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PresensiController;
 use App\Models\JenisDiklat;
 
 
@@ -48,6 +49,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/user/{id_users}/edit', [UserController::class, 'edit'])->name('user.edit')->middleware('isAdmin');
     Route::put('/user/{id_users}', [UserController::class, 'update'])->name('user.update')->middleware('isAdmin');
     Route::delete('/user/{id_users}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('isAdmin');
+    Route::post('/import', [UserController::class, 'import'])->name('import');
 });
 
 Route::group(['middleware' => ['auth']], function() {
@@ -137,3 +139,12 @@ Route::resource('pendidikan', \App\Http\Controllers\PendidikanController::class)
 Route::resource('peran', \App\Http\Controllers\PeranController::class)->middleware('auth');
 
 Route::get('/laporan', [App\Http\Controllers\TimKegiatanController::class, 'laporan'])->name('laporan')->middleware('auth');
+
+Route::group(['middleware' => ['auth']], function() {
+  Route::get('/presensi', [PresensiController::class, 'index'])->name('presensi.index');
+  Route::get('/presensi/filter', [PresensiController::class, 'filter'])->name('presensi.filter');
+  Route::get('/presensi/filteruser', [App\Http\Controllers\PresensiController::class, 'filteruser'])->name('presensi.user');
+  Route::post('/presensi/import', [PresensiController::class, 'import'])->name('presensi.import')->middleware('isAdmin');
+  Route::get('presensi/admin', [PresensiController::class, 'filterAdmin'])->name('presensi.filterAdmin')->middleware('isAdmin');
+  Route::get('/presensi/admin/export', [PresensiController::class, 'filterDataAdmin'])->name('presensi.filterDataAdmin')->middleware('isAdmin');
+});

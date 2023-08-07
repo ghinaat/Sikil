@@ -6,6 +6,8 @@ use App\Models\Jabatan;
 use App\Models\Profile;
 use App\Models\TingkatPendidikan;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UsersImport;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -140,5 +142,15 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('user.changePassword')->with('success', 'Password changed successfully.');
+    }
+
+
+    public function import(Request $request)
+    {
+        Excel::import(new UsersImport, $request->file('file')->store('temp'));
+
+        return redirect()->back()->with([
+            'success_message' => 'Data telah Tersimpan',
+        ]);
     }
 }
