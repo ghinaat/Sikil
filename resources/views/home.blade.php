@@ -19,8 +19,6 @@
 @section('content')
 <div class="container" style="overflow:scroll; height:90vh;">
 
-    <h1 class="mb-4 header-text-home">Sistem Informasi Kepegawaian & Layanan Internal SEAQIL</h1>
-
     <hr>
 
     <div class="row">
@@ -65,7 +63,7 @@
             <div class="card">
                 <div class="card-body">
                     <h3 >{{ $kegiatan->nama_kegiatan }}</h3>
-                    <p class="card-text">Tanggal Mulai: {{ $kegiatan->tgl_mulai }} <br> Tanggal Selesai: {{ $kegiatan->tgl_selesai }} <br> Lokasi : {{ $kegiatan->lokasi }}</p>
+                    <p class="card-text">Tanggal Mulai : {{ date_format( new DateTime($kegiatan->tgl_mulai), 'd F Y')}} &nbsp; &nbsp;  Tanggal Selesai : {{ date_format( new DateTime($kegiatan->tgl_selesai), 'd F Y')}} <br> Lokasi : {{ $kegiatan->lokasi }}</p>
                     <a class="btn btn-outline-dark" href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}">Lihat Kegiatan</a>
                 </div>
             </div>
