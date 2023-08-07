@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\PengalamanKerja;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Http\Request;
 
 class PengalamanKerjaController extends Controller
@@ -65,8 +68,8 @@ class PengalamanKerjaController extends Controller
         $penker = new PengalamanKerja();
     
         $file = $request->file('file_kerja');
-        $fileName = $file->getClientOriginalName();
-        $file->storeAs('Pengalaman Kerja', $fileName, 'public'); // Simpan file di dalam folder public/Pengalaman Kerja
+        $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('Pengalaman Kerja', $fileName, 'public');
     
         $penker->nama_perusahaan = $request->nama_perusahaan;
         $penker->masa_kerja = $request->masa_kerja;
@@ -121,10 +124,11 @@ class PengalamanKerjaController extends Controller
 
         // Upload file file_kerja baru
         $file_kerja = $request->file('file_kerja');
-        $namafile_kerja = time() . '.' . $file_kerja->getClientOriginalExtension();
+        $namafile_kerja = Str::random(20) . '.' . $file_kerja->getClientOriginalExtension();
         Storage::disk('public')->put('Pengalaman Kerja/' . $namafile_kerja, file_get_contents($file_kerja));
         $penker->file_kerja = $namafile_kerja;
     }
+
 
         $penker->nama_perusahaan = $request->nama_perusahaan;
         $penker->masa_kerja = $request->masa_kerja;
