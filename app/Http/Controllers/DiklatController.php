@@ -57,9 +57,8 @@ class DiklatController extends Controller
         $diklat = new Diklat();
     
         $file = $request->file('file_sertifikat');
-        $extension = $file->getClientOriginalExtension();
-        $hashedName = Str::random(40) . '.' . $extension;
-        $path = $file->storeAs('public/file_sertifikat', $hashedName);
+        $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('file_sertifikat', $fileName, 'public');
             
         $diklat->id_users = $request->id_users;
         $diklat->id_jenis_diklat = $request->id_jenis_diklat;
@@ -67,7 +66,7 @@ class DiklatController extends Controller
         $diklat->penyelenggara = $request->penyelenggara;
         $diklat->tanggal_diklat = $request->tanggal_diklat;
         $diklat->jp = $request->jp;
-        $diklat->file_sertifikat = $hashedName;    
+        $diklat->file_sertifikat = $fileName;    
         $diklat->save();
     
         return redirect()->back()->with('success', 'Data telah tersimpan.');

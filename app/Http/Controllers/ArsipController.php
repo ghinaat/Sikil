@@ -63,7 +63,7 @@ public function showAdmin(Request $request, $id_users)
             $arsip = new Arsip();
             $file = $request->file('file');
             $fileExtension = $file->getClientOriginalExtension();
-            $fileName = Str::random(20) . '.' . $fileExtension; // Nama file acak dengan ekstensi asli
+            $fileName = Str::random(5) . '.' . $fileExtension; // Nama file acak dengan ekstensi asli
             $file->storeAs('arsip', $fileName, 'public'); // Simpan file di dalam folder public/arsip
 
             $arsip->id_users = $request->id_users;
@@ -105,7 +105,7 @@ public function showAdmin(Request $request, $id_users)
                 if ($request->hasFile('file')) {
                     $file = $request->file('file');
                     $fileExtension = $file->getClientOriginalExtension();
-                    $fileName = Str::random(20) . '.' . $fileExtension; // Nama file acak dengan ekstensi asli
+                    $fileName = Str::random(5) . '.' . $fileExtension; // Nama file acak dengan ekstensi asli
                     $file->storeAs('arsip', $fileName, 'public'); // Simpan file di dalam folder public/arsip
                     $arsip->file = $fileName; // Simpan nama file ke dalam kolom 'file'
                 }                            
