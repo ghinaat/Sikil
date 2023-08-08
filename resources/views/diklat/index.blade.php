@@ -8,9 +8,9 @@
     <div class="col-12">
         <div class="card">
             @if (Route::currentRouteName() === 'diklat.showAdmin')
-                @include('partials.nav-pills-profile-admin', ['id_users' => $id_users])
+            @include('partials.nav-pills-profile-admin', ['id_users' => $id_users])
             @else
-                @include('partials.nav-pills-profile')
+            @include('partials.nav-pills-profile')
             @endcan
             <div class="card-body">
 
@@ -49,12 +49,13 @@
                                 <td id={{$key+1}}>{{$dk->tanggal_diklat}}</td>
                                 <td id={{$key+1}}>{{$dk->jp}}</td>
                                 <td id={{$key+1}}>
-                                    <a href="{{ asset('/storage/File Sertifikat/'. $dk->file_sertifikat) }}"
+                                    <a href="{{ asset('/storage/file_sertifikat/'. $dk->file_sertifikat) }}"
                                         target="_blank">Lihat Dokumen</a>
                                 </td>
-                            <td>
-                                @include('components.action-buttons', ['id' => $dk->id_diklat, 'key' => $key, 'route' => 'diklat'])
-                            </td>
+                                <td>
+                                    @include('components.action-buttons', ['id' => $dk->id_diklat, 'key' => $key,
+                                    'route' => 'diklat'])
+                                </td>
                             </tr>
                             <!-- Edit modal -->
                             <div class="modal fade" id="editModal{{$dk->id_diklat}}" tabindex="-1" role="dialog"
@@ -143,7 +144,7 @@
                                                         .docx</small>
                                                     @if ($dk->file_sertifikat)
                                                     <p>Previous File: <a
-                                                            href="{{ asset('/storage/File Sertifikat/' . $dk->file_sertifikat) }}"
+                                                            href="{{ asset('/storage/file_sertifikat/' . $dk->file_sertifikat) }}"
                                                             target="_blank">{{ $dk->file_sertifikat }}</a></p>
                                                     @endif
                                                     <input type="file" class="form-control" id="file_sertifikat"
