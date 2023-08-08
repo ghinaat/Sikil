@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Jabatan extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'jabatan';
- 
+
     protected $primaryKey = 'id_jabatan';
+
     protected $fillable = [
         'nama_jabatan',
-        'is_deleted'
+        'is_deleted',
     ];
 }

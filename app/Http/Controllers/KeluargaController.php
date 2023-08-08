@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HubunganKeluarga;
 use App\Models\Keluarga;
 use App\Models\User;
-use App\Models\HubunganKeluarga;
-use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,19 +13,19 @@ class KeluargaController extends Controller
     public function index()
     {
         $user = Auth::user();
-    
-        if ($user->level == "admin") {
+
+        if ($user->level == 'admin') {
             // Fetch all work experiences for admin
             $keluarga = Keluarga::where('is_deleted', '0')->get();
         } else {
             // Fetch user's own work experiences using the relationship
             $keluarga = $user->keluarga()->where('is_deleted', '0')->get();
         }
-    
+
         return view('keluarga.index', [
             'keluarga' => $keluarga,
             'users' => User::where('is_deleted', '0')->get(),
-            'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get()
+            'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get(),
         ]);
     }
 
@@ -45,12 +44,12 @@ class KeluargaController extends Controller
         //Menyimpan Data Keluarga Baru
         $request->validate([
             'id_users' => 'required',
-            'id_hubungan'  => 'required',
-            'nama'  => 'required',
-            'tanggal_lahir'  => 'required',
-            'gender'  => 'required',
-            'status'  => 'required'            
-            ]);
+            'id_hubungan' => 'required',
+            'nama' => 'required',
+            'tanggal_lahir' => 'required',
+            'gender' => 'required',
+            'status' => 'required',
+        ]);
 
         $array = $request->only([
             'id_users',
@@ -58,36 +57,39 @@ class KeluargaController extends Controller
             'nama',
             'tanggal_lahir',
             'gender',
-            'status'            
-            ]);
+            'status',
+        ]);
         $keluarga = Keluarga::create($array);
+
         return redirect()->route('keluarga.index')->with('success_message', 'Data telah tersimpan');
     }
 
-
-    public function edit($id_keluarga){
+    public function edit($id_keluarga)
+    {
         //Menampilkan Form Edit
         $keluarga = Keluarga::find($id_keluarga);
-        if (!$keluarga) return redirect()->route('keluarga.index')->with('error_message', 'User dengan id'.$id_keluarga.' tidak ditemukan');
+        if (! $keluarga) {
+            return redirect()->route('keluarga.index')->with('error_message', 'User dengan id'.$id_keluarga.' tidak ditemukan');
+        }
+
         return view('keluarga.edit', [
             'keluarga' => $keluarga,
             'users' => Users::where('is_deleted', '0')->get(),
-            'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get()
-        ]); 
+            'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get(),
+        ]);
     }
 
-
     public function update(Request $request, $id_keluarga)
-    { 
+    {
         //Mengedit Data Keluarga
         $request->validate([
             'id_users' => 'required',
-            'id_hubungan'  => 'required',
+            'id_hubungan' => 'required',
             'nama' => 'required',
-            'tanggal_lahir'  => 'required',
-            'gender'  => 'required',
-            'status'  => 'required'            
-            ]);
+            'tanggal_lahir' => 'required',
+            'gender' => 'required',
+            'status' => 'required',
+        ]);
 
         $keluarga = Keluarga::find($id_keluarga);
         $keluarga->id_users = $request->id_users;
@@ -97,8 +99,9 @@ class KeluargaController extends Controller
         $keluarga->gender = $request->gender;
         $keluarga->status = $request->status;
         $keluarga->save();
-        return redirect()->route('keluarga.index') ->with('success_message', 'Data telah tersimpan');
-    } 
+
+        return redirect()->route('keluarga.index')->with('success_message', 'Data telah tersimpan');
+    }
 
     public function destroy($id_keluarga)
     {
@@ -107,22 +110,22 @@ class KeluargaController extends Controller
             $keluarga->is_deleted = '1';
             $keluarga->save();
         }
+
         return redirect()->route('keluarga.index')->with('success_message', 'Data telah terhapus');
     }
 
-    public function showAdmin(Request $request, $id_users){
+    public function showAdmin(Request $request, $id_users)
+    {
         $user = User::where('id_users', $id_users)->first();
         $keluarga = $user->keluarga()->where('is_deleted', '0')->get();
-    
+
         return view('keluarga.index', [
             'id_users' => $id_users,
             'keluarga' => $keluarga,
             'users' => User::where('is_deleted', '0')->get(),
-            'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get()
+            'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get(),
         ]);
     }
-
-    
 
     // public function show(Keluarga $keluarga)
     // {

@@ -11,6 +11,7 @@ class HubunganKeluargaController extends Controller
     {
         //Menampilkan data Hubungan Keluarga
         $hubkel = HubunganKeluarga::where('is_deleted', '0')->get();
+
         return view('hubungankeluarga.index', [
             'hubkel' => $hubkel,
         ]);
@@ -26,33 +27,35 @@ class HubunganKeluargaController extends Controller
     {
         //Menyimpan Data Hubungan Keluarga Baru
         $request->validate([
-            'urutan' => 'required', 
-            'nama' => 'required', 
-            ]);
+            'urutan' => 'required',
+            'nama' => 'required',
+        ]);
 
-            $array = $request->only([
+        $array = $request->only([
             'urutan',
-            'nama'
-            ]);
-            
-            $hubkel = HubunganKeluarga::create($array);
-            return redirect()->route('hubkel.index')->with('success_message', 'Data telah tersimpan');
+            'nama',
+        ]);
+
+        $hubkel = HubunganKeluarga::create($array);
+
+        return redirect()->route('hubkel.index')->with('success_message', 'Data telah tersimpan');
     }
 
     public function update(Request $request, $id_hubungan)
-    { 
+    {
         //Mengedit Data Hubungan Keluarga
         $request->validate([
-            'urutan' => 'required', 
-            'nama' => 'required', 
-            ]);
+            'urutan' => 'required',
+            'nama' => 'required',
+        ]);
 
-            $hubkel = HubunganKeluarga::find($id_hubungan);
-            $hubkel->urutan = $request->urutan;
-            $hubkel->nama = $request->nama;
-            $hubkel->save();
-            return redirect()->route('hubkel.index')->with('success_message', 'Data telah tersimpan');
-    } 
+        $hubkel = HubunganKeluarga::find($id_hubungan);
+        $hubkel->urutan = $request->urutan;
+        $hubkel->nama = $request->nama;
+        $hubkel->save();
+
+        return redirect()->route('hubkel.index')->with('success_message', 'Data telah tersimpan');
+    }
 
     public function destroy($id_hubungan)
     {
@@ -61,9 +64,9 @@ class HubunganKeluargaController extends Controller
             $hubkel->is_deleted = '1';
             $hubkel->save();
         }
+
         return redirect()->route('hubkel.index')->with('success_message', 'Data telah terhapus');
     }
-
 
     // public function show(HubunganKeluarga $hubunganKeluarga)
     // {

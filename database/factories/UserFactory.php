@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -24,9 +23,8 @@ class UserFactory extends Factory
             '_password_' => 'password',
             'level' => 'staf',
             'kode_finger' => str_pad(fake()->randomNumber(5), 5, '0', STR_PAD_LEFT),
-            'id_jabatan' => random_int(1,3),
+            'id_jabatan' => random_int(1, 3),
             'is_deleted' => '0',
         ];
     }
-
 }

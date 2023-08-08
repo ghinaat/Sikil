@@ -40,17 +40,18 @@ class LoginController extends Controller
     }
 
     public function login(Request $request)
-    {  
+    {
         $inputVal = $request->all();
-    
+
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
         ]);
-    
-        if (auth()->attempt(array('email' => $inputVal['email'], 'password' => $inputVal['password']))) {
+
+        if (auth()->attempt(['email' => $inputVal['email'], 'password' => $inputVal['password']])) {
             if (auth()->user()->is_deletd === '1') {
                 auth()->logout(); // Logout pengguna
+
                 return redirect()->route('login')->with('error', 'Your account has been deleted.');
             } else {
                 return redirect()->route('home');
