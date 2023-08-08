@@ -7,6 +7,7 @@ use App\Models\Pendidikan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PendidikanController extends Controller
 {
@@ -69,7 +70,7 @@ class PendidikanController extends Controller
     
         $file = $request->file('ijazah');
         $fileName = Str::random(5) . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('Pendidikan', $fileName, 'public'); // Simpan file di dalam folder public/ Kerja
+        $file->storeAs('pendidikan', $fileName, 'public'); // Simpan file di dalam folder public/ Kerja
     
         $pendidikan->nama_sekolah = $request->nama_sekolah;
         $pendidikan->jurusan = $request->jurusan;
@@ -107,7 +108,7 @@ class PendidikanController extends Controller
         $request->validate([
             'nama_sekolah' => 'required', 
             'jurusan' => 'required', 
-            'ijazah' => 'mimes:|mimes:pdf,doc,docx,png,jpg,jpeg', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
+            'ijazah' => 'mimes:pdf,doc,docx,png,jpg,jpeg|max:2048', // Izinkan file PDF, DOC, DOCX, PNG, JPG, dan JPEG, maksimal ukuran 2MB.
             'tahun_lulus' => 'required', 
             'id_users' => 'required', 
             'id_tingkat_pendidikan' => 'required', 
@@ -117,14 +118,14 @@ class PendidikanController extends Controller
         if ($request->hasFile('ijazah')) {
             // Menghapus file ijazah sebelumnya
             if ($pendidikan->ijazah) {
-                Storage::disk('public')->delete(' pendidikan/' . $pendidikan->ijazah);
+                Storage::disk('public')->delete('pendidikan/' . $pendidikan->ijazah);
             }
     
             // Upload file ijazah baru
             $ijazah = $request->file('ijazah');
-            $namafile_kerja =  $fileName = Str::random(5) . '.' . $ijazah->getClientOriginalExtension();
-            Storage::disk('public')->put(' pendidikan/' . $namafile_kerja, file_get_contents($ijazah));
-            $pendidikan->ijazah = $namafile_kerja;
+            $fileName = Str::random(5) . '.' . $ijazah->getClientOriginalExtension();
+            $ijazah->storeAs('pendidikan', $fileName, 'public'); // Simpan file di dalam folder public/ Kerja
+            $pendidikan->ijazah = $fileName; // Simpan nama file ke dalam kolom 'file_kerja'
         }
     
         $pendidikan->nama_sekolah = $request->nama_sekolah;

@@ -145,10 +145,10 @@ table-stripped" id="example2">
                                                             href="{{ asset('/storage/pendidikan/' . $pd->ijazah) }}"
                                                             target="_blank">{{ $pd->ijazah }}</a></p>
                                                     @endif
+
                                                     <input type="file" name="ijazah" id="ijazah" class="form-control">
                                                     @error('ijazah')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
+                                                    <span class="textdanger">{{$message}}</span> @enderror
 
                                                 </div>
                                                 <div class="modal-footer">
