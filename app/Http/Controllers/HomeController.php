@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Carbon\Carbon;
 use App\Models\Kegiatan;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -27,15 +26,15 @@ class HomeController extends Controller
     {
         $all_kegiatan = Kegiatan::all();
         $kegiatans = Kegiatan::whereDate('tgl_mulai', '=', today())
-        ->where('tgl_selesai', '>=', today())
-        ->get();
-        
-            return view('home', [
+            ->where('tgl_selesai', '>=', today())
+            ->get();
+
+        return view('home', [
             'kegiatans' => $kegiatans,
             'all_kegiatan' => $all_kegiatan,
         ]);
-        return view('home');
 
+        return view('home');
 
         // $now = Carbon::now();
 

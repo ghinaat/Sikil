@@ -17,7 +17,7 @@ return new class extends Migration
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->time('jam_lembur');
-            $table->string('tugas',255);
+            $table->string('tugas', 255);
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->enum('is_deleted', ['0', '1'])->default('0');
             $table->timestamps();

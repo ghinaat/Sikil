@@ -1,66 +1,63 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Kegiatan;
+use App\Models\Peran;
 use App\Models\TimKegiatan;
 use App\Models\User;
-use App\Models\Peran;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class KegiatanController extends Controller
 {
     public function index()
     {
         $kegiatan = Kegiatan::where('is_deleted', '0')->get();
+
         return view('kegiatan.index', [
             'kegiatan' => $kegiatan,
-            'timkegiatan' => TimKegiatan::all()
+            'timkegiatan' => TimKegiatan::all(),
         ]);
     }
 
     public function create()
-    { 
+    {
         //Menampilkan Form Tambah User
         return view('kegiatan.create');
-    } 
+    }
 
     public function show($id_kegiatan)
     {
         // Mengambil kegiatan berdasarkan id_kegiatan
         $kegiatan = Kegiatan::findOrFail($id_kegiatan);
-    
+
         // Mengambil semua data user yang belum terkait dengan TimKegiatan
         $users = User::where('is_deleted', '0')->get();
 
         $peran = Peran::where('is_deleted', '0')->get();
 
-    
         // Mengambil tim kegiatan yang terkait dengan kegiatan tertentu dengan eager loading untuk relasi user
         $timkegiatan = TimKegiatan::with('user')->where('id_kegiatan', $id_kegiatan)->get();
-    
+
         return view('kegiatan.show', [
             'kegiatan' => $kegiatan,
             'users' => $users,
             'timkegiatan' => $timkegiatan,
-            'peran' => $peran
+            'peran' => $peran,
         ]);
     }
-   
-    
-    
 
     public function store(Request $request)
-    { 
+    {
         //Menyimpan Data User Baru
         $request->validate([
-            'nama_kegiatan' => 'required', 
+            'nama_kegiatan' => 'required',
             'tgl_mulai' => 'required|date',
             'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
-            'lokasi' => 'required', 
-            'peserta' => 'required', 
+            'lokasi' => 'required',
+            'peserta' => 'required',
         ]);
-        
+
         $kegiatan = new Kegiatan();
 
         $kegiatan->nama_kegiatan = $request->nama_kegiatan;
@@ -70,8 +67,9 @@ class KegiatanController extends Controller
         $kegiatan->peserta = $request->peserta;
 
         $kegiatan->save();
-        return redirect()->route('kegiatan.index') ->with('success_message', 'Data telah tersimpan');
-    } 
+
+        return redirect()->route('kegiatan.index')->with('success_message', 'Data telah tersimpan');
+    }
 
     public function storeTimKegiatan(Request $request)
     {
@@ -92,37 +90,41 @@ class KegiatanController extends Controller
         // Redirect atau lakukan tindakan lain setelah data berhasil disimpan
         return redirect()->route('kegiatan.index')->with('success_message', 'Data telah tersimpan');
     }
-    
+
     public function edit($id_kegiatan)
     {
         //Menampilkan Form Edit
         $kegiatan = Kegiatan::find($id_kegiatan);
-        if (!$kegiatan) return redirect()->route('kegiatan.index')->with('error_message', 'kegiatan dengan id_kegiatan = '.$id_kegiatan.' tidak ditemukan');
+        if (! $kegiatan) {
+            return redirect()->route('kegiatan.index')->with('error_message', 'kegiatan dengan id_kegiatan = '.$id_kegiatan.' tidak ditemukan');
+        }
+
         return view('kegiatan.edit', [
-            'kegiatan' => $kegiatan
+            'kegiatan' => $kegiatan,
         ]);
-    }   
+    }
 
     public function update(Request $request, $id_kegiatan)
     {
         //Mengedit Data Kegiatan
         $request->validate([
-            'nama_kegiatan' => 'required', 
-            'tgl_mulai' => 'required', 
-            'tgl_selesai' => 'required', 
-            'lokasi' => 'required', 
-            'peserta' => 'required', 
+            'nama_kegiatan' => 'required',
+            'tgl_mulai' => 'required',
+            'tgl_selesai' => 'required',
+            'lokasi' => 'required',
+            'peserta' => 'required',
         ]);
         $kegiatan = Kegiatan::find($id_kegiatan);
-        
+
         $kegiatan->nama_kegiatan = $request->nama_kegiatan;
         $kegiatan->tgl_mulai = $request->tgl_mulai;
         $kegiatan->tgl_selesai = $request->tgl_selesai;
         $kegiatan->lokasi = $request->lokasi;
         $kegiatan->peserta = $request->peserta;
         $kegiatan->save();
+
         return redirect()->route('kegiatan.index')->with('success_message', 'Data telah tersimpan');
-    } 
+    }
 
     public function destroy($id_kegiatan)
     {
@@ -132,6 +134,7 @@ class KegiatanController extends Controller
                 'is_deleted' => '1',
             ]);
         }
+
         return redirect()->route('kegiatan.index')->with('success_message', 'Data telah terhapus');
     }
 
@@ -149,5 +152,5 @@ class KegiatanController extends Controller
             // Handle jika terjadi error saat menghapus
             return redirect()->back()->with('error_message', 'Gagal menghapus Tim Kegiatan');
         }
-    }   
+    }
 }

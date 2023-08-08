@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nama_diklat', 100);
             $table->string('penyelenggara', 100);
             $table->date('tanggal_diklat');
-            $table->integer('jp',);
+            $table->integer('jp');
             $table->string('file_sertifikat', 255);
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->foreign('id_jenis_diklat')->references('id_jenis_diklat')->on('jenis_diklat')->onDelete('cascade');

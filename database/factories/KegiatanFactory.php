@@ -2,9 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Carbon\Carbon;
-
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
@@ -19,12 +18,13 @@ class KegiatanFactory extends Factory
     public function definition(): array
     {
         $end_date = Carbon::today()->addWeeks(8)->subDays(random_int(0, 365));
+
         return [
-            'nama_kegiatan' => fake()->sentence(2), 
+            'nama_kegiatan' => fake()->sentence(2),
             'tgl_mulai' => date('Y-m-d', strtotime('-1 week', strtotime($end_date))),
             'tgl_selesai' => $end_date,
-            'lokasi' => fake()->sentence(5), 
-            'peserta' => fake()->sentence(2), 
+            'lokasi' => fake()->sentence(5),
+            'peserta' => fake()->sentence(2),
         ];
     }
 }

@@ -33,7 +33,6 @@ return [
     'use_ico_only' => false,
     'use_full_favicon' => true,
 
-
     /*
     |--------------------------------------------------------------------------
     | Google Fonts
@@ -292,28 +291,28 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'text'  => 'Message',
+            'text' => 'Message',
             'route' => 'login',
-            'icon'  => 'fas fa-fw fa-envelope',
+            'icon' => 'fas fa-fw fa-envelope',
             'topnav_right' => true,
         ],
         [
             'text' => 'Home',
-            'url'  => '/home',
+            'url' => '/home',
             'icon' => 'fas fa-home',
-            'can'  => '',
+            'can' => '',
         ],
         // Sidebar items:
         'ACCOUNT SETTINGS',
         [
-            'text'  => 'Profile',
+            'text' => 'Profile',
             'route' => 'profile.index',
-            'icon'  => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-user',
         ],
         'MAIN NAVIGATION',
         [
             'icon' => 'fas fa-home',
-            'text'    => 'User Management',
+            'text' => 'User Management',
             'submenu' => [
 
                 [
@@ -323,39 +322,39 @@ return [
                 ],
                 [
                     'text' => 'Kegiatan',
-                    'url'  => '/kegiatan',
-                    'can'  => '',
+                    'url' => '/kegiatan',
+                    'can' => '',
                 ],
                 [
                     'text' => 'Pegawai',
-                    'url'  => 'user',
-                    'can'  => '',
+                    'url' => 'user',
+                    'can' => '',
                 ],
                 [
                     'text' => 'Tim Kegiatan',
-                    'url'  => 'timkegiatan',
-                    'can'  => '',
+                    'url' => 'timkegiatan',
+                    'can' => '',
                 ],
                 [
                     'text' => 'Arsip',
-                    'url'  => '/arsip',
-                    'can'  => '',
+                    'url' => '/arsip',
+                    'can' => '',
                 ],
                 [
                     'text' => 'Diklat',
-                    'url'  => 'diklat',
-                    'can'  => '',
+                    'url' => 'diklat',
+                    'can' => '',
                 ],
-                
+
                 [
                     'text' => 'Keluarga',
-                    'url'  => '/keluarga',
-                    'can'  => '',
+                    'url' => '/keluarga',
+                    'can' => '',
                 ],
                 [
                     'text' => 'Pengalaman Kerja',
-                    'url'  => '/penker',
-                    'can'  => '',
+                    'url' => '/penker',
+                    'can' => '',
                 ],
                 [
                     'text' => 'Pendidikan',
@@ -376,43 +375,42 @@ return [
         ],
         [
             'icon' => 'fas fa-user-cog',
-            'text'    => 'Admin Management',
+            'text' => 'Admin Management',
             'can' => 'isAdmin',
             'submenu' => [
                 [
                     'text' => 'Jabatan',
-                    'url'  => 'jabatan',
-                    'can'  => '',
+                    'url' => 'jabatan',
+                    'can' => '',
                 ],
                 [
                     'text' => 'Jenis Diklat',
-                    'url'  => 'jenisdiklat',
-                    'can'  => '',
+                    'url' => 'jenisdiklat',
+                    'can' => '',
                 ],
                 [
                     'text' => 'Tingkat Pendidikan',
-                    'url'  => '/tingkatpendidikan',
-                    'can'  => '',
+                    'url' => '/tingkatpendidikan',
+                    'can' => '',
                 ],
                 [
                     'text' => 'Hubungan Keluarga',
-                    'url'  => '/hubkel',
-                    'can'  => '',
+                    'url' => '/hubkel',
+                    'can' => '',
                 ],
                 [
                     'text' => 'Peran',
-                    'url'  => '/peran',
-                    'can'  => '',
+                    'url' => '/peran',
+                    'can' => '',
                 ],
                 [
                     'text' => 'Kelola Presensi',
-                    'url'  => '/presensi/admin',
-                    'can'  => '',
+                    'url' => '/presensi/admin',
+                    'can' => '',
                 ],
             ],
-        ]
+        ],
     ],
-
 
     /*
     |--------------------------------------------------------------------------
@@ -452,24 +450,21 @@ return [
         'Datatables' => [
             'active' => true,
             'files' => [
-            [
-            'type' => 'js',
-            'asset' => true,
-            'location' =>
-           '/vendor/datatables/js/jquery.dataTables.min.js',
-            ],
-            [
-            'type' => 'js',
-            'asset' => true,
-            'location' =>
-           '/vendor/datatables/js/dataTables.bootstrap4.min.js',
-            ],
-            [
-            'type' => 'css',
-            'asset' => true,
-            'location' =>
-           '/vendor/datatables/css/dataTables.bootstrap4.min.css',
-            ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/datatables/js/jquery.dataTables.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/datatables/js/dataTables.bootstrap4.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => '/vendor/datatables/css/dataTables.bootstrap4.min.css',
+                ],
             ],
         ],
         'Select2' => [
@@ -500,20 +495,18 @@ return [
         'Sweetalert2' => [
             'active' => true,
             'files' => [
-            [
-            'type' => 'js',
-            'asset' => true,
-            'location' =>
-           '/vendor/sweetalert2/sweetalert2.min.js',
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/sweetalert2/sweetalert2.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => '/vendor/sweetalert2/sweetalert2.min.css',
+                ],
             ],
-            [
-            'type' => 'css',
-            'asset' => true,
-            'location' =>
-           '/vendor/sweetalert2/sweetalert2.min.css',
-            ],
-            ],
-            ],
+        ],
         'Pace' => [
             'active' => false,
             'files' => [

@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Presensi extends Model
 {
     use HasFactory;
+
     protected $primarykey = 'id_presensi';
+
     protected $table = 'presensi';
-        protected $fillable = [
+
+    protected $fillable = [
         'kode_finger',
         'tanggal',
         'jam_masuk',
@@ -18,13 +21,11 @@ class Presensi extends Model
         'terlambat',
         'pulang_cepat',
         'kehadiran',
-        'jenis_perizinan'
+        'jenis_perizinan',
     ];
-
 
     public function user()
     {
         return $this->belongsTo(User::class, 'kode_finger', 'kode_finger');
     }
-
 }

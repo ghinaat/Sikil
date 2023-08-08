@@ -26,16 +26,14 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-    Route::bind('jabatan', function ($value) {
-        return \App\Models\Jabatan::where('id_jabatan', $value)->firstOrFail();
-    });
+        Route::bind('jabatan', function ($value) {
+            return \App\Models\Jabatan::where('id_jabatan', $value)->firstOrFail();
+        });
 
-    Route::bind('kegiatan', function ($value) {
-        return \App\Models\Kegiatan::where('id_kegiatan', $value)->firstOrFail();
-    });
+        Route::bind('kegiatan', function ($value) {
+            return \App\Models\Kegiatan::where('id_kegiatan', $value)->firstOrFail();
+        });
 
-
-    
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });

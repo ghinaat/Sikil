@@ -15,9 +15,10 @@ class Profile extends Model
 
     protected $date = 'tanggal_lahir';
 
-    public function tingkat_pendidikan(){
+    public function tingkat_pendidikan()
+    {
         return $this->belongsTo(TingkatPendidikan::class, 'id_tingkat_pendidikan', 'id_tingkat_pendidikan');
-    } 
+    }
 
     protected $guarded = ['id_profile_user'];
 }

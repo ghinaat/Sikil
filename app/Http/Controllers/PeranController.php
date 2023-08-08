@@ -10,12 +10,15 @@ class PeranController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(){
+    public function index()
+    {
         $peran = Peran::where('is_deleted', '0')->get();
-    return view('peran.index', [
-    'peran' => $peran
-    ]);
+
+        return view('peran.index', [
+            'peran' => $peran,
+        ]);
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -30,17 +33,17 @@ class PeranController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_peran' => 'required', 
-            ]);
-            $array = $request->only([
-            'nama_peran'
-            ]);
-            $peran = Peran::create($array);
-            return redirect()->route('peran.index') 
-            ->with('success_message', 'Data telah tersimpan');
-            
-    }
+            'nama_peran' => 'required',
+        ]);
+        $array = $request->only([
+            'nama_peran',
+        ]);
+        $peran = Peran::create($array);
 
+        return redirect()->route('peran.index')
+            ->with('success_message', 'Data telah tersimpan');
+
+    }
 
     /**
      * Display the specified resource.
@@ -62,30 +65,32 @@ class PeranController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id_peran)
-{
-    $request->validate([
-        'nama_peran' =>'required',
-    ]);
-    $peran = Peran::find($id_peran);
-    if ($peran) {
-        $peran->nama_peran = $request->nama_peran;
-        $peran->save();
-        return redirect()->route('peran.index')->with('success_message', 'Data telah tersimpan');
+    {
+        $request->validate([
+            'nama_peran' => 'required',
+        ]);
+        $peran = Peran::find($id_peran);
+        if ($peran) {
+            $peran->nama_peran = $request->nama_peran;
+            $peran->save();
+
+            return redirect()->route('peran.index')->with('success_message', 'Data telah tersimpan');
+        }
+        // Tambahkan logika untuk penanganan jika data tidak ditemukan
     }
-    // Tambahkan logika untuk penanganan jika data tidak ditemukan
-}
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id_peran)
     {
-        $peran =  Peran::find($id_peran);
+        $peran = Peran::find($id_peran);
         if ($peran) {
             $peran->update([
                 'is_deleted' => '1',
             ]);
         }
+
         return redirect()->route('peran.index')->with('success_message', 'Data telah terhapus');
     }
-
 }

@@ -51,14 +51,20 @@ Berikut adalah tahap-tahap untuk mengembakan fitur terbaru dan berktrbusi dalam 
 1. Fork repo ini
 2. Clone milikmu fork
 3. Lakukan beberapa pekerjaan
-4. Checkout branch baru
+4. Bersihkan pekerjaan kalian dengan lint
+
+```
+./vendor/bin/pint
+```
+
+5. Checkout branch baru
 
 ```bash
 git branch YOUR-NEW-FEATURE
 git checkout YOUR-NEW-FEATURE
 ```
 
-5. Commit
+6. Commit
 
 ```bash
 git init
@@ -66,10 +72,10 @@ git add .
 git commit -m "[Your message] -yourname"
 ```
 
-6. Push branch milikmu ke fork milikmu
+7. Push branch milikmu ke fork milikmu
 
 ```bash
 git push -u origin --set-upstream YOUR-NEW-FEATURE
 ```
 
-7. Pergi ke github UI dan buat a PR dari fork milikmu dan branch, dan merge dengan MAIN upstream kita
+8. Pergi ke github UI dan buat a PR dari fork milikmu dan branch, dan merge dengan MAIN upstream kita
