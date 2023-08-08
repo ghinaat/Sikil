@@ -5,6 +5,9 @@ namespace App\Imports;
 use App\Models\Presensi;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+
 
 class PresensiImport implements ToModel, WithStartRow
 {
@@ -18,12 +21,11 @@ class PresensiImport implements ToModel, WithStartRow
      */
     public function model(array $row)
     {
-        $formattedDate = date_create_from_format('m/d/Y', $row[2]);
-        $tanggal = date_format($formattedDate, 'Y-m-d');
+        $tanggal = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[2]));
 
         return new Presensi([
             'kode_finger' => $row[0],
-            'tanggal' => $tanggal,
+            'tanggal' => $tanggal->format('Y-m-d'),
             'jam_masuk' => $row[5],
             'jam_pulang' => $row[6],
             'terlambat' => $row[7],
