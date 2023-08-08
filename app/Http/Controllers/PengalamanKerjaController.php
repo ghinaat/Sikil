@@ -69,7 +69,7 @@ class PengalamanKerjaController extends Controller
     
         $file = $request->file('file_kerja');
         $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('Pengalaman Kerja', $fileName, 'public');
+        $file->storeAs('pengalaman_kerja', $fileName, 'public');
     
         $penker->nama_perusahaan = $request->nama_perusahaan;
         $penker->masa_kerja = $request->masa_kerja;
@@ -119,13 +119,13 @@ class PengalamanKerjaController extends Controller
       if ($request->hasFile('file_kerja')) {
         // Menghapus file file_kerja sebelumnya
         if ($penker->file_kerja) {
-            Storage::disk('public')->delete('Pengalaman Kerja/' . $penker->file_kerja);
+            Storage::disk('public')->delete('pengalaman_kerja/' . $penker->file_kerja);
         }
 
         // Upload file file_kerja baru
         $file_kerja = $request->file('file_kerja');
         $namafile_kerja = Str::random(20) . '.' . $file_kerja->getClientOriginalExtension();
-        Storage::disk('public')->put('Pengalaman Kerja/' . $namafile_kerja, file_get_contents($file_kerja));
+        Storage::disk('public')->put('pengalaman_kerja/' . $namafile_kerja, file_get_contents($file_kerja));
         $penker->file_kerja = $namafile_kerja;
     }
 
