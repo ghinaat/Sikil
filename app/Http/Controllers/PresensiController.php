@@ -150,12 +150,58 @@ class PresensiController extends Controller
             $presensiData = Presensi::where('kode_finger', $user->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
 
             foreach ($presensiData as $pd) {
-                if ($pd->kehadiran === 1) {
+                if ($pd->kehadiran) {
                     $kehadiran++;
+                }else{
+                    switch ($pd->jenis_perizinan) {
+                        case 'I':
+                            $ijin++;
+                            break;
+    
+                        case 'S':
+                            $sakit++;
+                            break;
+    
+                        case 'CS':
+                            $cutiSakit++;
+                            break;
+    
+                        case 'CT':
+                            $cutiTahunan++;
+                            break;
+    
+                        case 'CM':
+                            $cutiMelahirkan++;
+                            break;
+    
+                        case 'DL':
+                            $dinasLuar++;
+                            break;
+    
+                        case 'A':
+                            $alpha++;
+                            break;
+    
+                        case 'CB':
+                            $cutiBersama++;
+                            break;
+    
+                        case 'CH':
+                            $cutiHaji++;
+                            break;
+    
+                        case 'TB':
+                            $tugasBelajar++;
+                            break;
+    
+                        default:
+                            // Handle any other case not covered above, if necessary.
+                            break;
+                    }
                 }
 
                 if (isset($pd->terlambat)) {
-                    if ($pd->kehadiran === 1) {
+                    if ($pd->kehadiran) {
                         $time = explode(':', $pd->terlambat);
                         if ($time[0] > 0) {
                             $terlambat++;
@@ -166,51 +212,7 @@ class PresensiController extends Controller
                         }
                     }
                 }
-                switch ($pd->jenis_perizinan) {
-                    case 'I':
-                        $ijin++;
-                        break;
-
-                    case 'S':
-                        $sakit++;
-                        break;
-
-                    case 'CS':
-                        $cutiSakit++;
-                        break;
-
-                    case 'CT':
-                        $cutiTahunan++;
-                        break;
-
-                    case 'CM':
-                        $cutiMelahirkan++;
-                        break;
-
-                    case 'DL':
-                        $dinasLuar++;
-                        break;
-
-                    case 'A':
-                        $alpha++;
-                        break;
-
-                    case 'CB':
-                        $cutiBersama++;
-                        break;
-
-                    case 'CH':
-                        $cutiHaji++;
-                        break;
-
-                    case 'TB':
-                        $tugasBelajar++;
-                        break;
-
-                    default:
-                        // Handle any other case not covered above, if necessary.
-                        break;
-                }
+               
             }
 
             $presensis['data'][] = [
@@ -266,12 +268,58 @@ class PresensiController extends Controller
             $presensiData = Presensi::where('kode_finger', $user->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
 
             foreach ($presensiData as $pd) {
-                if ($pd->kehadiran === 1) {
+                if ($pd->kehadiran ) {
                     $kehadiran++;
+                }else{
+                    switch ($pd->jenis_perizinan) {
+                        case 'I':
+                            $ijin++;
+                            break;
+    
+                        case 'S':
+                            $sakit++;
+                            break;
+    
+                        case 'CS':
+                            $cutiSakit++;
+                            break;
+    
+                        case 'CT':
+                            $cutiTahunan++;
+                            break;
+    
+                        case 'CM':
+                            $cutiMelahirkan++;
+                            break;
+    
+                        case 'DL':
+                            $dinasLuar++;
+                            break;
+    
+                        case 'A':
+                            $alpha++;
+                            break;
+    
+                        case 'CB':
+                            $cutiBersama++;
+                            break;
+    
+                        case 'CH':
+                            $cutiHaji++;
+                            break;
+    
+                        case 'TB':
+                            $tugasBelajar++;
+                            break;
+    
+                        default:
+                            // Handle any other case not covered above, if necessary.
+                            break;
+                    }
                 }
 
                 if (isset($pd->terlambat)) {
-                    if ($pd->kehadiran === 1) {
+                    if ($pd->kehadiran) {
                         $time = explode(':', $pd->terlambat);
                         if ($time[0] > 0) {
                             $terlambat++;
@@ -282,51 +330,7 @@ class PresensiController extends Controller
                         }
                     }
                 }
-                switch ($pd->jenis_perizinan) {
-                    case 'I':
-                        $ijin++;
-                        break;
-
-                    case 'S':
-                        $sakit++;
-                        break;
-
-                    case 'CS':
-                        $cutiSakit++;
-                        break;
-
-                    case 'CT':
-                        $cutiTahunan++;
-                        break;
-
-                    case 'CM':
-                        $cutiMelahirkan++;
-                        break;
-
-                    case 'DL':
-                        $dinasLuar++;
-                        break;
-
-                    case 'A':
-                        $alpha++;
-                        break;
-
-                    case 'CB':
-                        $cutiBersama++;
-                        break;
-
-                    case 'CH':
-                        $cutiHaji++;
-                        break;
-
-                    case 'TB':
-                        $tugasBelajar++;
-                        break;
-
-                    default:
-                        // Handle any other case not covered above, if necessary.
-                        break;
-                }
+               
             }
 
             $presensis[] = [
