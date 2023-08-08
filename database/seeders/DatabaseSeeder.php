@@ -4,16 +4,15 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\GeneralSetting;
-use App\Models\User;
-use App\Models\Jabatan;
-use App\Models\TingkatPendidikan;
-use App\Models\JenisDiklat;
 use App\Models\HubunganKeluarga;
+use App\Models\Jabatan;
+use App\Models\JenisDiklat;
 use App\Models\Kegiatan;
-use App\Models\Presensi;
 use App\Models\peran;
+use App\Models\Presensi;
 use App\Models\TimKegiatan;
-
+use App\Models\TingkatPendidikan;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -36,27 +35,27 @@ class DatabaseSeeder extends Seeder
         ]);
 
         TingkatPendidikan::create([
-            'nama_tingkat_pendidikan' => 'Sarjana'
+            'nama_tingkat_pendidikan' => 'Sarjana',
         ]);
 
         TingkatPendidikan::create([
-            'nama_tingkat_pendidikan' => 'Magister'
+            'nama_tingkat_pendidikan' => 'Magister',
         ]);
-        
+
         TingkatPendidikan::create([
-            'nama_tingkat_pendidikan' => 'Doktor'
+            'nama_tingkat_pendidikan' => 'Doktor',
         ]);
 
         JenisDiklat::create([
-            'nama_jenis_diklat' => 'Diklat kepemimpinan'
+            'nama_jenis_diklat' => 'Diklat kepemimpinan',
         ]);
-        
+
         JenisDiklat::create([
-            'nama_jenis_diklat' => 'Diklat Fungsional'
+            'nama_jenis_diklat' => 'Diklat Fungsional',
         ]);
-        
+
         JenisDiklat::create([
-            'nama_jenis_diklat' => 'Diklat Teknis'
+            'nama_jenis_diklat' => 'Diklat Teknis',
         ]);
 
         HubunganKeluarga::create([
@@ -89,7 +88,7 @@ class DatabaseSeeder extends Seeder
             '_password_' => '12345678',
             'level' => 'admin',
             'id_jabatan' => '1',
-            'is_deleted' => '0'
+            'is_deleted' => '0',
         ]);
 
         User::create([
@@ -99,7 +98,7 @@ class DatabaseSeeder extends Seeder
             '_password_' => '12345678',
             'level' => 'admin',
             'id_jabatan' => '1',
-            'is_deleted' => '1'
+            'is_deleted' => '1',
         ]);
 
         User::create([
@@ -109,7 +108,7 @@ class DatabaseSeeder extends Seeder
             '_password_' => '12345678',
             'level' => 'staf',
             'id_jabatan' => '2',
-            'is_deleted' => '0'
+            'is_deleted' => '0',
         ]);
 
         // GeneralSetting::create([
@@ -117,7 +116,6 @@ class DatabaseSeeder extends Seeder
         //     'id_users' => null,
         //     'status' => '0',
         // ]);
-        
 
         User::factory(10)->create();
         Kegiatan::factory(40)->create();

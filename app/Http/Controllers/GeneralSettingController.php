@@ -15,10 +15,11 @@ class GeneralSettingController extends Controller
     {
 
         $generalsetting = GeneralSetting::all();
-        return view('generalsetting.index',  [
+
+        return view('generalsetting.index', [
             'generalsetting' => $generalsetting,
             'user' => User::where('is_deleted', '0')->get(),
-            ]);
+        ]);
     }
 
     /**
@@ -34,7 +35,7 @@ class GeneralSettingController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**
@@ -63,12 +64,12 @@ class GeneralSettingController extends Controller
             'id_users' => 'required',
             'status' => 'required',
         ]);
-        $array = $request->only([ 
-        'tahun_aktif' ,
-        'id_users' ,
-        'status' ,
-    ]);
-    $array['id_users'] = auth()->user()->id_users;
+        $array = $request->only([
+            'tahun_aktif',
+            'id_users',
+            'status',
+        ]);
+        $array['id_users'] = auth()->user()->id_users;
 
         GeneralSetting::where('id_users', auth()->user()->id_users)->update($array);
 

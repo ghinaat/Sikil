@@ -24,12 +24,14 @@ class User extends Authenticatable
         'password',
         'level',
         'id_jabatan',
-         '_password_'
+        '_password_',
     ];
 
-    public function jabatan(){
+    public function jabatan()
+    {
         return $this->belongsTo(Jabatan::class, 'id_jabatan', 'id_jabatan');
     }
+
     public function timkegiatans()
     {
         return $this->hasMany(TimKegiatan::class, 'id_users', 'id_users');
@@ -54,6 +56,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Arsip::class, 'id_users', 'id_users');
     }
+
     public function diklat()
     {
         return $this->hasMany(Diklat::class, 'id_users', 'id_users');
@@ -61,7 +64,7 @@ class User extends Authenticatable
 
     public function generalsetting()
     {
-        return $this->hasMany(GeneralSetting::class,  'id_users','id_users');
+        return $this->hasMany(GeneralSetting::class, 'id_users', 'id_users');
     }
 
     public function presensi()
@@ -69,7 +72,6 @@ class User extends Authenticatable
         return $this->hasMany(Presensi::class, 'kode_finger', 'kode_finger');
     }
 
-    
     protected $primaryKey = 'id_users';
 
     /**
@@ -90,7 +92,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-       
+
     ];
-    
 }

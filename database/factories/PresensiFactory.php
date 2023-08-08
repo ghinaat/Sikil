@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Presensi>
@@ -19,11 +19,9 @@ class PresensiFactory extends Factory
     {
         $existingKodeFingers = User::pluck('kode_finger')->all();
 
-        $array;
-
-        if(fake()->boolean()){
+        if (fake()->boolean()) {
             $array = [
-                'kode_finger' =>  fake()->randomElement($existingKodeFingers),
+                'kode_finger' => fake()->randomElement($existingKodeFingers),
                 'tanggal' => fake()->date(),
                 'jam_masuk' => fake()->time(),
                 'jam_pulang' => fake()->time(),
@@ -32,9 +30,9 @@ class PresensiFactory extends Factory
                 'kehadiran' => true,
                 'jenis_perizinan' => fake()->randomElement(['I', 'DL', 'S', 'CS', 'Prajab', 'CT', 'CM', 'CAP', 'CH', 'CB', 'A', 'TB']),
             ];
-        }else{
+        } else {
             $array = [
-                'kode_finger' =>  fake()->randomElement($existingKodeFingers),
+                'kode_finger' => fake()->randomElement($existingKodeFingers),
                 'tanggal' => fake()->date(),
                 'jam_masuk' => null,
                 'jam_pulang' => null,
@@ -44,7 +42,7 @@ class PresensiFactory extends Factory
                 'jenis_perizinan' => fake()->randomElement(['I', 'DL', 'S', 'CS', 'Prajab', 'CT', 'CM', 'CAP', 'CH', 'CB', 'A', 'TB']),
             ];
         }
-        
+
         return $array;
     }
 }

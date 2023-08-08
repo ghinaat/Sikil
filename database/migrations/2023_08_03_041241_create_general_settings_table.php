@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('general_setting', function (Blueprint $table) {
-        $table->increments('id_general');
-        $table->enum('tahun_aktif', ['2020', '2021', '2022', '2023', '2024', '2025']);
-        $table->unsignedInteger('id_users');
-        $table->enum('status', ['0', '1']);
-        $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
-        $table->timestamps();
-    });
+            $table->increments('id_general');
+            $table->enum('tahun_aktif', ['2020', '2021', '2022', '2023', '2024', '2025']);
+            $table->unsignedInteger('id_users');
+            $table->enum('status', ['0', '1']);
+            $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**

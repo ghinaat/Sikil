@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PresensiExportFilter;
+use App\Imports\PresensiImport;
 use App\Models\Presensi;
 use App\Models\User;
-use Illuminate\Http\Request;
-use App\Imports\PresensiImport;
-use App\Exports\PresensiExportFilter;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -16,19 +16,19 @@ class PresensiController extends Controller
     public function index()
     {
         $user = Auth::user();
-    
-        if ($user->level == "admin") {
+
+        if ($user->level == 'admin') {
             // Fetch all work experiences for admin
-            $presensi = Presensi::where('is_deleted', '0') ->whereMonth('tanggal', '=', date('m'))
-            ->whereYear('tanggal', '=', date('Y'))
-            ->get();
+            $presensi = Presensi::where('is_deleted', '0')->whereMonth('tanggal', '=', date('m'))
+                ->whereYear('tanggal', '=', date('Y'))
+                ->get();
         } else {
             // Fetch user's own work experiences using the relationship
-            $presensi = $user->presensi()->where('is_deleted', '0') ->whereMonth('tanggal', '=', date('m'))
-            ->whereYear('tanggal', '=', date('Y'))
-            ->get();
+            $presensi = $user->presensi()->where('is_deleted', '0')->whereMonth('tanggal', '=', date('m'))
+                ->whereYear('tanggal', '=', date('Y'))
+                ->get();
         }
-    
+
         return view('presensi.index', [
             'presensi' => $presensi,
             'users' => User::where('is_deleted', '0')->get(),
@@ -83,40 +83,39 @@ class PresensiController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    
     public function filter(Request $request)
-    {        
+    {
         $selectedDate = $request->input('tanggalFilter');
         $selectedDate = Carbon::parse($selectedDate)->format('Y-m-d');
-    
+
         $user = Auth::user();
-        if ($user->level == "admin") {
+        if ($user->level == 'admin') {
             $presensi = Presensi::whereDate('tanggal', $selectedDate)->get();
         } else {
             $presensi = $user->presensi()->whereDate('tanggal', $selectedDate)->get();
         }
-    
+
         return view('presensi.index', [
             'presensi' => $presensi,
         ]);
     }
-    
+
     public function filteruser(Request $request)
     {
         $user = Auth::user();
-        if ($user->level == "admin") {
+        if ($user->level == 'admin') {
             $kode_finger = $request->input('kode_finger');
         } else {
             $kode_finger = $user->kode_finger;
         }
         $tglawal = $request->input('tglawal');
-        $tglakhir = date('Y-m-d', strtotime($request->input('tglakhir') . ' +1 day'));
-    
+        $tglakhir = date('Y-m-d', strtotime($request->input('tglakhir').' +1 day'));
+
         $presensi = Presensi::where('kode_finger', $kode_finger)
-                            ->whereBetween('tanggal', [$tglawal, $tglakhir])
-                            ->orderBy('tanggal', 'desc')
-                            ->get();
-    
+            ->whereBetween('tanggal', [$tglawal, $tglakhir])
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
         return view('presensi.index', compact('presensi', 'tglawal', 'tglakhir'));
     }
 
@@ -125,12 +124,12 @@ class PresensiController extends Controller
     {
 
         $users = User::where('is_deleted', '0')->get();
-        
+
         $presensis = [];
 
         $defaultStartDate = '2023-01-01';
         $defaultEndDate = '2023-12-31';
-        
+
         $start_date = $request->input('start_date', $defaultStartDate);
         $end_date = $request->input('end_date', $defaultEndDate);
 
@@ -147,65 +146,64 @@ class PresensiController extends Controller
             $cutiBersama = 0;
             $cutiHaji = 0;
             $tugasBelajar = 0;
-            
 
             $presensiData = Presensi::where('kode_finger', $user->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
-            
+
             foreach ($presensiData as $pd) {
-                if($pd->kehadiran === 1){
-                    $kehadiran++; 
+                if ($pd->kehadiran === 1) {
+                    $kehadiran++;
                 }
-    
-                if(isset($pd->terlambat)){
-                    if($pd->kehadiran === 1){
-                        $time = explode(":", $pd->terlambat);
-                        if($time[0] > 0){
+
+                if (isset($pd->terlambat)) {
+                    if ($pd->kehadiran === 1) {
+                        $time = explode(':', $pd->terlambat);
+                        if ($time[0] > 0) {
                             $terlambat++;
-                        }elseif ($time[1] > 0) {
+                        } elseif ($time[1] > 0) {
                             $terlambat++;
-                        }elseif ($time[2] > 0) {
+                        } elseif ($time[2] > 0) {
                             $terlambat++;
                         }
                     }
                 }
                 switch ($pd->jenis_perizinan) {
-                    case "I":
+                    case 'I':
                         $ijin++;
                         break;
-                        
-                    case "S":
+
+                    case 'S':
                         $sakit++;
                         break;
-                        
-                    case "CS":
+
+                    case 'CS':
                         $cutiSakit++;
                         break;
-                        
-                    case "CT":
+
+                    case 'CT':
                         $cutiTahunan++;
                         break;
-                        
-                    case "CM":
+
+                    case 'CM':
                         $cutiMelahirkan++;
                         break;
-                        
-                    case "DL":
+
+                    case 'DL':
                         $dinasLuar++;
                         break;
-                        
-                    case "A":
+
+                    case 'A':
                         $alpha++;
                         break;
-                        
-                    case "CB":
+
+                    case 'CB':
                         $cutiBersama++;
                         break;
-                        
-                    case "CH":
+
+                    case 'CH':
                         $cutiHaji++;
                         break;
-                        
-                    case "TB":
+
+                    case 'TB':
                         $tugasBelajar++;
                         break;
 
@@ -230,12 +228,11 @@ class PresensiController extends Controller
                 'cutiHaji' => $cutiHaji,
                 'tugasBelajar' => $tugasBelajar,
             ];
-            
-        }  
+
+        }
 
         $presensis['start_date'] = $start_date;
         $presensis['end_date'] = $end_date;
-
 
         return Excel::download(new PresensiExportFilter($presensis), 'presensi.xlsx');
     }
@@ -243,12 +240,12 @@ class PresensiController extends Controller
     public function filterAdmin(Request $request)
     {
         $users = User::where('is_deleted', '0')->get();
-        
+
         $presensis = [];
 
         $defaultStartDate = '2023-01-01';
         $defaultEndDate = '2023-12-31';
-        
+
         $start_date = $request->input('start_date', $defaultStartDate);
         $end_date = $request->input('end_date', $defaultEndDate);
 
@@ -265,65 +262,64 @@ class PresensiController extends Controller
             $cutiBersama = 0;
             $cutiHaji = 0;
             $tugasBelajar = 0;
-            
 
             $presensiData = Presensi::where('kode_finger', $user->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
-            
+
             foreach ($presensiData as $pd) {
-                if($pd->kehadiran === 1){
-                    $kehadiran++; 
+                if ($pd->kehadiran === 1) {
+                    $kehadiran++;
                 }
-    
-                if(isset($pd->terlambat)){
-                    if($pd->kehadiran === 1){
-                        $time = explode(":", $pd->terlambat);
-                        if($time[0] > 0){
+
+                if (isset($pd->terlambat)) {
+                    if ($pd->kehadiran === 1) {
+                        $time = explode(':', $pd->terlambat);
+                        if ($time[0] > 0) {
                             $terlambat++;
-                        }elseif ($time[1] > 0) {
+                        } elseif ($time[1] > 0) {
                             $terlambat++;
-                        }elseif ($time[2] > 0) {
+                        } elseif ($time[2] > 0) {
                             $terlambat++;
                         }
                     }
                 }
                 switch ($pd->jenis_perizinan) {
-                    case "I":
+                    case 'I':
                         $ijin++;
                         break;
-                        
-                    case "S":
+
+                    case 'S':
                         $sakit++;
                         break;
-                        
-                    case "CS":
+
+                    case 'CS':
                         $cutiSakit++;
                         break;
-                        
-                    case "CT":
+
+                    case 'CT':
                         $cutiTahunan++;
                         break;
-                        
-                    case "CM":
+
+                    case 'CM':
                         $cutiMelahirkan++;
                         break;
-                        
-                    case "DL":
+
+                    case 'DL':
                         $dinasLuar++;
                         break;
-                        
-                    case "A":
+
+                    case 'A':
                         $alpha++;
                         break;
-                        
-                    case "CB":
+
+                    case 'CB':
                         $cutiBersama++;
                         break;
-                        
-                    case "CH":
+
+                    case 'CH':
                         $cutiHaji++;
                         break;
-                        
-                    case "TB":
+
+                    case 'TB':
                         $tugasBelajar++;
                         break;
 
@@ -348,13 +344,13 @@ class PresensiController extends Controller
                 'cutiHaji' => $cutiHaji,
                 'tugasBelajar' => $tugasBelajar,
             ];
-            
-        }  
-        
-        return view('presensi.filter',  [
+
+        }
+
+        return view('presensi.filter', [
             'presensis' => $presensis,
         ]);
-        
+
     }
 
     public function import(Request $request)
@@ -367,10 +363,10 @@ class PresensiController extends Controller
     }
 
     // public function filter(Request $request)
-    // {   
+    // {
     //     $selectedDate = $request->input('tanggalFilter');
     //     $selectedDate = Carbon::parse($selectedDate)->format('Y-m-d');
-        
+
     //     $presensi = Presensi::whereDate('tanggal', $selectedDate )->get();
 
     //     return view('presensi.index',  [

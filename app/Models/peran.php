@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class peran extends Model
 {
     use HasFactory;
+
     protected $table = 'peran';
- 
+
     protected $primaryKey = 'id_peran';
+
     protected $fillable = [
         'nama_peran',
-        'is_deleted'
+        'is_deleted',
     ];
 }

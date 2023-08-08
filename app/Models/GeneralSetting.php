@@ -8,16 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class GeneralSetting extends Model
 {
     use HasFactory;
+
     protected $table = 'general_setting';
+
     protected $primaryKey = 'id_general';
 
     protected $fillable = [
         'tahun_aktif',
         'id_users',
-        'status'
+        'status',
     ];
-    
-    public function id_ppk(){
+
+    public function id_ppk()
+    {
         return $this->belongsTo(User::class, 'id_users', 'id_users');
-        }
+    }
 }
