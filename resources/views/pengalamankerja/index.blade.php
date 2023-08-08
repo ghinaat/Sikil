@@ -49,7 +49,7 @@ table-stripped" id="example2">
                                 <td id={{$key+1}}>{{$pk->masa_kerja}}</td>
                                 <td id={{$key+1}}>{{$pk->posisi}}</td>
                                 <td id={{$key+1}}>
-                                    <a href="{{ asset('/storage/Pengalaman Kerja/'. $pk->file_kerja) }}"
+                                    <a href="{{ asset('/storage/pengalaman_kerja/'. $pk->file_kerja) }}"
                                         target="_blank">Lihat
                                         Dokumen</a>
 
@@ -119,7 +119,7 @@ table-stripped" id="example2">
                                                         .docx</small>
                                                     @if ($pk->file_kerja)
                                                     <p>Previous File: <a
-                                                            href="{{ asset('/storage/Pengalaman Kerja/' . $pk->file_kerja) }}"
+                                                            href="{{ asset('/storage/pengalaman_kerja/' . $pk->file_kerja) }}"
                                                             target="_blank">{{ $pk->file_kerja }}</a></p>
                                                     @endif
                                                     <input type="file" name="file_kerja" id="file_kerja"
