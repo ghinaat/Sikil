@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjuanPerizinanController;
 use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\DiklatController;
@@ -141,6 +142,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/presensi/admin/export', [PresensiController::class, 'filterDataAdmin'])->name('presensi.filterDataAdmin')->middleware('isAdmin');
 });
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/ajuanperizinan', [AjuanPerizinanController::class, 'index'])->name('ajuanperizinan.index');
+    Route::post('/ajuanperizinan', [AjuanPerizinanController::class, 'store'])->name('ajuanperizinan.store');
+    Route::put('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'update'])->name('ajuanperizinan.update');
+    Route::delete('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'destroy'])->name('ajuanperizinan.destroy');
+});
+
 Route::get('/cuti', [CutiController::class, 'index'])->name('cuti.index');
 Route::get('/cuti/create', [CutiController::class, 'create'])->name('cuti.create');
 Route::post('/cuti', [CutiController::class, 'store'])->name('cuti.store');
@@ -148,3 +156,4 @@ Route::get('/cuti/{cuti}/edit', [CutiController::class, 'edit'])->name('cuti.edi
 Route::put('/cuti/update/{id}', [CutiController::class, 'update'])->name('cuti.update');
 Route::delete('/cuti/{cuti}', [CutiController::class, 'destroy'])->name('cuti.destroy');
 Route::get('/cuti/export', [CutiController::class, 'export'])->name('cuti.xlsx')->middleware('isAdmin');
+

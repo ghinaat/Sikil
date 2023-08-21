@@ -71,6 +71,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Presensi::class, 'kode_finger', 'kode_finger');
     }
+    public function ajuanperizinan()
+    {
+        return $this->hasMany(Perizinan::class, 'id_users', 'id_atasan');
+    }
+    public function ajuanperizinans()
+    {
+        return $this->hasMany(Perizinan::class, 'kode_finger', 'kode_finger');
+    }
 
     public function perizinan()
     {

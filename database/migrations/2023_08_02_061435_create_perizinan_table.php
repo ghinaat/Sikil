@@ -21,8 +21,8 @@ return new class extends Migration
             $table->date('tgl_absen_akhir');
             $table->string('keterangan', 100);
             $table->string('file_perizinan', 255);
-            $table->enum('status_izin_atasan', ['0,1'])->nullable();
-            $table->enum('status_izin_ppk', ['0,1'])->nullable();
+            $table->enum('status_izin_atasan', ['0,1'])->nullable()->default(null);
+            $table->enum('status_izin_ppk', ['0,1'])->nullable()->default(null);
             $table->foreign('id_atasan')->references('id_users')->on('users')->onDelete('cascade');
             $table->enum('is_deleted', ['0', '1'])->default('0');
             $table->timestamps();
