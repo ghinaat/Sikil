@@ -35,7 +35,22 @@ class GeneralSettingController extends Controller
      */
     public function store(Request $request)
     {
+          //Menyimpan Data User Baru
+        $request->validate([
+            'tahun_aktif' => 'required',
+            'id_users' => 'required',
+            'status' => 'required',
+        ]);
 
+        $generalsetting = new GeneralSetting();
+
+        $generalsetting->tahun_aktif = $request->tahun_aktif;
+        $generalsetting->id_users = $request->id_users;
+        $generalsetting->status = $request->status;
+
+        $generalsetting->save();
+
+        return redirect()->route('generalsetting.index')->with('success_message', 'Data telah tersimpan');
     }
 
     /**

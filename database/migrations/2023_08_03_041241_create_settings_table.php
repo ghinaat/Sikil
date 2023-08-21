@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('general_setting', function (Blueprint $table) {
-            $table->increments('id_general');
-            $table->enum('tahun_aktif', ['2020', '2021', '2022', '2023', '2024', '2025']);
+        Schema::create('setting', function (Blueprint $table) {
+            $table->increments('id_setting');
+            $table->string('tahun_aktif', 4 );
             $table->unsignedInteger('id_users');
             $table->enum('status', ['0', '1']);
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('general_settings');
+        Schema::dropIfExists('setting');
     }
 };

@@ -108,7 +108,8 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/generalsetting', [GeneralSettingController::class, 'index'])->name('generalsetting.index');
     Route::post('/generalsetting', [GeneralSettingController::class, 'store'])->name('generalsetting.store');
-    Route::put('/generalsetting/{id_general}', [GeneralSettingController::class, 'update'])->name('generalsetting.update')->middleware('isAdmin');
+    Route::put('/generalsetting/{id_setting}', [GeneralSettingController::class, 'update'])->name('generalsetting.update')->middleware('isAdmin');
+    Route::delete('/argeneralsettingsip/{id_setting}', [GeneralSettingController::class, 'destroy'])->name('generalsetting.destroy')->middleware('isAdmin');
 });
 
 // Route::get('/generalsetting', [GeneralSettingController::class, 'index'])->name('generalsetting.index')->middleware('auth');
@@ -147,3 +148,6 @@ Route::get('/cuti/{cuti}/edit', [CutiController::class, 'edit'])->name('cuti.edi
 Route::put('/cuti/update/{id}', [CutiController::class, 'update'])->name('cuti.update');
 Route::delete('/cuti/{cuti}', [CutiController::class, 'destroy'])->name('cuti.destroy');
 Route::get('/cuti/export', [CutiController::class, 'export'])->name('cuti.xlsx')->middleware('isAdmin');
+=======
+});
+

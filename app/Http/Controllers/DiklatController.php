@@ -26,7 +26,7 @@ class DiklatController extends Controller
 
         return view('diklat.index', [
             'diklat' => $diklat,
-            'users' => User::all(),
+            'users' =>where('is_deleted', '0')->get(),
             'jenisdiklat' => JenisDiklat::all(),
         ]);
     }
@@ -39,7 +39,7 @@ class DiklatController extends Controller
         return view('diklat.index', [
             'id_users' => $id_users,
             'diklat' => $diklat,
-            'users' => User::all(),
+            'users' =>where('is_deleted', '0')->get(),
             'jenisdiklat' => JenisDiklat::all(),
         ]);
     }

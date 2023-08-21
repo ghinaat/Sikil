@@ -9,9 +9,9 @@ class GeneralSetting extends Model
 {
     use HasFactory;
 
-    protected $table = 'general_setting';
+    protected $table = 'setting';
 
-    protected $primaryKey = 'id_general';
+    protected $primaryKey = 'id_setting';
 
     protected $fillable = [
         'tahun_aktif',
@@ -19,7 +19,7 @@ class GeneralSetting extends Model
         'status',
     ];
 
-    public function id_ppk()
+    public function users()
     {
         return $this->belongsTo(User::class, 'id_users', 'id_users');
     }

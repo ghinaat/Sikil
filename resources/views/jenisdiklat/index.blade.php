@@ -31,10 +31,11 @@
                                 <td>{{$key+1}}</td>
                                 <td>{{$jd->nama_jenis_diklat}}</td>
                                 @can('isAdmin')
-                            <td>
-                                @include('components.action-buttons', ['id' => $jd->id_jenis_diklat, 'key' => $key, 'route' => 'jenisdiklat'])
-                            </td>
-                            @endcan
+                                <td>
+                                    @include('components.action-buttons', ['id' => $jd->id_jenis_diklat, 'key' => $key,
+                                    'route' => 'jenisdiklat'])
+                                </td>
+                                @endcan
                             </tr>
                             @endforeach
                         </tbody>
