@@ -371,6 +371,11 @@ return [
                     'url' => '/generalsetting',
                     'can' => '',
                 ],
+                [
+                    'text' => 'Perizinan',
+                    'url' => '/ajuanperizinan',
+                    'can' => '',
+                ],
             ],
         ],
         [
