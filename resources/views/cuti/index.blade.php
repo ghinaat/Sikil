@@ -14,7 +14,7 @@
                         Tambah
                     </button>
                     <a href="{{ route('cuti.xlsx') }}" class="btn btn-primary">Unduh Excel</a>
-                </div>
+                </div>
                 @endcan
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-stripped" id="example2">
@@ -51,9 +51,6 @@
 
 @can('isAdmin')
 
-<!-- Modal -->
-<!-- modal Create -->
-@foreach($cutis as $cuti)
 <div class="modal fade" id="modal_form" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -99,11 +96,9 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
-</div>
-@endforeach
-<!-- /.modal -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 @foreach($cutis as $cuti)
 <div class="modal fade" id="editModal{{$cuti->id_cuti}}" role="dialog">
