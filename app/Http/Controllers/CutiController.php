@@ -2,64 +2,82 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cuti;
 use Illuminate\Http\Request;
+use App\Models\Cuti;
+use App\Models\User;
+use App\Exports\CutiExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CutiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function export(Request $request) 
+    {
+        // $cutis['data'][] = [
+        //     'user' => Cuti::all()->nama_pegawai,
+        //     'jabatan' => $jabatan->id_jabatan,
+        //     'cutis' => $cuti->jatah_cuti,
+        // ];
+
+        $cutis = Cuti::all();
+
+        return Excel::download(new CutiExport($cutis), 'cuti.xlsx');
+    }
     public function index()
     {
-        //
+        $cuti = Cuti::where('is_deleted', '0')->get();
+
+        $cutis = Cuti::all();
+        $users = User::all();
+
+        return view('cuti.index', compact('cutis', 'users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $users = User::all();
+
+        return view('cuti.create', compact('users'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_users' => 'required',
+            'jatah_cuti' => 'required|integer',
+        ]);
+
+        Cuti::create($request->all());
+
+        return redirect()->route('cuti.index')->with('success', 'Cuti berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Cuti $cuti)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Cuti $cuti)
     {
-        //
+        $users = User::all();
+        return view('cuti.edit', compact('cuti', 'users'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Cuti $cuti)
+    public function update(Request $request,  $id_cuti)
     {
-        //
+        $validatedData = $request->validate([
+            'id_users' => 'required',
+            'jatah_cuti' => 'required|integer',
+        ]);
+
+        $cuti = Cuti::find($id_cuti);
+
+        $cuti->id_users = $request->id_users;
+        $cuti->jatah_cuti = $request->jatah_cuti;
+
+        $cuti->save();
+
+        return redirect()->route('cuti.index')->with('success', 'Cuti berhasil diperbarui');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Cuti $cuti)
     {
-        //
+        $cuti->delete();
+
+        return redirect()->route('cuti.index')->with('success', 'Cuti berhasil dihapus');
     }
 }
