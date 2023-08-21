@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjuanPerizinanController;
 use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\DiklatController;
 use App\Http\Controllers\GeneralSettingController;
@@ -137,4 +138,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/presensi/import', [PresensiController::class, 'import'])->name('presensi.import')->middleware('isAdmin');
     Route::get('presensi/admin', [PresensiController::class, 'filterAdmin'])->name('presensi.filterAdmin')->middleware('isAdmin');
     Route::get('/presensi/admin/export', [PresensiController::class, 'filterDataAdmin'])->name('presensi.filterDataAdmin')->middleware('isAdmin');
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/ajuanperizinan', [AjuanPerizinanController::class, 'index'])->name('ajuanperizinan.index');
+    Route::post('/ajuanperizinan', [AjuanPerizinanController::class, 'store'])->name('ajuanperizinan.store');
+    Route::put('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'update'])->name('ajuanperizinan.update');
+    Route::delete('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'destroy'])->name('ajuanperizinan.destroy');
 });
