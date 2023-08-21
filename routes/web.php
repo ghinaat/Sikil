@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArsipController;
+use App\Http\Controllers\CutiController;
 use App\Http\Controllers\DiklatController;
 use App\Http\Controllers\GeneralSettingController;
 use App\Http\Controllers\HomeController;
@@ -139,3 +140,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('presensi/admin', [PresensiController::class, 'filterAdmin'])->name('presensi.filterAdmin')->middleware('isAdmin');
     Route::get('/presensi/admin/export', [PresensiController::class, 'filterDataAdmin'])->name('presensi.filterDataAdmin')->middleware('isAdmin');
 });
+
+Route::get('/cuti', [CutiController::class, 'index'])->name('cuti.index');
+Route::get('/cuti/create', [CutiController::class, 'create'])->name('cuti.create');
+Route::post('/cuti', [CutiController::class, 'store'])->name('cuti.store');
+Route::get('/cuti/{cuti}/edit', [CutiController::class, 'edit'])->name('cuti.edit');
+Route::put('/cuti/update/{id}', [CutiController::class, 'update'])->name('cuti.update');
+Route::delete('/cuti/{cuti}', [CutiController::class, 'destroy'])->name('cuti.destroy');
+Route::get('/cuti/export', [CutiController::class, 'export'])->name('cuti.xlsx')->middleware('isAdmin');
+=======
+});
+
