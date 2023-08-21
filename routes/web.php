@@ -107,7 +107,8 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/generalsetting', [GeneralSettingController::class, 'index'])->name('generalsetting.index');
     Route::post('/generalsetting', [GeneralSettingController::class, 'store'])->name('generalsetting.store');
-    Route::put('/generalsetting/{id_general}', [GeneralSettingController::class, 'update'])->name('generalsetting.update')->middleware('isAdmin');
+    Route::put('/generalsetting/{id_setting}', [GeneralSettingController::class, 'update'])->name('generalsetting.update')->middleware('isAdmin');
+    Route::delete('/argeneralsettingsip/{id_setting}', [GeneralSettingController::class, 'destroy'])->name('generalsetting.destroy')->middleware('isAdmin');
 });
 
 // Route::get('/generalsetting', [GeneralSettingController::class, 'index'])->name('generalsetting.index')->middleware('auth');
