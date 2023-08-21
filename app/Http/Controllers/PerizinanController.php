@@ -10,6 +10,16 @@ class PerizinanController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function indexStaff()
+    {
+        $user = Auth::user();
+        $perizinan = $user->perizinan()->get();
+        return view('izin.staff', [
+            'pendidikan' => $pendidikan,
+            'user' => User::where('is_deleted', '0')->get(),
+        ]);
+    }
+    
     public function index()
     {
         //

@@ -9,7 +9,16 @@ class Cuti extends Model
 {
     use HasFactory;
 
-    protected $primarykey = 'id_cuti';
+    protected $primaryKey = 'id_cuti';
 
     protected $table = 'cuti';
+
+    protected $fillable = ['id_users', 'jatah_cuti', 'is_deleted'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_users');
+    }
 }
+
+

@@ -413,6 +413,11 @@ return [
                     'url' => '/presensi/admin',
                     'can' => '',
                 ],
+                [
+                    'text' => 'Jatah Cuti',
+                    'url' => '/cuti',
+                    'can' => '',
+                ],
             ],
         ],
     ],

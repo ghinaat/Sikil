@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AjuanPerizinanController;
 use App\Http\Controllers\ArsipController;
+use App\Http\Controllers\CutiController;
 use App\Http\Controllers\DiklatController;
 use App\Http\Controllers\GeneralSettingController;
 use App\Http\Controllers\HomeController;
@@ -108,7 +109,8 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/generalsetting', [GeneralSettingController::class, 'index'])->name('generalsetting.index');
     Route::post('/generalsetting', [GeneralSettingController::class, 'store'])->name('generalsetting.store');
-    Route::put('/generalsetting/{id_general}', [GeneralSettingController::class, 'update'])->name('generalsetting.update')->middleware('isAdmin');
+    Route::put('/generalsetting/{id_setting}', [GeneralSettingController::class, 'update'])->name('generalsetting.update')->middleware('isAdmin');
+    Route::delete('/argeneralsettingsip/{id_setting}', [GeneralSettingController::class, 'destroy'])->name('generalsetting.destroy')->middleware('isAdmin');
 });
 
 // Route::get('/generalsetting', [GeneralSettingController::class, 'index'])->name('generalsetting.index')->middleware('auth');
@@ -146,3 +148,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'update'])->name('ajuanperizinan.update');
     Route::delete('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'destroy'])->name('ajuanperizinan.destroy');
 });
+
+Route::get('/cuti', [CutiController::class, 'index'])->name('cuti.index');
+Route::get('/cuti/create', [CutiController::class, 'create'])->name('cuti.create');
+Route::post('/cuti', [CutiController::class, 'store'])->name('cuti.store');
+Route::get('/cuti/{cuti}/edit', [CutiController::class, 'edit'])->name('cuti.edit');
+Route::put('/cuti/update/{id}', [CutiController::class, 'update'])->name('cuti.update');
+Route::delete('/cuti/{cuti}', [CutiController::class, 'destroy'])->name('cuti.destroy');
+Route::get('/cuti/export', [CutiController::class, 'export'])->name('cuti.xlsx')->middleware('isAdmin');
+
