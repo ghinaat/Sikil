@@ -33,7 +33,7 @@
                                 <td>{{$key+1}}</td>
                                 <td>{{$p->jenis_perizinan}}</td>
                                 <td>{{$p->tgl_ajuan}}</td>
-                                <td>{{$p->tgl_absen_awal}}</td>
+                                <td>{{$p->tgl_absen_awal - tgl_absen_akhir}}</td>
                                 <td>{{$p->keterangan}}</td>
                                 <td>{{$p->file_perizinan}}</td>
                                 <td>{{$p->status_izin_atasan}}</td>
@@ -52,7 +52,7 @@
     </div>
 </div>
 
-@can('isAdmin')
+
 
 <!-- Modal -->
 <!-- Bootstrap modal Create -->
@@ -73,27 +73,31 @@
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
-                                <input type="hidden" name="id_atasan" value="{{ Auth::user()->id_atasan}}">
+                                <input type="hidden" id="tgl_ajuan" name="tgl_ajuan" value="{{ old('tgl_ajuan') }}">
                                 <div class="form-group">
-                                    <label for="tgl_mulai" class="form-label">Tanggal Mulai Acara</label>
+                                    <label for="tgl_absen_awal" class="form-label">Tanggal Awal Izin </label>
                                     <div class="form-input">
-                                        <input type="date" class="form-control @error('tgl_mulai') is-invalid @enderror"
-                                            id="tgl_mulai" name="tgl_mulai" value="{{ old('tgl_mulai')}}">
-                                        @error('tgl_mulai') <span class="textdanger">{{$message}}</span> @enderror
+                                        <input type="date"
+                                            class="form-control @error('tgl_absen_awal') is-invalid @enderror"
+                                            id="tgl_absen_awal" name="tgl_absen_awal"
+                                            value="{{ old('tgl_absen_awal')}}">
+                                        @error('tgl_absen_awal') <span class="textdanger">{{$message}}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="tgl_mulai" class="form-label">Tanggal Mulai Acara</label>
+                                    <label for="tgl_absen_akhir" class="form-label">Tanggal Akhir Izin</label>
                                     <div class="form-input">
-                                        <input type="date" class="form-control @error('tgl_mulai') is-invalid @enderror"
-                                            id="tgl_mulai" name="tgl_mulai" value="{{ old('tgl_mulai')}}">
-                                        @error('tgl_mulai') <span class="textdanger">{{$message}}</span> @enderror
+                                        <input type="date"
+                                            class="form-control @error('tgl_absen_akhir') is-invalid @enderror"
+                                            id="tgl_absen_akhir" name="tgl_absen_akhir"
+                                            value="{{ old('tgl_absen_akhir')}}">
+                                        @error('tgl_absen_akhir') <span class="textdanger">{{$message}}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-6" for="id_users">Atasan Langsung</label>
-                                    <select id="id_users" name="id_users"
-                                        class="form-select @error('id_users') is-invalid @enderror">
+                                    <label class="control-label col-md-6" for="id_atasan">Atasan Langsung</label>
+                                    <select id="id_atasan" name="id_atasan"
+                                        class="form-select @error('id_atasan') is-invalid @enderror">
                                         @foreach ($user as $us)
                                         <option value="{{ $us->id_users }}" @if( old('id_users')==$us->id_users )
                                             selected @endif">
@@ -108,12 +112,20 @@
                                     @error('keterangan') <span class="text-danger">{{$message}}</span> @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="file_kerja">Surat Pengalaman</label>
+                                    @foreach ($perizinan as $p)
+                                    <label for="ppk">ppk</label>
+                                    <input type="text" class="form-control @error('ppk') is-invalid @enderror" id="ppk"
+                                        name="ppk" value=" {{ $p->user->setting->id }}" @endforeach">
+                                    @error('ppk') <span class="text-danger">{{$message}}</span> @enderror
+                                    @endforeach
+                                </div>
+                                <div class="form-group">
+                                    <label for="file_perizinan">Unggah Lampiran</label>
                                     <small class="form-text text-muted">Allow file extensions : .jpeg
                                         .jpg .png .pdf
                                         .docx</small>
-                                    <input type="file" name="file_kerja" id="file_kerja" class="form-control">
-                                    @error('file_kerja')
+                                    <input type="file" name="file_perizinan" id="file_perizinan" class="form-control">
+                                    @error('file_perizinan')
                                     <span class="textdanger">{{$message}}</span> @enderror
                                 </div>
                             </div>
@@ -130,7 +142,7 @@
 </div><!-- /.modal -->
 
 <!-- Bootstrap modal Edit -->
-@foreach($jenisdiklat as $p)
+<!-- @foreach($jenisdiklat as $p)
 <div class="modal fade" id="editModal{{$p->id_jenis_diklat}}" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -174,9 +186,8 @@
         </div>
     </div>
 </div>
-@endforeach
+@endforeach -->
 
-@endcan
 
 @stop
 @push('js')
@@ -196,5 +207,14 @@ function notificationBeforeDelete(event, el) {
         $("#delete-form").submit();
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the current date and time
+    var currentDate = new Date();
+    var formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+
+    // Populate the hidden input field with the current date and time
+    document.getElementById('tgl_ajuan').value = formattedDate;
+});
 </script>
 @endpush

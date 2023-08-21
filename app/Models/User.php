@@ -62,14 +62,19 @@ class User extends Authenticatable
         return $this->hasMany(Diklat::class, 'id_users', 'id_users');
     }
 
-    public function generalsetting()
+    public function setting()
     {
-        return $this->hasMany(GeneralSetting::class, 'id_users', 'id_users');
+        return $this->hasOne(GeneralSetting::class);
     }
 
     public function presensi()
     {
         return $this->hasMany(Presensi::class, 'kode_finger', 'kode_finger');
+    }
+
+    public function perizinan()
+    {
+        return $this->hasMany(Perizinan::class, 'id_users', 'id_atasan');
     }
 
     protected $primaryKey = 'id_users';

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Perizinan;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PerizinanController extends Controller
@@ -13,9 +14,9 @@ class PerizinanController extends Controller
     public function indexStaff()
     {
         $user = Auth::user();
-        $perizinan = $user->perizinan()->get();
+        $perizinan = $user->perizinan()->with('user.setting')->get(); // Gunakan '()' setelah perizinan
         return view('izin.staff', [
-            'pendidikan' => $pendidikan,
+            'perizinan' => $perizinan,
             'user' => User::where('is_deleted', '0')->get(),
         ]);
     }
@@ -39,6 +40,34 @@ class PerizinanController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function Pengajuan(Request $request)
+    {
+          //Menyimpan Data User Baru
+        $request->validate([
+            'tgl_absen_awal' => 'required',
+            'tgl_absen_akhir' => 'required',
+            'id_atasan' => 'required',
+            'keterangan' => 'required',
+            'file_perizinan' => 'required|mimes:pdf,doc,docx,png,jpg,jpeg',
+        ]);
+
+        $perizinan = new Perizinan();
+        
+        $file = $request->file('file_perizinan');
+        $fileName = Str::random(20).'.'.$file->getClientOriginalExtension();
+        $file->storeAs('perizinan', $fileName, 'public');
+        
+        $perizinan->tgl_absen_awal = $request->tgl_absen_awal;
+        $perizinan->tgl_absen_akhir = $request->tgl_absen_akhir;
+        $perizinan->id_atasan = $request->id_atasan;
+        $perizinan->keterangan = $request->keterangan;
+        $perizinan->file_perizinan = $fileName;
+
+        $perizinan->save();
+
+        return redirect()->route('izin.index')->with('success_message', 'Data telah tersimpan');
     }
 
     /**
