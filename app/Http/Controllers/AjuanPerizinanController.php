@@ -143,9 +143,10 @@ class AjuanPerizinanController extends Controller
             $ajuanperizinan->alasan_ditolak_atasan = $request->alasan_ditolak_atasan;
         }
         
-        if($request->alasan_ditolak_ppk === '0'){
+        if($request->status_izin_ppk === '0'){
             $ajuanperizinan->alasan_ditolak_ppk = $request->alasan_ditolak_ppk;
         }
+        // dd($request, $ajuanperizinan);
         
         if ($request->hasFile('file_perizinan')) {
             // Menghapus file file_perizinan sebelumnya
