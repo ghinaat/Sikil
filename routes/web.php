@@ -156,4 +156,3 @@ Route::get('/cuti/{cuti}/edit', [CutiController::class, 'edit'])->name('cuti.edi
 Route::put('/cuti/update/{id}', [CutiController::class, 'update'])->name('cuti.update');
 Route::delete('/cuti/{cuti}', [CutiController::class, 'destroy'])->name('cuti.destroy');
 Route::get('/cuti/export', [CutiController::class, 'export'])->name('cuti.xlsx')->middleware('isAdmin');
-
