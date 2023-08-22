@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('_password_')->nullable();
             $table->unsignedInteger('id_jabatan')->nullable();
-            $table->enum('level', ['admin', 'kadiv', 'dda', 'ddo', 'staf']);
+            $table->enum('level', ['admin', 'kadiv', 'dda', 'ddo', 'staf', 'ppk', 'bod']);
             $table->enum('is_deleted', ['0', '1'])->default('0');
             $table->foreign('id_jabatan')->references('id_jabatan')->on('jabatan')->onDelete('cascade');
             $table->unsignedInteger('kode_finger')->nullable()->index();

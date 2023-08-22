@@ -9,7 +9,7 @@ class Perizinan extends Model
 {
     use HasFactory;
 
-    protected $primarykey = 'id_perizinan';
+    protected $primaryKey = 'id_perizinan';
 
     protected $table = 'perizinan';
     protected $fillable = [
@@ -22,7 +22,9 @@ class Perizinan extends Model
         'keterangan',
         'file_perizinan',
         'status_izin_atasan',
+        'alasan_ditolak_atasan',
         'status_izin_ppk',
+        'alasan_ditolak_ppk',
     ];
     public function user()
     {
@@ -37,11 +39,12 @@ class Perizinan extends Model
 
     protected static function boot()
     {
-    parent::boot();
-
-    static::creating(function ($model) {
-        $model->tgl_ajuan = now(); // Isi dengan tanggal yang sesuai
-    });
+        parent::boot();
+    
+        static::creating(function ($model) {
+            $model->tgl_ajuan = now();
+        });
     }
-
+    
+    
 }
