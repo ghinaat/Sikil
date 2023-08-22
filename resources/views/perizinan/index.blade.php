@@ -189,27 +189,27 @@
                                                 <div class="form-group">
                                                     <label for="status_izin_atasan">Persetujuan Atasan</label>
                                                     <div class="input">
-                                                        <input type="radio" name="status_izin_atasan" value="1">  Disetujui<br>
-                                                        <input type="radio" name="status_izin_atasan" value="0"> Ditolak<br> 
+                                                        <input type="radio" name="status_izin_atasan" value="1" @if ($ap->status_izin_atasan === '1') checked @endif>  Disetujui<br>
+                                                        <input type="radio" name="status_izin_atasan" value="0" @if ($ap->status_izin_atasan === '0') checked @endif> Ditolak<br> 
                                                     </div>
                                                 </div>
                                                 <div id="alasan_ditolak_atasan" style="display: none;" class="form-group">
                                                     <label for="alasan_ditolak_atasan">Alasan Ditolak</label>
-                                                    <textarea name="alasan_ditolak_atasan" id="alasan_ditolak_atasan" cols="30" rows="3" class="form-control"></textarea>
+                                                    <textarea name="alasan_ditolak_atasan" id="alasan_ditolak_atasan" cols="30" rows="3" class="form-control">{{ $ap->alasan_ditolak_atasan }}</textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="status_izin_ppk">Persetujuan PPK</label>
                                                     <div class="input">
-                                                        <input type="radio" name="status_izin_ppk" value="1">
+                                                        <input type="radio" name="status_izin_ppk" value="1" @if ($ap->status_izin_ppk === '1') checked @endif>
                                                         Disetujui<br>
-                                                        <input type="radio" name="status_izin_ppk" value="0">
+                                                        <input type="radio" name="status_izin_ppk" value="0" @if ($ap->status_izin_ppk === '0') checked @endif>
                                                         Ditolak<br>
                                                     </div>
                                                 </div>
                                                 <div id="alasan_ditolak_ppk" style="display: none;" class="form-group">
                                                     <label for="alasan_ditolak_ppk">Alasan Ditolak</label>
                                                     <textarea name="alasan_ditolak_ppk" id="alasan_ditolak_ppk"
-                                                        cols="30" rows="3" class="form-control"></textarea>
+                                                        cols="30" rows="3" class="form-control">{{ $ap->alasan_ditolak_ppk }}</textarea>
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
@@ -342,41 +342,21 @@
     @csrf
 </form>
 <script>
-function setupAlasanDitolakForm(formName, radioValue, alasanDivId) {
-    const radioElement = document.querySelector(`input[name="${formName}"][value="${radioValue}"]`);
-    const alasanDiv = document.getElementById(alasanDivId);
 
-    radioElement.addEventListener('change', function() {
-        if (this.value === radioValue) {
-            alasanDiv.style.display = 'block';
-        } else {
-            alasanDiv.style.display = 'none';
-        }
-    });
-}
-
-function setupFormRadioGroup(formName, alasanDivId) {
-    const radioElements = document.querySelectorAll(`input[name="${formName}"]`);
-    const alasanDiv = document.getElementById(alasanDivId);
-
-    radioElements.forEach(radioElement => {
-        radioElement.addEventListener('change', function() {
-            if (this.value === '0') {
-                alasanDiv.style.display = 'block';
-            } else {
-                alasanDiv.style.display = 'none';
-            }
-        });
-    });
-}
-
-// Setup for Form Atasan
-setupAlasanDitolakForm('status_izin_atasan', '0', 'alasan_ditolak_atasan');
-setupFormRadioGroup('status_izin_atasan', 'alasan_ditolak_atasan');
-
-// Setup for Form PPK
-setupAlasanDitolakForm('status_izin_ppk', '0', 'alasan_ditolak_ppk');
-setupFormRadioGroup('status_izin_ppk', 'alasan_ditolak_ppk');
+document.querySelectorAll('input[type=radio][name=status_izin_atasan]').forEach(input => input.addEventListener('change', function() {
+    if (this.value == '0') {
+        this.parentNode.parentNode.parentNode.querySelector('#alasan_ditolak_atasan').style.display = 'block';
+    } else {
+        this.parentNode.parentNode.parentNode.querySelector('#alasan_ditolak_atasan').style.display = 'none';
+    }
+}));
+document.querySelectorAll('input[type=radio][name=status_izin_ppk]').forEach(input => input.addEventListener('change', function() {
+    if (this.value == '0') {
+        this.parentNode.parentNode.parentNode.querySelector('#alasan_ditolak_ppk').style.display = 'block';
+    } else {
+        this.parentNode.parentNode.parentNode.querySelector('#alasan_ditolak_ppk').style.display = 'none';
+    }
+}));
 </script>
 <script>
 $('#example2').DataTable({
