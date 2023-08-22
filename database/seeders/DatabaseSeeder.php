@@ -27,11 +27,23 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Jabatan::create([
-            'nama_jabatan' => 'Direktur',
+            'nama_jabatan' => 'kadiv',
         ]);
 
         Jabatan::create([
-            'nama_jabatan' => 'Staf',
+            'nama_jabatan' => 'dda',
+        ]);
+
+        Jabatan::create([
+            'nama_jabatan' => 'staf',
+        ]);
+
+        Jabatan::create([
+            'nama_jabatan' => 'ppk',
+        ]);
+
+        Jabatan::create([
+            'nama_jabatan' => 'bod',
         ]);
 
         TingkatPendidikan::create([
@@ -93,14 +105,37 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
-            'nama_pegawai' => 'ghina',
-            'email' => 'admin@gmail.com',
+            'nama_pegawai' => 'kadiv',
+            'email' => 'kadiv@kadiv.com',
             'password' => '12345678',
             '_password_' => '12345678',
-            'level' => 'admin',
-            'kode_finger' => '122312',
-            'id_jabatan' => '1',
-            'is_deleted' => '1',
+            'level' => 'Kadiv',
+            'kode_finger' => '989898',
+            'id_jabatan' => '2',
+            'is_deleted' => '0',
+        ]);
+
+        User::create([
+            'nama_pegawai' => 'bod',
+            'email' => 'bod@bod.com',
+            'password' => '12345678',
+            '_password_' => '12345678',
+            'level' => 'bod',
+            'kode_finger' => '919898',
+            'id_jabatan' => '6',
+            'is_deleted' => '0',
+        ]);
+
+        
+        User::create([
+            'nama_pegawai' => 'ppk',
+            'email' => 'ppk@ppk.com',
+            'password' => '12345678',
+            '_password_' => '12345678',
+            'level' => 'ppk',
+            'kode_finger' => '983898',
+            'id_jabatan' => '6',
+            'is_deleted' => '0',
         ]);
 
         User::create([
@@ -110,7 +145,7 @@ class DatabaseSeeder extends Seeder
             '_password_' => '12345678',
             'level' => 'staf',
             'kode_finger' => '545621',
-            'id_jabatan' => '2',
+            'id_jabatan' => '4',
             'is_deleted' => '0',
         ]);
 
