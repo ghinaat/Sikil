@@ -43,7 +43,8 @@
                                 @endif
                                 <td id={{$key+1}}>{{$ap->jenis_perizinan}}</td>
                                 <td id={{$key+1}}>{{$ap->tgl_ajuan}}</td>
-                                <td id={{$key+1}}>{{$ap->tgl_absen_awal}} - {{$ap->tgl_absen_akhir}}</td>
+                                <td id={{$key+1}}>{{date_format( new DateTime($ap->tgl_absen_awal), 'd F Y')}} s.d.
+                                    {{ date_format( new DateTime($ap->tgl_absen_akhir), 'd F Y')}}</td>
                                 <td id={{$key+1}}>{{$ap->keterangan}}</td>
                                 <td id={{$key+1}}>
                                     <a href="{{ asset('/storage/file_perizinan/'. $ap->file_perizinan) }}"
@@ -74,13 +75,162 @@
                                 </td>
                                 @endcan
                             </tr>
-                            @endforeach
-                            <!-- Edit modal -->
-                    </table>
+                            <div class="modal fade" id="editModal{{$ap->id_perizinan}}" tabindex="-1" role="dialog"
+                                aria-labelledby="editModalLabel{{$ap->id_perizinan}}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editModalLabel">Edit Diklat</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('ajuanperizinan.update', $ap->id_perizinan) }}"
+                                                enctype="multipart/form-data" method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="form-group">
+                                                    <label for="tgl_absen_awal" class='form-label'>Tanggal Awal
+                                                        Izin</label>
+                                                    <div class="form-input">
+                                                        <input type="date" class="form-control"
+                                                            class="form-control @error('tgl_absen_awal') is-invalid @enderror"
+                                                            id="tgl_absen_awal" placeholder="Nama Diklat"
+                                                            name="tgl_absen_awal"
+                                                            value="{{$ap -> tgl_absen_awal ?? old('tgl_absen_awal')}}">
+                                                        @error('tgl_absen_awal') <span
+                                                            class="textdanger">{{$message}}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="tgl_absen_akhir" class='form-label'>Tanggal Akhir
+                                                        Izin</label>
+                                                    <div class="form-input">
+                                                        <input type="date" class="form-control"
+                                                            class="form-control @error('tgl_absen_akhir') is-invalid @enderror"
+                                                            id="tgl_absen_akhir" placeholder="Nama Diklat"
+                                                            name="tgl_absen_akhir"
+                                                            value="{{$ap -> tgl_absen_akhir ?? old('tgl_absen_akhir')}}">
+                                                        @error('tgl_absen_akhir') <span
+                                                            class="textdanger">{{$message}}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="jenis_perizinan">Jenis Perizinan</label>
+                                                    <select
+                                                        class="form-control  @error('jenis_perizinan') is-invalid @enderror"
+                                                        id="jenis_perizinan" name="jenis_perizinan">
+                                                        <option value="I" @if(old('jenis_perizinan')=='I' )selected
+                                                            @endif>Izin</option>
+                                                        <option value="DL" @if(old('jenis_perizinan')=='DL' )selected
+                                                            @endif>Dinas Luar</option>
+                                                        <option value="S" @if(old('jenis_perizinan')=='S' )selected
+                                                            @endif>Sakit</option>
+                                                        <option value="CS" @if(old('jenis_perizinan')=='CS' )selected
+                                                            @endif>Cuti Sakit</option>
+                                                        <option value="Prajab" @if(old('jenis_perizinan')=='Prajab'
+                                                            )selected @endif>Prajab</option>
+                                                        <option value="CT" @if(old('jenis_perizinan')=='CT' )selected
+                                                            @endif>Cuti Tahunan</option>
+                                                        <option value="CM" @if(old('jenis_perizinan')=='CM' )selected
+                                                            @endif>Cuti Melahirkan</option>
+                                                        <option value="CAP" @if(old('jenis_perizinan')=='CAP' )selected
+                                                            @endif>CAP</option>
+                                                        <option value="CH" @if(old('jenis_perizinan')=='CH' )selected
+                                                            @endif>Cuti Haji</option>
+                                                        <option value="CB" @if(old('jenis_perizinan')=='CB' )selected
+                                                            @endif>Cuti Bersama</option>
+                                                        <option value="A" @if(old('jenis_perizinan')=='A' )selected
+                                                            @endif>Alpha</option>
+                                                        <option value="TB" @if(old('jenis_perizinan')=='TB' )selected
+                                                            @endif>Tugas Belajar</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="keterangan" class="form-label">Keterangan</label>
+                                                    <textarea rows="5"
+                                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                                        id="keterangan" placeholder="keterangan"
+                                                        name="keterangan">{{$ap -> keterangan ?? old('keterangan')}}</textarea
+                                                        @error('keterangan') <span class="textdanger">{{$message}}</span>
+                                                        @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-6" for="id_atasan">Atasan Langsung</label>
+                                                    <select id="id_atasan" name="id_atasan"
+                                                        class="form-control @error('id_atasan') is-invalid @enderror">
+                                                        @foreach ($users as $us)
+                                                        <option value="{{ $us->id_users }}" @if(
+                                                            old('id_users')==$us->id_users
+                                                            ) selected @endif>
+                                                            {{ $us->nama_pegawai }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="file_perizinan">Unggah Lampiran</label>
+                                                    <small class="form-text text-muted">Allow file extensions :.jpeg .jpg .png .pdf .docx
+                                                        .docx</small>
+                                                    @if ($ap->file_perizinan)
+                                                    <p>Previous File: <a
+                                                            href="{{ asset('/storage/file_perizinan/' . $ap->file_perizinan) }}"
+                                                            target="_blank">{{ $ap->file_perizinan }}</a></p>
+                                                    @endif
+                                                    <input type="file" class="form-control" id="file_perizinan"
+                                                        name="file_perizinan"
+                                                        @error('file_perizinan') <span class="invalid"
+                                                        role="alert">{{$message}}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status_izin_atasan">Persetujuan Atasan</label>
+                                                    <div class="input">
+                                                        <input type="radio" name="status_izin_atasan" value="1">  Disetujui<br>
+                                                        <input type="radio" name="status_izin_atasan" value="0"> Ditolak<br> 
+                                                    </div>
+                                                </div>
+                                                <div id="alasan_ditolak_atasan" style="display: none;" class="form-group">
+                                                    <label for="alasan_ditolak_atasan">Alasan Ditolak</label>
+                                                    <textarea name="alasan_ditolak_atasan" id="alasan_ditolak_atasan" cols="30" rows="3" class="form-control"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status_izin_ppk">Persetujuan PPK</label>
+                                                    <div class="input">
+                                                        <input type="radio" name="status_izin_ppk" value="1">
+                                                        Disetujui<br>
+                                                        <input type="radio" name="status_izin_ppk" value="0">
+                                                        Ditolak<br>
+                                                    </div>
+                                                </div>
+                                                <div id="alasan_ditolak_ppk" style="display: none;" class="form-group">
+                                                    <label for="alasan_ditolak_ppk">Alasan Ditolak</label>
+                                                    <textarea name="alasan_ditolak_ppk" id="alasan_ditolak_ppk"
+                                                        cols="30" rows="3" class="form-control"></textarea>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                            <a href="{{route('ajuanperizinan.index')}}" class="btn btn-danger">
+                                                Batal
+                                            </a>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                 </div>
+                @endforeach
+                <!-- Edit modal -->
+                </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 </div>
 <!-- Modal -->
 <!-- Bootstrap modal Create -->
@@ -122,7 +272,7 @@
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="jenis_perizinan">Jenis Ajuan</label>
+                                <label for="jenis_perizinan">Jenis Perizinan</label>
                                 <select class="form-control  @error('jenis_perizinan') is-invalid @enderror"
                                     id="jenis_perizinan" name="jenis_perizinan">
                                     <option value="I">Izin</option>
@@ -148,7 +298,8 @@
                                 <label for="id_atasan">Atasan Langsung</label>
                                 <select id="id_atasan" name="id_atasan" class="form-control ">
                                     @foreach ($users as $us)
-                                    <option value="{{ $us->id_users }}" @if( old('id_users')==$us->id_users )selected
+                                    <option value="{{ $us->id_users }}" @if( old('id_users')==$us->
+                                        id_users )selected
                                         @endif>
                                         {{ $us->nama_pegawai }}</option>
                                     @endforeach
@@ -161,8 +312,8 @@
  -->
                             <div class="form-group">
                                 <label for="file_perizinan">Unggah Lampiran</label>
-                                <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf
-                                    .docx</small>
+                                <small class="form-text text-muted">Allow file extensions :
+                                    .jpeg .jpg .png .pdf .docx</small>
                                 <input type="file" class="form-control" id="file_perizinan"
                                     enctype="multipart/form-data" name="file_perizinan" @error('file_perizinan') <span
                                     class="invalid" role="alert">{{$message}}</span>
@@ -190,6 +341,43 @@
     @method('delete')
     @csrf
 </form>
+<script>
+function setupAlasanDitolakForm(formName, radioValue, alasanDivId) {
+    const radioElement = document.querySelector(`input[name="${formName}"][value="${radioValue}"]`);
+    const alasanDiv = document.getElementById(alasanDivId);
+
+    radioElement.addEventListener('change', function() {
+        if (this.value === radioValue) {
+            alasanDiv.style.display = 'block';
+        } else {
+            alasanDiv.style.display = 'none';
+        }
+    });
+}
+
+function setupFormRadioGroup(formName, alasanDivId) {
+    const radioElements = document.querySelectorAll(`input[name="${formName}"]`);
+    const alasanDiv = document.getElementById(alasanDivId);
+
+    radioElements.forEach(radioElement => {
+        radioElement.addEventListener('change', function() {
+            if (this.value === '0') {
+                alasanDiv.style.display = 'block';
+            } else {
+                alasanDiv.style.display = 'none';
+            }
+        });
+    });
+}
+
+// Setup for Form Atasan
+setupAlasanDitolakForm('status_izin_atasan', '0', 'alasan_ditolak_atasan');
+setupFormRadioGroup('status_izin_atasan', 'alasan_ditolak_atasan');
+
+// Setup for Form PPK
+setupAlasanDitolakForm('status_izin_ppk', '0', 'alasan_ditolak_ppk');
+setupFormRadioGroup('status_izin_ppk', 'alasan_ditolak_ppk');
+</script>
 <script>
 $('#example2').DataTable({
     "responsive": true,

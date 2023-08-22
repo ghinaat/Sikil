@@ -87,6 +87,7 @@ class DatabaseSeeder extends Seeder
             'password' => '12345678',
             '_password_' => '12345678',
             'level' => 'admin',
+            'kode_finger' => '989898',
             'id_jabatan' => '1',
             'is_deleted' => '0',
         ]);
@@ -97,6 +98,7 @@ class DatabaseSeeder extends Seeder
             'password' => '12345678',
             '_password_' => '12345678',
             'level' => 'admin',
+            'kode_finger' => '122312',
             'id_jabatan' => '1',
             'is_deleted' => '1',
         ]);
@@ -107,6 +109,7 @@ class DatabaseSeeder extends Seeder
             'password' => '12345678',
             '_password_' => '12345678',
             'level' => 'staf',
+            'kode_finger' => '545621',
             'id_jabatan' => '2',
             'is_deleted' => '0',
         ]);
