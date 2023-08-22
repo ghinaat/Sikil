@@ -314,7 +314,6 @@ return [
             'icon' => 'fas fa-home',
             'text' => 'User Management',
             'submenu' => [
-
                 [
                     'text' => 'Presensi',
                     'url' => '/presensi',
@@ -367,14 +366,9 @@ return [
                     'can' => '',
                 ],
                 [
-                    'text' => 'General Setting',
-                    'url' => '/generalsetting',
-                    'can' => '',
-                ],
-                [
-                    'text' => 'Perizinan',
+                    'text' => 'Kelola Perizinan',
                     'url' => '/ajuanperizinan',
-                    'can' => '',
+                    'can' => ['isBod', 'isPpk'],
                 ],
             ],
         ],
@@ -417,6 +411,16 @@ return [
                     'text' => 'Jatah Cuti',
                     'url' => '/cuti',
                     'can' => '',
+                ],
+                [
+                    'text' => 'General Setting',
+                    'url' => '/generalsetting',
+                    'can' => 'isAdmin',
+                ],
+                [
+                    'text' => 'Kelola Perizinan',
+                    'url' => '/ajuanperizinan',
+                    'can' => 'isAdmin',
                 ],
             ],
         ],
