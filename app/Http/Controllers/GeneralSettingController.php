@@ -39,7 +39,7 @@ class GeneralSettingController extends Controller
         $request->validate([
             'tahun_aktif' => 'required',
             'id_users' => 'required',
-            'status' => 'required',
+            // 'status' => 'required',
         ]);
 
         $generalsetting = new GeneralSetting();
@@ -49,6 +49,9 @@ class GeneralSettingController extends Controller
         $generalsetting->status = $request->status;
 
         $generalsetting->save();
+
+        GeneralSetting::where('id_setting', '!=', $generalsetting->id_setting)
+                      ->update(['status' => '0']);
 
         return redirect()->route('generalsetting.index')->with('success_message', 'Data telah tersimpan');
     }

@@ -64,26 +64,22 @@ class User extends Authenticatable
 
     public function setting()
     {
-        return $this->hasOne(GeneralSetting::class);
+        return $this->hasOne(GeneralSetting::class, 'id_users', 'id_users');
     }
-
+    
     public function presensi()
     {
         return $this->hasMany(Presensi::class, 'kode_finger', 'kode_finger');
     }
     public function ajuanperizinan()
     {
-        return $this->hasMany(Perizinan::class, 'id_users', 'id_atasan');
+        return $this->hasMany(Perizinan::class, 'id_atasan', 'id_users');
     }
     public function ajuanperizinans()
     {
         return $this->hasMany(Perizinan::class, 'kode_finger', 'kode_finger');
     }
 
-    public function perizinan()
-    {
-        return $this->hasMany(Perizinan::class, 'id_users', 'id_atasan');
-    }
 
     protected $primaryKey = 'id_users';
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AjuanPerizinanController;
+use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\DiklatController;
@@ -149,6 +150,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'destroy'])->name('ajuanperizinan.destroy');
 });
 
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/perizinan', [PerizinanController::class, 'indexStaff'])->name('perizinan.index');
+    Route::post('/perizinan', [PerizinanController::class, 'pengajuan'])->name('perizinan.pengajuan');
+    Route::put('/perizinan/{id_perizinan}', [PerizinanController::class, 'update'])->name('perizinan.update');
+    Route::delete('/perizinan/{id_perizinan}', [PerizinanController::class, 'destroy'])->name('perizinan.destroy');
+});
+
 Route::get('/cuti', [CutiController::class, 'index'])->name('cuti.index');
 Route::get('/cuti/create', [CutiController::class, 'create'])->name('cuti.create');
 Route::post('/cuti', [CutiController::class, 'store'])->name('cuti.store');
@@ -156,4 +165,3 @@ Route::get('/cuti/{cuti}/edit', [CutiController::class, 'edit'])->name('cuti.edi
 Route::put('/cuti/update/{id}', [CutiController::class, 'update'])->name('cuti.update');
 Route::delete('/cuti/{cuti}', [CutiController::class, 'destroy'])->name('cuti.destroy');
 Route::get('/cuti/export', [CutiController::class, 'export'])->name('cuti.xlsx')->middleware('isAdmin');
-

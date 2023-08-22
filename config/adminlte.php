@@ -374,6 +374,11 @@ return [
                 [
                     'text' => 'Perizinan',
                     'url' => '/ajuanperizinan',
+                    'can' => 'isadmin',
+                ],
+                [
+                    'text' => 'Perizinan',
+                    'url' => '/perizinan',
                     'can' => '',
                 ],
             ],

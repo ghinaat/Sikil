@@ -89,6 +89,7 @@ class DatabaseSeeder extends Seeder
             'level' => 'admin',
             'id_jabatan' => '1',
             'is_deleted' => '0',
+            'kode_finger' => '88121'
         ]);
 
         User::create([
@@ -99,6 +100,7 @@ class DatabaseSeeder extends Seeder
             'level' => 'admin',
             'id_jabatan' => '1',
             'is_deleted' => '1',
+            'kode_finger' => '83121'
         ]);
 
         User::create([
@@ -109,6 +111,7 @@ class DatabaseSeeder extends Seeder
             'level' => 'staf',
             'id_jabatan' => '2',
             'is_deleted' => '0',
+            'kode_finger' => '82121'
         ]);
 
         // GeneralSetting::create([

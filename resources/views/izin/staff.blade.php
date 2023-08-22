@@ -30,14 +30,37 @@
                         <tbody>
                             @foreach($perizinan as $key => $p)
                             <tr>
-                                <td>{{$key+1}}</td>
-                                <td>{{$p->jenis_perizinan}}</td>
-                                <td>{{$p->tgl_ajuan}}</td>
-                                <td>{{$p->tgl_absen_awal - tgl_absen_akhir}}</td>
-                                <td>{{$p->keterangan}}</td>
-                                <td>{{$p->file_perizinan}}</td>
-                                <td>{{$p->status_izin_atasan}}</td>
-                                <td>{{$p->status_izin_ppk}}</td>
+                                <td id={{$key+1}}>{{$key+1}}</td>
+                                <td id={{$key+1}}>{{$p->jenis_perizinan}}</td>
+                                <td id={{$key+1}}>{{$p->tgl_ajuan}}</td>
+                                <td id={{$key+1}}>{{$p->tgl_absen_awal}} - {{$p->tgl_absen_akhir}}</td>
+                                <td id={{$key+1}}>{{$p->keterangan}}</td>
+                                <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
+                                    <a href="{{ asset('/storage/perizinan/'. $p->file_perizinan) }}" target="_blank"><i
+                                            class="fa fa-download"></i></a>
+                                </td>
+                                <td id={{$key+1}}>
+                                    @if($p->status_izin_atasan == '0')
+                                    Ditolak
+                                    @elseif($p->status_izin_atasan == '1')
+                                    Disetujui
+                                    @elseif($p->jenis_perizinan == 'I')
+
+                                    @else
+                                    Menunggu Persetujuan
+                                    @endif
+                                </td>
+                                <td id={{$key+1}}>
+                                    @if($p->status_izin_ppk == '0')
+                                    Ditolak
+                                    @elseif($p->status_izin_ppk == '1')
+                                    Disetujui
+                                    @elseif($p->jenis_perizinan == 'I')
+
+                                    @else
+                                    Menunggu Persetujuan
+                                    @endif
+                                </td>
                                 <td>
                                     @include('components.action-buttons', ['id' => $p->id_perizinan, 'key' => $key,
                                     'route' => 'perizinan'])
@@ -66,14 +89,13 @@
                 </button>
             </div>
             <div class="modal-body form">
-                <form action="{{ route('perizinan.store') }}" method="POST" id="form" class="form-horizontal"
+                <form action="{{ route('perizinan.pengajuan') }}" method="POST" id="form" class="form-horizontal"
                     enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" value="" name="id">
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
-                                <input type="hidden" id="tgl_ajuan" name="tgl_ajuan" value="{{ old('tgl_ajuan') }}">
+                                <input type="hidden" name="kode_finger" value="{{ Auth::user()->kode_finger}}">
                                 <div class="form-group">
                                     <label for="tgl_absen_awal" class="form-label">Tanggal Awal Izin </label>
                                     <div class="form-input">
@@ -95,11 +117,29 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="jenis_perizinan">Jenis Ajuan</label>
+                                    <select class="form-control  @error('jenis_perizinan') is-invalid @enderror"
+                                        id="jenis_perizinan" name="jenis_perizinan">
+                                        <option value="I">Izin</option>
+                                        <option value="DL">Dinas Luar</option>
+                                        <option value="S">Sakit</option>
+                                        <option value="CS">Cuti Sakit</option>
+                                        <option value="Prajab">Prajab</option>
+                                        <option value="CT">Cuti Tahunan</option>
+                                        <option value="CM">Cuti Melahirkan</option>
+                                        <option value="CAP">CAP</option>
+                                        <option value="CH">Cuti Haji</option>
+                                        <option value="CB">Cuti Bersama</option>
+                                        <option value="A">Alpha</option>
+                                        <option value="TB">Tugas Belajar</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-md-6" for="id_atasan">Atasan Langsung</label>
                                     <select id="id_atasan" name="id_atasan"
                                         class="form-select @error('id_atasan') is-invalid @enderror">
-                                        @foreach ($user as $us)
-                                        <option value="{{ $us->id_users }}" @if( old('id_users')==$us->id_users )
+                                        @foreach ($users as $us)
+                                        <option value="{{ $us->id_users }}" @if( old('id_atasan')==$us->id_users )
                                             selected @endif">
                                             {{ $us->nama_pegawai }}</option>
                                         @endforeach
@@ -112,11 +152,13 @@
                                     @error('keterangan') <span class="text-danger">{{$message}}</span> @enderror
                                 </div>
                                 <div class="form-group">
-                                    @foreach ($perizinan as $p)
-                                    <label for="ppk">ppk</label>
-                                    <input type="text" class="form-control @error('ppk') is-invalid @enderror" id="ppk"
-                                        name="ppk" value=" {{ $p->user->setting->id }}" @endforeach">
-                                    @error('ppk') <span class="text-danger">{{$message}}</span> @enderror
+                                    @foreach ($settingperizinan as $ps)
+                                    @if($ps->status == '1')
+                                    <label for="keterangan">PPK</label>
+                                    <input type="text" class="form-control @error('keterangan') is-invalid @enderror"
+                                        id="keterangan" name="keterangan" value="{{ $ps->id_users}}">
+                                    @error('keterangan') <span class="text-danger">{{$message}}</span> @enderror
+                                    @endif
                                     @endforeach
                                 </div>
                                 <div class="form-group">
@@ -137,56 +179,10 @@
                     </div>
                 </form>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- Bootstrap modal Edit -->
-<!-- @foreach($jenisdiklat as $p)
-<div class="modal fade" id="editModal{{$p->id_jenis_diklat}}" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Edit Jenis Diklat</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body form">
-                <form action="{{ route('jenisdiklat.update',$p->id_jenis_diklat) }}" method="POST" id="form"
-                    class="form-horizontal" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" name="id" value="{{ $p->id_jenis_diklat }}">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="nama_jenis_diklat">Nama Jenis Diklat</label>
-                                        <input type="text"
-                                            class="form-control @error('nama_jenis_diklat') is-invalid @enderror"
-                                            id="nama_jenis_diklat" placeholder="Masukkan Nama Jenis Diklat"
-                                            name="nama_jenis_diklat"
-                                            value="{{ $p->nama_jenis_diklat ?? old('nama_jenis_diklat') }}">
-                                        @error('nama_jenis_diklat')
-                                        <span class="textdanger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 </div>
-@endforeach -->
+
 
 
 @stop
