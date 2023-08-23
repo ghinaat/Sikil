@@ -42,6 +42,75 @@
                                     'route' => 'generalsetting'])
                                 </td>
                             </tr>
+                            <div class="modal fade" id="editModal{{$gs->id_setting}}" role="dialog">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Edit General Setting</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('generalsetting.update', $gs->id_setting) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-6" for="tahun_aktif">Tahun
+                                                        Aktif</label>
+                                                    <select id="tahun_aktif" name="tahun_aktif"
+                                                        class="form-select @error('tahun_aktif') is-invalid @enderror">
+                                                        <option value="2020"
+                                                            {{ $gs->tahun_aktif === '2020' ? 'selected' : '' }}>2020
+                                                        </option>
+                                                        <option value="2021"
+                                                            {{ $gs->tahun_aktif === '2021' ? 'selected' : '' }}>2021
+                                                        </option>
+                                                        <option value="2022"
+                                                            {{ $gs->tahun_aktif === '2022' ? 'selected' : '' }}>2022
+                                                        </option>
+                                                        <option value="2023"
+                                                            {{ $gs->tahun_aktif === '2023' ? 'selected' : '' }}>2023
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-6" for="id_users">Nama
+                                                        Pegawai</label>
+                                                    <select id="id_users" name="id_users"
+                                                        class="form-select @error('id_users') is-invalid @enderror">
+                                                        @foreach ($user as $us)
+                                                        <option value="{{ $us->id_users }}" @if( old('id_users')==$us->
+                                                            id_users )
+                                                            selected @endif">
+                                                            {{ $us->nama_pegawai }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status"></label>
+                                                    <select class="form-select @error('status') isinvalid @enderror"
+                                                        id="status" name="status">
+                                                        <option value="1" @if($gs->status == '1' ||
+                                                            old('status')=='1'
+                                                            )selected @endif>Aktif
+                                                        </option>
+                                                        <option value="0" @if($gs->status == '0' ||old('status')=='0'
+                                                            )selected @endif>Tidak
+                                                            Aktif </option>
+                                                    </select>
+                                                    @error('status') <span class="textdanger">{{$message}}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Batal</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             @endforeach
                         </tbody>
                     </table>
@@ -75,7 +144,6 @@
                             <option value="2023">2023</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label class="control-label col-md-6" for="id_users">Nama Pegawai</label>
                         <select id="id_users" name="id_users"

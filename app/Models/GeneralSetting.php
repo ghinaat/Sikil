@@ -19,6 +19,8 @@ class GeneralSetting extends Model
         'status',
     ];
 
+
+
     public function users()
     {
         return $this->belongsTo(User::class, 'id_users', 'id_users');

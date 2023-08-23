@@ -370,6 +370,11 @@ return [
                     'url' => '/ajuanperizinan',
                     'can' => ['isBod', 'isPpk', 'isKadiv'],
                 ],
+                [
+                    'text' => 'Perizinan',
+                    'url' => '/perizinan',
+                    'can' => '',
+                ],
             ],
         ],
         [

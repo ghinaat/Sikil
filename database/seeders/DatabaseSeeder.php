@@ -102,6 +102,7 @@ class DatabaseSeeder extends Seeder
             'kode_finger' => '989898',
             'id_jabatan' => '1',
             'is_deleted' => '0',
+            'kode_finger' => '88121'
         ]);
 
         User::create([
@@ -136,6 +137,7 @@ class DatabaseSeeder extends Seeder
             'kode_finger' => '983898',
             'id_jabatan' => '6',
             'is_deleted' => '0',
+
         ]);
 
         User::create([
@@ -147,6 +149,7 @@ class DatabaseSeeder extends Seeder
             'kode_finger' => '545621',
             'id_jabatan' => '4',
             'is_deleted' => '0',
+            'kode_finger' => '82121'
         ]);
 
         // GeneralSetting::create([

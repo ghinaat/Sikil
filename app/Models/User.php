@@ -57,28 +57,35 @@ class User extends Authenticatable
         return $this->hasMany(Arsip::class, 'id_users', 'id_users');
     }
 
+    public function cuti()
+{
+    return $this->hasOne(Cuti::class, 'id_users'); // Assuming 'id_users' is the foreign key in the 'cuti' table
+}
+
+
     public function diklat()
     {
         return $this->hasMany(Diklat::class, 'id_users', 'id_users');
     }
 
-    public function generalsetting()
+    public function setting()
     {
-        return $this->hasMany(GeneralSetting::class, 'id_users', 'id_users');
+        return $this->hasOne(GeneralSetting::class, 'id_users', 'id_users');
     }
-
+    
     public function presensi()
     {
         return $this->hasMany(Presensi::class, 'kode_finger', 'kode_finger');
     }
     public function ajuanperizinan()
     {
-        return $this->hasMany(Perizinan::class, 'id_users', 'id_atasan');
+        return $this->hasMany(Perizinan::class, 'id_atasan', 'id_users');
     }
     public function ajuanperizinans()
     {
         return $this->hasMany(Perizinan::class, 'kode_finger', 'kode_finger');
     }
+
 
     protected $primaryKey = 'id_users';
 

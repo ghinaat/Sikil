@@ -30,19 +30,197 @@
                         <tbody>
                             @foreach($perizinan as $key => $p)
                             <tr>
-                                <td>{{$key+1}}</td>
-                                <td>{{$p->jenis_perizinan}}</td>
-                                <td>{{$p->tgl_ajuan}}</td>
-                                <td>{{$p->tgl_absen_awal}}</td>
-                                <td>{{$p->keterangan}}</td>
-                                <td>{{$p->file_perizinan}}</td>
-                                <td>{{$p->status_izin_atasan}}</td>
-                                <td>{{$p->status_izin_ppk}}</td>
+                                <td id={{$key+1}}>{{$key+1}}</td>
+                                <td id={{$key+1}}>{{$p->jenis_perizinan}}</td>
+                                <td id={{$key+1}}>{{$p->tgl_ajuan}}</td>
+                                <td id={{$key+1}}>{{$p->tgl_absen_awal}} - {{$p->tgl_absen_akhir}}</td>
+                                <td id={{$key+1}}>{{$p->keterangan}}</td>
+                                <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
+                                    <a href="{{ asset('/storage/perizinan/'. $p->file_perizinan) }}" target="_blank"><i
+                                            class="fa fa-download"></i></a>
+                                </td>
+                                <td id={{$key+1}}>
+                                    @if($p->status_izin_atasan == '0')
+                                    Ditolak
+                                    @elseif($p->status_izin_atasan == '1')
+                                    Disetujui
+                                    @elseif($p->jenis_perizinan == 'I')
+
+                                    @else
+                                    Menunggu Persetujuan
+                                    @endif
+                                </td>
+                                <td id={{$key+1}}>
+                                    @if($p->status_izin_ppk == '0')
+                                    Ditolak
+                                    @elseif($p->status_izin_ppk == '1')
+                                    Disetujui
+                                    @elseif($p->jenis_perizinan == 'I')
+
+                                    @else
+                                    Menunggu Persetujuan
+                                    @endif
+                                </td>
                                 <td>
                                     @include('components.action-buttons', ['id' => $p->id_perizinan, 'key' => $key,
                                     'route' => 'perizinan'])
                                 </td>
                             </tr>
+                            <!-- Edit -->
+                            <div class="modal fade" id="editModal{{$p->id_perizinan}}" role="dialog">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Edit Perizinan</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('perizinan.update', $p->id_perizinan) }}"
+                                                method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="form-body">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <input type="hidden" name="kode_finger"
+                                                                value="{{ Auth::user()->kode_finger}}">
+                                                            <div class="form-group">
+                                                                <label for="tgl_absen_awal" class="form-label">Tanggal
+                                                                    Awal Izin </label>
+                                                                <div class="form-input">
+                                                                    <input type="date"
+                                                                        class="form-control @error('tgl_absen_awal') is-invalid @enderror"
+                                                                        id="tgl_absen_awal" name="tgl_absen_awal"
+                                                                        value="{{$p->tgl_absen_awal ?? old('tgl_absen_awal')}}">
+                                                                    @error('tgl_absen_awal') <span
+                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="tgl_absen_akhir" class="form-label">Tanggal
+                                                                    Akhir Izin</label>
+                                                                <div class="form-input">
+                                                                    <input type="date"
+                                                                        class="form-control @error('tgl_absen_akhir') is-invalid @enderror"
+                                                                        id="tgl_absen_akhir" name="tgl_absen_akhir"
+                                                                        value="{{$p->tgl_absen_akhir ?? old('tgl_absen_akhir')}}">
+                                                                    @error('tgl_absen_akhir') <span
+                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="jenis_perizinan">Jenis Ajuan</label>
+                                                                <select
+                                                                    class="form-control  @error('jenis_perizinan') is-invalid @enderror"
+                                                                    id="jenis_perizinan" name="jenis_perizinan">
+                                                                    <option value="I" @if($p->jenis_perizinan == 'I' ||
+                                                                        old('jenis_perizinan')=='I'
+                                                                        )selected @endif>Izin</option>
+                                                                    <option value="DL" @if($p->jenis_perizinan == 'DL'||
+                                                                        old('jenis_perizinan')=='DL'
+                                                                        )selected @endif>Dinas Luar</option>
+                                                                    <option value="S" @if($p->jenis_perizinan == 'S' ||
+                                                                        old('jenis_perizinan')=='S'
+                                                                        )selected @endif>Sakit</option>
+                                                                    <option value="CS" @if($p->jenis_perizinan == 'CS'
+                                                                        ||
+                                                                        old('jenis_perizinan')=='CS'
+                                                                        )selected @endif>Cuti Sakit</option>
+                                                                    <option value="Prajab" @if($p->jenis_perizinan ==
+                                                                        'Prajab' || old('jenis_perizinan')=='Prajab'
+                                                                        )selected
+                                                                        @endif>Prajab</option>
+                                                                    <option value="CT" @if($p->jenis_perizinan == 'CT'
+                                                                        || old('jenis_perizinan')=='CT'
+                                                                        )selected @endif>Cuti Tahunan</option>
+                                                                    <option value="CM" @if($p->jenis_perizinan == 'CM'
+                                                                        ||old('jenis_perizinan')=='CM'
+                                                                        )selected @endif>Cuti Melahirkan</option>
+                                                                    <option value="CAP" @if($p->jenis_perizinan == 'CAP'
+                                                                        || old('jenis_perizinan')=='CAP' )selected
+                                                                        @endif>CAP</option>
+                                                                    <option value="CH" @if($p->jenis_perizinan == 'CH'
+                                                                        ||old('jenis_perizinan')=='CH'
+                                                                        )selected @endif>Cuti Haji</option>
+                                                                    <option value="CB" @if($p->jenis_perizinan == 'CB'
+                                                                        ||
+                                                                        old('jenis_perizinan')=='CB'
+                                                                        )selected @endif>Cuti Bersama</option>
+                                                                    <option value="A" @if($p->jenis_perizinan == 'A' ||
+                                                                        old('jenis_perizinan')=='A'
+                                                                        )selected @endif>Alpha</option>
+                                                                    <option value="TB" @if($p->jenis_perizinan == 'TB'
+                                                                        ||
+                                                                        old('jenis_perizinan')=='TB'
+                                                                        )selected @endif>Tugas Belajar</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-6"
+                                                                    for="id_atasan">Atasan Langsung</label>
+                                                                <select id="id_atasan" name="id_atasan"
+                                                                    class="form-control @error('id_atasan') is-invalid @enderror">
+                                                                    @foreach ($users as $us)
+                                                                    <option value="{{ $us->id_users }}" @if( $p->
+                                                                        id_atasan === old('id_atasan',
+                                                                        $us->id_users) ) selected @endif>
+                                                                        {{ $us->nama_pegawai }}
+                                                                    </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="keterangan">Keterangan</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('keterangan') is-invalid @enderror"
+                                                                    id="keterangan" name="keterangan"
+                                                                    value="{{$p -> keterangan ?? old('keterangan')}}">
+                                                                @error('keterangan') <span
+                                                                    class="text-danger">{{$message}}</span> @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                @foreach ($settingperizinan as $ps)
+                                                                @if ($ps->setting && $ps->setting->status == '1')
+                                                                <label for="id">PPK</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('') is-invalid @enderror"
+                                                                    id="id" name="" value="{{ $ps->nama_pegawai}}"
+                                                                    readonly>
+                                                                @error('') <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                                @endif
+                                                                @endforeach
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="file_perizinan">Unggah Lampiran</label>
+                                                                <small class="form-text text-muted">Allow file
+                                                                    extensions :.jpeg .jpg .png .pdf .docx
+                                                                    .docx</small>
+                                                                @if ($p->file_perizinan)
+                                                                <p>Previous File: <a
+                                                                        href="{{ asset('/storage/file_perizinan/' . $p->file_perizinan) }}"
+                                                                        target="_blank">{{ $p->file_perizinan }}</a>
+                                                                </p>
+                                                                @endif
+                                                                <input type="file" class="form-control"
+                                                                    id="file_perizinan" name="file_perizinan"
+                                                                    @error('file_perizinan') <span class="invalid"
+                                                                    role="alert">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                                    <button type="button" class="btn btn-danger"
+                                                        data-dismiss="modal">Batal</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             @endforeach
                         </tbody>
                     </table>
@@ -52,7 +230,7 @@
     </div>
 </div>
 
-@can('isAdmin')
+
 
 <!-- Modal -->
 <!-- Bootstrap modal Create -->
@@ -66,35 +244,56 @@
                 </button>
             </div>
             <div class="modal-body form">
-                <form action="{{ route('perizinan.store') }}" method="POST" id="form" class="form-horizontal"
+                <form action="{{ route('perizinan.pengajuan') }}" method="POST" id="form" class="form-horizontal"
                     enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" value="" name="id">
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
-                                <input type="hidden" name="id_atasan" value="{{ Auth::user()->id_atasan}}">
+                                <input type="hidden" name="kode_finger" value="{{ Auth::user()->kode_finger}}">
                                 <div class="form-group">
-                                    <label for="tgl_mulai" class="form-label">Tanggal Mulai Acara</label>
+                                    <label for="tgl_absen_awal" class="form-label">Tanggal Awal Izin </label>
                                     <div class="form-input">
-                                        <input type="date" class="form-control @error('tgl_mulai') is-invalid @enderror"
-                                            id="tgl_mulai" name="tgl_mulai" value="{{ old('tgl_mulai')}}">
-                                        @error('tgl_mulai') <span class="textdanger">{{$message}}</span> @enderror
+                                        <input type="date"
+                                            class="form-control @error('tgl_absen_awal') is-invalid @enderror"
+                                            id="tgl_absen_awal" name="tgl_absen_awal"
+                                            value="{{ old('tgl_absen_awal')}}">
+                                        @error('tgl_absen_awal') <span class="textdanger">{{$message}}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="tgl_mulai" class="form-label">Tanggal Mulai Acara</label>
+                                    <label for="tgl_absen_akhir" class="form-label">Tanggal Akhir Izin</label>
                                     <div class="form-input">
-                                        <input type="date" class="form-control @error('tgl_mulai') is-invalid @enderror"
-                                            id="tgl_mulai" name="tgl_mulai" value="{{ old('tgl_mulai')}}">
-                                        @error('tgl_mulai') <span class="textdanger">{{$message}}</span> @enderror
+                                        <input type="date"
+                                            class="form-control @error('tgl_absen_akhir') is-invalid @enderror"
+                                            id="tgl_absen_akhir" name="tgl_absen_akhir"
+                                            value="{{ old('tgl_absen_akhir')}}">
+                                        @error('tgl_absen_akhir') <span class="textdanger">{{$message}}</span> @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-6" for="id_users">Atasan Langsung</label>
-                                    <select id="id_users" name="id_users"
-                                        class="form-select @error('id_users') is-invalid @enderror">
-                                        @foreach ($user as $us)
+                                    <label for="jenis_perizinan">Jenis Ajuan</label>
+                                    <select class="form-control  @error('jenis_perizinan') is-invalid @enderror"
+                                        id="jenis_perizinan" name="jenis_perizinan">
+                                        <option value="I">Izin</option>
+                                        <option value="DL">Dinas Luar</option>
+                                        <option value="S">Sakit</option>
+                                        <option value="CS">Cuti Sakit</option>
+                                        <option value="Prajab">Prajab</option>
+                                        <option value="CT">Cuti Tahunan</option>
+                                        <option value="CM">Cuti Melahirkan</option>
+                                        <option value="CAP">CAP</option>
+                                        <option value="CH">Cuti Haji</option>
+                                        <option value="CB">Cuti Bersama</option>
+                                        <option value="A">Alpha</option>
+                                        <option value="TB">Tugas Belajar</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-6" for="id_atasan">Atasan Langsung</label>
+                                    <select id="id_atasan" name="id_atasan"
+                                        class="form-select @error('id_atasan') is-invalid @enderror">
+                                        @foreach ($users as $us)
                                         <option value="{{ $us->id_users }}" @if( old('id_users')==$us->id_users )
                                             selected @endif">
                                             {{ $us->nama_pegawai }}</option>
@@ -108,59 +307,23 @@
                                     @error('keterangan') <span class="text-danger">{{$message}}</span> @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="file_kerja">Surat Pengalaman</label>
+                                    @foreach ($settingperizinan as $ps)
+                                    @if ($ps->setting && $ps->setting->status == '1')
+                                    <label for="id">PPK</label>
+                                    <input type="text" class="form-control @error('') is-invalid @enderror" id="id"
+                                        name="" value="{{ $ps->nama_pegawai}}" readonly>
+                                    @error('') <span class="text-danger">{{$message}}</span> @enderror
+                                    @endif
+                                    @endforeach
+                                </div>
+                                <div class="form-group">
+                                    <label for="file_perizinan">Unggah Lampiran</label>
                                     <small class="form-text text-muted">Allow file extensions : .jpeg
                                         .jpg .png .pdf
                                         .docx</small>
-                                    <input type="file" name="file_kerja" id="file_kerja" class="form-control">
-                                    @error('file_kerja')
+                                    <input type="file" name="file_perizinan" id="file_perizinan" class="form-control">
+                                    @error('file_perizinan')
                                     <span class="textdanger">{{$message}}</span> @enderror
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    </div>
-                </form>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- Bootstrap modal Edit -->
-@foreach($jenisdiklat as $p)
-<div class="modal fade" id="editModal{{$p->id_jenis_diklat}}" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Edit Jenis Diklat</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body form">
-                <form action="{{ route('jenisdiklat.update',$p->id_jenis_diklat) }}" method="POST" id="form"
-                    class="form-horizontal" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" name="id" value="{{ $p->id_jenis_diklat }}">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="nama_jenis_diklat">Nama Jenis Diklat</label>
-                                        <input type="text"
-                                            class="form-control @error('nama_jenis_diklat') is-invalid @enderror"
-                                            id="nama_jenis_diklat" placeholder="Masukkan Nama Jenis Diklat"
-                                            name="nama_jenis_diklat"
-                                            value="{{ $p->nama_jenis_diklat ?? old('nama_jenis_diklat') }}">
-                                        @error('nama_jenis_diklat')
-                                        <span class="textdanger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -174,9 +337,8 @@
         </div>
     </div>
 </div>
-@endforeach
 
-@endcan
+
 
 @stop
 @push('js')
@@ -196,5 +358,14 @@ function notificationBeforeDelete(event, el) {
         $("#delete-form").submit();
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the current date and time
+    var currentDate = new Date();
+    var formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+
+    // Populate the hidden input field with the current date and time
+    document.getElementById('tgl_ajuan').value = formattedDate;
+});
 </script>
 @endpush

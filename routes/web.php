@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AjuanPerizinanController;
+use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\DiklatController;
@@ -110,7 +111,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/generalsetting', [GeneralSettingController::class, 'index'])->name('generalsetting.index');
     Route::post('/generalsetting', [GeneralSettingController::class, 'store'])->name('generalsetting.store');
     Route::put('/generalsetting/{id_setting}', [GeneralSettingController::class, 'update'])->name('generalsetting.update')->middleware('isAdmin');
-    Route::delete('/argeneralsettingsip/{id_setting}', [GeneralSettingController::class, 'destroy'])->name('generalsetting.destroy')->middleware('isAdmin');
+    Route::delete('/generalsettingsip/{id_setting}', [GeneralSettingController::class, 'destroy'])->name('generalsetting.destroy')->middleware('isAdmin');
 });
 
 // Route::get('/generalsetting', [GeneralSettingController::class, 'index'])->name('generalsetting.index')->middleware('auth');
@@ -147,6 +148,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/ajuanperizinan', [AjuanPerizinanController::class, 'store'])->name('ajuanperizinan.store');
     Route::put('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'update'])->name('ajuanperizinan.update');
     Route::delete('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'destroy'])->name('ajuanperizinan.destroy');
+});
+
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/perizinan', [PerizinanController::class, 'indexStaff'])->name('perizinan.index');
+    Route::post('/perizinan', [PerizinanController::class, 'pengajuan'])->name('perizinan.pengajuan');
+    Route::put('/perizinan/{id_perizinan}', [PerizinanController::class, 'update'])->name('perizinan.update');
+    Route::delete('/perizinan/{id_perizinan}', [PerizinanController::class, 'destroy'])->name('perizinan.destroy');
 });
 
 Route::get('/cuti', [CutiController::class, 'index'])->name('cuti.index');

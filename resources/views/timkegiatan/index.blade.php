@@ -35,7 +35,8 @@
                             <td>{{$tk->peran->nama_peran}}</td>
                             @can('isAdmin')
                             <td>
-                                @include('components.action-buttons', ['id' => $tk->id_tim, 'key' => $key, 'route' => 'timkegiatan'])
+                                @include('components.action-buttons', ['id' => $tk->id_tim, 'key' => $key, 'route' =>
+                                'timkegiatan'])
                             </td>
                             @endcan
                         </tr>
