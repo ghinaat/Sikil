@@ -35,11 +35,10 @@ class GeneralSettingController extends Controller
      */
     public function store(Request $request)
     {
-          //Menyimpan Data User Baru
         $request->validate([
             'tahun_aktif' => 'required',
             'id_users' => 'required',
-            // 'status' => 'required',
+            'status' => 'required',
         ]);
 
         $generalsetting = new GeneralSetting();
@@ -75,23 +74,26 @@ class GeneralSettingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, GeneralSetting $generalSetting)
+    public function update(Request $request,  $id_setting)
     {
         $request->validate([
             'tahun_aktif' => 'required',
             'id_users' => 'required',
             'status' => 'required',
         ]);
-        $array = $request->only([
-            'tahun_aktif',
-            'id_users',
-            'status',
-        ]);
-        $array['id_users'] = auth()->user()->id_users;
 
-        GeneralSetting::where('id_users', auth()->user()->id_users)->update($array);
+        $generalsetting = GeneralSetting::find($id_setting);
 
-        return redirect()->route('generalsetting.index');
+        $generalsetting->tahun_aktif = $request->tahun_aktif;
+        $generalsetting->id_users = $request->id_users;
+        $generalsetting->status = $request->status;
+
+        $generalsetting->save();
+
+        GeneralSetting::where('id_setting', '!=', $generalsetting->id_setting)
+                      ->update(['status' => '0']);
+
+        return redirect()->route('generalsetting.index')->with('success_message', 'Data telah tersimpan');
 
     }
 

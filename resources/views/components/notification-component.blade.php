@@ -9,11 +9,19 @@ $(document).ready(function() {
     var successMessage = '{{ session('success_message') }}';
     var successChanged = '{{ session('success_changed') }}';
     var successDeleted = '{{ session('success_deleted') }}';
+    var errorMessage = '{{ session('error') }}';
     if (successMessage) {
         Swal.fire({
             icon: 'success',
             title: 'Sukses!',
             text: successMessage,
+        });
+    }
+    if (errorMessage) { // Tambahkan ini
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: errorMessage,
         });
     }
     // if (successChanged) {
