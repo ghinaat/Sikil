@@ -18,16 +18,16 @@ class AjuanPerizinanController extends Controller
     {
         if($request->input('tgl_absen_awal') == null && $request->input('tgl_absen_akhir') == null){
             $user = Auth::user();
-            if ($user->level == 'admin' or $user->level == 'ppk') {
+            if ($user->level == 'admin' or $user->level == 'ppk' ) {
                 $ajuanperizinan = Perizinan::where('is_deleted', '0')->get();
-            }elseif( $user->level == 'bod'){
+            }elseif( $user->level == 'bod' or $user->level == 'kadiv'){
                 $ajuanperizinan = Perizinan::where('is_deleted', '0')->where('id_atasan', auth()->user()->id_users)->get();
             }
         }else{
             $user = Auth::user();
-            if ($user->level == 'admin' or $user->level == 'ppk') {
+            if ($user->level == 'admin' or $user->level == 'ppk' ) {
                 $ajuanperizinan = Perizinan::where('is_deleted', '0')->where('tgl_absen_awal', '>=', $request->input('tgl_absen_awal'))->where('tgl_absen_akhir', '<=', $request->input('tgl_absen_akhir'))->get();
-            }elseif( $user->level == 'bod'){
+            }elseif( $user->level == 'bod' or $user->level == 'kadiv'){
                 $ajuanperizinan = Perizinan::where('is_deleted', '0')->where('id_atasan', auth()->user()->id_users)->where('tgl_absen_awal', '>=', $request->tgl_absen_awal)->where('tgl_absen_akhir', '<=', $request->tgl_absen_akhir)->get();
             }
         }
@@ -249,8 +249,14 @@ class AjuanPerizinanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Perizinan $perizinan)
+    public function destroy(Perizinan $id_perizinan)
     {
-        //
+        if ($id_perizinan) {
+            $id_perizinan->update([
+                'is_deleted' => '1',
+            ]);
+        }
+    
+        return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah terhapus');
     }
-}
+    }

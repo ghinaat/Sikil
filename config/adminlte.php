@@ -368,7 +368,7 @@ return [
                 [
                     'text' => 'Kelola Perizinan',
                     'url' => '/ajuanperizinan',
-                    'can' => ['isBod', 'isPpk'],
+                    'can' => ['isBod', 'isPpk', 'isKadiv'],
                 ],
                 [
                     'text' => 'Perizinan',

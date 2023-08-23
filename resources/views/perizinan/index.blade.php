@@ -9,64 +9,66 @@
         <div class="card">
             <div class="card-body">
 
+                <form action="{{ route('ajuanperizinan.index') }}" method="GET" class="form-inline mb-3">
+                    
+                    <div class="form-group mb-2">    
+                        <label for="kode_finger" >Nama Pegawai :</label> &nbsp;
+                        <select class="form-control" name="kode_finger" id="kode_finger" class="form-select" >
+                            <option value="all">Semua Pegawai</option>
+                            @foreach ($users as $user)
+                            <option value="{{ $user->kode_finger }}" @if(request()->input('kode_finger') == $user->kode_finger) selected @endif>{{ $user->nama_pegawai }}</option>
+                            @endforeach
+                        </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div> 
+                    <br>
+                    <div class="form-group mb-2 ">
+                        <label for="jenis_perizinan" >Jenis Perizinan :</label>&nbsp;
+                        <select class="form-control" id="jenis_perizinan" name="jenis_perizinan">
+                            <option value="all">Semua Jenis Perizinan</option>
+                            <option value="I" @if(request()->input('jenis_perizinan')=='I' )selected
+                                @endif>Izin</option>
+                            <option value="DL" @if(request()->input('jenis_perizinan')=='DL' )selected
+                                @endif>Dinas Luar</option>
+                            <option value="S" @if(request()->input('jenis_perizinan')=='S' )selected
+                                @endif>Sakit</option>
+                            <option value="CS" @if(request()->input('jenis_perizinan')=='CS' )selected
+                                @endif>Cuti Sakit</option>
+                            <option value="Prajab" @if(request()->input('jenis_perizinan')=='Prajab'
+                                )selected @endif>Prajab</option>
+                            <option value="CT" @if(request()->input('jenis_perizinan')=='CT' )selected
+                                @endif>Cuti Tahunan</option>
+                            <option value="CM" @if(request()->input('jenis_perizinan')=='CM' )selected
+                                @endif>Cuti Melahirkan</option>
+                            <option value="CAP" @if(request()->input('jenis_perizinan')=='CAP' )selected
+                                @endif>CAP</option>
+                            <option value="CH" @if(request()->input('jenis_perizinan')=='CH' )selected
+                                @endif>Cuti Haji</option>
+                            <option value="CB" @if(request()->input('jenis_perizinan')=='CB' )selected
+                                @endif>Cuti Bersama</option>
+                            <option value="A" @if(request()->input('jenis_perizinan')=='A' )selected
+                                @endif>Alpha</option>
+                            <option value="TB" @if(request()->input('jenis_perizinan')=='TB' )selected
+                                @endif>Tugas Belajar</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="tgl_absen_awal" class="my-label mr-2">Tanggal Awal: </label>
+                        <input type="date" id="tgl_absen_awal" name="tgl_absen_awal" required class="form-control" value="{{request()->input('tgl_absen_awal')}}">&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                        <label for="tgl_absen_akhir" class="form-label">Tanggal Akhir: </label>&nbsp;&nbsp;
+                        <input type="date" id="tgl_absen_akhir" name="tgl_absen_akhir" required class="form-control" value="{{request()->input('tgl_absen_akhir')}}"> &nbsp;&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary"> Tampilkan</button>
+                    </div>  
+
+                </form>
                 @can('isAdmin')
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
                     role="dialog">
                     Tambah
                 </button>
                 @endcan
-
-                <div class="border rounded p-2">
-                    <form action="{{ route('ajuanperizinan.index') }}" method="GET" class="form-inline mb-3">
-                        <div class="form-group mb-2 ">
-                            <label for="kode_finger">Nama Pegawai</label>
-                            <select name="kode_finger" id="kode_finger" class="form-select" >
-                                <option value="all">Semua Pegawai</option>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->kode_finger }}" @if(request()->input('kode_finger') == $user->kode_finger) selected @endif>{{ $user->nama_pegawai }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">    
-                            <label for="jenis_perizinan">Jenis Perizinan</label>
-                            <select class="form-control" id="jenis_perizinan" name="jenis_perizinan">
-                                <option value="all">Semua Jenis Perizinan</option>
-                                <option value="I" @if(request()->input('jenis_perizinan')=='I' )selected
-                                    @endif>Izin</option>
-                                <option value="DL" @if(request()->input('jenis_perizinan')=='DL' )selected
-                                    @endif>Dinas Luar</option>
-                                <option value="S" @if(request()->input('jenis_perizinan')=='S' )selected
-                                    @endif>Sakit</option>
-                                <option value="CS" @if(request()->input('jenis_perizinan')=='CS' )selected
-                                    @endif>Cuti Sakit</option>
-                                <option value="Prajab" @if(request()->input('jenis_perizinan')=='Prajab'
-                                    )selected @endif>Prajab</option>
-                                <option value="CT" @if(request()->input('jenis_perizinan')=='CT' )selected
-                                    @endif>Cuti Tahunan</option>
-                                <option value="CM" @if(request()->input('jenis_perizinan')=='CM' )selected
-                                    @endif>Cuti Melahirkan</option>
-                                <option value="CAP" @if(request()->input('jenis_perizinan')=='CAP' )selected
-                                    @endif>CAP</option>
-                                <option value="CH" @if(request()->input('jenis_perizinan')=='CH' )selected
-                                    @endif>Cuti Haji</option>
-                                <option value="CB" @if(request()->input('jenis_perizinan')=='CB' )selected
-                                    @endif>Cuti Bersama</option>
-                                <option value="A" @if(request()->input('jenis_perizinan')=='A' )selected
-                                    @endif>Alpha</option>
-                                <option value="TB" @if(request()->input('jenis_perizinan')=='TB' )selected
-                                    @endif>Tugas Belajar</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="tgl_absen_awal" class="my-label mr-2">Tanggal Awal: </label>
-                            <input type="date" id="tgl_absen_awal" name="tgl_absen_awal" required class="form-control" value="{{request()->input('tgl_absen_awal')}}">
-                            <label for="tgl_absen_akhir" class="form-label">Tanggal Akhir: </label>
-                            <input type="date" id="tgl_absen_akhir" name="tgl_absen_akhir" required class="form-control" value="{{request()->input('tgl_absen_akhir')}}">
-                            <button type="submit" class="btn btn-primary"> Tampilkan</button>
-                        </div>
-                    </form>
-                </div>
-                
+                                                    
+                            
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
@@ -91,14 +93,16 @@
                                 <td id={{$key+1}}>{{$key+1}}</td>
                                 <td id={{$key+1}}>{{$ap->user->nama_pegawai}}</td>
                                 <td id={{$key+1}}>{{$ap->jenis_perizinan}}</td>
-                                <td id={{$key+1}}>{{$ap->tgl_ajuan}}</td>
+                                <td id={{$key+1}}>{{date_format( new DateTime($ap->tgl_ajuan), 'd F Y')}}</td>
                                 <td id={{$key+1}}>{{date_format( new DateTime($ap->tgl_absen_awal), 'd F Y')}} s.d.
                                     {{ date_format( new DateTime($ap->tgl_absen_akhir), 'd F Y')}}</td>
                                 <td id={{$key+1}}>{{$ap->keterangan}}</td>
-                                <td id={{$key+1}}>
-                                    <a href="{{ asset('/storage/file_perizinan/'. $ap->file_perizinan) }}"
-                                        target="_blank">Lihat Dokumen</a>
+                                <td id="{{ $key + 1 }}" style="text-align: center; vertical-align: middle;">
+                                    <a href="{{ asset('storage/file_perizinan/' . $ap->file_perizinan) }}" download>
+                                        <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
+                                    </a>
                                 </td>
+                                
                                 <td id={{$key+1}}>
                                     @if($ap->id_atasan == auth()->user()->id_users or auth()->user()->level=='admin')
 
@@ -114,17 +118,19 @@
                                     @endif
 
                                 </td>
-                                @if(auth()->user()->level=='ppk' or auth()->user()->level=='admin')
-                                <td id={{$key+1}}>
-                                    @if ($ap->status_izin_ppk === null)
-                                    Menunggu Persetujuan
-                                    @elseif ($ap->status_izin_ppk === '1')
-                                    Disetujui
-                                    @else
-                                    Ditolak
+                                <td id="{{ $key + 1 }}">
+                                    @if (auth()->user()->level == 'ppk' || auth()->user()->level == 'admin')
+                                        @if ($ap->jenis_perizinan === 'I')
+                                        <b>Bukan PPK Persetujuan</b>
+                                        @elseif ($ap->status_izin_ppk === null)
+                                            Menunggu Persetujuan
+                                        @elseif ($ap->status_izin_ppk === '1')
+                                            Disetujui
+                                        @else
+                                            Ditolak
+                                        @endif
                                     @endif
                                 </td>
-                                @endif
                                 <td>
                                     <div class="btn-group">
                                         <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
@@ -189,49 +195,45 @@
                                                     <select
                                                         class="form-control  @error('jenis_perizinan') is-invalid @enderror"
                                                         id="jenis_perizinan" name="jenis_perizinan">
-                                                        <option value="I" @if(old('jenis_perizinan')=='I' )selected
+                                                        <option value="I" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='I')selected
                                                             @endif>Izin</option>
-                                                        <option value="DL" @if(old('jenis_perizinan')=='DL' )selected
+                                                        <option value="DL" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='DL' )selected
                                                             @endif>Dinas Luar</option>
-                                                        <option value="S" @if(old('jenis_perizinan')=='S' )selected
+                                                        <option value="S" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='S' )selected
                                                             @endif>Sakit</option>
-                                                        <option value="CS" @if(old('jenis_perizinan')=='CS' )selected
+                                                        <option value="CS" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CS' )selected
                                                             @endif>Cuti Sakit</option>
-                                                        <option value="Prajab" @if(old('jenis_perizinan')=='Prajab'
+                                                        <option value="Prajab" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='Prajab'
                                                             )selected @endif>Prajab</option>
-                                                        <option value="CT" @if(old('jenis_perizinan')=='CT' )selected
+                                                        <option value="CT" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CT' )selected
                                                             @endif>Cuti Tahunan</option>
-                                                        <option value="CM" @if(old('jenis_perizinan')=='CM' )selected
+                                                        <option value="CM" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CM' )selected
                                                             @endif>Cuti Melahirkan</option>
-                                                        <option value="CAP" @if(old('jenis_perizinan')=='CAP' )selected
+                                                        <option value="CAP" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CAP' )selected
                                                             @endif>CAP</option>
-                                                        <option value="CH" @if(old('jenis_perizinan')=='CH' )selected
+                                                        <option value="CH" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CH' )selected
                                                             @endif>Cuti Haji</option>
-                                                        <option value="CB" @if(old('jenis_perizinan')=='CB' )selected
+                                                        <option value="CB" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CB' )selected
                                                             @endif>Cuti Bersama</option>
-                                                        <option value="A" @if(old('jenis_perizinan')=='A' )selected
+                                                        <option value="A" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='A' )selected
                                                             @endif>Alpha</option>
-                                                        <option value="TB" @if(old('jenis_perizinan')=='TB' )selected
+                                                        <option value="TB" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='TB' )selected
                                                             @endif>Tugas Belajar</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="keterangan" class="form-label">Keterangan</label>
                                                     <textarea rows="5"
-                                                        class="form-control @error('keterangan') is-invalid @enderror"
-                                                        id="keterangan" placeholder="keterangan"
-                                                        name="keterangan">{{$ap -> keterangan ?? old('keterangan')}}</textarea
-                                                        @error('keterangan') <span class="textdanger">{{$message}}</span>
-                                                        @enderror
+                                                        class="form-control"
+                                                        id="keterangan"
+                                                        name="keterangan">{{$ap -> keterangan ?? old('keterangan')}}</textarea>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-6" for="id_atasan">Atasan Langsung</label>
+                                                    <label class="id_atasan" for="id_atasan">Atasan Langsung</label>
                                                     <select id="id_atasan" name="id_atasan"
                                                         class="form-control @error('id_atasan') is-invalid @enderror">
                                                         @foreach ($users as $us)
-                                                        <option value="{{ $us->id_users }}" @if(
-                                                            old('id_users')==$us->id_users
-                                                            ) selected @endif>
+                                                        <option value="{{ $us->id_users }}" @if( $ap->id_atasan === old('id_atasan', $us->id_users) ) selected @endif>
                                                             {{ $us->nama_pegawai }}
                                                         </option>
                                                         @endforeach
@@ -239,13 +241,13 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="file_perizinan">Unggah Lampiran</label>
-                                                    <small class="form-text text-muted">Allow file extensions :.jpeg .jpg .png .pdf .docx
-                                                        .docx</small>
                                                     @if ($ap->file_perizinan)
                                                     <p>Previous File: <a
                                                             href="{{ asset('/storage/file_perizinan/' . $ap->file_perizinan) }}"
                                                             target="_blank">{{ $ap->file_perizinan }}</a></p>
                                                     @endif
+                                                    <small class="form-text text-muted">Allow file extensions :.jpeg .jpg .png .pdf .docx
+                                                        .docx</small>
                                                     <input type="file" class="form-control" id="file_perizinan"
                                                         name="file_perizinan"
                                                         @error('file_perizinan') <span class="invalid"
@@ -269,6 +271,7 @@
 
                                                 @endif
                                                 @if(auth()->user()->level === 'admin' || auth()->user()->level === 'ppk')
+                                                @if ($ap->jenis_perizinan !== 'I')
                                                 <div class="form-group">
                                                     <label for="status_izin_ppk">Persetujuan PPK</label>
                                                     <div class="input">
@@ -278,6 +281,7 @@
                                                         Ditolak<br>
                                                     </div>
                                                 </div>
+                                                @endif
                                                 <div id="alasan_ditolak_ppk" style="display: none;" class="form-group">
                                                     <label for="alasan_ditolak_ppk">Alasan Ditolak</label>
                                                     <textarea name="alasan_ditolak_ppk" id="alasan_ditolak_ppk"
