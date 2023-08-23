@@ -25,6 +25,7 @@ class Perizinan extends Model
         'alasan_ditolak_atasan',
         'status_izin_ppk',
         'alasan_ditolak_ppk',
+        'is_deleted',
     ];
     public function user()
     {
