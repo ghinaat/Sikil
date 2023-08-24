@@ -32,20 +32,19 @@
                             <tr>
                                 <td id={{$key+1}}>{{$key+1}}</td>
                                 <td id={{$key+1}}>{{$p->jenis_perizinan}}</td>
-                                <td id={{$key+1}}>{{$p->tgl_ajuan}}</td>
-                                <td id={{$key+1}}>{{$p->tgl_absen_awal}} - {{$p->tgl_absen_akhir}}</td>
+                                <td id={{$key+1}}>{{date_format( new DateTime($p->tgl_ajuan), 'd F Y')}}</td>
+                                <td id={{$key+1}}>{{date_format( new DateTime($p->tgl_absen_awal), 'd F Y')}} s.d.
+                                    {{ date_format( new DateTime($p->tgl_absen_akhir), 'd F Y')}}</td>
                                 <td id={{$key+1}}>{{$p->keterangan}}</td>
                                 <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
-                                    <a href="{{ asset('/storage/perizinan/'. $p->file_perizinan) }}" target="_blank"><i
-                                            class="fa fa-download"></i></a>
+                                    <a href="{{ asset('/storage/file_perzinan/'. $p->file_perizinan) }}"
+                                        target="_blank"><i class="fa fa-download"></i></a>
                                 </td>
                                 <td id={{$key+1}}>
                                     @if($p->status_izin_atasan == '0')
                                     Ditolak
                                     @elseif($p->status_izin_atasan == '1')
                                     Disetujui
-                                    @elseif($p->jenis_perizinan == 'I')
-
                                     @else
                                     Menunggu Persetujuan
                                     @endif
@@ -85,98 +84,97 @@
                                                             <input type="hidden" name="kode_finger"
                                                                 value="{{ Auth::user()->kode_finger}}">
                                                             <div class="form-group">
-                                                                <label for="tgl_absen_awal" class="form-label">Tanggal
-                                                                    Awal Izin </label>
+                                                                <label for="tgl_absen_awal" class='form-label'>Tanggal
+                                                                    Awal
+                                                                    Izin</label>
                                                                 <div class="form-input">
-                                                                    <input type="date"
+                                                                    <input type="date" class="form-control"
                                                                         class="form-control @error('tgl_absen_awal') is-invalid @enderror"
-                                                                        id="tgl_absen_awal" name="tgl_absen_awal"
-                                                                        value="{{$p->tgl_absen_awal ?? old('tgl_absen_awal')}}">
+                                                                        id="tgl_absen_awal" placeholder="Nama Diklat"
+                                                                        name="tgl_absen_awal"
+                                                                        value="{{$p -> tgl_absen_awal ?? old('tgl_absen_awal')}}">
                                                                     @error('tgl_absen_awal') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="textdanger">{{$message}}</span>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="tgl_absen_akhir" class="form-label">Tanggal
-                                                                    Akhir Izin</label>
+                                                                <label for="tgl_absen_akhir" class='form-label'>Tanggal
+                                                                    Akhir
+                                                                    Izin</label>
                                                                 <div class="form-input">
-                                                                    <input type="date"
+                                                                    <input type="date" class="form-control"
                                                                         class="form-control @error('tgl_absen_akhir') is-invalid @enderror"
-                                                                        id="tgl_absen_akhir" name="tgl_absen_akhir"
-                                                                        value="{{$p->tgl_absen_akhir ?? old('tgl_absen_akhir')}}">
+                                                                        id="tgl_absen_akhir" placeholder="Nama Diklat"
+                                                                        name="tgl_absen_akhir"
+                                                                        value="{{$p -> tgl_absen_akhir ?? old('tgl_absen_akhir')}}">
                                                                     @error('tgl_absen_akhir') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="textdanger">{{$message}}</span>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="jenis_perizinan">Jenis Ajuan</label>
+                                                                <label for="jenis_perizinan">Jenis Perizinan</label>
                                                                 <select
                                                                     class="form-control  @error('jenis_perizinan') is-invalid @enderror"
                                                                     id="jenis_perizinan" name="jenis_perizinan">
-                                                                    <option value="I" @if($p->jenis_perizinan == 'I' ||
-                                                                        old('jenis_perizinan')=='I'
-                                                                        )selected @endif>Izin</option>
-                                                                    <option value="DL" @if($p->jenis_perizinan == 'DL'||
-                                                                        old('jenis_perizinan')=='DL'
-                                                                        )selected @endif>Dinas Luar</option>
-                                                                    <option value="S" @if($p->jenis_perizinan == 'S' ||
-                                                                        old('jenis_perizinan')=='S'
-                                                                        )selected @endif>Sakit</option>
-                                                                    <option value="CS" @if($p->jenis_perizinan == 'CS'
-                                                                        ||
-                                                                        old('jenis_perizinan')=='CS'
-                                                                        )selected @endif>Cuti Sakit</option>
-                                                                    <option value="Prajab" @if($p->jenis_perizinan ==
-                                                                        'Prajab' || old('jenis_perizinan')=='Prajab'
-                                                                        )selected
-                                                                        @endif>Prajab</option>
-                                                                    <option value="CT" @if($p->jenis_perizinan == 'CT'
-                                                                        || old('jenis_perizinan')=='CT'
-                                                                        )selected @endif>Cuti Tahunan</option>
-                                                                    <option value="CM" @if($p->jenis_perizinan == 'CM'
-                                                                        ||old('jenis_perizinan')=='CM'
-                                                                        )selected @endif>Cuti Melahirkan</option>
-                                                                    <option value="CAP" @if($p->jenis_perizinan == 'CAP'
-                                                                        || old('jenis_perizinan')=='CAP' )selected
+                                                                    <option value="I" @if(old('jenis_perizinan', $p->
+                                                                        jenis_perizinan)=='I')selected
+                                                                        @endif>Izin</option>
+                                                                    <option value="DL" @if(old('jenis_perizinan', $p->
+                                                                        jenis_perizinan)=='DL' )selected
+                                                                        @endif>Dinas Luar</option>
+                                                                    <option value="S" @if(old('jenis_perizinan', $p->
+                                                                        jenis_perizinan)=='S' )selected
+                                                                        @endif>Sakit</option>
+                                                                    <option value="CS" @if(old('jenis_perizinan', $p->
+                                                                        jenis_perizinan)=='CS' )selected
+                                                                        @endif>Cuti Sakit</option>
+                                                                    <option value="Prajab" @if(old('jenis_perizinan',
+                                                                        $p->jenis_perizinan)=='Prajab'
+                                                                        )selected @endif>Prajab</option>
+                                                                    <option value="CT" @if(old('jenis_perizinan', $p->
+                                                                        jenis_perizinan)=='CT' )selected
+                                                                        @endif>Cuti Tahunan</option>
+                                                                    <option value="CM" @if(old('jenis_perizinan', $p->
+                                                                        jenis_perizinan)=='CM' )selected
+                                                                        @endif>Cuti Melahirkan</option>
+                                                                    <option value="CAP" @if(old('jenis_perizinan', $p->
+                                                                        jenis_perizinan)=='CAP' )selected
                                                                         @endif>CAP</option>
-                                                                    <option value="CH" @if($p->jenis_perizinan == 'CH'
-                                                                        ||old('jenis_perizinan')=='CH'
-                                                                        )selected @endif>Cuti Haji</option>
-                                                                    <option value="CB" @if($p->jenis_perizinan == 'CB'
-                                                                        ||
-                                                                        old('jenis_perizinan')=='CB'
-                                                                        )selected @endif>Cuti Bersama</option>
-                                                                    <option value="A" @if($p->jenis_perizinan == 'A' ||
-                                                                        old('jenis_perizinan')=='A'
-                                                                        )selected @endif>Alpha</option>
-                                                                    <option value="TB" @if($p->jenis_perizinan == 'TB'
-                                                                        ||
-                                                                        old('jenis_perizinan')=='TB'
-                                                                        )selected @endif>Tugas Belajar</option>
+                                                                    <option value="CH" @if(old('jenis_perizinan', $p->
+                                                                        jenis_perizinan)=='CH' )selected
+                                                                        @endif>Cuti Haji</option>
+                                                                    <option value="CB" @if(old('jenis_perizinan', $p->
+                                                                        jenis_perizinan)=='CB' )selected
+                                                                        @endif>Cuti Bersama</option>
+                                                                    <option value="A" @if(old('jenis_perizinan', $p->
+                                                                        jenis_perizinan)=='A' )selected
+                                                                        @endif>Alpha</option>
+                                                                    <option value="TB" @if(old('jenis_perizinan', $p->
+                                                                        jenis_perizinan)=='TB' )selected
+                                                                        @endif>Tugas Belajar</option>
                                                                 </select>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-6"
-                                                                    for="id_atasan">Atasan Langsung</label>
+                                                                <label for="keterangan"
+                                                                    class="form-label">Keterangan</label>
+                                                                <textarea rows="5" class="form-control" id="keterangan"
+                                                                    name="keterangan">{{$p -> keterangan ?? old('keterangan')}}</textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="id_atasan" for="id_atasan">Atasan
+                                                                    Langsung</label>
                                                                 <select id="id_atasan" name="id_atasan"
                                                                     class="form-control @error('id_atasan') is-invalid @enderror">
                                                                     @foreach ($users as $us)
                                                                     <option value="{{ $us->id_users }}" @if( $p->
-                                                                        id_atasan === old('id_atasan',
-                                                                        $us->id_users) ) selected @endif>
+                                                                        id_atasan === old('id_atasan', $us->id_users) )
+                                                                        selected @endif>
                                                                         {{ $us->nama_pegawai }}
                                                                     </option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="keterangan">Keterangan</label>
-                                                                <input type="text"
-                                                                    class="form-control @error('keterangan') is-invalid @enderror"
-                                                                    id="keterangan" name="keterangan"
-                                                                    value="{{$p -> keterangan ?? old('keterangan')}}">
-                                                                @error('keterangan') <span
-                                                                    class="text-danger">{{$message}}</span> @enderror
                                                             </div>
                                                             <div class="form-group">
                                                                 @foreach ($settingperizinan as $ps)
@@ -193,28 +191,31 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="file_perizinan">Unggah Lampiran</label>
-                                                                <small class="form-text text-muted">Allow file
-                                                                    extensions :.jpeg .jpg .png .pdf .docx
-                                                                    .docx</small>
                                                                 @if ($p->file_perizinan)
                                                                 <p>Previous File: <a
                                                                         href="{{ asset('/storage/file_perizinan/' . $p->file_perizinan) }}"
                                                                         target="_blank">{{ $p->file_perizinan }}</a>
                                                                 </p>
                                                                 @endif
+                                                                <small class="form-text text-muted">Allow file
+                                                                    extensions :.jpeg .jpg .png .pdf .docx
+                                                                    .docx</small>
                                                                 <input type="file" class="form-control"
                                                                     id="file_perizinan" name="file_perizinan"
                                                                     @error('file_perizinan') <span class="invalid"
                                                                     role="alert">{{$message}}</span>
                                                                 @enderror
                                                             </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Simpan</button>
+                                                                <a href="{{route('ajuanperizinan.index')}}"
+                                                                    class="btn btn-danger">
+                                                                    Batal
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Batal</button>
                                                 </div>
                                             </form>
                                         </div>

@@ -135,22 +135,23 @@ class PerizinanController extends Controller
      */
     public function update(Request $request, $id_perizinan)
     {
-        $request->validate([
+        $rules = [
             'kode_finger' => 'required',
             'tgl_absen_awal' => 'required',
             'tgl_absen_akhir' => 'required',
             'id_atasan' => 'required',
             'keterangan' => 'required',
             'jenis_perizinan' => 'required',
-            'file_perizinan' => 'required|mimes:pdf,doc,docx,png,jpg,jpeg',
-        ]);
-     
-        $perizinan = Perizinan::find('id_perizinan');
+            'file_perizinan' => 'mimes:pdf,doc,docx,png,jpg,jpeg',
+        ];
+        $request->validate($rules);
+         
+        $perizinan = Perizinan::find($id_perizinan);
 
         if ($request->jenis_perizinan === 'CT') {
             // Menggunakan kode_finger untuk mencari pengguna dalam tabel Perizinan
             $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
-        
+            
             if ($perizinanUser) {
                 // Check if the user has enough jatah cuti tahunan
                 $jatahCutiTahunan = $perizinanUser->cuti->jatah_cuti;
@@ -179,13 +180,14 @@ class PerizinanController extends Controller
                 return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
             }
         }
-
+        // dd($request, $rules, $perizinan);
+        
         if ($request->hasFile('file_perizinan')) {
             // Menghapus file file_perizinan sebelumnya
             if ($perizinan->file_perizinan) {
                 Storage::disk('public')->delete('file_perizinan/'.$perizinan->file_perizinan);
             }
-
+            
             // Upload file file_perizinan baru
             $file_perizinan = $request->file('file_perizinan');
             $namafile_perizinan = Str::random(10).'.'.$file_perizinan->getClientOriginalExtension();
