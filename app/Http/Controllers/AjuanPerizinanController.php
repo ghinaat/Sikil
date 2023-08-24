@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Perizinan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -45,9 +46,10 @@ class AjuanPerizinanController extends Controller
         }
 
 
-        return view('perizinan.index', [
+        return view('izin.index', [
             'ajuanperizinan' => $ajuanperizinan,
-            'users' => User::all(),
+            'users' => User::where('is_deleted', '0')->get(),
+            "settingperizinan" => User::with(['setting'])->get(),
         ]);
     }
 
@@ -79,7 +81,39 @@ class AjuanPerizinanController extends Controller
         ]);
         
         
-        $ajuanperizinan = new Perizinan();
+        $ajuanperizinan = new Perizinan();   
+        if ($request->jenis_perizinan === 'CT') {
+            // Menggunakan kode_finger untuk mencari pengguna dalam tabel Perizinan
+            $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
+        
+            if ($perizinanUser) {
+                // Check if the user has enough jatah cuti tahunan
+                $jatahCutiTahunan = $perizinanUser->cuti->jatah_cuti;
+                
+                $tglAbsenAwal = Carbon::parse($request->tgl_absen_awal);
+                $tglAbsenAkhir = Carbon::parse($request->tgl_absen_akhir);
+                $duration = $tglAbsenAwal->diffInDays($tglAbsenAkhir) + 1; // Include both start and end days
+        
+                // Add additional logic to check if the user is eligible for "cuti tahunan"
+                if ($jatahCutiTahunan < $duration) { // Menggunakan < bukan <=
+                    return redirect()->back()->with('error', 'Anda tidak memiliki jatah cuti tahunan yang cukup.');
+                }
+              
+                // Update the user's jatah_cuti in the cuti record
+                if ($perizinanUser->cuti) {
+                    $perizinanUser->cuti->jatah_cuti -= $duration;
+                    if ($perizinanUser->cuti->save()) {
+                        // Proceed with creating Perizinan record
+                    } else {
+                        return redirect()->back()->with('error', 'Gagal mengurangi jatah cuti pengguna.');
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Tidak ada data cuti yang sesuai.');
+                }
+            } else {
+                return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
+            }
+        }
         
         $file = $request->file('file_perizinan');
         
@@ -197,7 +231,7 @@ class AjuanPerizinanController extends Controller
             $ajuanperizinan = Perizinan::find($id_perizinan);
             
             if (! $ajuanperizinan) {
-                return redirect()->route('ajuanperizinan.index')->with('error_message', 'Data tidak ditemukan');
+                return redirect()->route('izin.index')->with('error_message', 'Data tidak ditemukan');
             }
             
             $ajuanperizinan->id_atasan = $request->id_atasan;
@@ -242,7 +276,7 @@ class AjuanPerizinanController extends Controller
             
         }
 
-        return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+        return redirect()->route('izin.index')->with('success_message', 'Data telah tersimpan');
 
     }
 
@@ -257,6 +291,6 @@ class AjuanPerizinanController extends Controller
             ]);
         }
     
-        return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah terhapus');
+        return redirect()->route('izin.index')->with('success_message', 'Data telah terhapus');
     }
     }

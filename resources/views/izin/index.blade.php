@@ -2,6 +2,12 @@
 @section('title', ' Perizinan')
 @section('content_header')
 <h1 class="m-0 text-dark"> Perizinan</h1>
+<style>
+    .form-container {
+        display: block;
+        margin-bottom: 10px; /* Untuk memberikan jarak antar div */
+    }
+</style>
 @stop
 @section('content')
 <div class="row">
@@ -9,58 +15,54 @@
         <div class="card">
             <div class="card-body">
 
-                <form action="{{ route('ajuanperizinan.index') }}" method="GET" class="form-inline mb-3">
-                    
-                    <div class="form-group mb-2">    
-                        <label for="kode_finger" >Nama Pegawai :</label> &nbsp;
-                        <select class="form-control" name="kode_finger" id="kode_finger" class="form-select" >
-                            <option value="all">Semua Pegawai</option>
-                            @foreach ($users as $user)
-                            <option value="{{ $user->kode_finger }}" @if(request()->input('kode_finger') == $user->kode_finger) selected @endif>{{ $user->nama_pegawai }}</option>
-                            @endforeach
-                        </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                    </div> 
-                    <br>
-                    <div class="form-group mb-2 ">
-                        <label for="jenis_perizinan" >Jenis Perizinan :</label>&nbsp;
-                        <select class="form-control" id="jenis_perizinan" name="jenis_perizinan">
-                            <option value="all">Semua Jenis Perizinan</option>
-                            <option value="I" @if(request()->input('jenis_perizinan')=='I' )selected
-                                @endif>Izin</option>
-                            <option value="DL" @if(request()->input('jenis_perizinan')=='DL' )selected
-                                @endif>Dinas Luar</option>
-                            <option value="S" @if(request()->input('jenis_perizinan')=='S' )selected
-                                @endif>Sakit</option>
-                            <option value="CS" @if(request()->input('jenis_perizinan')=='CS' )selected
-                                @endif>Cuti Sakit</option>
-                            <option value="Prajab" @if(request()->input('jenis_perizinan')=='Prajab'
-                                )selected @endif>Prajab</option>
-                            <option value="CT" @if(request()->input('jenis_perizinan')=='CT' )selected
-                                @endif>Cuti Tahunan</option>
-                            <option value="CM" @if(request()->input('jenis_perizinan')=='CM' )selected
-                                @endif>Cuti Melahirkan</option>
-                            <option value="CAP" @if(request()->input('jenis_perizinan')=='CAP' )selected
-                                @endif>CAP</option>
-                            <option value="CH" @if(request()->input('jenis_perizinan')=='CH' )selected
-                                @endif>Cuti Haji</option>
-                            <option value="CB" @if(request()->input('jenis_perizinan')=='CB' )selected
-                                @endif>Cuti Bersama</option>
-                            <option value="A" @if(request()->input('jenis_perizinan')=='A' )selected
-                                @endif>Alpha</option>
-                            <option value="TB" @if(request()->input('jenis_perizinan')=='TB' )selected
-                                @endif>Tugas Belajar</option>
-                        </select>
-
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="tgl_absen_awal" class="my-label mr-2">Tanggal Awal: </label>
-                        <input type="date" id="tgl_absen_awal" name="tgl_absen_awal" required class="form-control" value="{{request()->input('tgl_absen_awal')}}">&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                        <label for="tgl_absen_akhir" class="form-label">Tanggal Akhir: </label>&nbsp;&nbsp;
-                        <input type="date" id="tgl_absen_akhir" name="tgl_absen_akhir" required class="form-control" value="{{request()->input('tgl_absen_akhir')}}"> &nbsp;&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary"> Tampilkan</button>
-                    </div>  
-
-                </form>
+                    <form action="{{ route('ajuanperizinan.index') }}" method="GET" class="form-inline mb-3">
+                        <div class="form-group">
+                            <label for="kode_finger">Nama Pegawai:</label>&nbsp;&nbsp;
+                            <select class="form-control" name="kode_finger" id="kode_finger" class="form-select" >
+                                <option value="all">Semua Pegawai</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->kode_finger }}" @if(request()->input('kode_finger') == $user->kode_finger) selected @endif>{{ $user->nama_pegawai }}</option>
+                                @endforeach
+                            </select>&nbsp;&nbsp;
+                        </div>
+                        <div class="form-group">    
+                            <label for="jenis_perizinan">Jenis Perizinan :</label>&nbsp;&nbsp;
+                            <select class="form-control" id="jenis_perizinan" name="jenis_perizinan">
+                                <option value="all">Semua Jenis Perizinan</option>
+                                <option value="I" @if(request()->input('jenis_perizinan')=='I' )selected
+                                    @endif>Izin</option>
+                                <option value="DL" @if(request()->input('jenis_perizinan')=='DL' )selected
+                                    @endif>Dinas Luar</option>
+                                <option value="S" @if(request()->input('jenis_perizinan')=='S' )selected
+                                    @endif>Sakit</option>
+                                <option value="CS" @if(request()->input('jenis_perizinan')=='CS' )selected
+                                    @endif>Cuti Sakit</option>
+                                <option value="Prajab" @if(request()->input('jenis_perizinan')=='Prajab'
+                                    )selected @endif>Prajab</option>
+                                <option value="CT" @if(request()->input('jenis_perizinan')=='CT' )selected
+                                    @endif>Cuti Tahunan</option>
+                                <option value="CM" @if(request()->input('jenis_perizinan')=='CM' )selected
+                                    @endif>Cuti Melahirkan</option>
+                                <option value="CAP" @if(request()->input('jenis_perizinan')=='CAP' )selected
+                                    @endif>CAP</option>
+                                <option value="CH" @if(request()->input('jenis_perizinan')=='CH' )selected
+                                    @endif>Cuti Haji</option>
+                                <option value="CB" @if(request()->input('jenis_perizinan')=='CB' )selected
+                                    @endif>Cuti Bersama</option>
+                                <option value="A" @if(request()->input('jenis_perizinan')=='A' )selected
+                                    @endif>Alpha</option>
+                                <option value="TB" @if(request()->input('jenis_perizinan')=='TB' )selected
+                                    @endif>Tugas Belajar</option>
+                            </select>&nbsp;&nbsp;
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="tgl_absen_awal" class="my-label mr-2">Tanggal Awal: </label>
+                            <input type="date" id="tgl_absen_awal" name="tgl_absen_awal" required class="form-control" value="{{request()->input('tgl_absen_awal')}}">&nbsp;&nbsp;
+                            <label for="tgl_absen_akhir" class="form-label">Tanggal Akhir: </label>&nbsp;&nbsp;
+                            <input type="date" id="tgl_absen_akhir" name="tgl_absen_akhir" required class="form-control" value="{{request()->input('tgl_absen_akhir')}}">&nbsp;&nbsp;&nbsp;
+                            <button type="submit" class="btn btn-primary"> Tampilkan</button>&nbsp;&nbsp;
+                        </div>
+                    </form>               
                 @can('isAdmin')
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
                     role="dialog">
@@ -370,6 +372,16 @@
                                 <label for="keterangan">Keterangan</label>
                                 <textarea rows="5" class="form-control" id="keterangan" name="keterangan"
                                     required></textarea>
+                            </div>
+                            <div class="form-group">
+                                @foreach ($settingperizinan as $ps)
+                                @if ($ps->setting && $ps->setting->status == '1')
+                                <label for="id">PPK</label>
+                                <input type="text" class="form-control @error('') is-invalid @enderror" id="id"
+                                    name="" value="{{ $ps->nama_pegawai}}" readonly>
+                                @error('') <span class="text-danger">{{$message}}</span> @enderror
+                                @endif
+                                @endforeach
                             </div>
                             <div class="form-group">
                                 <label for="id_atasan">Atasan Langsung</label>
