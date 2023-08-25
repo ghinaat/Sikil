@@ -150,8 +150,8 @@
                                     <select id="id_kegiatan" name="id_kegiatan"
                                         class="form-select @error('id_kegiatan') is-invalid @enderror">
                                         @foreach ($kegiatan as $kg)
-                                        <option value="{{ $kg->id_kegiatan }}" @if( old('id_kegiatan')==$kg->id_kegiatan
-                                            ) selected @endif>
+                                        <option value="{{ $kg->id_kegiatan }}" @if( $tk->id_kegiatan === old('id_kegiatan', $kg->id_kegiatan
+                                            ) ) selected @endif>
                                             {{ $kg->nama_kegiatan }}
                                         </option>
                                         @endforeach
@@ -164,8 +164,7 @@
                                     <select id="id_users" name="id_users"
                                         class="form-select @error('id_users') is-invalid @enderror">
                                         @foreach ($user as $us)
-                                        <option value="{{ $us->id_users }}" @if( old('id_users')==$us->id_users )
-                                            selected @endif">
+                                        <option value="{{ $us->id_users }}" @if( $tk->id_users === old('id_users', $us->id_users) ) selected @endif>
                                             {{ $us->nama_pegawai }}</option>
                                         @endforeach
                                     </select>
@@ -177,8 +176,8 @@
                                     <select class="form-select @error('nama') isinvalid @enderror" id="id_peran"
                                         name="id_peran">
                                         @foreach ($peran as $p)
-                                        <option value="{{ $p->id_peran }}" @if( old('id_peran')==$p->
-                                            id_peran )
+                                        <option value="{{ $p->id_peran }}" @if( $tk-> id_peran ===  old('id_peran',$p->
+                                            id_peran ))
                                             selected @endif">
                                             {{ $p->nama_peran }}</option>
                                         @endforeach

@@ -79,10 +79,9 @@
                                                     <select id="id_users" name="id_users"
                                                         class="form-select @error('id_users') is-invalid @enderror">
                                                         @foreach ($user as $us)
-                                                        <option value="{{ $us->id_users }}" @if( old('id_users')==$us->
-                                                            id_users )
-                                                            selected @endif">
-                                                            {{ $us->nama_pegawai }}</option>
+                                                        <option value="{{ $us->id_users }}" @if( $gs->id_users === old('id_users', $us->id_users) ) selected @endif>
+                                                            {{ $us->nama_pegawai }}
+                                                        </option>
                                                         @endforeach
                                                     </select>
                                                 </div>

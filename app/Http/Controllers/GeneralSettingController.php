@@ -14,7 +14,7 @@ class GeneralSettingController extends Controller
     public function index()
     {
 
-        $generalsetting = GeneralSetting::all();
+        $generalsetting = GeneralSetting::where('is_deleted', '0');
 
         return view('generalsetting.index', [
             'generalsetting' => $generalsetting,
@@ -100,8 +100,14 @@ class GeneralSettingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(GeneralSetting $generalSetting)
+    public function destroy($id_setting)
     {
-        //
+        $generalsetting = GeneralSetting::find($id_setting);
+        if ($generalsetting) {
+            $generalsetting->is_deleted = '1';
+            $generalsetting->save();
+        }
+
+        return redirect()->back()->with('success_message', 'Data telah terhapus');
     }
 }
