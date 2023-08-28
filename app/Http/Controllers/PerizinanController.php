@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Grei\TanggalMerah;
+use DateTime;
 use Carbon\Carbon;
 
 class PerizinanController extends Controller
@@ -68,6 +70,9 @@ class PerizinanController extends Controller
             $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
         
             if ($perizinanUser) {
+                if ($perizinanUser->cuti == null) {
+                    return redirect()->back()->with('error', 'Anda belum memiliki cuti tahunan.');
+                }
                 // Check if the user has enough jatah cuti tahunan
                 $jatahCutiTahunan = $perizinanUser->cuti->jatah_cuti;
                 
@@ -103,6 +108,11 @@ class PerizinanController extends Controller
         $perizinan->tgl_absen_awal = $request->tgl_absen_awal;
         $perizinan->jenis_perizinan = $request->jenis_perizinan;
         $perizinan->tgl_absen_akhir = $request->tgl_absen_akhir;
+        $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan(
+            $request->tgl_absen_awal,
+            $request->tgl_absen_akhir
+        );
+        $perizinan->jumlah_hari_pengajuan = $jumlah_hari_pengajuan;
         $perizinan->id_atasan = $request->id_atasan;
         $perizinan->keterangan = $request->keterangan;
         $perizinan->file_perizinan = $fileName;
@@ -111,7 +121,7 @@ class PerizinanController extends Controller
 
         $perizinan->save();   
      
-        return redirect()->back()->with('success', 'Data telah tersimpan.');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
@@ -149,6 +159,9 @@ class PerizinanController extends Controller
         $perizinan = Perizinan::find($id_perizinan);
 
         if ($request->jenis_perizinan === 'CT') {
+            if ($perizinanUser->cuti == null) {
+                return redirect()->back()->with('error', 'Anda belum memiliki cuti tahunan.');
+            }
             // Menggunakan kode_finger untuk mencari pengguna dalam tabel Perizinan
             $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
             
@@ -205,7 +218,7 @@ class PerizinanController extends Controller
       
         $perizinan->save();   
      
-        return redirect()->back()->with('success', 'Data telah tersimpan.');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
     /**
      * Remove the specified resource from storage.
@@ -219,6 +232,6 @@ class PerizinanController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Data telah tersimpan.');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 }

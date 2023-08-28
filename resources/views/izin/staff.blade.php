@@ -22,6 +22,7 @@
                                 <th>Tanggal Pelaksanaan</th>
                                 <th>Keterangan</th>
                                 <th>Lampiran</th>
+                                <th>Jumlah Hari Cuti</th>
                                 <th>Persetujuan Atasan</th>
                                 <th>Persetujuan PPK</th>
                                 <th>Opsi</th>
@@ -40,6 +41,7 @@
                                     <a href="{{ asset('/storage/file_perizinan/'. $p->file_perizinan) }}"
                                         target="_blank"><i class="fa fa-download"></i></a>
                                 </td>
+                                <td id={{$key+1}}>{{$p->jumlah_hari_pengajuan}}</td>
                                 <td id={{$key+1}}>
                                     @if($p->status_izin_atasan == '0')
                                     Ditolak

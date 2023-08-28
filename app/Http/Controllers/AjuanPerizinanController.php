@@ -87,7 +87,9 @@ class AjuanPerizinanController extends Controller
             $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
         
             if ($perizinanUser) {
-                // Check if the user has enough jatah cuti tahunan
+                if ($perizinanUser->cuti == null) {
+                    return redirect()->back()->with('error', 'Anda belum memiliki cuti tahunan.');
+                }
                 $jatahCutiTahunan = $perizinanUser->cuti->jatah_cuti;
                 
                 $tglAbsenAwal = Carbon::parse($request->tgl_absen_awal);
@@ -97,6 +99,7 @@ class AjuanPerizinanController extends Controller
                 // Add additional logic to check if the user is eligible for "cuti tahunan"
                 if ($jatahCutiTahunan < $duration) { // Menggunakan < bukan <=
                     return redirect()->back()->with('error', 'Anda tidak memiliki jatah cuti tahunan yang cukup.');
+
                 }
               
                 // Update the user's jatah_cuti in the cuti record
@@ -110,7 +113,9 @@ class AjuanPerizinanController extends Controller
                 } else {
                     return redirect()->back()->with('error', 'Tidak ada data cuti yang sesuai.');
                 }
-            } else {
+
+           
+         } else {
                 return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
             }
         }
@@ -158,18 +163,22 @@ class AjuanPerizinanController extends Controller
      */
     public function update(Request $request, $id_perizinan)
     {
-        if(auth()->user()->level === 'bod')
-        {
-            $request->validate([
+        if (auth()->user()->level === 'bod' || auth()->user()->level === 'kadiv') {
+            $rules = [
                 'status_izin_atasan' => 'required',
-            ]);
-
+            ];
+            
             $ajuanperizinan = Perizinan::find($id_perizinan);
+            $request->validate($rules);
             $ajuanperizinan->status_izin_atasan = $request->status_izin_atasan;
-            if($request->status_izin_atasan === '0'){
+            
+            if ($request->status_izin_atasan === '0') {
                 $ajuanperizinan->alasan_ditolak_atasan = $request->alasan_ditolak_atasan;
             }
+            
             $ajuanperizinan->save();
+            
+            return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
         }
         elseif(auth()->user()->level === 'ppk'){
             $ajuanperizinan = Perizinan::find($id_perizinan);
@@ -196,6 +205,7 @@ class AjuanPerizinanController extends Controller
                 $ajuanperizinan->alasan_ditolak_atasan = $request->alasan_ditolak_atasan;
             }
             $ajuanperizinan->save();
+            return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
         }
         else
         {
@@ -231,7 +241,7 @@ class AjuanPerizinanController extends Controller
             $ajuanperizinan = Perizinan::find($id_perizinan);
             
             if (! $ajuanperizinan) {
-                return redirect()->route('izin.index')->with('error_message', 'Data tidak ditemukan');
+                return redirect()->route('ajuanperizinan.index')->with('error', 'Data tidak ditemukan');
             }
             
             $ajuanperizinan->id_atasan = $request->id_atasan;
@@ -276,7 +286,7 @@ class AjuanPerizinanController extends Controller
             
         }
 
-        return redirect()->route('izin.index')->with('success_message', 'Data telah tersimpan');
+        return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
 
     }
 
@@ -291,6 +301,6 @@ class AjuanPerizinanController extends Controller
             ]);
         }
     
-        return redirect()->route('izin.index')->with('success_message', 'Data telah terhapus');
+        return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah terhapus');
     }
     }

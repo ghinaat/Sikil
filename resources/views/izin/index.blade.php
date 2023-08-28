@@ -120,8 +120,8 @@
                                     @endif
 
                                 </td>
+                                @if (auth()->user()->level == 'ppk' || auth()->user()->level == 'admin')
                                 <td id="{{ $key + 1 }}">
-                                    @if (auth()->user()->level == 'ppk' || auth()->user()->level == 'admin')
                                         @if ($ap->jenis_perizinan === 'I')
                                         <b>Bukan PPK Persetujuan</b>
                                         @elseif ($ap->status_izin_ppk === null)
@@ -131,8 +131,8 @@
                                         @else
                                             Ditolak
                                         @endif
-                                    @endif
                                 </td>
+                                @endif
                                 <td>
                                     <div class="btn-group">
                                         <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
@@ -153,7 +153,7 @@
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="editModalLabel">Edit Diklat</h5>
+                                            <h5 class="modal-title" id="editModalLabel">Edit Perizinan</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
