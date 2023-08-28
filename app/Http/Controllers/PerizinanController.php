@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class PerizinanController extends Controller
 {
@@ -59,7 +60,7 @@ class PerizinanController extends Controller
             'id_atasan' => 'required',
             'keterangan' => 'required',
             'jenis_perizinan' => 'required',
-            'file_perizinan' => 'required|mimes:pdf,doc,docx,png,jpg,jpeg',
+            'file_perizinan' => 'mimes:pdf,doc,docx,png,jpg,jpeg',
         ]);
         
         $perizinan = new Perizinan();   
@@ -95,17 +96,21 @@ class PerizinanController extends Controller
                 return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
             }
         }
-        
-        $file = $request->file('file_perizinan');
-        $fileName = Str::random(20).'.'.$file->getClientOriginalExtension();
-        $file->storeAs('file_perizinan', $fileName, 'public');
+        if ($request->hasFile('file_perizinan')) {
+            // Upload dan simpan file jika ada
+            $file_perizinan = $request->file('file_perizinan');
+            $namafile_perizinan = Str::random(10) . '.' . $file_perizinan->getClientOriginalExtension();
+            Storage::disk('public')->put('file_perizinan/' . $namafile_perizinan, file_get_contents($file_perizinan));
+            $perizinan->file_perizinan = $namafile_perizinan;
+        } else {
+            $perizinan->file_perizinan = null; // Atur kolom file_perizinan menjadi NULL jika tidak ada file diunggah
+        }
         $perizinan->kode_finger = $request->kode_finger;
         $perizinan->tgl_absen_awal = $request->tgl_absen_awal;
         $perizinan->jenis_perizinan = $request->jenis_perizinan;
         $perizinan->tgl_absen_akhir = $request->tgl_absen_akhir;
         $perizinan->id_atasan = $request->id_atasan;
         $perizinan->keterangan = $request->keterangan;
-        $perizinan->file_perizinan = $fileName;
         $perizinan->status_izin_atasan = null;
         $perizinan->status_izin_ppk = null;
 
