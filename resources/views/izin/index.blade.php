@@ -250,11 +250,7 @@
                                                     @endif
                                                     <small class="form-text text-muted">Allow file extensions :.jpeg .jpg .png .pdf .docx
                                                         .docx</small>
-                                                    <input type="file" class="form-control" id="file_perizinan"
-                                                        name="file_perizinan"
-                                                        @error('file_perizinan') <span class="invalid"
-                                                        role="alert">{{$message}}</span>
-                                                    @enderror
+                                                        <input type="file" class="form-control" id="file_perizinan" name="file_perizinan">
                                                 </div>
                                                 @endcan
                                                 @if($ap->id_atasan == auth()->user()->id_users or auth()->user()->level=='admin')
@@ -403,10 +399,7 @@
                                 <label for="file_perizinan">Unggah Lampiran</label>
                                 <small class="form-text text-muted">Allow file extensions :
                                     .jpeg .jpg .png .pdf .docx</small>
-                                <input type="file" class="form-control" id="file_perizinan"
-                                    enctype="multipart/form-data" name="file_perizinan" @error('file_perizinan') <span
-                                    class="invalid" role="alert">{{$message}}</span>
-                                @enderror
+                                    <input type="file" class="form-control" id="file_perizinan" name="file_perizinan">
                             </div>
                         </div>
                     </div>
