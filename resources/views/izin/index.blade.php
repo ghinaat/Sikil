@@ -114,8 +114,8 @@
                                     @endif
 
                                 </td>
+                                @if (auth()->user()->level == 'ppk' || auth()->user()->level == 'admin')
                                 <td id="{{ $key + 1 }}">
-                                    @if (auth()->user()->level == 'ppk' || auth()->user()->level == 'admin')
                                         @if ($ap->jenis_perizinan === 'I')
                                         <b>Bukan PPK Persetujuan</b>
                                         @elseif ($ap->status_izin_ppk === null)
@@ -125,8 +125,8 @@
                                         @else
                                             Ditolak
                                         @endif
-                                    @endif
                                 </td>
+                                @endif
                                 <td>
                                     <div class="btn-group">
                                         <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
@@ -147,7 +147,7 @@
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="editModalLabel">Edit Diklat</h5>
+                                            <h5 class="modal-title" id="editModalLabel">Edit Perizinan</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -244,11 +244,7 @@
                                                     @endif
                                                     <small class="form-text text-muted">Allow file extensions :.jpeg .jpg .png .pdf .docx
                                                         .docx</small>
-                                                    <input type="file" class="form-control" id="file_perizinan"
-                                                        name="file_perizinan"
-                                                        @error('file_perizinan') <span class="invalid"
-                                                        role="alert" required>{{$message}}</span>
-                                                    @enderror
+                                                        <input type="file" class="form-control" id="file_perizinan" name="file_perizinan">
                                                 </div>
                                                 @endcan
                                                 @if($ap->id_atasan == auth()->user()->id_users or auth()->user()->level=='admin')
@@ -399,15 +395,12 @@
                                 <label for="ppk">PPK</label>
                                 <input type="text" class="form-control" id="ppk" name="ppk" required>
                             </div>
- -->
+
                             <div class="form-group">
                                 <label for="file_perizinan">Unggah Lampiran</label>
                                 <small class="form-text text-muted">Allow file extensions :
                                     .jpeg .jpg .png .pdf .docx</small>
-                                <input type="file" class="form-control @error('file_perizinan') is-invalid @enderror" id="file_perizinan"
-                                    enctype="multipart/form-data" name="file_perizinan"> @error('file_perizinan') <span
-                                    class="invalid" role="alert">{{$message}}</span>
-                                @enderror
+                                    <input type="file" class="form-control" id="file_perizinan" name="file_perizinan">
                             </div>
                         </div>
                     </div>

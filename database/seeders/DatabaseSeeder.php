@@ -110,7 +110,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'kadiv@kadiv.com',
             'password' => '12345678',
             '_password_' => '12345678',
-            'level' => 'Kadiv',
+            'level' => 'kadiv',
             'kode_finger' => '989898',
             'id_jabatan' => '2',
             'is_deleted' => '0',
