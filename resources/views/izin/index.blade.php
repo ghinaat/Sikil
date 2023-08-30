@@ -117,7 +117,7 @@
                                 @if (auth()->user()->level == 'ppk' || auth()->user()->level == 'admin')
                                 <td id="{{ $key + 1 }}">
                                         @if ($ap->jenis_perizinan === 'I')
-                                        <b>Bukan PPK Persetujuan</b>
+                                        <b></b>
                                         @elseif ($ap->status_izin_ppk === null)
                                             Menunggu Persetujuan
                                         @elseif ($ap->status_izin_ppk === '1')
@@ -258,7 +258,7 @@
                                                 </div>
                                                 <div id="alasan_ditolak_atasan" style="display: none;" class="form-group">
                                                     <label for="alasan_ditolak_atasan">Alasan Ditolak</label>
-                                                    <textarea name="alasan_ditolak_atasan" id="alasan_ditolak_atasan" cols="30" rows="3" class="form-control" required>{{ $ap->alasan_ditolak_atasan }}</textarea>
+                                                    <textarea name="alasan_ditolak_atasan" id="alasan_ditolak_atasan" cols="30" rows="3" class="form-control">{{ $ap->alasan_ditolak_atasan }}</textarea>
                                                 </div>
 
                                                 @endif
@@ -277,7 +277,7 @@
                                                 <div id="alasan_ditolak_ppk" style="display: none;" class="form-group">
                                                     <label for="alasan_ditolak_ppk">Alasan Ditolak</label>
                                                     <textarea name="alasan_ditolak_ppk" id="alasan_ditolak_ppk"
-                                                        cols="30" rows="3" class="form-control" required>{{ $ap->alasan_ditolak_ppk }}</textarea>
+                                                        cols="30" rows="3" class="form-control">{{ $ap->alasan_ditolak_ppk }}</textarea>
                                                 </div>
                                                 @endif
                                         </div>
@@ -391,16 +391,14 @@
                                 </select>
                                 @error('id_atasan') <span class="textdanger">{{$message}}</span> @enderror
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="ppk">PPK</label>
-                                <input type="text" class="form-control" id="ppk" name="ppk" required>
-                            </div>
-
                             <div class="form-group">
                                 <label for="file_perizinan">Unggah Lampiran</label>
-                                <small class="form-text text-muted">Allow file extensions :
-                                    .jpeg .jpg .png .pdf .docx</small>
-                                    <input type="file" class="form-control" id="file_perizinan" name="file_perizinan">
+                                <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf .docx</small>
+                                <input type="file" class="form-control @error('file_perizinan') is-invalid @enderror" id="file_perizinan" name="file_perizinan" onchange="validateFile(this)">
+                                <div class="invalid-feedback" id="fileError" style="display: none;">Tipe file tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
+                                @error('file_perizinan')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -441,6 +439,29 @@ document.querySelectorAll('input[type=radio][name=status_izin_ppk]').forEach(inp
     }
 }));
 </script>
+
+<script>
+    function validateFile(input) {
+        const allowedExtensions = ['.jpeg', '.jpg', '.png', '.pdf', '.docx'];
+        const fileInput = input.files[0];
+        const fileErrorElement = document.getElementById('fileError');
+    
+        if (fileInput) {
+            const fileName = fileInput.name;
+            const fileExtension = '.' + fileName.split('.').pop().toLowerCase();
+    
+            if (!allowedExtensions.includes(fileExtension)) {
+                fileErrorElement.style.display = 'block';
+                input.classList.add('is-invalid');
+                input.value = ''; // Clear the input
+            } else {
+                fileErrorElement.style.display = 'none';
+                input.classList.remove('is-invalid');
+            }
+        }
+    }
+    </script>
+
 <script>
 $('#example2').DataTable({
     "responsive": true,

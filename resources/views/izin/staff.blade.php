@@ -306,7 +306,7 @@
                                 <div class="form-group">
                                     <label for="keterangan">Keterangan</label>
                                     <textarea rows="4" class="form-control @error('keterangan') is-invalid @enderror"
-                                        id="keterangan" name="keterangan" value="{{old('keterangan')}}" required></textarea>
+                                        id="keterangan" name="keterangan"  required>{{old('keterangan')}}</textarea>
                                     @error('keterangan') <span class="text-danger">{{$message}}</span> @enderror
                                 </div>
                                 <div class="form-group">
