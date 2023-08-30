@@ -169,7 +169,7 @@ table-stripped" id="example2">
 
                         <input type="text" class="form-control @error('nama_perusahaan') is-invalid @enderror"
                             id="nama_perusahaan"  name="nama_perusahaan"
-                            value="{{old('nama_perusahaan')}}">
+                            value="{{old('nama_perusahaan')}}" required>
                         @error('nama_perusahaan') <span class="textdanger">{{$message}}</span> @enderror
 
                     </div>
@@ -177,7 +177,7 @@ table-stripped" id="example2">
                         <label for="masa_kerja" class="form-label">Masa Kerja</label>
 
                         <input type="text" class="form-control @error('masa_kerja') is-invalid @enderror"
-                            id="masa_kerja" name="masa_kerja" value="{{old('masa_kerja')}}">
+                            id="masa_kerja" name="masa_kerja" value="{{old('masa_kerja')}}" required>
                         @error('masa_kerja') <span class="textdanger">{{$message}}</span> @enderror
 
                     </div>
