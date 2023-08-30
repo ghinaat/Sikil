@@ -205,7 +205,7 @@
                                                                 <input type="file" class="form-control"
                                                                     id="file_perizinan" name="file_perizinan"
                                                                     @error('file_perizinan') <span class="invalid"
-                                                                    role="alert" required>{{$message}}</span>
+                                                                    role="alert">{{$message}}</span>
                                                                 @enderror
                                                             </div>
                                                             <div class="modal-footer">
@@ -324,7 +324,7 @@
                                     <small class="form-text text-muted">Allow file extensions : .jpeg
                                         .jpg .png .pdf
                                         .docx</small>
-                                    <input type="file" name="file_perizinan" id="file_perizinan" class="form-control" required>
+                                    <input type="file" name="file_perizinan" id="file_perizinan" class="form-control">
                                     @error('file_perizinan')
                                     <span class="textdanger">{{$message}}</span> @enderror
                                 </div>
