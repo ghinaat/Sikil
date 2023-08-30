@@ -13,6 +13,7 @@ use App\Models\Presensi;
 use App\Models\TimKegiatan;
 use App\Models\TingkatPendidikan;
 use App\Models\User;
+use App\Models\Cuti;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -162,5 +163,10 @@ class DatabaseSeeder extends Seeder
         Kegiatan::factory(40)->create();
         TimKegiatan::factory(40)->create();
         // Presensi::factory(100)->create();
+        User::all()->each(function ($user) {
+            Cuti::factory()->create([
+                'id_users' => $user->id_users,
+            ]);
+        });
     }
 }
