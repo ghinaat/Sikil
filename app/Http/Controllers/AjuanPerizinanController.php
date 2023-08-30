@@ -131,6 +131,10 @@ class AjuanPerizinanController extends Controller
         $ajuanperizinan->tgl_ajuan = $request->tgl_ajuan;
         $ajuanperizinan->tgl_absen_awal = $request->tgl_absen_awal;
         $ajuanperizinan->tgl_absen_akhir = $request->tgl_absen_akhir;
+        $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan(
+            $request->tgl_absen_awal,
+            $request->tgl_absen_akhir
+        );
         $ajuanperizinan->keterangan = $request->keterangan;
         $ajuanperizinan->file_perizinan = $fileName;
         $ajuanperizinan->status_izin_atasan = null; // Default menunggu persetujuan

@@ -216,6 +216,10 @@ class PerizinanController extends Controller
         $perizinan->tgl_absen_awal = $request->tgl_absen_awal;
         $perizinan->jenis_perizinan = $request->jenis_perizinan;
         $perizinan->tgl_absen_akhir = $request->tgl_absen_akhir;
+        $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan(
+            $request->tgl_absen_awal,
+            $request->tgl_absen_akhir
+        );
         $perizinan->id_atasan = $request->id_atasan;
         $perizinan->keterangan = $request->keterangan;
         $perizinan->status_izin_atasan = null;
