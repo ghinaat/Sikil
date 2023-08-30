@@ -94,7 +94,7 @@
                                                                         class="form-control @error('tgl_absen_awal') is-invalid @enderror"
                                                                         id="tgl_absen_awal" placeholder="Nama Diklat"
                                                                         name="tgl_absen_awal"
-                                                                        value="{{$p -> tgl_absen_awal ?? old('tgl_absen_awal')}}">
+                                                                        value="{{$p -> tgl_absen_awal ?? old('tgl_absen_awal')}}" required>
                                                                     @error('tgl_absen_awal') <span
                                                                         class="textdanger">{{$message}}</span>
                                                                     @enderror
@@ -109,7 +109,7 @@
                                                                         class="form-control @error('tgl_absen_akhir') is-invalid @enderror"
                                                                         id="tgl_absen_akhir" placeholder="Nama Diklat"
                                                                         name="tgl_absen_akhir"
-                                                                        value="{{$p -> tgl_absen_akhir ?? old('tgl_absen_akhir')}}">
+                                                                        value="{{$p -> tgl_absen_akhir ?? old('tgl_absen_akhir')}}" required>
                                                                     @error('tgl_absen_akhir') <span
                                                                         class="textdanger">{{$message}}</span>
                                                                     @enderror
@@ -162,7 +162,7 @@
                                                                 <label for="keterangan"
                                                                     class="form-label">Keterangan</label>
                                                                 <textarea rows="5" class="form-control" id="keterangan"
-                                                                    name="keterangan">{{$p -> keterangan ?? old('keterangan')}}</textarea>
+                                                                    name="keterangan" required>{{$p -> keterangan ?? old('keterangan')}}</textarea>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="id_atasan" for="id_atasan">Atasan
@@ -205,7 +205,7 @@
                                                                 <input type="file" class="form-control"
                                                                     id="file_perizinan" name="file_perizinan"
                                                                     @error('file_perizinan') <span class="invalid"
-                                                                    role="alert">{{$message}}</span>
+                                                                    role="alert" required>{{$message}}</span>
                                                                 @enderror
                                                             </div>
                                                             <div class="modal-footer">
@@ -260,7 +260,7 @@
                                         <input type="date"
                                             class="form-control @error('tgl_absen_awal') is-invalid @enderror"
                                             id="tgl_absen_awal" name="tgl_absen_awal"
-                                            value="{{ old('tgl_absen_awal')}}">
+                                            value="{{ old('tgl_absen_awal')}}" required>
                                         @error('tgl_absen_awal') <span class="textdanger">{{$message}}</span> @enderror
                                     </div>
                                 </div>
@@ -270,7 +270,7 @@
                                         <input type="date"
                                             class="form-control @error('tgl_absen_akhir') is-invalid @enderror"
                                             id="tgl_absen_akhir" name="tgl_absen_akhir"
-                                            value="{{ old('tgl_absen_akhir')}}">
+                                            value="{{ old('tgl_absen_akhir')}}" required>
                                         @error('tgl_absen_akhir') <span class="textdanger">{{$message}}</span> @enderror
                                     </div>
                                 </div>
@@ -305,8 +305,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="keterangan">Keterangan</label>
-                                    <input type="text" class="form-control @error('keterangan') is-invalid @enderror"
-                                        id="keterangan" name="keterangan" value="{{old('keterangan')}}">
+                                    <textarea rows="4" class="form-control @error('keterangan') is-invalid @enderror"
+                                        id="keterangan" name="keterangan" value="{{old('keterangan')}}" required></textarea>
                                     @error('keterangan') <span class="text-danger">{{$message}}</span> @enderror
                                 </div>
                                 <div class="form-group">
@@ -324,7 +324,7 @@
                                     <small class="form-text text-muted">Allow file extensions : .jpeg
                                         .jpg .png .pdf
                                         .docx</small>
-                                    <input type="file" name="file_perizinan" id="file_perizinan" class="form-control">
+                                    <input type="file" name="file_perizinan" id="file_perizinan" class="form-control" required>
                                     @error('file_perizinan')
                                     <span class="textdanger">{{$message}}</span> @enderror
                                 </div>

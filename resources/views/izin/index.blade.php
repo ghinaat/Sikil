@@ -2,12 +2,6 @@
 @section('title', ' Perizinan')
 @section('content_header')
 <h1 class="m-0 text-dark"> Perizinan</h1>
-<style>
-    .form-container {
-        display: block;
-        margin-bottom: 10px; /* Untuk memberikan jarak antar div */
-    }
-</style>
 @stop
 @section('content')
 <div class="row">
@@ -172,7 +166,7 @@
                                                             class="form-control @error('tgl_absen_awal') is-invalid @enderror"
                                                             id="tgl_absen_awal" placeholder="Nama Diklat"
                                                             name="tgl_absen_awal"
-                                                            value="{{$ap -> tgl_absen_awal ?? old('tgl_absen_awal')}}">
+                                                            value="{{$ap -> tgl_absen_awal ?? old('tgl_absen_awal')}}" required>
                                                         @error('tgl_absen_awal') <span
                                                             class="textdanger">{{$message}}</span>
                                                         @enderror
@@ -186,7 +180,7 @@
                                                             class="form-control @error('tgl_absen_akhir') is-invalid @enderror"
                                                             id="tgl_absen_akhir" placeholder="Nama Diklat"
                                                             name="tgl_absen_akhir"
-                                                            value="{{$ap -> tgl_absen_akhir ?? old('tgl_absen_akhir')}}">
+                                                            value="{{$ap -> tgl_absen_akhir ?? old('tgl_absen_akhir')}}" required>
                                                         @error('tgl_absen_akhir') <span
                                                             class="textdanger">{{$message}}</span>
                                                         @enderror
@@ -225,10 +219,10 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="keterangan" class="form-label">Keterangan</label>
-                                                    <textarea rows="5"
+                                                    <textarea rows="4"
                                                         class="form-control"
                                                         id="keterangan"
-                                                        name="keterangan">{{$ap -> keterangan ?? old('keterangan')}}</textarea>
+                                                        name="keterangan" required>{{$ap -> keterangan ?? old('keterangan')}}</textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="id_atasan" for="id_atasan">Atasan Langsung</label>
@@ -264,7 +258,7 @@
                                                 </div>
                                                 <div id="alasan_ditolak_atasan" style="display: none;" class="form-group">
                                                     <label for="alasan_ditolak_atasan">Alasan Ditolak</label>
-                                                    <textarea name="alasan_ditolak_atasan" id="alasan_ditolak_atasan" cols="30" rows="3" class="form-control">{{ $ap->alasan_ditolak_atasan }}</textarea>
+                                                    <textarea name="alasan_ditolak_atasan" id="alasan_ditolak_atasan" cols="30" rows="3" class="form-control" required>{{ $ap->alasan_ditolak_atasan }}</textarea>
                                                 </div>
 
                                                 @endif
@@ -283,7 +277,7 @@
                                                 <div id="alasan_ditolak_ppk" style="display: none;" class="form-group">
                                                     <label for="alasan_ditolak_ppk">Alasan Ditolak</label>
                                                     <textarea name="alasan_ditolak_ppk" id="alasan_ditolak_ppk"
-                                                        cols="30" rows="3" class="form-control">{{ $ap->alasan_ditolak_ppk }}</textarea>
+                                                        cols="30" rows="3" class="form-control" required>{{ $ap->alasan_ditolak_ppk }}</textarea>
                                                 </div>
                                                 @endif
                                         </div>
@@ -326,25 +320,29 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-6" for="kode_finger">Nama Pegawai</label>
-                                    <select id="kode_finger" name="kode_finger" class="form-control ">
+                                    <label class="control-label col-md-6"  for="kode_finger">Nama Pegawai</label>
+                                    <select id="kode_finger" name="kode_finger" class="form-control @error('kode_finger') is-invalid @enderror">
                                         @foreach ($users as $us)
                                         <option value="{{ $us->kode_finger }}" @if( old('kode_finger')==$us->id_users
                                             )selected @endif>
                                             {{ $us->nama_pegawai }}</option>
                                         @endforeach
                                     </select>
+                                    @error('kode_finger') <span class="textdanger">{{$message}}</span> @enderror
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="tgl_absen_awal">Tanggal Awal Izin</label>
-                                <input type="date" class="form-control" id="tgl_absen_awal" name="tgl_absen_awal"
+                                <input type="date" class="form-control @error('tgl_absen_awal') is-invalid @enderror" id="tgl_absen_awal" name="tgl_absen_awal"
                                     required>
+                                    @error('tgl_absen_awal') <span class="textdanger">{{$message}}</span> @enderror
                             </div>
                             <div class="form-group">
                                 <label for="tgl_absen_akhir">Tanggal Akhir Izin</label>
-                                <input type="date" class="form-control" id="tgl_absen_akhir" name="tgl_absen_akhir"
+                                <input type="date"class="form-control @error('tgl_absen_akhir') is-invalid @enderror" id="tgl_absen_akhir" name="tgl_absen_akhir"
                                     required>
+                                    @error('tgl_absen_akhir') <span class="textdanger">{{$message}}</span> @enderror
+
                             </div>
                             <div class="form-group">
                                 <label for="jenis_perizinan">Jenis Perizinan</label>
@@ -363,17 +361,19 @@
                                     <option value="A">Alpha</option>
                                     <option value="TB">Tugas Belajar</option>
                                 </select>
+                                @error('jenis_perizinan') <span class="textdanger">{{$message}}</span> @enderror
                             </div>
                             <div class="form-group">
                                 <label for="keterangan">Keterangan</label>
-                                <textarea rows="5" class="form-control" id="keterangan" name="keterangan"
+                                <textarea rows="4" class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" name="keterangan"
                                     required></textarea>
+                                    @error('keterangan') <span class="textdanger">{{$message}}</span> @enderror
                             </div>
                             <div class="form-group">
                                 @foreach ($settingperizinan as $ps)
                                 @if ($ps->setting && $ps->setting->status == '1')
                                 <label for="id">PPK</label>
-                                <input type="text" class="form-control @error('') is-invalid @enderror" id="id"
+                                <input type="text" class="form-control" id="id"
                                     name="" value="{{ $ps->nama_pegawai}}" readonly>
                                 @error('') <span class="text-danger">{{$message}}</span> @enderror
                                 @endif
@@ -381,7 +381,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="id_atasan">Atasan Langsung</label>
-                                <select id="id_atasan" name="id_atasan" class="form-control ">
+                                <select id="id_atasan" name="id_atasan"class="form-control @error('id_atasan') is-invalid @enderror">
                                     @foreach ($users as $us)
                                     <option value="{{ $us->id_users }}" @if( old('id_users')==$us->
                                         id_users )selected
@@ -389,12 +389,13 @@
                                         {{ $us->nama_pegawai }}</option>
                                     @endforeach
                                 </select>
+                                @error('id_atasan') <span class="textdanger">{{$message}}</span> @enderror
                             </div>
                             <!-- <div class="form-group">
                                 <label for="ppk">PPK</label>
                                 <input type="text" class="form-control" id="ppk" name="ppk" required>
                             </div>
- -->
+
                             <div class="form-group">
                                 <label for="file_perizinan">Unggah Lampiran</label>
                                 <small class="form-text text-muted">Allow file extensions :
