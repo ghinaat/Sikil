@@ -137,7 +137,7 @@ class AjuanPerizinanController extends Controller
         $ajuanperizinan->status_izin_ppk = null; // Default menunggu persetujuan
         $ajuanperizinan->save();
         
-        return redirect()->back()->with('success', 'Data telah tersimpan.');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
         
         
     }

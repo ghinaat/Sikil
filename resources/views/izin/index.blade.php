@@ -9,54 +9,55 @@
         <div class="card">
             <div class="card-body">
 
-                    <form action="{{ route('ajuanperizinan.index') }}" method="GET" class="form-inline mb-3">
-                        <div class="form-group">
-                            <label for="kode_finger">Nama Pegawai:</label>&nbsp;&nbsp;
-                            <select class="form-control" name="kode_finger" id="kode_finger" class="form-select" >
-                                <option value="all">Semua Pegawai</option>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->kode_finger }}" @if(request()->input('kode_finger') == $user->kode_finger) selected @endif>{{ $user->nama_pegawai }}</option>
-                                @endforeach
-                            </select>&nbsp;&nbsp;
-                        </div>
-                        <div class="form-group">    
-                            <label for="jenis_perizinan">Jenis Perizinan :</label>&nbsp;&nbsp;
-                            <select class="form-control" id="jenis_perizinan" name="jenis_perizinan">
-                                <option value="all">Semua Jenis Perizinan</option>
-                                <option value="I" @if(request()->input('jenis_perizinan')=='I' )selected
-                                    @endif>Izin</option>
-                                <option value="DL" @if(request()->input('jenis_perizinan')=='DL' )selected
-                                    @endif>Dinas Luar</option>
-                                <option value="S" @if(request()->input('jenis_perizinan')=='S' )selected
-                                    @endif>Sakit</option>
-                                <option value="CS" @if(request()->input('jenis_perizinan')=='CS' )selected
-                                    @endif>Cuti Sakit</option>
-                                <option value="Prajab" @if(request()->input('jenis_perizinan')=='Prajab'
-                                    )selected @endif>Prajab</option>
-                                <option value="CT" @if(request()->input('jenis_perizinan')=='CT' )selected
-                                    @endif>Cuti Tahunan</option>
-                                <option value="CM" @if(request()->input('jenis_perizinan')=='CM' )selected
-                                    @endif>Cuti Melahirkan</option>
-                                <option value="CAP" @if(request()->input('jenis_perizinan')=='CAP' )selected
-                                    @endif>CAP</option>
-                                <option value="CH" @if(request()->input('jenis_perizinan')=='CH' )selected
-                                    @endif>Cuti Haji</option>
-                                <option value="CB" @if(request()->input('jenis_perizinan')=='CB' )selected
-                                    @endif>Cuti Bersama</option>
-                                <option value="A" @if(request()->input('jenis_perizinan')=='A' )selected
-                                    @endif>Alpha</option>
-                                <option value="TB" @if(request()->input('jenis_perizinan')=='TB' )selected
-                                    @endif>Tugas Belajar</option>
-                            </select>&nbsp;&nbsp;
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="tgl_absen_awal" class="my-label mr-2">Tanggal Awal: </label>
-                            <input type="date" id="tgl_absen_awal" name="tgl_absen_awal" required class="form-control" value="{{request()->input('tgl_absen_awal')}}">&nbsp;&nbsp;
-                            <label for="tgl_absen_akhir" class="form-label">Tanggal Akhir: </label>&nbsp;&nbsp;
-                            <input type="date" id="tgl_absen_akhir" name="tgl_absen_akhir" required class="form-control" value="{{request()->input('tgl_absen_akhir')}}">&nbsp;&nbsp;&nbsp;
-                            <button type="submit" class="btn btn-primary"> Tampilkan</button>&nbsp;&nbsp;
-                        </div>
-                    </form>               
+                <form action="{{ route('ajuanperizinan.index') }}" method="GET" class="form-inline mb-3">
+                    <div class="form-group">
+                        <label for="kode_finger">Nama Pegawai:</label>&nbsp;&nbsp;
+                        <select class="form-control" name="kode_finger" id="kode_finger" class="form-select" >
+                            <option value="all">Semua Pegawai</option>
+                            @foreach ($users as $user)
+                                <option value="{{ $user->kode_finger }}" @if(request()->input('kode_finger') == $user->kode_finger) selected @endif>{{ $user->nama_pegawai }}</option>
+                            @endforeach
+                        </select>&nbsp;&nbsp;
+                    </div>
+                    <div class="form-group">    
+                        <label for="jenis_perizinan">Jenis Perizinan :</label>&nbsp;&nbsp;
+                        <select class="form-control" id="jenis_perizinan" name="jenis_perizinan">
+                            <option value="all">Semua Jenis Perizinan</option>
+                            <option value="I" @if(request()->input('jenis_perizinan')=='I' )selected
+                                @endif>Izin</option>
+                            <option value="DL" @if(request()->input('jenis_perizinan')=='DL' )selected
+                                @endif>Dinas Luar</option>
+                            <option value="S" @if(request()->input('jenis_perizinan')=='S' )selected
+                                @endif>Sakit</option>
+                            <option value="CS" @if(request()->input('jenis_perizinan')=='CS' )selected
+                                @endif>Cuti Sakit</option>
+                            <option value="Prajab" @if(request()->input('jenis_perizinan')=='Prajab'
+                                )selected @endif>Prajab</option>
+                            <option value="CT" @if(request()->input('jenis_perizinan')=='CT' )selected
+                                @endif>Cuti Tahunan</option>
+                            <option value="CM" @if(request()->input('jenis_perizinan')=='CM' )selected
+                                @endif>Cuti Melahirkan</option>
+                            <option value="CAP" @if(request()->input('jenis_perizinan')=='CAP' )selected
+                                @endif>CAP</option>
+                            <option value="CH" @if(request()->input('jenis_perizinan')=='CH' )selected
+                                @endif>Cuti Haji</option>
+                            <option value="CB" @if(request()->input('jenis_perizinan')=='CB' )selected
+                                @endif>Cuti Bersama</option>
+                            <option value="A" @if(request()->input('jenis_perizinan')=='A' )selected
+                                @endif>Alpha</option>
+                            <option value="TB" @if(request()->input('jenis_perizinan')=='TB' )selected
+                                @endif>Tugas Belajar</option>
+                        </select>&nbsp;&nbsp;
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="tgl_absen_awal" class="my-label mr-2">Tanggal Awal: </label>
+                        <input type="date" id="tgl_absen_awal" name="tgl_absen_awal" required class="form-control" value="{{request()->input('tgl_absen_awal')}}">&nbsp;&nbsp;
+                        <label for="tgl_absen_akhir" class="form-label">Tanggal Akhir: </label>&nbsp;&nbsp;
+                        <input type="date" id="tgl_absen_akhir" name="tgl_absen_akhir" required class="form-control" value="{{request()->input('tgl_absen_akhir')}}">&nbsp;&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary"> Tampilkan</button>&nbsp;&nbsp;
+                    </div>
+                </form>
+                
                 @can('isAdmin')
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
                     role="dialog">
@@ -117,7 +118,7 @@
                                 @if (auth()->user()->level == 'ppk' || auth()->user()->level == 'admin')
                                 <td id="{{ $key + 1 }}">
                                         @if ($ap->jenis_perizinan === 'I')
-                                        <b>Bukan PPK Persetujuan</b>
+                                        <b></b>
                                         @elseif ($ap->status_izin_ppk === null)
                                             Menunggu Persetujuan
                                         @elseif ($ap->status_izin_ppk === '1')
@@ -391,16 +392,14 @@
                                 </select>
                                 @error('id_atasan') <span class="textdanger">{{$message}}</span> @enderror
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="ppk">PPK</label>
-                                <input type="text" class="form-control" id="ppk" name="ppk" required>
-                            </div>
-
                             <div class="form-group">
                                 <label for="file_perizinan">Unggah Lampiran</label>
-                                <small class="form-text text-muted">Allow file extensions :
-                                    .jpeg .jpg .png .pdf .docx</small>
-                                    <input type="file" class="form-control" id="file_perizinan" name="file_perizinan">
+                                <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf .docx</small>
+                                <input type="file" class="form-control @error('file_perizinan') is-invalid @enderror" id="file_perizinan" name="file_perizinan" onchange="validateFile(this)">
+                                <div class="invalid-feedback" id="fileError" style="display: none;">Tipe file tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
+                                @error('file_perizinan')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -441,6 +440,29 @@ document.querySelectorAll('input[type=radio][name=status_izin_ppk]').forEach(inp
     }
 }));
 </script>
+
+<script>
+    function validateFile(input) {
+        const allowedExtensions = ['.jpeg', '.jpg', '.png', '.pdf', '.docx'];
+        const fileInput = input.files[0];
+        const fileErrorElement = document.getElementById('fileError');
+    
+        if (fileInput) {
+            const fileName = fileInput.name;
+            const fileExtension = '.' + fileName.split('.').pop().toLowerCase();
+    
+            if (!allowedExtensions.includes(fileExtension)) {
+                fileErrorElement.style.display = 'block';
+                input.classList.add('is-invalid');
+                input.value = ''; // Clear the input
+            } else {
+                fileErrorElement.style.display = 'none';
+                input.classList.remove('is-invalid');
+            }
+        }
+    }
+    </script>
+
 <script>
 $('#example2').DataTable({
     "responsive": true,
