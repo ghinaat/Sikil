@@ -47,6 +47,15 @@ class Perizinan extends Model
         static::creating(function ($model) {
             $model->tgl_ajuan = now();
         });
+
+        static::saving(function ($perizinan) {
+            $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan(
+                $perizinan->tgl_absen_awal,
+                $perizinan->tgl_absen_akhir
+            );
+
+            $perizinan->attributes['jumlah_hari_pengajuan'] = $jumlah_hari_pengajuan;
+        });
     }
 
       public function is_saturday()
@@ -60,11 +69,12 @@ class Perizinan extends Model
             }
         }
 
+
     public function hitungJumlahHariPengajuan($tgl_absen_awal, $tgl_absen_akhir)
     {
         $tanggalMerah = new TanggalMerah();
-        $tgl_awal = new DateTime($this->attributes['tgl_absen_awal']);
-        $tgl_akhir = new DateTime($this->attributes['tgl_absen_akhir']);
+        $tgl_awal = new DateTime($tgl_absen_awal);
+        $tgl_akhir = new DateTime($tgl_absen_akhir);
         $jumlah_hari_pengajuan = 0;
         while ($tgl_awal <= $tgl_akhir) {
             $tanggalMerah->set_date($tgl_awal->format('Y-m-d'));

@@ -74,7 +74,7 @@ class AjuanPerizinanController extends Controller
             'tgl_absen_awal' => 'required',
             'tgl_absen_akhir' => 'required',
             'keterangan' => 'required',
-            'file_perizinan' => 'required|mimes:pdf,doc,docx,png,jpg,jpeg',
+            'file_perizinan' => 'mimes:pdf,doc,docx,png,jpg,jpeg',
         ]);
         
         
@@ -117,16 +117,25 @@ class AjuanPerizinanController extends Controller
             }
         }
         
-       
-        $file = $request->file('file_perizinan');
-        $allowedExtensions = ['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg'];
-        $fileExtension = $request->file('file_perizinan')->getClientOriginalExtension();
-    
-        if (!in_array($fileExtension, $allowedExtensions)) {
-            return redirect()->back()->with('error', 'Tipe data file tidak sesuai.');
+        if ($request->hasFile('file_perizinan')) {
+            // Upload dan simpan file jika ada
+            $file = $request->file('file_perizinan');
+            $allowedExtensions = ['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg'];
+            $fileExtension = $file->getClientOriginalExtension();
+            
+            if (!in_array($fileExtension, $allowedExtensions)) {
+                return redirect()->back()->with('error', 'Tipe data file tidak sesuai.');
+            }
+            
+            $fileName = Str::random(20) . '.' . $fileExtension;
+            $file->storeAs('file_perizinan', $fileName, 'public');
+            
+            // Update the file_perizinan attribute in the $perizinan object
+            $ajuanperizinan->file_perizinan = $fileName;
+        } else {
+            // If no file is uploaded, set the file_perizinan attribute to NULL
+            $ajuanperizinan->file_perizinan = null;
         }
-        $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('file_perizinan', $fileName, 'public');
         
         $ajuanperizinan->id_atasan = $request->id_atasan;
         $ajuanperizinan->kode_finger = $request->kode_finger;
@@ -139,7 +148,7 @@ class AjuanPerizinanController extends Controller
             $request->tgl_absen_akhir
         );
         $ajuanperizinan->keterangan = $request->keterangan;
-        $ajuanperizinan->file_perizinan = $fileName;
+        // $ajuanperizinan->file_perizinan = $fileName;
         $ajuanperizinan->status_izin_atasan = null; // Default menunggu persetujuan
         $ajuanperizinan->status_izin_ppk = null; // Default menunggu persetujuan
         $ajuanperizinan->save();
@@ -255,6 +264,10 @@ class AjuanPerizinanController extends Controller
             $ajuanperizinan->jenis_perizinan = $request->jenis_perizinan;
             $ajuanperizinan->tgl_absen_awal = $request->tgl_absen_awal;
             $ajuanperizinan->tgl_absen_akhir = $request->tgl_absen_akhir;
+            $jumlah_hari_pengajuan = $ajuanperizinan->hitungJumlahHariPengajuan(
+                $request->tgl_absen_awal,
+                $request->tgl_absen_akhir
+            );
             $ajuanperizinan->keterangan = $request->keterangan;
     
             if(isset($request->status_izin_atasan )){
