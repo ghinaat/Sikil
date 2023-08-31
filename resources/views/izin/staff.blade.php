@@ -211,7 +211,7 @@
                                                             <div class="modal-footer">
                                                                 <button type="submit"
                                                                     class="btn btn-primary">Simpan</button>
-                                                                <a href="{{route('ajuanperizinan.index')}}"
+                                                                <a href="{{route('perizinan.index')}}"
                                                                     class="btn btn-danger">
                                                                     Batal
                                                                 </a>
