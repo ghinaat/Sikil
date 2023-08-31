@@ -162,13 +162,14 @@ class PerizinanController extends Controller
         $perizinan = Perizinan::find($id_perizinan);
 
         if ($request->jenis_perizinan === 'CT') {
-            if ($perizinanUser->cuti == null) {
-                return redirect()->back()->with('error', 'Anda belum memiliki cuti tahunan.');
-            }
+         
             // Menggunakan kode_finger untuk mencari pengguna dalam tabel Perizinan
             $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
             
             if ($perizinanUser) {
+                if ($perizinanUser->cuti == null) {
+                    return redirect()->back()->with('error', 'Anda belum memiliki cuti tahunan.');
+                }
                 // Check if the user has enough jatah cuti tahunan
                 $jatahCutiTahunan = $perizinanUser->cuti->jatah_cuti;
                 

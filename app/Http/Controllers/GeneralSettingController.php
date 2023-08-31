@@ -14,7 +14,7 @@ class GeneralSettingController extends Controller
     public function index()
     {
 
-        $generalsetting = GeneralSetting::where('is_deleted', '0');
+        $generalsetting = GeneralSetting::where('is_deleted', '0')->get();
 
         return view('generalsetting.index', [
             'generalsetting' => $generalsetting,

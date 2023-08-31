@@ -134,7 +134,7 @@ class AjuanPerizinanController extends Controller
         $ajuanperizinan->tgl_ajuan = $request->tgl_ajuan;
         $ajuanperizinan->tgl_absen_awal = $request->tgl_absen_awal;
         $ajuanperizinan->tgl_absen_akhir = $request->tgl_absen_akhir;
-        $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan(
+        $jumlah_hari_pengajuan = $ajuanperizinan->hitungJumlahHariPengajuan(
             $request->tgl_absen_awal,
             $request->tgl_absen_akhir
         );
