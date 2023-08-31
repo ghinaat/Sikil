@@ -321,12 +321,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="file_perizinan">Unggah Lampiran</label>
-                                    <small class="form-text text-muted">Allow file extensions : .jpeg
-                                        .jpg .png .pdf
-                                        .docx</small>
-                                    <input type="file" name="file_perizinan" id="file_perizinan" class="form-control">
+                                    <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf .docx</small>
+                                    <input type="file" class="form-control @error('file_perizinan') is-invalid @enderror" id="file_perizinan" name="file_perizinan" onchange="validateFile(this)">
+                                    <div class="invalid-feedback" id="fileError" style="display: none;">Tipe file tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
                                     @error('file_perizinan')
-                                    <span class="textdanger">{{$message}}</span> @enderror
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -371,4 +371,27 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('tgl_ajuan').value = formattedDate;
 });
 </script>
+
+<script>
+    function validateFile(input) {
+        const allowedExtensions = ['.jpeg', '.jpg', '.png', '.pdf', '.docx'];
+        const fileInput = input.files[0];
+        const fileErrorElement = document.getElementById('fileError');
+    
+        if (fileInput) {
+            const fileName = fileInput.name;
+            const fileExtension = '.' + fileName.split('.').pop().toLowerCase();
+    
+            if (!allowedExtensions.includes(fileExtension)) {
+                fileErrorElement.style.display = 'block';
+                input.classList.add('is-invalid');
+                input.value = ''; // Clear the input
+            } else {
+                fileErrorElement.style.display = 'none';
+                input.classList.remove('is-invalid');
+            }
+        }
+    }
+    </script>
+
 @endpush
