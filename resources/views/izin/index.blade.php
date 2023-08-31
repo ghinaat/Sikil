@@ -259,7 +259,9 @@
                                                 </div>
                                                 <div id="alasan_ditolak_atasan" style="display: none;" class="form-group">
                                                     <label for="alasan_ditolak_atasan">Alasan Ditolak</label>
-                                                    <textarea name="alasan_ditolak_atasan" id="alasan_ditolak_atasan" cols="30" rows="3" class="form-control" required>{{ $ap->alasan_ditolak_atasan }}</textarea>
+
+                                                    <textarea name="alasan_ditolak_atasan" id="alasan_ditolak_atasan" cols="30" rows="3" class="form-control" >{{ $ap->alasan_ditolak_atasan }}</textarea>
+
                                                 </div>
 
                                                 @endif
@@ -278,7 +280,7 @@
                                                 <div id="alasan_ditolak_ppk" style="display: none;" class="form-group">
                                                     <label for="alasan_ditolak_ppk">Alasan Ditolak</label>
                                                     <textarea name="alasan_ditolak_ppk" id="alasan_ditolak_ppk"
-                                                        cols="30" rows="3" class="form-control" required>{{ $ap->alasan_ditolak_ppk }}</textarea>
+                                                        cols="30" rows="3" class="form-control">{{ $ap->alasan_ditolak_ppk }}</textarea>
                                                 </div>
                                                 @endif
                                         </div>
@@ -424,20 +426,31 @@
     @csrf
 </form>
 <script>
-
 document.querySelectorAll('input[type=radio][name=status_izin_atasan]').forEach(input => input.addEventListener('change', function() {
-    if (this.value == '0') {
-        this.parentNode.parentNode.parentNode.querySelector('#alasan_ditolak_atasan').style.display = 'block';
+    const alasanDitolakElement = this.parentNode.parentNode.parentNode.querySelector('#alasan_ditolak_atasan');
+    const alasanTextarea = alasanDitolakElement.querySelector('textarea[name=alasan_ditolak_atasan]');
+
+    if (this.value === '0') {
+        alasanDitolakElement.style.display = 'block';
+        // Tambahkan atribut required
+        alasanTextarea.setAttribute('required', 'true');
     } else {
-        this.parentNode.parentNode.parentNode.querySelector('#alasan_ditolak_atasan').style.display = 'none';
+        alasanDitolakElement.style.display = 'none';
+        // Hapus atribut required
+        alasanTextarea.removeAttribute('required');
     }
 }));
 document.querySelectorAll('input[type=radio][name=status_izin_ppk]').forEach(input => input.addEventListener('change', function() {
-    if (this.value == '0') {
-        this.parentNode.parentNode.parentNode.querySelector('#alasan_ditolak_ppk').style.display = 'block';
+    const alasanDitolakppkElement = this.parentNode.parentNode.parentNode.querySelector('#alasan_ditolak_ppk');
+    const alasanppkTextarea = alasanDitolakElement.querySelector('textarea[name=alasan_ditolak_ppk]');
+    if (this.value === '0') {
+        alasanDitolakppkElement.style.display = 'block';
+        // Tambahkan atribut required
+        alasanppkTextarea.setAttribute('required', 'true');
     } else {
-        this.parentNode.parentNode.parentNode.querySelector('#alasan_ditolak_ppk').style.display = 'none';
-    }
+        alasanDitolakppkElement.style.display = 'none';
+        // Hapus atribut required
+        alasanppkTextarea.removeAttribute('required');
 }));
 </script>
 

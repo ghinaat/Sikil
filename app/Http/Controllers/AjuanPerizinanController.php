@@ -49,7 +49,7 @@ class AjuanPerizinanController extends Controller
         return view('izin.index', [
             'ajuanperizinan' => $ajuanperizinan,
             'users' => User::where('is_deleted', '0')->get(),
-            "settingperizinan" => User::with(['setting'])->get(),
+            'settingperizinan' => User::with(['setting'])->get(),
         ]);
     }
 
@@ -71,13 +71,10 @@ class AjuanPerizinanController extends Controller
             'id_atasan' => 'required',
             'kode_finger' => 'required',
             'jenis_perizinan' => 'required',
-            // 'tgl_ajuan' => 'required',
             'tgl_absen_awal' => 'required',
             'tgl_absen_akhir' => 'required',
             'keterangan' => 'required',
             'file_perizinan' => 'required|mimes:pdf,doc,docx,png,jpg,jpeg',
-            // 'status_izin_atasan' => 'required',
-            // 'status_izin_ppk' => 'required',
         ]);
         
         
@@ -120,8 +117,14 @@ class AjuanPerizinanController extends Controller
             }
         }
         
+       
         $file = $request->file('file_perizinan');
-        
+        $allowedExtensions = ['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg'];
+        $fileExtension = $request->file('file_perizinan')->getClientOriginalExtension();
+    
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            return redirect()->back()->with('error', 'Tipe data file tidak sesuai.');
+        }
         $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
         $file->storeAs('file_perizinan', $fileName, 'public');
         
@@ -131,6 +134,10 @@ class AjuanPerizinanController extends Controller
         $ajuanperizinan->tgl_ajuan = $request->tgl_ajuan;
         $ajuanperizinan->tgl_absen_awal = $request->tgl_absen_awal;
         $ajuanperizinan->tgl_absen_akhir = $request->tgl_absen_akhir;
+        $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan(
+            $request->tgl_absen_awal,
+            $request->tgl_absen_akhir
+        );
         $ajuanperizinan->keterangan = $request->keterangan;
         $ajuanperizinan->file_perizinan = $fileName;
         $ajuanperizinan->status_izin_atasan = null; // Default menunggu persetujuan

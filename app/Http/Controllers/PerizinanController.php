@@ -7,8 +7,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Grei\TanggalMerah;
-use DateTime;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
@@ -216,6 +214,10 @@ class PerizinanController extends Controller
         $perizinan->tgl_absen_awal = $request->tgl_absen_awal;
         $perizinan->jenis_perizinan = $request->jenis_perizinan;
         $perizinan->tgl_absen_akhir = $request->tgl_absen_akhir;
+        $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan(
+            $request->tgl_absen_awal,
+            $request->tgl_absen_akhir
+        );
         $perizinan->id_atasan = $request->id_atasan;
         $perizinan->keterangan = $request->keterangan;
         $perizinan->status_izin_atasan = null;
