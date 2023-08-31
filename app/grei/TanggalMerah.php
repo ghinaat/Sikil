@@ -12,8 +12,7 @@ declare(strict_types=1);
  * @link     https://github.com/guangrei/phptanggalmerah
  */
 
-namespace Config;
-
+namespace App\Grei;
 use DateTime;
 use DateTimeZone;
 use Exception;
@@ -69,8 +68,8 @@ class TanggalMerah
             return false;
         }
     } // end is_holiday()
-
-    public function is_saturday() : bool
+    
+    public function is_saturday()
     {
         $day = $this->date->format("D");
         if ($day === "Sat") {

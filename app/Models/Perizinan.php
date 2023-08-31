@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-use Config\TanggalMerah;
+use App\Grei\TanggalMerah;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
