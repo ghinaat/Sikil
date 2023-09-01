@@ -72,21 +72,23 @@ class PerizinanController extends Controller
                 if ($perizinanUser->cuti == null) {
                     return redirect()->back()->with('error', 'Anda belum memiliki cuti tahunan.');
                 }
+                
+                // Hitung jumlah hari pengajuan cuti menggunakan fungsi hitungJumlahHariPengajuan
+                $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan(
+                    $request->tgl_absen_awal,
+                    $request->tgl_absen_akhir
+                );
+        
                 // Check if the user has enough jatah cuti tahunan
                 $jatahCutiTahunan = $perizinanUser->cuti->jatah_cuti;
-                
-                $tglAbsenAwal = Carbon::parse($request->tgl_absen_awal);
-                $tglAbsenAkhir = Carbon::parse($request->tgl_absen_akhir);
-                $duration = $tglAbsenAwal->diffInDays($tglAbsenAkhir) + 1; // Include both start and end days
         
-                // Add additional logic to check if the user is eligible for "cuti tahunan"
-                if ($jatahCutiTahunan < $duration) { // Menggunakan < bukan <=
+                if ($jatahCutiTahunan < $jumlah_hari_pengajuan) {
                     return redirect()->back()->with('error', 'Anda tidak memiliki jatah cuti tahunan yang cukup.');
                 }
-              
+        
                 // Update the user's jatah_cuti in the cuti record
                 if ($perizinanUser->cuti) {
-                    $perizinanUser->cuti->jatah_cuti -= $duration;
+                    $perizinanUser->cuti->jatah_cuti -= $jumlah_hari_pengajuan;
                     if ($perizinanUser->cuti->save()) {
                         // Proceed with creating Perizinan record
                     } else {
@@ -172,19 +174,18 @@ class PerizinanController extends Controller
                 }
                 // Check if the user has enough jatah cuti tahunan
                 $jatahCutiTahunan = $perizinanUser->cuti->jatah_cuti;
-                
-                $tglAbsenAwal = Carbon::parse($request->tgl_absen_awal);
-                $tglAbsenAkhir = Carbon::parse($request->tgl_absen_akhir);
-                $duration = $tglAbsenAwal->diffInDays($tglAbsenAkhir) + 1; // Include both start and end days
-        
-                // Add additional logic to check if the user is eligible for "cuti tahunan"
-                if ($jatahCutiTahunan < $duration) { // Menggunakan < bukan <=
+                $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan( 
+                 $request->tgl_absen_awal,
+                 $request->tgl_absen_akhir
+                );
+            
+                if ($jatahCutiTahunan < $jumlah_hari_pengajuan) { // Menggunakan < bukan <=
                     return redirect()->back()->with('error', 'Anda tidak memiliki jatah cuti tahunan yang cukup.');
                 }
               
                 // Update the user's jatah_cuti in the cuti record
                 if ($perizinanUser->cuti) {
-                    $perizinanUser->cuti->jatah_cuti -= $duration;
+                    $perizinanUser->cuti->jatah_cuti -= $jumlah_hari_pengajuan;
                     if ($perizinanUser->cuti->save()) {
                         // Proceed with creating Perizinan record
                     } else {
@@ -195,6 +196,34 @@ class PerizinanController extends Controller
                 }
             } else {
                 return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
+            }
+            
+        }else{
+            $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
+            if (!$perizinanUser) {
+                return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
+            }
+        
+            if ($perizinanUser->cuti) {
+                $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan( 
+                    $request->tgl_absen_awal,
+                    $request->tgl_absen_akhir
+                   );
+               
+                $perizinanUser->cuti->jatah_cuti += $jumlah_hari_pengajuan; // Tambahkan jatah cuti yang telah digunakan kembali
+                if ($perizinanUser->cuti->save()) {
+                  
+                    $perizinan->jenis_perizinan = $request->jenis_perizinan;
+                    if ($perizinanUser->save()) {
+                    
+                    } else {
+                        return redirect()->back()->with('error', 'Gagal mengubah jenis perizinan pengguna.');
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Gagal mengembalikan jatah cuti pengguna.');
+                }
+            } else {
+                return redirect()->back()->with('error', 'Tidak ada data cuti yang sesuai.');
             }
         }
         // dd($request, $rules, $perizinan);

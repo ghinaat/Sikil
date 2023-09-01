@@ -77,6 +77,7 @@
                                 <th>Tanggal Pelaksanaan</th>
                                 <th>Keterangan</th>
                                 <th>Lampiran</th>
+                                <th>Jumlah Hari Perizinan</th>
                                 <th>Persetujuan Atasan</th>
                                 @if(auth()->user()->level=='ppk' or auth()->user()->level=='admin')
                                 <th>Persetujuan PPK</th>
@@ -99,7 +100,7 @@
                                         <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
                                     </a>
                                 </td>
-                                
+                                <td id={{$key+1}}>{{$ap->jumlah_hari_pengajuan}}</td>
                                 <td id={{$key+1}}>
                                     @if($ap->id_atasan == auth()->user()->id_users or auth()->user()->level=='admin')
 
@@ -159,6 +160,17 @@
                                                 @csrf
                                                 @method('PUT')
                                                 @can('isAdmin')
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-6"  for="kode_finger">Nama Pegawai</label>
+                                                    <select id="kode_finger" name="kode_finger" class="form-control @error('kode_finger') is-invalid @enderror">
+                                                        @foreach ($users as $us)
+                                                        <option value="{{ $us->kode_finger }}" @if($ap-> kode_finger === old('kode_finger', $us->kode_finger)
+                                                            )selected @endif>
+                                                            {{ $us->nama_pegawai }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('kode_finger') <span class="textdanger">{{$message}}</span> @enderror
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="tgl_absen_awal" class='form-label'>Tanggal Awal
                                                         Izin</label>
