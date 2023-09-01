@@ -103,7 +103,6 @@
                                 <td id={{$key+1}}>{{$ap->jumlah_hari_pengajuan}}</td>
                                 <td id={{$key+1}}>
                                     @if($ap->id_atasan == auth()->user()->id_users or auth()->user()->level=='admin')
-
                                         @if ($ap->status_izin_atasan === null)
                                         Menunggu Persetujuan
                                         @elseif ($ap->status_izin_atasan === '1')
@@ -112,7 +111,13 @@
                                         Ditolak
                                         @endif
                                     @else
-                                        <b>Bukan Atasan Persetujuan</b>
+                                        @if ($ap->status_izin_atasan === null)
+                                        Menunggu Persetujuan
+                                        @elseif ($ap->status_izin_atasan === '1')
+                                        Disetujui
+                                        @else
+                                        Ditolak
+                                        @endif
                                     @endif
 
                                 </td>
