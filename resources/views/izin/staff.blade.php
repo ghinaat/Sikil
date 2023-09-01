@@ -38,8 +38,12 @@
                                     {{ date_format( new DateTime($p->tgl_absen_akhir), 'd F Y')}}</td>
                                 <td id={{$key+1}}>{{$p->keterangan}}</td>
                                 <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
-                                    <a href="{{ asset('/storage/file_perizinan/'. $p->file_perizinan) }}"
+                                @if($p->file_perizinan)
+                                <a href="{{ asset('/storage/file_perizinan/'. $p->file_perizinan) }}"
                                         target="_blank"><i class="fa fa-download"></i></a>
+                                @else
+                                Tidak Melampirkan Dokumen
+                                @endif
                                 </td>
                                 <td id={{$key+1}}>{{$p->jumlah_hari_pengajuan}}</td>
                                 <td id={{$key+1}}>

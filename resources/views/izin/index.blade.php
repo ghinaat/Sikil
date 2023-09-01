@@ -96,9 +96,13 @@
                                     {{ date_format( new DateTime($ap->tgl_absen_akhir), 'd F Y')}}</td>
                                 <td id={{$key+1}}>{{$ap->keterangan}}</td>
                                 <td id="{{ $key + 1 }}" style="text-align: center; vertical-align: middle;">
+                                @if($ap->file_perizinan)
                                     <a href="{{ asset('storage/file_perizinan/' . $ap->file_perizinan) }}" download>
                                         <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
                                     </a>
+                                @else
+                                Tidak Melampirkan Dokumen
+                                @endif
                                 </td>
                                 <td id={{$key+1}}>{{$ap->jumlah_hari_pengajuan}}</td>
                                 <td id={{$key+1}}>
