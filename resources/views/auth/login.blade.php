@@ -53,7 +53,7 @@
                 <div class=" box-2 d-flex flex-column h-100">
                     <div class="mt-auto mb-auto">
                         <p class="heading mb-3 h-1 text-black">Holla!</p>
-                        <p class="desc p-color-2 mb-3 text-black">Selamat datang kembali.</p>
+                        <p class="desc p-color-2 mb-3 text-black">Selamat datang..</p>
                         <div class="d-flex flex-column">
                             <div class="mt-5">
                                 @if (session()->has('error'))
