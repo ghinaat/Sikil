@@ -174,26 +174,34 @@ class PerizinanController extends Controller
                 }
                 // Check if the user has enough jatah cuti tahunan
                 $jatahCutiTahunan = $perizinanUser->cuti->jatah_cuti;
-                $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan( 
-                 $request->tgl_absen_awal,
-                 $request->tgl_absen_akhir
+                $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan(
+                    $request->tgl_absen_awal,
+                    $request->tgl_absen_akhir
                 );
-            
-                if ($jatahCutiTahunan < $jumlah_hari_pengajuan) { // Menggunakan < bukan <=
-                    return redirect()->back()->with('error', 'Anda tidak memiliki jatah cuti tahunan yang cukup.');
+                $perubahan_hari_cuti = $jumlah_hari_pengajuan - $perizinan->jumlah_hari_pengajuan;
+                
+                if ($perubahan_hari_cuti < 0) {
+                    // Increase 'jatah_cuti' if the new leave duration is less than the old one
+                    $perizinanUser->cuti->jatah_cuti += abs($perubahan_hari_cuti);
+                } elseif ($perubahan_hari_cuti > 0) {
+                    // Decrease 'jatah_cuti' if the new leave duration is greater than the old one
+                    if ($perizinanUser->cuti->jatah_cuti >= $perubahan_hari_cuti) {
+                        $perizinanUser->cuti->jatah_cuti -= $perubahan_hari_cuti;
+                    } else {
+                        return redirect()->back()->with('error', 'Jatah cuti tidak mencukupi untuk pengurangan tersebut.');
+                    }
                 }
-              
-                // Update the user's jatah_cuti in the cuti record
-                if ($perizinanUser->cuti) {
-                    $perizinanUser->cuti->jatah_cuti -= $jumlah_hari_pengajuan;
+
+                // Make sure 'jatah_cuti' is not less than 0
+                if ($perizinanUser->cuti->jatah_cuti < 0) {
+                    $perizinanUser->cuti->jatah_cuti = 0;
+                }
+                
                     if ($perizinanUser->cuti->save()) {
                         // Proceed with creating Perizinan record
                     } else {
                         return redirect()->back()->with('error', 'Gagal mengurangi jatah cuti pengguna.');
                     }
-                } else {
-                    return redirect()->back()->with('error', 'Tidak ada data cuti yang sesuai.');
-                }
             } else {
                 return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
             }

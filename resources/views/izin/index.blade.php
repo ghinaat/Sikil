@@ -170,15 +170,14 @@
                                                 @method('PUT')
                                                 @can('isAdmin')
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-6"  for="kode_finger">Nama Pegawai</label>
+                                                    <label for="kode_finger">Nama Pegawai</label>
                                                     <select id="kode_finger" name="kode_finger" class="form-control @error('kode_finger') is-invalid @enderror">
-                                                        @foreach ($users as $us)
-                                                        <option value="{{ $us->kode_finger }}" @if($ap-> kode_finger === old('kode_finger', $us->kode_finger)
-                                                            )selected @endif>
-                                                            {{ $us->nama_pegawai }}</option>
+                                                        @foreach ($users as $u)
+                                                        <option value="{{ $u->kode_finger }}" {{ $ap->kode_finger == $u->kode_finger ? 'selected' : '' }}>
+                                                            {{ $u->nama_pegawai }} 
+                                                        </option>
                                                         @endforeach
                                                     </select>
-                                                    @error('kode_finger') <span class="textdanger">{{$message}}</span> @enderror
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="tgl_absen_awal" class='form-label'>Tanggal Awal
