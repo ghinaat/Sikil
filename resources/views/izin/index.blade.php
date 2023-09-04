@@ -263,9 +263,12 @@
                                                             href="{{ asset('/storage/file_perizinan/' . $ap->file_perizinan) }}"
                                                             target="_blank">{{ $ap->file_perizinan }}</a></p>
                                                     @endif
-                                                    <small class="form-text text-muted">Allow file extensions :.jpeg .jpg .png .pdf .docx
-                                                        .docx</small>
-                                                        <input type="file" class="form-control" id="file_perizinan" name="file_perizinan">
+                                                    <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf .docx</small>
+                                                    <input type="file" class="form-control @error('file_perizinan') is-invalid @enderror" id="file_perizinan" name="file_perizinan" onchange="validateFile(this)">
+                                                    <div class="invalid-feedback" id="fileError" style="display: none;">Tipe file tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
+                                                    @error('file_perizinan')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                                 @endcan
                                                 @if($ap->id_atasan == auth()->user()->id_users or auth()->user()->level=='admin')
@@ -462,7 +465,7 @@ document.querySelectorAll('input[type=radio][name=status_izin_atasan]').forEach(
 }));
 document.querySelectorAll('input[type=radio][name=status_izin_ppk]').forEach(input => input.addEventListener('change', function() {
     const alasanDitolakppkElement = this.parentNode.parentNode.parentNode.querySelector('#alasan_ditolak_ppk');
-    const alasanppkTextarea = alasanDitolakElement.querySelector('textarea[name=alasan_ditolak_ppk]');
+    const alasanppkTextarea = alasanDitolakppkElement.querySelector('textarea[name=alasan_ditolak_ppk]');
     if (this.value === '0') {
         alasanDitolakppkElement.style.display = 'block';
         // Tambahkan atribut required
@@ -471,6 +474,7 @@ document.querySelectorAll('input[type=radio][name=status_izin_ppk]').forEach(inp
         alasanDitolakppkElement.style.display = 'none';
         // Hapus atribut required
         alasanppkTextarea.removeAttribute('required');
+    }
 }));
 </script>
 

@@ -198,20 +198,16 @@
                                                             <div class="form-group">
                                                                 <label for="file_perizinan">Unggah Lampiran</label>
                                                                 @if ($p->file_perizinan)
-                                                                <p>Previous File: <a
-                                                                        href="{{ asset('/storage/file_perizinan/' . $p->file_perizinan) }}"
-                                                                        target="_blank">{{ $p->file_perizinan }}</a>
-                                                                </p>
+                                                                <p>Previous File: <a href="{{ asset('/storage/file_perizinan/' . $p->file_perizinan) }}" target="_blank">{{ $p->file_perizinan }}</a></p>
                                                                 @endif
-                                                                <small class="form-text text-muted">Allow file
-                                                                    extensions :.jpeg .jpg .png .pdf .docx
-                                                                    .docx</small>
-                                                                <input type="file" class="form-control"
-                                                                    id="file_perizinan" name="file_perizinan"
-                                                                    @error('file_perizinan') <span class="invalid"
-                                                                    role="alert">{{$message}}</span>
+                                                                <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf .docx</small>
+                                                                <input type="file" class="form-control @error('file_perizinan') is-invalid @enderror" id="file_perizinan_edit" name="file_perizinan" onchange="validateFile(this, 'fileErrorEdit')">
+                                                                <div class="invalid-feedback" id="fileErrorEdit" style="display: none;">Tipe file tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
+                                                                @error('file_perizinan')
+                                                                    <span class="text-danger">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
+                                                            
                                                             <div class="modal-footer">
                                                                 <button type="submit"
                                                                     class="btn btn-primary">Simpan</button>
@@ -326,12 +322,12 @@
                                 <div class="form-group">
                                     <label for="file_perizinan">Unggah Lampiran</label>
                                     <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf .docx</small>
-                                    <input type="file" class="form-control @error('file_perizinan') is-invalid @enderror" id="file_perizinan" name="file_perizinan" onchange="validateFile(this)">
-                                    <div class="invalid-feedback" id="fileError" style="display: none;">Tipe file tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
+                                    <input type="file" class="form-control @error('file_perizinan') is-invalid @enderror" id="file_perizinan" name="file_perizinan" onchange="validateFile(this, 'fileErrorCreate')">
+                                    <div class="invalid-feedback" id="fileErrorCreate" style="display: none;">Tipe file tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
                                     @error('file_perizinan')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -377,25 +373,25 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-    function validateFile(input) {
-        const allowedExtensions = ['.jpeg', '.jpg', '.png', '.pdf', '.docx'];
-        const fileInput = input.files[0];
-        const fileErrorElement = document.getElementById('fileError');
-    
-        if (fileInput) {
-            const fileName = fileInput.name;
-            const fileExtension = '.' + fileName.split('.').pop().toLowerCase();
-    
-            if (!allowedExtensions.includes(fileExtension)) {
-                fileErrorElement.style.display = 'block';
-                input.classList.add('is-invalid');
-                input.value = ''; // Clear the input
-            } else {
-                fileErrorElement.style.display = 'none';
-                input.classList.remove('is-invalid');
-            }
+function validateFile(input, errorElementId) {
+    const allowedExtensions = ['.jpeg', '.jpg', '.png', '.pdf', '.docx'];
+    const fileInput = input.files[0];
+    const fileErrorElement = document.getElementById(errorElementId);
+
+    if (fileInput) {
+        const fileName = fileInput.name;
+        const fileExtension = '.' + fileName.split('.').pop().toLowerCase();
+
+        if (!allowedExtensions.includes(fileExtension)) {
+            fileErrorElement.style.display = 'block';
+            input.classList.add('is-invalid');
+            input.value = ''; // Clear the input
+        } else {
+            fileErrorElement.style.display = 'none';
+            input.classList.remove('is-invalid');
         }
     }
-    </script>
+}
+</script>
 
 @endpush
