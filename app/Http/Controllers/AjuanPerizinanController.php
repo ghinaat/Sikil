@@ -252,20 +252,65 @@ class AjuanPerizinanController extends Controller
             $request->validate($rules);
             
             $ajuanperizinan = Perizinan::find($id_perizinan);
-            
-            if (! $ajuanperizinan) {
+
+            if (!$ajuanperizinan) {
                 return redirect()->route('ajuanperizinan.index')->with('error', 'Data tidak ditemukan');
             }
 
+
+            // Dapatkan jenis perizinan sebelumnya pengguna
+            $jenisPerizinanSebelumnya = $ajuanperizinan->jenis_perizinan;
+
+            // Update jenis perizinan pada pengguna
+            $ajuanperizinan->jenis_perizinan = $request->jenis_perizinan;
+
+            // Hitung perbedaan dalam jatah cuti tahunan
+            $perbedaanJatahCuti = 0;
+
+            if ($jenisPerizinanSebelumnya === 'CT' && $request->jenis_perizinan !== 'CT') {
+                // Jika sebelumnya cuti tahunan dan sekarang bukan cuti tahunan
+                $perbedaanJatahCuti = $ajuanperizinan->hitungJumlahHariPengajuan(
+                    $request->tgl_absen_awal,
+                    $request->tgl_absen_akhir
+                );
+            } elseif ($jenisPerizinanSebelumnya !== 'CT' && $request->jenis_perizinan === 'CT') {
+                // Jika sebelumnya bukan cuti tahunan dan sekarang cuti tahunan
+                $perbedaanJatahCuti = -$ajuanperizinan->hitungJumlahHariPengajuan(
+                    $request->tgl_absen_awal,
+                    $request->tgl_absen_akhir
+                );
+            }
+
+            // Perbarui jatah cuti tahunan pengguna
+            if ($perbedaanJatahCuti != 0) {
+                // Cek apakah pengguna ditemukan berdasarkan kode finger
+                $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
+
+                if ($perizinanUser) {
+                    if (!$perizinanUser->cuti) {
+                        return redirect()->back()->with('error', 'Pengguna tidak memiliki cuti tahunan.');
+                    }
+
+                    $perizinanUser->cuti->jatah_cuti += $perbedaanJatahCuti;
+
+                    // Pastikan jatah cuti tidak kurang dari 0
+                    if ($perizinanUser->cuti->jatah_cuti < 0) {
+                        $perizinanUser->cuti->jatah_cuti = 0;
+                    }
+
+                    if (!$perizinanUser->cuti->save()) {
+                        return redirect()->back()->with('error', 'Gagal mengubah jatah cuti tahunan pengguna.');
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
+                }
+            }
+
+
             $ajuanperizinan->id_atasan = $request->id_atasan;
             $ajuanperizinan->kode_finger = $request->kode_finger;
-            $ajuanperizinan->jenis_perizinan = $request->jenis_perizinan;
             $ajuanperizinan->tgl_absen_awal = $request->tgl_absen_awal;
             $ajuanperizinan->tgl_absen_akhir = $request->tgl_absen_akhir;
-            $jumlah_hari_pengajuan = $ajuanperizinan->hitungJumlahHariPengajuan(
-                $request->tgl_absen_awal,
-                $request->tgl_absen_akhir
-            );
             $ajuanperizinan->keterangan = $request->keterangan;
     
             if(isset($request->status_izin_atasan )){
