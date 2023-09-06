@@ -120,12 +120,8 @@ class AjuanPerizinanController extends Controller
         if ($request->hasFile('file_perizinan')) {
             // Upload dan simpan file jika ada
             $file = $request->file('file_perizinan');
-            $allowedExtensions = ['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg'];
             $fileExtension = $file->getClientOriginalExtension();
             
-            if (!in_array($fileExtension, $allowedExtensions)) {
-                return redirect()->back()->with('error', 'Tipe data file tidak sesuai.');
-            }
             
             $fileName = Str::random(20) . '.' . $fileExtension;
             $file->storeAs('file_perizinan', $fileName, 'public');
@@ -205,7 +201,7 @@ class AjuanPerizinanController extends Controller
 
             if($ajuanperizinan) {
                 if($ajuanperizinan->id_atasan === auth()->user()->id_users){
-                    $rules['status_izin_atasan'] = 'required'; 
+                    $rules['status_izin_'] = 'required'; 
                 }
             }
             
@@ -226,8 +222,8 @@ class AjuanPerizinanController extends Controller
         else
         {
             $rules = [
-                'id_atasan' => 'required',
                 'kode_finger' => 'required',
+                'id_atasan' => 'required',
                 'jenis_perizinan' => 'required',
                 // 'tgl_ajuan' => 'required',
                 'tgl_absen_awal' => 'required',
@@ -260,6 +256,7 @@ class AjuanPerizinanController extends Controller
             if (!$ajuanperizinan) {
                 return redirect()->route('ajuanperizinan.index')->with('error', 'Data tidak ditemukan');
             }
+
 
             // Dapatkan jenis perizinan sebelumnya pengguna
             $jenisPerizinanSebelumnya = $ajuanperizinan->jenis_perizinan;
@@ -309,6 +306,7 @@ class AjuanPerizinanController extends Controller
                 }
             }
 
+
             $ajuanperizinan->id_atasan = $request->id_atasan;
             $ajuanperizinan->kode_finger = $request->kode_finger;
             $ajuanperizinan->tgl_absen_awal = $request->tgl_absen_awal;
@@ -345,6 +343,38 @@ class AjuanPerizinanController extends Controller
                 $namafile_perizinan = time().'.'.$file_perizinan->getClientOriginalExtension();
                 Storage::disk('public')->put('file_perizinan/'.$namafile_perizinan, file_get_contents($file_perizinan));
                 $ajuanperizinan->file_perizinan = $namafile_perizinan;
+            }
+            
+            $request->validate($rules);
+
+            $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
+            $jumlah_hari_pengajuan_baru = $ajuanperizinan->hitungJumlahHariPengajuan(
+                $request->tgl_absen_awal,
+                $request->tgl_absen_akhir
+            );
+        
+            // Hitung selisih dengan jumlah hari pengajuan sebelumnya
+            $selisih_hari = $jumlah_hari_pengajuan_baru - $ajuanperizinan->jumlah_hari_pengajuan;
+        
+            if ($selisih_hari > 0) {
+                // Jumlah hari pengajuan bertambah, kurangi jatah cuti
+                $perizinanUser->cuti->jatah_cuti -= $selisih_hari;
+                $message = 'Jumlah hari pengajuan bertambah.';
+            } elseif ($selisih_hari < 0) {
+                // Jumlah hari pengajuan berkurang, tambahkan jatah cuti
+                $perizinanUser->cuti->jatah_cuti += abs($selisih_hari);
+                $message = 'Jumlah hari pengajuan berkurang.';
+            } else {
+                // Jumlah hari pengajuan tidak berubah, jatah cuti tidak berubah
+                $message = 'Jumlah hari pengajuan tidak berubah.';
+            }
+        
+            if ($perizinanUser->cuti->save()) {
+                // Update data Perizinan
+                $ajuanperizinan->update($request->all());
+                return redirect()->route('ajuanperizinan.index')->with('success_message', $message);
+            } else {
+                return redirect()->back()->with('error', 'Gagal mengubah jatah cuti pengguna.');
             }
             
             $ajuanperizinan->save();
