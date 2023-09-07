@@ -120,6 +120,14 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
+                                                                <label for="jumlah_hari_pengajuan"
+                                                                    class="form-label">Jumlah Hari Pengajuan</label>
+                                                                    <input type="number"
+                                                                    class="form-control @error('jumlah_hari_pengajuan') is-invalid @enderror"
+                                                                    id="jumlah_hari_pengajuan" name="jumlah_hari_pengajuan" value="{{$p -> jumlah_hari_pengajuan ?? old('jumlah_hari_pengajuan') }}">
+                                                                    @error('jumlah_hari_pengajuan') <span class="text-danger">{{ $message }}</span> @enderror
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <label for="jenis_perizinan">Jenis Perizinan</label>
                                                                 <select
                                                                     class="form-control  @error('jenis_perizinan') is-invalid @enderror"
@@ -273,6 +281,12 @@
                                             value="{{ old('tgl_absen_akhir')}}" required>
                                         @error('tgl_absen_akhir') <span class="textdanger">{{$message}}</span> @enderror
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="jumlah_hari_pengajuan" class="form-label">Jumlah Hari Pengajuan</label>
+                                    <input type="number" class="form-control @error('jumlah_hari_pengajuan') is-invalid @enderror"
+                                    id="jumlah_hari_pengajuan" name="jumlah_hari_pengajuan" value="{{  old('jumlah_hari_pengajuan') }}">
+                                    @error('jumlah_hari_pengajuan') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="jenis_perizinan">Jenis Ajuan</label>
