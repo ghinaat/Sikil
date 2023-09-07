@@ -294,8 +294,8 @@
                                                 </div>
 
                                                 @endif
-                                                @foreach ($settingperizinan as $ps)
-                                                @if(auth()->user()->level === 'admin' || auth()->user()->level === 'ppk' || ($ps->setting && $ps->setting->status === '1' && $ps->setting->id_users === auth()->user()->id_users))
+
+                                                @if(auth()->user()->level === 'admin' || auth()->user()->level === 'ppk' )
                                                 @if ($ap->jenis_perizinan !== 'I')
                                                 <div class="form-group">
                                                     <label for="status_izin_ppk">Persetujuan PPK</label>
@@ -313,7 +313,7 @@
                                                         cols="30" rows="3" class="form-control">{{ $ap->alasan_ditolak_ppk }}</textarea>
                                                 </div>
                                                 @endif
-                                                @endforeach
+                                            
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-primary">Simpan</button>
