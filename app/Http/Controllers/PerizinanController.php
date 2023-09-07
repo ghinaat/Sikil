@@ -152,6 +152,7 @@ class PerizinanController extends Controller
      
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
+
     /**
      * Remove the specified resource from storage.
      */

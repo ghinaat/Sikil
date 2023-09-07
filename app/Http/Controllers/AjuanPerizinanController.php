@@ -151,7 +151,8 @@ class AjuanPerizinanController extends Controller
                     $CutiTahunan = $ajuanperizinan -> jenis_perizinan;
                 
                     if ($statusPPK === '1' && $CutiTahunan === "CT") {
-                        $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
+                        $kodeFinger = $ajuanperizinan -> kode_finger;
+                        $perizinanUser = User::with('cuti')->where('kode_finger', $kodeFinger)->first();
                 
                         if ($perizinanUser) {
                             if ($perizinanUser->cuti == null) {
@@ -210,12 +211,13 @@ class AjuanPerizinanController extends Controller
                 $ajuanperizinan->alasan_ditolak_atasan = $request->alasan_ditolak_atasan;
             }
 
-           
-            if($request->status_izin_ppk === '1' ){
-                $statusAtasan = $ajuanperizinan -> status_izin_atasan;
-                if($statusAtasan === '1'){
-                if($request->jenis_perizinan === "CT"){
-                    $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
+            if($request->status_izin_ppk === '1' || $request->status_izin_atasan ){
+                $statusAtasan = $ajuanperizinan->status_izin_atasan;
+                $CutiTahunan = $ajuanperizinan -> jenis_perizinan;
+                
+                    if ($statusAtasan === '1' && $CutiTahunan === "CT") {
+                        $kodeFinger = $ajuanperizinan -> kode_finger;
+                    $perizinanUser = User::with('cuti')->where('kode_finger', $kodeFinger)->first();
 
                     if ($perizinanUser) {
                         $jumlahCuti = $ajuanperizinan -> jumlah_hari_pengajuan;
@@ -233,10 +235,9 @@ class AjuanPerizinanController extends Controller
                         }
                     } else {
                         return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
-                    }
-                }
-            }
+                   }
                 
+                }
             }
             $ajuanperizinan->status_izin_atasan = $statusAtasan; 
             // dd($request);
