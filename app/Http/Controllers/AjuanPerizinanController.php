@@ -211,7 +211,7 @@ class AjuanPerizinanController extends Controller
                 $ajuanperizinan->alasan_ditolak_atasan = $request->alasan_ditolak_atasan;
             }
 
-            if($request->status_izin_ppk === '1' || $request->status_izin_atasan ){
+            if($request->status_izin_ppk === '1' || $request->status_izin_atasan === '1' ){
                 $statusAtasan = $ajuanperizinan->status_izin_atasan;
                 $CutiTahunan = $ajuanperizinan -> jenis_perizinan;
                 
