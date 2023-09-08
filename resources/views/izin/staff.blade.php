@@ -124,7 +124,7 @@
                                                                     class="form-label">Jumlah Hari Pengajuan</label>
                                                                     <input type="number"
                                                                     class="form-control @error('jumlah_hari_pengajuan') is-invalid @enderror"
-                                                                    id="jumlah_hari_pengajuan" name="jumlah_hari_pengajuan" value="{{$p -> jumlah_hari_pengajuan ?? old('jumlah_hari_pengajuan') }}">
+                                                                    id="jumlah_hari_pengajuan" name="jumlah_hari_pengajuan" value="{{$p -> jumlah_hari_pengajuan ?? old('jumlah_hari_pengajuan') }}" min="0">
                                                                     @error('jumlah_hari_pengajuan') <span class="text-danger">{{ $message }}</span> @enderror
                                                             </div>
                                                             <div class="form-group">
@@ -285,7 +285,7 @@
                                 <div class="form-group">
                                     <label for="jumlah_hari_pengajuan" class="form-label">Jumlah Hari Pengajuan</label>
                                     <input type="number" class="form-control @error('jumlah_hari_pengajuan') is-invalid @enderror"
-                                    id="jumlah_hari_pengajuan" name="jumlah_hari_pengajuan" value="{{  old('jumlah_hari_pengajuan') }}">
+                                    id="jumlah_hari_pengajuan" name="jumlah_hari_pengajuan" value="{{  old('jumlah_hari_pengajuan') }}" min="0">
                                     @error('jumlah_hari_pengajuan') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="form-group">

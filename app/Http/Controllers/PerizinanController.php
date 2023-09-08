@@ -138,6 +138,26 @@ class PerizinanController extends Controller
             Storage::disk('public')->put('file_perizinan/'.$namafile_perizinan, file_get_contents($file_perizinan));
             $perizinan->file_perizinan = $namafile_perizinan;
         }
+        
+        
+        if($request->jenis_perizinan === "CT"){
+            $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
+            if ($perizinanUser) {
+                if ($perizinanUser->cuti == null) {
+                    return redirect()->back()->with('error', 'Anda belum memiliki cuti tahunan.');
+                }
+                $jumlahCuti = $request -> jumlah_hari_pengajuan;
+                $jatahCutiTahunan = $perizinanUser->cuti->jatah_cuti;
+                if ($jatahCutiTahunan < $jumlahCuti) {
+                    return redirect()->back()->with('error', 'Anda tidak memiliki jatah cuti tahunan yang cukup.');
+                }
+                if ($perizinanUser->cuti->save()) {
+                            
+                } else {
+                    return redirect()->back()->with('error', 'Gagal mengurangi jatah cuti pengguna.');
+                }
+            }
+        }
         $perizinan->kode_finger = $request->kode_finger;
         $perizinan->tgl_absen_awal = $request->tgl_absen_awal;
         $perizinan->jenis_perizinan = $request->jenis_perizinan;
