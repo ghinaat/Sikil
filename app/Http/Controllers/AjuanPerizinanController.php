@@ -77,25 +77,25 @@ class AjuanPerizinanController extends Controller
             'keterangan' => 'required',
             'file_perizinan' => 'mimes:pdf,doc,docx,png,jpg,jpeg',
         ]);
-        
-        
-        $ajuanperizinan = new Perizinan();   
+
+
+        $ajuanperizinan = new Perizinan();
         if ($request->hasFile('file_perizinan')) {
             // Upload dan simpan file jika ada
             $file = $request->file('file_perizinan');
             $fileExtension = $file->getClientOriginalExtension();
-            
-            
+
+
             $fileName = Str::random(20) . '.' . $fileExtension;
             $file->storeAs('file_perizinan', $fileName, 'public');
-            
+
             // Update the file_perizinan attribute in the $perizinan object
             $ajuanperizinan->file_perizinan = $fileName;
         } else {
             // If no file is uploaded, set the file_perizinan attribute to NULL
             $ajuanperizinan->file_perizinan = null;
         }
-        
+
         $ajuanperizinan->id_atasan = $request->id_atasan;
         $ajuanperizinan->kode_finger = $request->kode_finger;
         $ajuanperizinan->jenis_perizinan = $request->jenis_perizinan;
@@ -108,10 +108,10 @@ class AjuanPerizinanController extends Controller
         $ajuanperizinan->status_izin_atasan = null; // Default menunggu persetujuan
         $ajuanperizinan->status_izin_ppk = null; // Default menunggu persetujuan
         $ajuanperizinan->save();
-        
+
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
-        
-        
+
+
     }
 
     /**
@@ -139,33 +139,33 @@ class AjuanPerizinanController extends Controller
             $rules = [
                 'status_izin_atasan' => 'required',
             ];
-            
+
             $ajuanperizinan = Perizinan::find($id_perizinan);
             $request->validate($rules);
             $ajuanperizinan->status_izin_atasan = $request->status_izin_atasan;
-            
+
                 if ($request->status_izin_atasan === '0') {
                     $ajuanperizinan->alasan_ditolak_atasan = $request->alasan_ditolak_atasan;
                 } else {
                     $statusPPK = $ajuanperizinan->status_izin_ppk;
                     $CutiTahunan = $ajuanperizinan -> jenis_perizinan;
-                
+
                     if ($statusPPK === '1' && $CutiTahunan === "CT") {
                         $kodeFinger = $ajuanperizinan -> kode_finger;
                         $perizinanUser = User::with('cuti')->where('kode_finger', $kodeFinger)->first();
-                
+
                         if ($perizinanUser) {
                             if ($perizinanUser->cuti == null) {
                                 return redirect()->back()->with('error', 'Anda belum memiliki cuti tahunan.');
                             }
-                
+
                             $jumlahCuti = $ajuanperizinan->jumlah_hari_pengajuan;
                             $jatahCutiTahunan = $perizinanUser->cuti->jatah_cuti;
-                
+
                             if ($jatahCutiTahunan < $jumlahCuti) {
                                 return redirect()->back()->with('error', 'Anda tidak memiliki jatah cuti tahunan yang cukup.');
                             }
-                
+
                             $perizinanUser->cuti->jatah_cuti -= $jumlahCuti;
 
                             if ($perizinanUser->cuti->save()) {
@@ -173,7 +173,7 @@ class AjuanPerizinanController extends Controller
                             } else {
                                 return redirect()->back()->with('error', 'Gagal mengurangi jatah cuti pengguna.');
                             }
-                            
+
                         } else {
                             return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
                         }
@@ -183,25 +183,30 @@ class AjuanPerizinanController extends Controller
                 // dd($request);
                 // dd($statusPPK, $request->jenis_perizinan);
             $ajuanperizinan->save();
-            
+
             return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
         }elseif(auth()->user()->level === 'ppk'){
             $ajuanperizinan = Perizinan::find($id_perizinan);
-            
+
             $rules = [
                 'status_izin_ppk' => 'required',
             ];
 
             if($ajuanperizinan) {
                 if($ajuanperizinan->id_atasan === auth()->user()->id_users){
-                    $rules['status_izin_atasan'] = 'required'; 
+                    $rules['status_izin_atasan'] = 'required';
                 }
             }
-            
+
             $request->validate($rules);
 
             $ajuanperizinan->status_izin_ppk = $request->status_izin_ppk;
-            // $ajuanperizinan->status_izin_atasan = $request->status_izin_atasan;
+            if($ajuanperizinan) {
+                if($ajuanperizinan->id_atasan === auth()->user()->id_users){
+                    $ajuanperizinan->status_izin_atasan = $request->status_izin_atasan;
+                }
+            }
+
             $statusAtasan = $ajuanperizinan -> status_izin_atasan;
 
             if($request->status_izin_ppk === '0'){
@@ -214,7 +219,7 @@ class AjuanPerizinanController extends Controller
             if($request->status_izin_ppk === '1' || $request->status_izin_atasan === '1' ){
                 $statusAtasan = $ajuanperizinan->status_izin_atasan;
                 $CutiTahunan = $ajuanperizinan -> jenis_perizinan;
-                
+
                     if ($statusAtasan === '1' && $CutiTahunan === "CT") {
                         $kodeFinger = $ajuanperizinan -> kode_finger;
                     $perizinanUser = User::with('cuti')->where('kode_finger', $kodeFinger)->first();
@@ -226,9 +231,9 @@ class AjuanPerizinanController extends Controller
                             return redirect()->back()->with('error', 'Anda tidak memiliki jatah cuti tahunan yang cukup.');
                         }
                         if ($perizinanUser->cuti) {
-                            $perizinanUser->cuti->jatah_cuti -= $jumlahCuti; 
+                            $perizinanUser->cuti->jatah_cuti -= $jumlahCuti;
                             if ($perizinanUser->cuti->save()) {
-                            
+
                             } else {
                                 return redirect()->back()->with('error', 'Gagal mengurangi jatah cuti pengguna.');
                             }
@@ -236,10 +241,10 @@ class AjuanPerizinanController extends Controller
                     } else {
                         return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
                    }
-                
+
                 }
             }
-            $ajuanperizinan->status_izin_atasan = $statusAtasan; 
+            $ajuanperizinan->status_izin_atasan = $statusAtasan;
             // dd($request);
 
             $ajuanperizinan->save();
@@ -258,28 +263,28 @@ class AjuanPerizinanController extends Controller
                 // 'status_izin_atasan' => 'required',
                 // 'status_izin_ppk' => 'required',
             ];
-    
+
             if($request->file('file_perizinan')){
-                $rules['file_perizinan'] = 'required|mimes:pdf,doc,docx,png,jpg,jpeg'; 
+                $rules['file_perizinan'] = 'required|mimes:pdf,doc,docx,png,jpg,jpeg';
             }
-    
+
             if(isset($request->status_izin_atasan )){
                 if($request->status_izin_atasan === '0'){
-                    $rules['alasan_ditolak_atasan'] = 'required'; 
-                }
-            }
-    
-            if(isset($request->status_izin_ppk )){
-                if($request->status_izin_ppk === '0'){
-                    $rules['alasan_ditolak_ppk'] = 'required'; 
+                    $rules['alasan_ditolak_atasan'] = 'required';
                 }
             }
 
-  
-            
-    
+            if(isset($request->status_izin_ppk )){
+                if($request->status_izin_ppk === '0'){
+                    $rules['alasan_ditolak_ppk'] = 'required';
+                }
+            }
+
+
+
+
             $request->validate($rules);
-            
+
             $ajuanperizinan = Perizinan::find($id_perizinan);
 
             if (!$ajuanperizinan) {
@@ -290,14 +295,14 @@ class AjuanPerizinanController extends Controller
             $ajuanperizinan->tgl_absen_awal = $request->tgl_absen_awal;
             $ajuanperizinan->tgl_absen_akhir = $request->tgl_absen_akhir;
             $ajuanperizinan->keterangan = $request->keterangan;
-    
+
             if(isset($request->status_izin_atasan )){
                 $ajuanperizinan->status_izin_atasan = $request->status_izin_atasan;
             }
             if(isset($request->status_izin_ppk )){
                 $ajuanperizinan->status_izin_ppk = $request->status_izin_ppk;
             }
-            
+
             if(isset($request->status_izin_atasan )){
                 if($request->status_izin_atasan === '0'){
                     $ajuanperizinan->alasan_ditolak_atasan = $request->alasan_ditolak_atasan;
@@ -309,7 +314,7 @@ class AjuanPerizinanController extends Controller
                 }
             }
 
-           
+
             if($request->status_izin_ppk && $request->status_izin_atasan){
                 if($request->jenis_perizinan === "CT"){
                     $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
@@ -324,9 +329,9 @@ class AjuanPerizinanController extends Controller
                             return redirect()->back()->with('error', 'Anda tidak memiliki jatah cuti tahunan yang cukup.');
                         }
                         if ($perizinanUser->cuti) {
-                            $perizinanUser->cuti->jatah_cuti -= $jumlahCuti; 
+                            $perizinanUser->cuti->jatah_cuti -= $jumlahCuti;
                             if ($perizinanUser->cuti->save()) {
-                            
+
                             } else {
                                 return redirect()->back()->with('error', 'Gagal mengurangi jatah cuti pengguna.');
                             }
@@ -335,29 +340,29 @@ class AjuanPerizinanController extends Controller
                         return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
                     }
                 }
-                
+
             }
             // dd($request, $ajuanperizinan);
-            
+
             if ($request->hasFile('file_perizinan')) {
                 // Menghapus file file_perizinan sebelumnya
                 if ($ajuanperizinan->file_perizinan) {
                     Storage::disk('public')->delete('file_perizinan/'.$ajuanperizinan->file_perizinan);
                 }
-                
+
                 // Upload file file_perizinan baru
                 $file_perizinan = $request->file('file_perizinan');
                 $namafile_perizinan = time().'.'.$file_perizinan->getClientOriginalExtension();
                 Storage::disk('public')->put('file_perizinan/'.$namafile_perizinan, file_get_contents($file_perizinan));
                 $ajuanperizinan->file_perizinan = $namafile_perizinan;
             }
-            
+
             $request->validate($rules);
 
-          
-            
+
+
             $ajuanperizinan->save();
-            
+
         }
 
         return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
@@ -374,7 +379,7 @@ class AjuanPerizinanController extends Controller
                 'is_deleted' => '1',
             ]);
         }
-    
+
         return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah terhapus');
     }
     }
