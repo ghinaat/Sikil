@@ -36,6 +36,17 @@ class Perizinan extends Model
     {
         return $this->belongsTo(User::class, 'id_atasan', 'id_users');
     }
+    public function hitungJumlahHariPengajuan($tgl_awal, $tgl_akhir)
+    {
+        // Logika perhitungan jumlah hari di sini
+        // Misalnya, Anda dapat menggunakan Carbon untuk menghitung selisih tanggal
+        // Contoh:
+        $tanggal_awal = \Carbon\Carbon::parse($tgl_awal);
+        $tanggal_akhir = \Carbon\Carbon::parse($tgl_akhir);
+        $jumlah_hari = $tanggal_awal->diffInDays($tanggal_akhir);
+
+        return $jumlah_hari;
+    }
 
 
     protected static function boot()
