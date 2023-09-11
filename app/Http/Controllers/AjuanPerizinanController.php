@@ -80,6 +80,23 @@ class AjuanPerizinanController extends Controller
 
 
         $ajuanperizinan = new Perizinan();
+
+        $pengguna = User::where('kode_finger', $request->kode_finger)->first();
+    
+        if (!$pengguna) {
+            return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
+        }
+
+        $jumlah_hari_pengajuan = $request->jumlah_hari_pengajuan;
+        // dd($jumlah_hari_pengajuan);
+    
+        // Periksa apakah jatah cuti tahunan mencukupi
+        if ($request->jenis_perizinan === 'CT' && $pengguna->cuti) {
+            if ($pengguna->cuti->jatah_cuti < $jumlah_hari_pengajuan) {
+                return redirect()->back()->with('error', 'Jatah cuti tidak mencukupi untuk pengajuan ini.');
+            }
+        }
+
         if ($request->hasFile('file_perizinan')) {
             // Upload dan simpan file jika ada
             $file = $request->file('file_perizinan');

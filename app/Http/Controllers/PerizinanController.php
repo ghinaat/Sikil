@@ -74,10 +74,8 @@ class PerizinanController extends Controller
         }
     
         // Hitung jumlah hari pengajuan
-        $jumlah_hari_pengajuan = $perizinan->hitungJumlahHariPengajuan(
-            $request->tgl_absen_awal,
-            $request->tgl_absen_akhir
-        );
+        $jumlah_hari_pengajuan = $request->jumlah_hari_pengajuan;
+        // dd($jumlah_hari_pengajuan);
     
         // Periksa apakah jatah cuti tahunan mencukupi
         if ($request->jenis_perizinan === 'CT' && $pengguna->cuti) {
