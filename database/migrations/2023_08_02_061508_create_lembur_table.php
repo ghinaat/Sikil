@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('lembur', function (Blueprint $table) {
             $table->increments('id_lembur');
-            $table->unsignedInteger('id_users');
+            $table->unsignedInteger('kode_finger');
+            $table->unsignedInteger('id_atasan');
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->time('jam_lembur');
             $table->string('tugas', 255);
-            $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
+            $table->enum('status_izin_atasan', ['0','1'])->nullable()->default(null);
+            $table->foreign('kode_finger')->references('kode_finger')->on('users')->onDelete('cascade');
+            $table->foreign('id_atasan')->references('id_users')->on('users')->onDelete('cascade');
             $table->enum('is_deleted', ['0', '1'])->default('0');
             $table->timestamps();
         });
