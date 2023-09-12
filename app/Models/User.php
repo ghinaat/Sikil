@@ -85,6 +85,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Perizinan::class, 'kode_finger', 'kode_finger');
     }
+    public function lembur()
+    {
+        return $this->hasMany(Lembur::class, 'kode_finger', 'kode_finger');
+    }
+
 
 
     protected $primaryKey = 'id_users';

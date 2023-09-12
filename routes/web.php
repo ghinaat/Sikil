@@ -4,6 +4,7 @@ use App\Http\Controllers\AjuanPerizinanController;
 use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\CutiController;
+use App\Http\Controllers\LemburController;
 use App\Http\Controllers\DiklatController;
 use App\Http\Controllers\GeneralSettingController;
 use App\Http\Controllers\HomeController;
@@ -165,3 +166,14 @@ Route::get('/cuti/{cuti}/edit', [CutiController::class, 'edit'])->name('cuti.edi
 Route::put('/cuti/update/{id}', [CutiController::class, 'update'])->name('cuti.update');
 Route::delete('/cuti/{cuti}', [CutiController::class, 'destroy'])->name('cuti.destroy');
 Route::get('/cuti/export', [CutiController::class, 'export'])->name('cuti.xlsx')->middleware('isAdmin');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/lembur', [LemburController::class, 'index'])->name('lembur.index');
+    Route::get('/lembur/create', [LemburController::class, 'create'])->name('lembur.create');
+    Route::post('/lembur', [LemburController::class, 'store'])->name('lembur.store');
+    Route::get('/lembur/{lembur}/edit', [LemburController::class, 'edit'])->name('lembur.edit');
+    Route::put('/lembur/update/{id}', [LemburController::class, 'update'])->name('lembur.update');
+    Route::delete('/lembur/{id_lembur}', [LemburController::class, 'destroy'])->name('lembur.destroy');
+    Route::get('/lembur/export', [LemburController::class, 'export'])->name('lembur.xlsx')->middleware('isAdmin');
+    
+});

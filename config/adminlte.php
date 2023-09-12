@@ -375,6 +375,12 @@ return [
                     'url' => '/perizinan',
                     'can' => '',
                 ],
+                [
+                    'text' => 'Lembur',
+                    'url' => '/lembur',
+                    'can' => '',
+                ],
+
             ],
         ],
         [
