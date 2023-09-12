@@ -174,6 +174,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/lembur/{lembur}/edit', [LemburController::class, 'edit'])->name('lembur.edit');
     Route::put('/lembur/update/{id}', [LemburController::class, 'update'])->name('lembur.update');
     Route::delete('/lembur/{id_lembur}', [LemburController::class, 'destroy'])->name('lembur.destroy');
+    Route::get('/lembur/rekap', [LemburController::class, 'rekap'])->name('lembur.rekap');
+    Route::get('/lembur/filter', [LemburController::class, 'filter'])->name('lembur.filter');
     Route::get('/lembur/export', [LemburController::class, 'export'])->name('lembur.xlsx')->middleware('isAdmin');
     
 });

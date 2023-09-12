@@ -28,6 +28,32 @@ class LemburController extends Controller
         ]);
     }
 
+    public function rekap()
+    {
+        $lembur = Lembur::where('is_deleted', '0')
+        ->get();
+    
+        return view('lembur.rekap', [
+            'lembur' => $lembur,
+            'users' => User::where('is_deleted', '0')->get(),
+        ]);
+    }
+
+    public function filter(Request $request)
+{
+    $start_date = $request->input('start_date');
+    $end_date = $request->input('end_date');
+
+    $lembur = Lembur::where('is_deleted', '0')
+        ->whereBetween('tanggal', [$start_date, $end_date])
+        ->get();
+
+    return view('lembur.rekap', [
+        'lembur' => $lembur,
+        'users' => User::where('is_deleted', '0')->get(),
+    ]);
+}
+
     /**
      * Show the form for creating a new resource.
      */
