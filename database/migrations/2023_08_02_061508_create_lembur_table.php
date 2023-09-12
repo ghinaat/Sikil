@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id_lembur');
             $table->unsignedInteger('kode_finger');
             $table->unsignedInteger('id_atasan');
+            $table->date('tanggal');
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->time('jam_lembur');
