@@ -433,6 +433,11 @@ return [
                     'url' => '/ajuanperizinan',
                     'can' => 'isAdmin',
                 ],
+                [
+                    'text' => 'Rekap Lembur',
+                    'url' => '/lembur/rekap',
+                    'can' => 'isAdmin',
+                ],
             ],
         ],
     ],
