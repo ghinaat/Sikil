@@ -9,12 +9,52 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use App\Exports\LemburExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LemburController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function export(Request $request) 
+    {
+        $users = User::where('is_deleted', '0')->get();
+
+        $lemburs = [];
+
+        $defaultStartDate = '2023-01-01';
+        $defaultEndDate = '2023-12-31';
+
+        $start_date = $request->input('start_date', $defaultStartDate);
+        $end_date = $request->input('end_date', $defaultEndDate);
+
+        $lemburs['data'] = Lembur::whereBetween('tanggal' , [$start_date, $end_date])->get();
+
+        $lemburs['start_date'] = $start_date;       
+        $lemburs['end_date'] = $end_date;
+
+        return Excel::download(new LemburExport($lemburs), 'lembur.xlsx');
+
+    }
+
+    public function filterAdmin(Request $request)
+    {
+        $users = User::where('is_deleted', '0')->get();
+
+        $lembur = [];
+
+        $defaultStartDate = '2023-01-01';
+        $defaultEndDate = '2023-12-31';
+
+        $start_date = $request->input('start_date', $defaultStartDate);
+        $end_date = $request->input('end_date', $defaultEndDate);
+
+        $lemburData = Lembur::where('kode_finger', $user->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
+
+        return view('lembur.filter', [
+            'lembur' => $lembur,
+        ]);
+
+    }
+
     public function index()
     {
         $user = auth()->user();
