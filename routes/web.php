@@ -177,5 +177,4 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/lembur/export', [LemburController::class, 'export'])->name('lembur.xlsx')->middleware('isAdmin');
     Route::get('/persetujuan', [LemburController::class, 'atasan'])->name('lembur.atasan');
     Route::put('/persetujuan/update/{id_lembur}', [LemburController::class, 'status'])->name('lembur.status');
-    
 });

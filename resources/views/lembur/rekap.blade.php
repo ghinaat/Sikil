@@ -10,7 +10,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-10">
-                        <form action="{{ route('lembur.filter') }}" method="GET" class="form-inline mb-3">
+                        <form action="{{ route('lembur.filter', ['start_date' => request()->input('start_date'), 'end_date' => request()->input('end_date')]) }}" method="GET" class="form-inline mb-3">
                             <div class="form-group mb-2">
                                 <label for="start_date" class="my-label mr-2">Tanggal
                                     Awal:&nbsp;</label>
@@ -20,12 +20,14 @@
                                 <input type="date" id="end_date" name="end_date" required
                                     class="form-control" value="{{request()->input('end_date')}}">&nbsp;&nbsp;
                                 <button type="submit" class="btn btn-primary">&nbsp;Tampilkan</button>
+                                <a href="{{ route('lembur.xlsx', ['start_date' => request()->input('start_date'), 'end_date' => request()->input('end_date')]) }}" class="btn btn-primary">Unduh Excel</a>
                             </div>
                             <div>
                                 
                             </div>
                         </form>
                     </div>
+
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-stripped" id="example2">

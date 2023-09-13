@@ -141,7 +141,7 @@
                                                             <div class="form-group">
                                                                 <label for="jenis_perizinan">Jenis Perizinan</label>
                                                                 <select
-                                                                    class="form-control  @error('jenis_perizinan') is-invalid @enderror"
+                                                                    class="form-select  @error('jenis_perizinan') is-invalid @enderror"
                                                                     id="jenis_perizinan" name="jenis_perizinan">
                                                                     <option value="I" @if(old('jenis_perizinan', $p->
                                                                         jenis_perizinan)=='I')selected
@@ -192,7 +192,7 @@
                                                                 <label class="id_atasan" for="id_atasan">Atasan
                                                                     Langsung</label>
                                                                 <select id="id_atasan" name="id_atasan"
-                                                                    class="form-control @error('id_atasan') is-invalid @enderror">
+                                                                    class="form-select @error('id_atasan') is-invalid @enderror">
                                                                     @foreach ($users as $us)
                                                                     <option value="{{ $us->id_users }}" @if( $p->
                                                                         id_atasan === old('id_atasan', $us->id_users) )
@@ -313,7 +313,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="jenis_perizinan">Jenis Ajuan</label>
-                                    <select class="form-control  @error('jenis_perizinan') is-invalid @enderror"
+                                    <select class="form-select  @error('jenis_perizinan') is-invalid @enderror"
                                         id="jenis_perizinan" name="jenis_perizinan">
                                         <option value="I">Izin</option>
                                         <option value="DL">Dinas Luar</option>
