@@ -28,27 +28,32 @@ class LemburController extends Controller
         ]);
     }
 
-<<<<<<< HEAD
+
     public function atasan()
     {
         $user = auth()->user();
         $lembur = Lembur::where('is_deleted', '0')->get();
     
         return view('lembur.atasan', [
-=======
+            'lembur' => $lembur,
+            'users' => User::where('is_deleted', '0')->get(),
+        ]);
+
+    }
+
     public function rekap()
     {
         $lembur = Lembur::where('is_deleted', '0')
         ->get();
     
         return view('lembur.rekap', [
->>>>>>> 5c5735e414ba5b80a7b3dfebf42556506b3ab8b4
+
             'lembur' => $lembur,
             'users' => User::where('is_deleted', '0')->get(),
         ]);
     }
 
-<<<<<<< HEAD
+
     public function status(Request $request, $id_lembur)
     {
         $rules = [
@@ -65,8 +70,7 @@ class LemburController extends Controller
 
     }
 
-    
-=======
+
     public function filter(Request $request)
 {
     $start_date = $request->input('start_date');
@@ -82,7 +86,7 @@ class LemburController extends Controller
     ]);
 }
 
->>>>>>> 5c5735e414ba5b80a7b3dfebf42556506b3ab8b4
+
     /**
      * Show the form for creating a new resource.
      */

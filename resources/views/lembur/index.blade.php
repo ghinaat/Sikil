@@ -39,8 +39,16 @@
                                     {{ \Carbon\Carbon::createFromFormat('H:i:s', $lr->jam_lembur)->format('H:i') }}</td>
                                 <td id={{$key+1}}>{{$lr->tugas}}</td>
                                 <td>
+                                    @if($lr->status_izin_atasan !== null)
+                                    @if($lr->status_izin_atasan === '1')
+                                    Disetujui
+                                    @else
+                                    Ditolak
+                                    @endif
+                                    @else
                                     @include('components.action-buttons', ['id' => $lr->id_lembur, 'key' => $key,
                                     'route' => 'lembur'])
+                                    @endif
                                 </td>
                             </tr>
                             <!-- Edit -->
