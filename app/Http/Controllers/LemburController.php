@@ -28,6 +28,34 @@ class LemburController extends Controller
         ]);
     }
 
+    public function atasan()
+    {
+        $user = auth()->user();
+        $lembur = Lembur::where('is_deleted', '0')->get();
+    
+        return view('lembur.atasan', [
+            'lembur' => $lembur,
+            'users' => User::where('is_deleted', '0')->get(),
+        ]);
+    }
+
+    public function status(Request $request, $id_lembur)
+    {
+        $rules = [
+            'status_izin_atasan' => 'required',
+        ];
+
+        $request->validate($rules);
+        $lembur = Lembur::find($id_lembur);
+       
+        $lembur->status_izin_atasan = $request->status_izin_atasan;
+
+        $lembur->save();
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+
+    }
+
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -95,9 +123,40 @@ class LemburController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Lembur $lembur)
+    public function update(Request $request, $id_lembur)
     {
-        //
+        $rules = [
+            'id_atasan' => 'required',
+            'kode_finger' => 'required',
+            'tanggal' => 'required|date',
+            'jam_mulai' => 'required',
+            'jam_selesai' => 'required',
+            'tugas' => 'required|string',
+        ];
+
+        $request->validate($rules);
+        $lembur = Lembur::find($id_lembur);
+         // Menghitung jam lembur dari jam mulai dan jam selesai
+         $lembur->jam_mulai = $request->input('jam_mulai');
+        $lembur->jam_selesai = $request->input('jam_selesai');
+        
+        // Hitung selisih waktu dalam menit
+        $jamMulai = \Carbon\Carbon::createFromFormat('H:i', $lembur->jam_mulai);
+        $jamSelesai = \Carbon\Carbon::createFromFormat('H:i', $lembur->jam_selesai);
+        $diffInMinutes = $jamMulai->diffInMinutes($jamSelesai);
+        
+        $lembur->kode_finger = $request->kode_finger;
+        $lembur->id_atasan = $request->id_atasan;
+        $lembur->tanggal = $request->input('tanggal');
+        $lembur->jam_mulai = $request->input('jam_mulai');
+        $lembur->jam_selesai = $request->input('jam_selesai');
+        $lembur->jam_lembur = floor($diffInMinutes / 60) . ':' . ($diffInMinutes % 60); // Jam dan menit
+        $lembur->tugas = $request->input('tugas');
+        $lembur->status_izin_atasan = null;
+
+        $lembur->save();
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+
     }
 
     /**
@@ -106,12 +165,11 @@ class LemburController extends Controller
     public function destroy($id_lembur)
     {
         $lembur = Lembur::find($id_lembur);
-        
         if ($lembur) {
-            $lembur->delete();
-            return redirect()->route('lembur.index')->with('success_message', 'Data telah terhapus.');
-        } else {
-            return redirect()->route('lembur.index')->with('error_message', 'Data tidak ditemukan.');
+            $lembur->update([
+                'is_deleted' => '1',
+            ]);
         }
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 }

@@ -169,11 +169,11 @@ Route::get('/cuti/export', [CutiController::class, 'export'])->name('cuti.xlsx')
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/lembur', [LemburController::class, 'index'])->name('lembur.index');
-    Route::get('/lembur/create', [LemburController::class, 'create'])->name('lembur.create');
     Route::post('/lembur', [LemburController::class, 'store'])->name('lembur.store');
-    Route::get('/lembur/{lembur}/edit', [LemburController::class, 'edit'])->name('lembur.edit');
-    Route::put('/lembur/update/{id}', [LemburController::class, 'update'])->name('lembur.update');
+    Route::put('/lembur/update/{id_lembur}', [LemburController::class, 'update'])->name('lembur.update');
     Route::delete('/lembur/{id_lembur}', [LemburController::class, 'destroy'])->name('lembur.destroy');
     Route::get('/lembur/export', [LemburController::class, 'export'])->name('lembur.xlsx')->middleware('isAdmin');
+    Route::get('/persetujuan', [LemburController::class, 'atasan'])->name('lembur.atasan');
+    Route::put('/persetujuan/update/{id_lembur}', [LemburController::class, 'status'])->name('lembur.status');
     
 });

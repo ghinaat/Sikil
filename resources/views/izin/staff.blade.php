@@ -38,12 +38,12 @@
                                     {{ date_format( new DateTime($p->tgl_absen_akhir), 'd F Y')}}</td>
                                 <td id={{$key+1}}>{{$p->keterangan}}</td>
                                 <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
-                                @if($p->file_perizinan)
-                                <a href="{{ asset('/storage/file_perizinan/'. $p->file_perizinan) }}"
+                                    @if($p->file_perizinan)
+                                    <a href="{{ asset('/storage/file_perizinan/'. $p->file_perizinan) }}"
                                         target="_blank"><i class="fa fa-download"></i></a>
-                                @else
-                                Tidak Melampirkan Dokumen
-                                @endif
+                                    @else
+                                    Tidak Melampirkan Dokumen
+                                    @endif
                                 </td>
                                 <td id={{$key+1}}>{{$p->jumlah_hari_pengajuan}}</td>
                                 <td id={{$key+1}}>
@@ -98,7 +98,8 @@
                                                                         class="form-control @error('tgl_absen_awal') is-invalid @enderror"
                                                                         id="tgl_absen_awal" placeholder="Nama Diklat"
                                                                         name="tgl_absen_awal"
-                                                                        value="{{$p -> tgl_absen_awal ?? old('tgl_absen_awal')}}" required>
+                                                                        value="{{$p -> tgl_absen_awal ?? old('tgl_absen_awal')}}"
+                                                                        required>
                                                                     @error('tgl_absen_awal') <span
                                                                         class="textdanger">{{$message}}</span>
                                                                     @enderror
@@ -113,7 +114,8 @@
                                                                         class="form-control @error('tgl_absen_akhir') is-invalid @enderror"
                                                                         id="tgl_absen_akhir" placeholder="Nama Diklat"
                                                                         name="tgl_absen_akhir"
-                                                                        value="{{$p -> tgl_absen_akhir ?? old('tgl_absen_akhir')}}" required>
+                                                                        value="{{$p -> tgl_absen_akhir ?? old('tgl_absen_akhir')}}"
+                                                                        required>
                                                                     @error('tgl_absen_akhir') <span
                                                                         class="textdanger">{{$message}}</span>
                                                                     @enderror
@@ -122,10 +124,14 @@
                                                             <div class="form-group">
                                                                 <label for="jumlah_hari_pengajuan"
                                                                     class="form-label">Jumlah Hari Pengajuan</label>
-                                                                    <input type="number"
+                                                                <input type="number"
                                                                     class="form-control @error('jumlah_hari_pengajuan') is-invalid @enderror"
-                                                                    id="jumlah_hari_pengajuan" name="jumlah_hari_pengajuan" value="{{$p -> jumlah_hari_pengajuan ?? old('jumlah_hari_pengajuan') }}" min="0">
-                                                                    @error('jumlah_hari_pengajuan') <span class="text-danger">{{ $message }}</span> @enderror
+                                                                    id="jumlah_hari_pengajuan"
+                                                                    name="jumlah_hari_pengajuan"
+                                                                    value="{{$p -> jumlah_hari_pengajuan ?? old('jumlah_hari_pengajuan') }}"
+                                                                    min="0">
+                                                                @error('jumlah_hari_pengajuan') <span
+                                                                    class="text-danger">{{ $message }}</span> @enderror
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="jenis_perizinan">Jenis Perizinan</label>
@@ -174,7 +180,8 @@
                                                                 <label for="keterangan"
                                                                     class="form-label">Keterangan</label>
                                                                 <textarea rows="5" class="form-control" id="keterangan"
-                                                                    name="keterangan" required>{{$p -> keterangan ?? old('keterangan')}}</textarea>
+                                                                    name="keterangan"
+                                                                    required>{{$p -> keterangan ?? old('keterangan')}}</textarea>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="id_atasan" for="id_atasan">Atasan
@@ -206,16 +213,24 @@
                                                             <div class="form-group">
                                                                 <label for="file_perizinan">Unggah Lampiran</label>
                                                                 @if ($p->file_perizinan)
-                                                                <p>Previous File: <a href="{{ asset('/storage/file_perizinan/' . $p->file_perizinan) }}" target="_blank">{{ $p->file_perizinan }}</a></p>
+                                                                <p>Previous File: <a
+                                                                        href="{{ asset('/storage/file_perizinan/' . $p->file_perizinan) }}"
+                                                                        target="_blank">{{ $p->file_perizinan }}</a></p>
                                                                 @endif
-                                                                <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf .docx</small>
-                                                                <input type="file" class="form-control @error('file_perizinan') is-invalid @enderror" id="file_perizinan_edit" name="file_perizinan" onchange="validateFile(this, 'fileErrorEdit')">
-                                                                <div class="invalid-feedback" id="fileErrorEdit" style="display: none;">Tipe file tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
+                                                                <small class="form-text text-muted">Allow file
+                                                                    extensions: .jpeg .jpg .png .pdf .docx</small>
+                                                                <input type="file"
+                                                                    class="form-control @error('file_perizinan') is-invalid @enderror"
+                                                                    id="file_perizinan_edit" name="file_perizinan"
+                                                                    onchange="validateFile(this, 'fileErrorEdit')">
+                                                                <div class="invalid-feedback" id="fileErrorEdit"
+                                                                    style="display: none;">Tipe file tidak valid. Harap
+                                                                    unggah file dengan ekstensi yang diizinkan.</div>
                                                                 @error('file_perizinan')
-                                                                    <span class="text-danger">{{ $message }}</span>
+                                                                <span class="text-danger">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
-                                                            
+
                                                             <div class="modal-footer">
                                                                 <button type="submit"
                                                                     class="btn btn-primary">Simpan</button>
@@ -267,8 +282,8 @@
                                     <div class="form-input">
                                         <input type="date"
                                             class="form-control @error('tgl_absen_awal') is-invalid @enderror"
-                                            id="tgl_absen_awal" name="tgl_absen_awal"
-                                            value="{{ old('tgl_absen_awal')}}" required>
+                                            id="tgl_absen_awal" name="tgl_absen_awal" value="{{ old('tgl_absen_awal')}}"
+                                            required>
                                         @error('tgl_absen_awal') <span class="textdanger">{{$message}}</span> @enderror
                                     </div>
                                 </div>
@@ -284,9 +299,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="jumlah_hari_pengajuan" class="form-label">Jumlah Hari Pengajuan</label>
-                                    <input type="number" class="form-control @error('jumlah_hari_pengajuan') is-invalid @enderror"
-                                    id="jumlah_hari_pengajuan" name="jumlah_hari_pengajuan" value="{{  old('jumlah_hari_pengajuan') }}" min="0">
-                                    @error('jumlah_hari_pengajuan') <span class="text-danger">{{ $message }}</span> @enderror
+                                    <input type="number"
+                                        class="form-control @error('jumlah_hari_pengajuan') is-invalid @enderror"
+                                        id="jumlah_hari_pengajuan" name="jumlah_hari_pengajuan"
+                                        value="{{  old('jumlah_hari_pengajuan') }}" min="0">
+                                    @error('jumlah_hari_pengajuan') <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="jenis_perizinan">Jenis Ajuan</label>
@@ -320,7 +338,7 @@
                                 <div class="form-group">
                                     <label for="keterangan">Keterangan</label>
                                     <textarea rows="4" class="form-control @error('keterangan') is-invalid @enderror"
-                                        id="keterangan" name="keterangan"  required>{{old('keterangan')}}</textarea>
+                                        id="keterangan" name="keterangan" required>{{old('keterangan')}}</textarea>
                                     @error('keterangan') <span class="text-danger">{{$message}}</span> @enderror
                                 </div>
                                 <div class="form-group">
@@ -335,13 +353,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="file_perizinan">Unggah Lampiran</label>
-                                    <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf .docx</small>
-                                    <input type="file" class="form-control @error('file_perizinan') is-invalid @enderror" id="file_perizinan" name="file_perizinan" onchange="validateFile(this, 'fileErrorCreate')">
-                                    <div class="invalid-feedback" id="fileErrorCreate" style="display: none;">Tipe file tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
+                                    <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf
+                                        .docx</small>
+                                    <input type="file"
+                                        class="form-control @error('file_perizinan') is-invalid @enderror"
+                                        id="file_perizinan" name="file_perizinan"
+                                        onchange="validateFile(this, 'fileErrorCreate')">
+                                    <div class="invalid-feedback" id="fileErrorCreate" style="display: none;">Tipe file
+                                        tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
                                     @error('file_perizinan')
-                                        <span class="text-danger">{{ $message }}</span>
+                                    <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                     </div>
