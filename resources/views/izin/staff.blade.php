@@ -67,8 +67,13 @@
                                     @endif
                                 </td>
                                 <td>
+                                    @if($p->status_izin_atasan == '1' && $p->status_izin_ppk == '1' ||
+                                    $p->status_izin_ppk == null )
+                                    Sudah Disetujui
+                                    @else
                                     @include('components.action-buttons', ['id' => $p->id_perizinan, 'key' => $key,
                                     'route' => 'perizinan'])
+                                    @endif
                                 </td>
                             </tr>
                             <!-- Edit -->

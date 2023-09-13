@@ -46,6 +46,7 @@
                 <div style="margin-top: 30px;"></div>
                 <label>Data Tim SEAQIL</label>
                 <div class="table-container">
+                <div class="table-responsive">
                     <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form">Add</button>
                     <table class="table table-hover table-bordered table-stripped">
                         <thead>
@@ -61,7 +62,6 @@
                             @foreach($timkegiatan as $key => $tk)
                             <tr>
                                 <td>{{$key+1}}</td>
-
                                 <td>{{$tk->user->nama_pegawai}}</td>
                                 <td>{{ $tk->user->jabatan->nama_jabatan }}</td>
                                 <td>{{$tk->peran->nama_peran}}</td>
@@ -74,6 +74,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
                 </div>
 
             </div>
