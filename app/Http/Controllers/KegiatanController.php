@@ -88,7 +88,7 @@ class KegiatanController extends Controller
         ]);
 
         // Redirect atau lakukan tindakan lain setelah data berhasil disimpan
-        return redirect()->route('kegiatan.index')->with('success_message', 'Data telah tersimpan');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan');
     }
 
     public function edit($id_kegiatan)

@@ -9,11 +9,10 @@ class Lembur extends Model
 {
     use HasFactory;
 
-    protected $primarykey = 'id_lembur';
+    protected $primaryKey = 'id_lembur';
 
     protected $table = 'lembur';
     protected $fillable = [
-        'id_lembur',
         'kode_finger',
         'id_atasan',
         'tanggal',
@@ -22,6 +21,7 @@ class Lembur extends Model
         'jam_lembur',
         'tugas',
         'status_izin_atasan',
+        'is_deleted',
     ];
     public function user()
     {

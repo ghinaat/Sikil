@@ -89,6 +89,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Lembur::class, 'kode_finger', 'kode_finger');
     }
+    public function lemburs()
+    {
+        return $this->hasMany(Lembur::class, 'id_atasan', 'id_users');
+    }
 
 
 
