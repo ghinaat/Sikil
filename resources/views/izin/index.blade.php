@@ -12,7 +12,7 @@
                 <form action="{{ route('ajuanperizinan.index') }}" method="GET" class="form-inline mb-3">
                     <div class="form-group">
                         <label for="kode_finger">Nama Pegawai:</label>&nbsp;&nbsp;
-                        <select class="form-control" name="kode_finger" id="kode_finger" class="form-select" >
+                        <select class="form-select" name="kode_finger" id="kode_finger" class="form-select" >
                             <option value="all">Semua Pegawai</option>
                             @foreach ($users as $user)
                                 <option value="{{ $user->kode_finger }}" @if(request()->input('kode_finger') == $user->kode_finger) selected @endif>{{ $user->nama_pegawai }}</option>
@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-group">    
                         <label for="jenis_perizinan">Jenis Perizinan :</label>&nbsp;&nbsp;
-                        <select class="form-control" id="jenis_perizinan" name="jenis_perizinan">
+                        <select class="form-select" id="jenis_perizinan" name="jenis_perizinan">
                             <option value="all">Semua Jenis Perizinan</option>
                             <option value="I" @if(request()->input('jenis_perizinan')=='I' )selected
                                 @endif>Izin</option>
@@ -171,7 +171,7 @@
                                                 @can('isAdmin')
                                                 <div class="form-group">
                                                     <label for="kode_finger">Nama Pegawai</label>
-                                                    <select id="kode_finger" name="kode_finger" class="form-control @error('kode_finger') is-invalid @enderror">
+                                                    <select id="kode_finger" name="kode_finger" class="form-select @error('kode_finger') is-invalid @enderror">
                                                         @foreach ($users as $u)
                                                         <option value="{{ $u->kode_finger }}" {{ $ap->kode_finger == $u->kode_finger ? 'selected' : '' }}>
                                                             {{ $u->nama_pegawai }} 
@@ -216,7 +216,7 @@
                                                 <div class="form-group">
                                                     <label for="jenis_perizinan">Jenis Perizinan</label>
                                                     <select
-                                                        class="form-control  @error('jenis_perizinan') is-invalid @enderror"
+                                                        class="form-select  @error('jenis_perizinan') is-invalid @enderror"
                                                         id="jenis_perizinan" name="jenis_perizinan">
                                                         <option value="I" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='I')selected
                                                             @endif>Izin</option>
@@ -254,7 +254,7 @@
                                                 <div class="form-group">
                                                     <label class="id_atasan" for="id_atasan">Atasan Langsung</label>
                                                     <select id="id_atasan" name="id_atasan"
-                                                        class="form-control @error('id_atasan') is-invalid @enderror">
+                                                        class="form-select @error('id_atasan') is-invalid @enderror">
                                                         @foreach ($users as $us)
                                                         <option value="{{ $us->id_users }}" @if( $ap->id_atasan === old('id_atasan', $us->id_users) ) selected @endif>
                                                             {{ $us->nama_pegawai }}
@@ -355,7 +355,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-6"  for="kode_finger">Nama Pegawai</label>
-                                    <select id="kode_finger" name="kode_finger" class="form-control @error('kode_finger') is-invalid @enderror">
+                                    <select id="kode_finger" name="kode_finger" class="form-select @error('kode_finger') is-invalid @enderror">
                                         @foreach ($users as $us)
                                         <option value="{{ $us->kode_finger }}" @if( old('kode_finger')==$us->id_users
                                             )selected @endif>
@@ -386,7 +386,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="jenis_perizinan">Jenis Perizinan</label>
-                                <select class="form-control  @error('jenis_perizinan') is-invalid @enderror"
+                                <select class="form-select  @error('jenis_perizinan') is-invalid @enderror"
                                     id="jenis_perizinan" name="jenis_perizinan">
                                     <option value="I">Izin</option>
                                     <option value="DL">Dinas Luar</option>
@@ -421,7 +421,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="id_atasan">Atasan Langsung</label>
-                                <select id="id_atasan" name="id_atasan"class="form-control @error('id_atasan') is-invalid @enderror">
+                                <select id="id_atasan" name="id_atasan"class="form-select @error('id_atasan') is-invalid @enderror">
                                     @foreach ($users as $us)
                                     <option value="{{ $us->id_users }}" @if( old('id_users')==$us->
                                         id_users )selected

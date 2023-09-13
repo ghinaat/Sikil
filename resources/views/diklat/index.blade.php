@@ -78,7 +78,7 @@
                                                     <label class="control-label col-md-6" for="id_jenis_diklat">Jenis
                                                         Diklat</label>
                                                     <select id="id_jenis_diklat" name="id_jenis_diklat"
-                                                        class="form-control @error('id_jenis_diklat') is-invalid @enderror">
+                                                        class="form-select @error('id_jenis_diklat') is-invalid @enderror">
                                                         @foreach ($jenisdiklat as $jd)
                                                         <option value="{{ $jd->id_jenis_diklat }}" @if(
                                                             old('id_jenis_diklat')==$jd->id_jenis_diklat
@@ -197,7 +197,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-6" for="id_jenis_diklat">Jenis Diklat</label>
                                     <select id="id_jenis_diklat" name="id_jenis_diklat"
-                                        class="form-control @error('id_jenis_diklat') is-invalid @enderror">
+                                        class="form-select @error('id_jenis_diklat') is-invalid @enderror">
                                         @foreach ($jenisdiklat as $jd)
                                         <option value="{{ $jd->id_jenis_diklat }}" @if( old('id_jenis_diklat')==$jd->
                                             id_jenis_diklat )selected @endif>
