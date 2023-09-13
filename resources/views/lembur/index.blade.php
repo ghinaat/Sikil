@@ -152,23 +152,23 @@
                                 <div class="form-group">
                                     <label for="tanggal">Tanggal</label>
                                     <input type="date" name="tanggal" id="tanggal"
-                                        value="{{$lr -> tanggal ?? old('tanggal')}}" class="form-control" required>
+                                        value="{{ old('tanggal')}}" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="jam_mulai">Jam Mulai</label>
                                     <input type="time" name="jam_mulai" id="jam_mulai"
-                                        value="{{$lr -> jam_mulai ?? old('jam_mulai')}}" class="form-control" required>
+                                        value="{{ old('jam_mulai')}}" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="jam_selesai">Jam Selesai</label>
                                     <input type="time" name="jam_selesai" id="jam_selesai"
-                                        value="{{$lr -> jam_selesai ?? old('jam_selesai')}}" class="form-control"
+                                        value="{{ old('jam_selesai')}}" class="form-control"
                                         required>
                                 </div>
                                 <div class="form-group">
                                     <label for="tugas">Uraian Tugas</label>
                                     <textarea name="tugas" id="tugas" class="form-control"
-                                        value="{{$lr -> tugas ?? old('tugas')}}" required></textarea>
+                                        value="{{ old('tugas')}}" required></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-6" for="id_atasan">Atasan Langsung</label>

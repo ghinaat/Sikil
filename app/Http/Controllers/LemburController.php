@@ -167,21 +167,28 @@ class LemburController extends Controller
 
         $request->validate($rules);
         $lembur = Lembur::find($id_lembur);
-         // Menghitung jam lembur dari jam mulai dan jam selesai
-         $lembur->jam_mulai = $request->input('jam_mulai');
-        $lembur->jam_selesai = $request->input('jam_selesai');
-        
-        // Hitung selisih waktu dalam menit
-        $jamMulai = \Carbon\Carbon::createFromFormat('H:i', $lembur->jam_mulai);
-        $jamSelesai = \Carbon\Carbon::createFromFormat('H:i', $lembur->jam_selesai);
-        $diffInMinutes = $jamMulai->diffInMinutes($jamSelesai);
-        
+
+        if ($request->has('jam_awal') && $request->has('jam_akhir')) {
+            $lembur->jam_awal = $request->input('jam_awal');
+            $lembur->jam_akhir = $request->input('jam_akhir');
+
+            
+            // Create Carbon objects for "jam_mulai" and "jam_selesai"
+            $jamMulai = \Carbon\Carbon::createFromFormat('H:i',   $lembur->jam_awal);
+            $jamSelesai = \Carbon\Carbon::createFromFormat('H:i',  $lembur->jam_akhir);
+            
+            // Process the time values as needed
+            $diffInMinutes = $jamMulai->diffInMinutes($jamSelesai);
+            $lembur->jam_lembur = floor($diffInMinutes / 60) . ':' . ($diffInMinutes % 60); // Jam dan menit
+            
+        } 
+
         $lembur->kode_finger = $request->kode_finger;
         $lembur->id_atasan = $request->id_atasan;
         $lembur->tanggal = $request->input('tanggal');
         $lembur->jam_mulai = $request->input('jam_mulai');
         $lembur->jam_selesai = $request->input('jam_selesai');
-        $lembur->jam_lembur = floor($diffInMinutes / 60) . ':' . ($diffInMinutes % 60); // Jam dan menit
+       
         $lembur->tugas = $request->input('tugas');
         $lembur->status_izin_atasan = null;
 
