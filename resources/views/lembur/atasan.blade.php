@@ -45,6 +45,7 @@
                                 <td id={{$key+1}}>
                                     {{ \Carbon\Carbon::createFromFormat('H:i:s', $lr->jam_lembur)->format('H:i') }}</td>
                                 <td id={{$key+1}}>{{$lr->tugas}}</td>
+                                @can('isAdmin')
                                 <td id={{$key+1}}>       
                                     @if($lr->status_izin_atasan == '0')
                                     Ditolak
@@ -54,11 +55,13 @@
                                     Menunggu Persetujuan
                                     @endif
                                 </td>
+                                @endcan
                                 <td>
                                     <div class="btn-group">
-                                    @if($lr->status_izin_atasan === 1)
+                                    @if($lr->id_atasan == auth()->user()->id_users) 
+                                    @if($lr->status_izin_atasan === '1')
                                     Sudah Disetujui
-                                    @elseif($lr->status_izin_atasan === 0)
+                                    @elseif($lr->status_izin_atasan === '0')
                                     Tidak Disetujui
                                     @else
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
@@ -66,8 +69,12 @@
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     @endif
+                                    @endif
                                     @can('isAdmin')
-                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                    @if($lr->status_izin_atasan === '1')
+                                    Sudah Disetujui
+                                    @else
+                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                         data-target="#editModal{{$lr->id_lembur}}" data-id="{{$lr->id_lembur}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
@@ -75,6 +82,7 @@
                                     onclick="notificationBeforeDelete(event, this, {{$key+1}})" class="btn btn-danger btn-xs mx-1">
                                     <i class="fa fa-trash"></i>
                                     </a>
+                                    @endif
                                     @endcan
                                     </div>
                                 </td>

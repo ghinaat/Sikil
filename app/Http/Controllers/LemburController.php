@@ -176,7 +176,7 @@ class LemburController extends Controller
         $lembur->status_izin_atasan = null;
 
         $lembur->save();
-        return redirect()->route('lembur.index')->with('success_message', 'Data telah tersimpan.');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
