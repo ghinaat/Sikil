@@ -15,6 +15,7 @@
     </thead>
     <tbody>
         @foreach($lemburs['data'] as $key => $lembur)
+        @if($lembur->status_izin_atasan === '1')
         <tr>
             <td>{{$key + 1}}</td>
             <td>{{ $lembur->user->nama_pegawai }}</td>
@@ -25,5 +26,6 @@
             <td>{{ $lembur->jam_lembur }}</td>
             <td>{{ $lembur->tugas }}</td>
         </tr>
+        @endif
         @endforeach
 </table>
