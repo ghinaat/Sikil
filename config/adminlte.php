@@ -359,7 +359,7 @@ return [
                 [
                     'text' => 'Kelola Lembur',
                     'url' => '/persetujuan',
-                    'can' =>  ['isBod', 'isPpk', 'isKadiv'],
+                    'can' =>  ['isBod', 'isPpk', 'isKadiv', 'isAdmin'],
                 ],
                 [
                     'text' => 'Kelola Presensi',
@@ -410,7 +410,7 @@ return [
                     'can' => '',
                 ],
                 [
-<<<<<<< HEAD
+
                     'text' => 'Peran',
                     'url' => '/peran',
                     'can' => '',
@@ -421,8 +421,7 @@ return [
                     'can' => '',
                 ],
                 [
-=======
->>>>>>> dca595815ce7255277b69472cb291bb6463ea762
+
                     'text' => 'Jatah Cuti',
                     'url' => '/cuti',
                     'can' => '',

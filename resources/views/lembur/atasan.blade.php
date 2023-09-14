@@ -55,13 +55,9 @@
                                     @endif
                                 </td>
                                 <td>
+                                    <div class="btn-group">
                                     @if($lr->status_izin_atasan === 1)
                                     Sudah Disetujui
-                                    @elseif(auth()->user()->level=='admin' && $lr->status_izin_atasan === 0 || $lr->status_izin_atasan === 'null' )
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                        data-target="#editModal{{$lr->id_lembur}}" data-id="{{$lr->id_lembur}}">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
                                     @elseif($lr->status_izin_atasan === 0)
                                     Tidak Disetujui
                                     @else
@@ -71,11 +67,16 @@
                                     </a>
                                     @endif
                                     @can('isAdmin')
+                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                        data-target="#editModal{{$lr->id_lembur}}" data-id="{{$lr->id_lembur}}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
                                     <a href="{{ route('lembur' . '.destroy', $lr->id_lembur) }}"
                                     onclick="notificationBeforeDelete(event, this, {{$key+1}})" class="btn btn-danger btn-xs mx-1">
                                     <i class="fa fa-trash"></i>
                                     </a>
                                     @endcan
+                                    </div>
                                 </td>
                             </tr>
                             <div class="modal fade" id="editModal{{$lr->id_lembur}}" role="dialog">
@@ -189,7 +190,6 @@
                     enctype="multipart/form-data">
                     @csrf
                     <div class="form-body">
-                        <div class="form-group">
                             <div class="row">
                                 <div class="form-group">
                                         <label class="control-label col-md-6"  for="kode_finger">Nama Pegawai</label>
