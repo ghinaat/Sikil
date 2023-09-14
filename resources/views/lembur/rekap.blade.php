@@ -19,11 +19,8 @@
                                 <label for="end_date" class="form-label">Tanggal Akhir:</label>&nbsp;&nbsp;
                                 <input type="date" id="end_date" name="end_date" required
                                     class="form-control" value="{{request()->input('end_date')}}">&nbsp;&nbsp;
-                                <button type="submit" class="btn btn-primary">&nbsp;Tampilkan</button>
+                                <button type="submit" class="btn btn-primary">&nbsp;Tampilkan</button>&nbsp;&nbsp;
                                 <a href="{{ route('lembur.xlsx', ['start_date' => request()->input('start_date'), 'end_date' => request()->input('end_date')]) }}" class="btn btn-primary">Unduh Excel</a>
-                            </div>
-                            <div>
-                                
                             </div>
                         </form>
                     </div>
@@ -44,19 +41,21 @@
                         </thead>
                         <tbody>
                             @foreach($lembur as $key => $lr)
+                            @if($lr->status_izin_atasan === '1')
                             <tr>
                                 <td id={{$key+1}}>{{$key+1}}</td>
                                 <td id={{$key+1}}>{{$lr->user->nama_pegawai}}</td>
                                 <td id={{$key+1}}>{{date_format( new DateTime($lr->tanggal), 'd F Y')}}</td>
                                 <td id={{$key+1}}>
                                     {{ \Carbon\Carbon::createFromFormat('H:i:s', $lr->jam_mulai)->format('H:i') }}</td>
-                                <td id={{$key+1}}>
-                                    {{ \Carbon\Carbon::createFromFormat('H:i:s', $lr->jam_selesai)->format('H:i') }}
+                                    <td id={{$key+1}}>
+                                        {{ \Carbon\Carbon::createFromFormat('H:i:s', $lr->jam_selesai)->format('H:i') }}
                                 </td>
                                 <td id={{$key+1}}>
                                     {{ \Carbon\Carbon::createFromFormat('H:i:s', $lr->jam_lembur)->format('H:i') }}</td>
                                 <td id={{$key+1}}>{{$lr->tugas}}</td>
                             </tr>
+                            @endif
                             @endforeach
                         </tbody>
                     </table>

@@ -176,8 +176,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/lembur/rekap', [LemburController::class, 'rekap'])->name('lembur.rekap');
     Route::get('/lembur/filter', [LemburController::class, 'filter'])->name('lembur.filter');
     Route::get('/lembur/export', [LemburController::class, 'export'])->name('lembur.xlsx')->middleware('isAdmin');
-    Route::get('/persetujuan', [LemburController::class, 'atasan'])->name('lembur.atasan');
-    Route::put('/persetujuan/update/{id_lembur}', [LemburController::class, 'status'])->name('lembur.status');
+    Route::get('/ajuanlembur', [LemburController::class, 'atasan'])->name('lembur.atasan');
+    Route::put('/ajuanlembur/update/{id_lembur}', [LemburController::class, 'status'])->name('lembur.status');
 });
 
 Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');

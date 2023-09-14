@@ -156,6 +156,11 @@ class LemburController extends Controller
         $jamSelesai = \Carbon\Carbon::createFromFormat('H:i', $request->input('jam_selesai'));
         $diffInMinutes = $jamMulai->diffInMinutes($jamSelesai);
 
+        // Validasi: Jam selesai harus lebih besar dari jam mulai
+        if ($request->jam_mulai >= $request->jam_selesai) {
+            return redirect()->back()->with('error', 'Harap periksa kembali waktu selesai Anda.');
+        }
+
         // Membuat objek Lembur baru dan mengisi atributnya
         $lembur = new Lembur();
         $lembur->kode_finger = $request->kode_finger;
@@ -167,12 +172,8 @@ class LemburController extends Controller
         $lembur->tugas = $request->input('tugas');
         $lembur->status_izin_atasan = null;
 
-        // Simpan data lembur ke database
         $lembur->save();
-
-
-        // Redirect kembali ke halaman list lembur dengan pesan sukses
-        return redirect()->route('lembur.index')->with('success', 'Data telah tersimpan.');
+        return redirect()->route('lembur.index')->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
@@ -204,24 +205,25 @@ class LemburController extends Controller
             'jam_selesai' => 'required',
             'tugas' => 'required|string',
         ];
+        // dd($request->all());
 
         $request->validate($rules);
         $lembur = Lembur::find($id_lembur);
 
-        if ($request->has('jam_awal') && $request->has('jam_akhir')) {
-            $lembur->jam_awal = $request->input('jam_awal');
-            $lembur->jam_akhir = $request->input('jam_akhir');
+        // Ubah format jam_mulai dan jam_selesai dari 'H:i:s' menjadi 'H:i'
+        $lembur->jam_mulai = date('H:i', strtotime($request->input('jam_mulai')));
+        $lembur->jam_selesai = date('H:i', strtotime($request->input('jam_selesai')));
 
-            
-            // Create Carbon objects for "jam_mulai" and "jam_selesai"
-            $jamMulai = \Carbon\Carbon::createFromFormat('H:i',   $lembur->jam_awal);
-            $jamSelesai = \Carbon\Carbon::createFromFormat('H:i',  $lembur->jam_akhir);
-            
-            // Process the time values as needed
-            $diffInMinutes = $jamMulai->diffInMinutes($jamSelesai);
-            $lembur->jam_lembur = floor($diffInMinutes / 60) . ':' . ($diffInMinutes % 60); // Jam dan menit
-            
-        } 
+        // Validasi: Jam selesai harus lebih besar dari jam mulai
+        if ($lembur->jam_mulai >= $lembur->jam_selesai) {
+            return redirect()->back()->with('error', 'Harap periksa kembali waktu selesai Anda.');
+        }
+
+        // Hitung jumlah jam lembur secara otomatis
+        $jamMulai = \Carbon\Carbon::createFromFormat('H:i', $lembur->jam_mulai);
+        $jamSelesai = \Carbon\Carbon::createFromFormat('H:i', $lembur->jam_selesai);
+        $diffInMinutes = $jamMulai->diffInMinutes($jamSelesai);
+        $lembur->jam_lembur = floor($diffInMinutes / 60) . ':' . ($diffInMinutes % 60);
 
         $lembur->kode_finger = $request->kode_finger;
         $lembur->id_atasan = $request->id_atasan;
