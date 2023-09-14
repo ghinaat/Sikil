@@ -311,22 +311,12 @@ return [
         ],
         'MAIN NAVIGATION',
         [
-            'icon' => 'fas fa-home',
-            'text' => 'User Management',
+            'icon' => 'fas fa-book',
+            'text' => 'Data Kegiatan',
             'submenu' => [
-                [
-                    'text' => 'Presensi',
-                    'url' => '/presensi',
-                    'can' => '',
-                ],
                 [
                     'text' => 'Kegiatan',
                     'url' => '/kegiatan',
-                    'can' => '',
-                ],
-                [
-                    'text' => 'Pegawai',
-                    'url' => 'user',
                     'can' => '',
                 ],
                 [
@@ -335,34 +325,30 @@ return [
                     'can' => '',
                 ],
                 [
-                    'text' => 'Arsip',
-                    'url' => '/arsip',
-                    'can' => '',
-                ],
-                [
-                    'text' => 'Diklat',
-                    'url' => 'diklat',
+                    'text' => 'Laporan',
+                    'url' => '/laporan',
                     'can' => '',
                 ],
 
+            ],
+        ],
+        [
+            'icon' => 'fas fa-edit',
+            'text' => 'Kehadiran',
+            'submenu' => [
                 [
-                    'text' => 'Keluarga',
-                    'url' => '/keluarga',
+                    'text' => 'Presensi',
+                    'url' => '/presensi',
                     'can' => '',
                 ],
                 [
-                    'text' => 'Pengalaman Kerja',
-                    'url' => '/penker',
+                    'text' => 'Perizinan',
+                    'url' => '/perizinan',
                     'can' => '',
                 ],
                 [
-                    'text' => 'Pendidikan',
-                    'url' => '/pendidikan',
-                    'can' => '',
-                ],
-                [
-                    'text' => 'Laporan',
-                    'url' => '/laporan',
+                    'text' => 'Lembur',
+                    'url' => '/lembur',
                     'can' => '',
                 ],
                 [
@@ -376,23 +362,33 @@ return [
                     'can' =>  ['isBod', 'isPpk', 'isKadiv'],
                 ],
                 [
-                    'text' => 'Perizinan',
-                    'url' => '/perizinan',
-                    'can' => '',
+                    'text' => 'Kelola Presensi',
+                    'url' => '/presensi/admin',
+                    'can' => 'isAdmin',
                 ],
                 [
-                    'text' => 'Lembur',
-                    'url' => '/lembur',
-                    'can' => '',
+                    'text' => 'Kelola Perizinan',
+                    'url' => '/ajuanperizinan',
+                    'can' => 'isAdmin',
+                ],
+                [
+                    'text' => 'Rekap Lembur',
+                    'url' => '/lembur/rekap',
+                    'can' => 'isAdmin',
                 ],
 
             ],
         ],
         [
             'icon' => 'fas fa-user-cog',
-            'text' => 'Admin Management',
+            'text' => 'Menu Master',
             'can' => 'isAdmin',
             'submenu' => [
+                [
+                    'text' => 'Pegawai',
+                    'url' => 'user',
+                    'can' => '',
+                ],
                 [
                     'text' => 'Jabatan',
                     'url' => 'jabatan',
@@ -414,16 +410,6 @@ return [
                     'can' => '',
                 ],
                 [
-                    'text' => 'Peran',
-                    'url' => '/peran',
-                    'can' => '',
-                ],
-                [
-                    'text' => 'Kelola Presensi',
-                    'url' => '/presensi/admin',
-                    'can' => '',
-                ],
-                [
                     'text' => 'Jatah Cuti',
                     'url' => '/cuti',
                     'can' => '',
@@ -431,16 +417,6 @@ return [
                 [
                     'text' => 'General Setting',
                     'url' => '/generalsetting',
-                    'can' => 'isAdmin',
-                ],
-                [
-                    'text' => 'Kelola Perizinan',
-                    'url' => '/ajuanperizinan',
-                    'can' => 'isAdmin',
-                ],
-                [
-                    'text' => 'Rekap Lembur',
-                    'url' => '/lembur/rekap',
                     'can' => 'isAdmin',
                 ],
             ],
