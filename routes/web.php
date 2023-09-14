@@ -18,6 +18,7 @@ use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NotifikasiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -178,3 +179,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/ajuanlembur', [LemburController::class, 'atasan'])->name('lembur.atasan');
     Route::put('/ajuanlembur/update/{id_lembur}', [LemburController::class, 'status'])->name('lembur.status');
 });
+
+Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
+Route::get('/notifikasi/fetch', [NotifikasiController::class, 'fetch'])->name('notifikasi.fetch');
+Route::get('/notifikasi/{id_notifikasi}/detail', [NotifikasiController::class, 'detail'])->name('notifikasi.detail');
