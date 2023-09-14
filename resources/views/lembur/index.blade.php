@@ -22,6 +22,7 @@
                                 <th>Jam Selesai</th>
                                 <th>Jumlah Jam</th>
                                 <th>Uraian Tugas</th>
+                                <th>Status</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>
@@ -38,13 +39,18 @@
                                 <td id={{$key+1}}>
                                     {{ \Carbon\Carbon::createFromFormat('H:i:s', $lr->jam_lembur)->format('H:i') }}</td>
                                 <td id={{$key+1}}>{{$lr->tugas}}</td>
-                                <td>
-                                    @if($lr->status_izin_atasan !== null)
-                                    @if($lr->status_izin_atasan === '1')
+                                <td id={{$key+1}}>       
+                                    @if($lr->status_izin_atasan == '0')
+                                    Ditolak
+                                    @elseif($lr->status_izin_atasan == '1')
                                     Disetujui
                                     @else
-                                    Ditolak
+                                    Menunggu Persetujuan
                                     @endif
+                                </td>
+                                <td>
+                                    @if($lr->status_izin_atasan === '1')
+                                    Sudah Disetujui
                                     @else
                                     @include('components.action-buttons', ['id' => $lr->id_lembur, 'key' => $key,
                                     'route' => 'lembur'])
@@ -93,14 +99,11 @@
                                                                     required>{{$lr -> tugas ?? old('tugas')}}</textarea>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-6"
-                                                                    for="id_atasan">Atasan Langsung</label>
+                                                                <label class="id_atasan" for="id_atasan">Atasan Langsung</label>
                                                                 <select id="id_atasan" name="id_atasan"
                                                                     class="form-select @error('id_atasan') is-invalid @enderror">
                                                                     @foreach ($users as $us)
-                                                                    <option value="{{ $us->id_users }}" @if( $lr->
-                                                                        id_atasan === old('id_atasan', $us->id_users) )
-                                                                        selected @endif>
+                                                                    <option value="{{ $us->id_users }}" @if( $lr->id_atasan === old('id_atasan', $us->id_users) ) selected @endif>
                                                                         {{ $us->nama_pegawai }}
                                                                     </option>
                                                                     @endforeach
@@ -175,8 +178,7 @@
                                     <select id="id_atasan" name="id_atasan"
                                         class="form-select @error('id_atasan') is-invalid @enderror">
                                         @foreach ($users as $us)
-                                        <option value="{{ $us->id_users }}" @if( $lr->
-                                            id_atasan === old('id_atasan', $us->id_users) )
+                                        <option value="{{ $us->id_users }}" @if( old('id_atasan', $us->id_users) )
                                             selected @endif>
                                             {{ $us->nama_pegawai }}
                                         </option>

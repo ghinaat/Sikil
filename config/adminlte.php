@@ -420,7 +420,7 @@ return [
                 ],
                 [
                     'text' => 'Kelola Presensi',
-                    'url' => '/presensi/admin',
+                     'url' => '/presensi/admin',
                     'can' => '',
                 ],
                 [

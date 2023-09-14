@@ -72,7 +72,7 @@ class LemburController extends Controller
     public function atasan()
     {
         $user = auth()->user();
-        $lembur = Lembur::where('is_deleted', '0')->get();
+        $lembur = Lembur::where('is_deleted', '0')->whereIn('id_atasan', $user->lemburs->pluck('id_atasan'))->get();
     
         return view('lembur.atasan', [
             'lembur' => $lembur,
