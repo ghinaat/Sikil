@@ -72,7 +72,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(GeneralSetting::class, 'id_users', 'id_users');
     }
-    
+
     public function presensi()
     {
         return $this->hasMany(Presensi::class, 'kode_finger', 'kode_finger');
@@ -94,6 +94,9 @@ class User extends Authenticatable
         return $this->hasMany(Lembur::class, 'id_atasan', 'id_users');
     }
 
+    public function notifikasi(){
+        return $this->hasMany(Notifikasi::class, 'id_users', 'id_users');
+    }
 
 
     protected $primaryKey = 'id_users';
