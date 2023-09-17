@@ -14,6 +14,7 @@ use App\Models\TimKegiatan;
 use App\Models\TingkatPendidikan;
 use App\Models\User;
 use App\Models\Cuti;
+use App\Models\EmailConfiguration;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -128,7 +129,7 @@ class DatabaseSeeder extends Seeder
             'is_deleted' => '0',
         ]);
 
-        
+
         User::create([
             'nama_pegawai' => 'ppk',
             'email' => 'ppk@ppk.com',
@@ -153,6 +154,18 @@ class DatabaseSeeder extends Seeder
             'kode_finger' => '82121'
         ]);
 
+        User::create([
+            'nama_pegawai' => 'almer',
+            'email' => 'kevinalmer4@gmail.com',
+            'password' => '12345678',
+            '_password_' => '12345678',
+            'level' => 'staf',
+            'kode_finger' => '545621',
+            'id_jabatan' => '4',
+            'is_deleted' => '0',
+            'kode_finger' => '82121'
+        ]);
+
         // GeneralSetting::create([
         //     'tahun_aktif' => '2023',
         //     'id_users' => null,
@@ -168,5 +181,15 @@ class DatabaseSeeder extends Seeder
                 'id_users' => $user->id_users,
             ]);
         });
+
+        EmailConfiguration::create([
+            'protocol' => 'smtp', // 'smtp', 'sendmail', 'mail', 'qmail
+            'host' => 'smtp.gmail.com',
+            'port' => '465',
+            'timeout' => '30',
+            'username' => 'kevinalmer.bisnis@gmail.com',
+            'email' => 'kevinalmer.bisnis@gmail.com',
+            'password' => 'szjnbcpcbkpvggte',
+        ]);
     }
 }
