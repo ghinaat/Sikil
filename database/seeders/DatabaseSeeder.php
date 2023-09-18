@@ -8,12 +8,14 @@ use App\Models\HubunganKeluarga;
 use App\Models\Jabatan;
 use App\Models\JenisDiklat;
 use App\Models\Kegiatan;
+use App\Models\KodeSurat;
 use App\Models\peran;
 use App\Models\Presensi;
 use App\Models\TimKegiatan;
 use App\Models\TingkatPendidikan;
 use App\Models\User;
 use App\Models\Cuti;
+use App\Models\EmailConfiguration;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -128,7 +130,7 @@ class DatabaseSeeder extends Seeder
             'is_deleted' => '0',
         ]);
 
-        
+
         User::create([
             'nama_pegawai' => 'ppk',
             'email' => 'ppk@ppk.com',
@@ -144,6 +146,69 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_pegawai' => 'kevin',
             'email' => 'kevin@gmail.com',
+            'password' => '12345678',
+            '_password_' => '12345678',
+            'level' => 'staf',
+            'kode_finger' => '545621',
+            'id_jabatan' => '4',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'Direktur',
+            'kode_surat' => 'I',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'DDA',
+            'kode_surat' => 'I.B',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'DDP',
+            'kode_surat' => 'I.A',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'HRGA',
+            'kode_surat' => 'II.E',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'PPR',
+            'kode_surat' => 'II.D',
+            'is_deleted' => '0',
+        ]);
+        KodeSurat::create([
+            'divisi' => 'ICT',
+            'kode_surat' => 'II.C',
+            'is_deleted' => '0',
+        ]);
+        KodeSurat::create([
+            'divisi' => 'RDP',
+            'kode_surat' => 'II.B',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'Training',
+            'kode_surat' => 'II.A',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'Keuangan',
+            'kode_surat' => 'II.F',
+            'is_deleted' => '0',
+        ]);
+      
+        User::create([
+            'nama_pegawai' => 'almer',
+            'email' => 'kevinalmer4@gmail.com',
             'password' => '12345678',
             '_password_' => '12345678',
             'level' => 'staf',
@@ -168,5 +233,15 @@ class DatabaseSeeder extends Seeder
                 'id_users' => $user->id_users,
             ]);
         });
+
+        EmailConfiguration::create([
+            'protocol' => 'smtp', // 'smtp', 'sendmail', 'mail', 'qmail
+            'host' => 'smtp.gmail.com',
+            'port' => '465',
+            'timeout' => '30',
+            'username' => 'kevinalmer.bisnis@gmail.com',
+            'email' => 'kevinalmer.bisnis@gmail.com',
+            'password' => 'szjnbcpcbkpvggte',
+        ]);
     }
 }

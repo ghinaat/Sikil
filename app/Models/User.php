@@ -98,6 +98,9 @@ class User extends Authenticatable
         return $this->hasMany(Notifikasi::class, 'id_users', 'id_users');
     }
 
+    public function surat(){
+        return $this->hasMany(Surat::class, 'id_users', 'id_users');
+    }
 
     protected $primaryKey = 'id_users';
 

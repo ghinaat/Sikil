@@ -370,6 +370,7 @@ return [
                     'text' => 'Kelola Lembur',
                     'url' => '/ajuanlembur',
                     'can' =>  ['isBod', 'isPpk', 'isKadiv', 'isAdmin'],
+
                 ],
                 [
                     'text' => 'Kelola Presensi',
@@ -390,10 +391,22 @@ return [
             ],
         ],
         [
+
             'text' => 'ShortUrl',
             'url' => '/url',
             'icon' => 'fas fa-home',
             'can' => '',
+
+            'icon' => 'fas fa-edit',
+            'text' => 'Surat',
+            'submenu' => [
+                [
+                    'text' => 'Nomor Surat',
+                    'url' => '/surat',
+                    'can' => '',
+                ],
+            ],
+
         ],
         [
             'icon' => 'fas fa-user-cog',
@@ -445,6 +458,16 @@ return [
                 [
                     'text' => 'General Setting',
                     'url' => '/generalsetting',
+                    'can' => 'isAdmin',
+                ],
+                [
+                    'text' => 'Kode Surat',
+                    'url' => '/kodesurat',
+                    'can' => 'isAdmin',
+                ],
+                [
+                    'text' => 'Email Configuration',
+                    'route' => 'emailConfiguration.show',
                     'can' => 'isAdmin',
                 ],
             ],
