@@ -58,7 +58,7 @@
                                 @endcan
                                 <td>
                                     <div class="btn-group">
-                                    @if($lr->id_atasan == auth()->user()->id_users) 
+                                    @if($lr->id_atasan == auth()->user()->id_users && auth()->user()->level != 'admin' ) 
                                     @if($lr->status_izin_atasan === '1')
                                     Sudah Disetujui
                                     @elseif($lr->status_izin_atasan === '0')
@@ -70,7 +70,7 @@
                                     </a>
                                     @endif
                                     @endif
-                                    @can('isAdmin')
+                                    @can('isAdmin' )
                                     @if($lr->status_izin_atasan === '1')
                                     Sudah Disetujui
                                     @else
