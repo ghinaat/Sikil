@@ -441,6 +441,11 @@ return [
                     'url' => '/generalsetting',
                     'can' => 'isAdmin',
                 ],
+                [
+                    'text' => 'Email Configuration',
+                    'route' => 'emailConfiguration.show',
+                    'can' => 'isAdmin',
+                ],
             ],
         ],
 
