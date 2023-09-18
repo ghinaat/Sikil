@@ -19,6 +19,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\UrlController;
 use Illuminate\Support\Facades\Route;
 
 /*
