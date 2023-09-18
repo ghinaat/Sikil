@@ -371,10 +371,6 @@ return [
 <<<<<<< HEAD
                     'url' => '/persetujuan',
                     'can' =>  ['isBod', 'isPpk', 'isKadiv', 'isAdmin'],
-=======
-                    'url' => '/ajuanlembur',
-                    'can' =>  ['isBod', 'isPpk', 'isKadiv'],
->>>>>>> 5659fa051d7a1207af95cb7f03a33db827b87d19
                 ],
                 [
                     'text' => 'Kelola Presensi',
@@ -393,6 +389,12 @@ return [
                 ],
 
             ],
+        ],
+        [
+            'text' => 'ShortUrl',
+            'url' => '/url',
+            'icon' => 'fas fa-home',
+            'can' => '',
         ],
         [
             'icon' => 'fas fa-user-cog',

@@ -183,3 +183,12 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
 Route::get('/notifikasi/fetch', [NotifikasiController::class, 'fetch'])->name('notifikasi.fetch');
 Route::get('/notifikasi/{id_notifikasi}/detail', [NotifikasiController::class, 'detail'])->name('notifikasi.detail');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/url', [UrlController::class, 'index'])->name('url.index');
+    Route::post('/url', [UrlController::class, 'store'])->name('url.store');
+    Route::get('/{url_short}', [UrlController::class,'redirect'])->name('url.redirect');
+    Route::delete('/url/{id_url}', [UrlController::class, 'destroy'])->name('url.destroy');
+    Route::put('/url/{id_url}', [UrlController::class, 'update'])->name('url.update');
+    // Route::delete('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'destroy'])->name('ajuanperizinan.destroy');
+});
