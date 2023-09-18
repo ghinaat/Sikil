@@ -16,10 +16,13 @@ use App\Http\Controllers\PendidikanController;
 use App\Http\Controllers\PengalamanKerjaController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SuratController;
 use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotifikasiController;
+use App\Models\Surat;
 use Illuminate\Support\Facades\Route;
+use Svg\Tag\Group;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,6 +139,8 @@ Route::resource('peran', \App\Http\Controllers\PeranController::class)->middlewa
 
 Route::get('/laporan', [App\Http\Controllers\TimKegiatanController::class, 'laporan'])->name('laporan')->middleware('auth');
 
+Route::resource('/kodesurat', \App\Http\Controllers\KodeSuratController::class)->middleware('auth');
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/presensi', [PresensiController::class, 'index'])->name('presensi.index');
     Route::get('/presensi/filter', [PresensiController::class, 'filter'])->name('presensi.filter');
@@ -183,3 +188,10 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
 Route::get('/notifikasi/fetch', [NotifikasiController::class, 'fetch'])->name('notifikasi.fetch');
 Route::get('/notifikasi/{id_notifikasi}/detail', [NotifikasiController::class, 'detail'])->name('notifikasi.detail');
+
+Route::Group(['middleware' => ['auth']], function (){
+    Route::get('/surat', [SuratController::class, 'index'])->name('surat.index');
+    Route::post('/surat', [SuratController::class, 'store'])->name('surat.store');
+    Route::put('/surat/update/{id_surat}', [SuratController::class, 'update'])->name('surat.update');
+    Route::delete('/surat/{id_surat}', [SuratController::class, 'destroy'])->name('surat.destroy');
+});

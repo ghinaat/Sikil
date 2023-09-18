@@ -8,6 +8,7 @@ use App\Models\HubunganKeluarga;
 use App\Models\Jabatan;
 use App\Models\JenisDiklat;
 use App\Models\Kegiatan;
+use App\Models\KodeSurat;
 use App\Models\peran;
 use App\Models\Presensi;
 use App\Models\TimKegiatan;
@@ -150,9 +151,59 @@ class DatabaseSeeder extends Seeder
             'kode_finger' => '545621',
             'id_jabatan' => '4',
             'is_deleted' => '0',
-            'kode_finger' => '82121'
         ]);
 
+        KodeSurat::create([
+            'divisi' => 'Direktur',
+            'kode_surat' => 'I',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'DDA',
+            'kode_surat' => 'I.B',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'DDP',
+            'kode_surat' => 'I.A',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'HRGA',
+            'kode_surat' => 'II.E',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'PPR',
+            'kode_surat' => 'II.D',
+            'is_deleted' => '0',
+        ]);
+        KodeSurat::create([
+            'divisi' => 'ICT',
+            'kode_surat' => 'II.C',
+            'is_deleted' => '0',
+        ]);
+        KodeSurat::create([
+            'divisi' => 'RDP',
+            'kode_surat' => 'II.B',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'Training',
+            'kode_surat' => 'II.A',
+            'is_deleted' => '0',
+        ]);
+
+        KodeSurat::create([
+            'divisi' => 'Keuangan',
+            'kode_surat' => 'II.F',
+            'is_deleted' => '0',
+        ]);
         // GeneralSetting::create([
         //     'tahun_aktif' => '2023',
         //     'id_users' => null,

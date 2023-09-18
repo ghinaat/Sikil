@@ -368,13 +368,8 @@ return [
                 ],
                 [
                     'text' => 'Kelola Lembur',
-<<<<<<< HEAD
-                    'url' => '/persetujuan',
-                    'can' =>  ['isBod', 'isPpk', 'isKadiv', 'isAdmin'],
-=======
                     'url' => '/ajuanlembur',
                     'can' =>  ['isBod', 'isPpk', 'isKadiv'],
->>>>>>> 5659fa051d7a1207af95cb7f03a33db827b87d19
                 ],
                 [
                     'text' => 'Kelola Presensi',
@@ -392,6 +387,17 @@ return [
                     'can' => 'isAdmin',
                 ],
 
+            ],
+        ],
+        [
+            'icon' => 'fas fa-edit',
+            'text' => 'Surat',
+            'submenu' => [
+                [
+                    'text' => 'Nomor Surat',
+                    'url' => '/surat',
+                    'can' => '',
+                ],
             ],
         ],
         [
@@ -444,6 +450,11 @@ return [
                 [
                     'text' => 'General Setting',
                     'url' => '/generalsetting',
+                    'can' => 'isAdmin',
+                ],
+                [
+                    'text' => 'Kode Surat',
+                    'url' => '/kodesurat',
                     'can' => 'isAdmin',
                 ],
             ],
