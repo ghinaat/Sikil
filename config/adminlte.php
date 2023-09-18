@@ -368,8 +368,7 @@ return [
                 ],
                 [
                     'text' => 'Kelola Lembur',
-<<<<<<< HEAD
-                    'url' => '/persetujuan',
+                    'url' => '/ajuanlembur',
                     'can' =>  ['isBod', 'isPpk', 'isKadiv', 'isAdmin'],
                 ],
                 [
