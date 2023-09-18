@@ -391,12 +391,12 @@ return [
             ],
         ],
         [
-
             'text' => 'ShortUrl',
             'url' => '/url',
             'icon' => 'fas fa-home',
             'can' => '',
-
+        ],
+        [
             'icon' => 'fas fa-edit',
             'text' => 'Surat',
             'submenu' => [

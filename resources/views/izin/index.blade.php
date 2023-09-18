@@ -292,9 +292,7 @@
                                                     <textarea name="alasan_ditolak_atasan" id="alasan_ditolak_atasan" cols="30" rows="3" class="form-control" >{{ $ap->alasan_ditolak_atasan }}</textarea>
 
                                                 </div>
-
                                                 @endif
-
                                                 @if(auth()->user()->level === 'admin' || auth()->user()->level === 'ppk' )
                                                 @if ($ap->jenis_perizinan !== 'I')
                                                 <div class="form-group">
