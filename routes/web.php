@@ -20,7 +20,7 @@ use App\Http\Controllers\SuratController;
 use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotifikasiController;
-use App\Models\Surat;
+use App\Http\Controllers\EmailConfigurationController;
 use Illuminate\Support\Facades\Route;
 use Svg\Tag\Group;
 
@@ -195,3 +195,7 @@ Route::Group(['middleware' => ['auth']], function (){
     Route::put('/surat/update/{id_surat}', [SuratController::class, 'update'])->name('surat.update');
     Route::delete('/surat/{id_surat}', [SuratController::class, 'destroy'])->name('surat.destroy');
 });
+
+Route::get('/email-configuration', [EmailConfigurationController::class, 'show'])->name('emailConfiguration.show');
+ Route::post('/email-configuration', [EmailConfigurationController::class, 'update'])->name('emailConfiguration.update');
+

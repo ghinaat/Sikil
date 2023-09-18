@@ -457,6 +457,11 @@ return [
                     'url' => '/kodesurat',
                     'can' => 'isAdmin',
                 ],
+                [
+                    'text' => 'Email Configuration',
+                    'route' => 'emailConfiguration.show',
+                    'can' => 'isAdmin',
+                ],
             ],
         ],
 
