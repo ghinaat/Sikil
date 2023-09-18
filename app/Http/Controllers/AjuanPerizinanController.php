@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GeneralSetting;
 use App\Models\Perizinan;
 use App\Models\User;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -125,6 +127,47 @@ class AjuanPerizinanController extends Controller
         $ajuanperizinan->status_izin_atasan = null; // Default menunggu persetujuan
         $ajuanperizinan->status_izin_ppk = null; // Default menunggu persetujuan
         $ajuanperizinan->save();
+
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Izin';
+        $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil dikirimkan.  Kami telah mengirimkan notifikasi untuk memproses pengajuanmu..';
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/perizinan';
+        $notifikasi->id_users = $pengguna->id_users;
+        $notifikasi->save();
+
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Izin ';
+        $notifikasi->pesan = 'Pengajuan perizinan dari ' . $pengguna->nama_pegawai . '. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/ajuanperizinan'; 
+        $notifikasi->id_users = $request->id_atasan;
+        $notifikasi->save();
+
+        $ppk = GeneralSetting::where('status', '1')->first();
+        if($request->jenis_perizinan !== 'I'){
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Izin ';
+        $notifikasi->pesan = 'Pengajuan perizinan dari ' . $pengguna->nama_pegawai . '. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/ajuanperizinan'; 
+        $notifikasi->id_users = $ppk->id_users;
+        $notifikasi->save();
+        }
+
+        $notifikasiAdmin = User::where('level', 'admin')->first();
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Izin ';
+        $notifikasi->pesan = 'Pengajuan perizinan dari ' . $pengguna->nama_pegawai . '. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/ajuanperizinan'; 
+        $notifikasi->id_users = $notifikasiAdmin->id_users;
+        $notifikasi->save();
+
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
 
@@ -265,6 +308,8 @@ class AjuanPerizinanController extends Controller
             // dd($request);
 
             $ajuanperizinan->save();
+
+
             return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
         }
         else
@@ -376,9 +421,63 @@ class AjuanPerizinanController extends Controller
 
             $request->validate($rules);
 
-
-
             $ajuanperizinan->save();
+
+            $pengguna = User::where('kode_finger', $request->kode_finger)->first();
+            if($ajuanperizinan->jenis_perizinan !== 'I'){
+                if($ajuanperizinan->status_izin_atasan === '1' &&  $ajuanperizinan->status_izin_ppk === '1'){
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Persetujuan Izin ';
+                    $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/perizinan';
+                    $notifikasi->id_users = $pengguna->id_users;
+                    $notifikasi->save();
+                    
+                    return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+
+                }elseif($ajuanperizinan->status_izin_atasan === '0' &&  $ajuanperizinan->status_izin_ppk === '0'){
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Persetujuan Izin ';
+                    $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/perizinan';
+                    $notifikasi->id_users = $pengguna->id_users;
+                    $notifikasi->save();
+
+                    return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+            }
+
+        }else{
+            if($ajuanperizinan->status_izin_atasan === '1'){
+                $notifikasi = new Notifikasi();
+                $notifikasi->judul = 'Persetujuan Izin ';
+                $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                $notifikasi->is_dibaca = 'tidak_dibaca';
+                $notifikasi->label = 'info';
+                $notifikasi->link = '/perizinan';
+                $notifikasi->id_users = $pengguna->id_users;
+                $notifikasi->save();
+
+                return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+
+
+            }elseif($ajuanperizinan->status_izin_atasan === '0'){
+                $notifikasi = new Notifikasi();
+                $notifikasi->judul = 'Persetujuan Izin ';
+                $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                $notifikasi->is_dibaca = 'tidak_dibaca';
+                $notifikasi->label = 'info';
+                $notifikasi->link = '/perizinan';
+                $notifikasi->id_users = $pengguna->id_users;
+                $notifikasi->save();
+
+                return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+
+            }
+        };
 
         }
 

@@ -67,8 +67,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if($p->status_izin_atasan == '1' && $p->status_izin_ppk == '1' ||
-                                    $p->status_izin_ppk == null )
+                                    @if($p->status_izin_atasan == '1' && $p->status_izin_ppk == '1' )
                                     Sudah Disetujui
                                     @else
                                     @include('components.action-buttons', ['id' => $p->id_perizinan, 'key' => $key,

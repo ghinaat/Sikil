@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lembur;
+use App\Models\Notifikasi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,7 @@ class LemburController extends Controller
         $start_date = $request->input('start_date', $defaultStartDate);
         $end_date = $request->input('end_date', $defaultEndDate);
 
-        $lemburData = Lembur::where('kode_finger', $user->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
+        $lemburData = Lembur::where('kode_finger', $users->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
 
         return view('lembur.filter', [
             'lembur' => $lembur,
@@ -166,6 +167,7 @@ class LemburController extends Controller
 
         // Membuat objek Lembur baru dan mengisi atributnya
         $lembur = new Lembur();
+        
         $lembur->kode_finger = $request->kode_finger;
         $lembur->id_atasan = $request->id_atasan;
         $lembur->tanggal = $request->input('tanggal');
@@ -174,8 +176,39 @@ class LemburController extends Controller
         $lembur->jam_lembur = floor($diffInMinutes / 60) . ':' . ($diffInMinutes % 60); // Jam dan menit
         $lembur->tugas = $request->input('tugas');
         $lembur->status_izin_atasan = null;
-
+        
         $lembur->save();
+        
+        $pengguna = User::where('kode_finger', $request->kode_finger)->first();
+
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Lembur';
+        $notifikasi->pesan = 'Pengajuan Lembur anda sudah berhasil dikirimkan. Kami telah mengirimkan notifikasi untuk memproses pengajuanmu.';
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/lembur';
+        $notifikasi->id_users = $pengguna->id_users;
+        $notifikasi->save();
+
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Lembur ';
+        $notifikasi->pesan = 'Pengajuan Lembur dari ' . $pengguna->nama_pegawai . '. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/ajuanlembur'; 
+        $notifikasi->id_users = $request->id_atasan;
+        $notifikasi->save();
+
+        $notifikasiAdmin = User::where('level', 'admin')->first();
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Lembur ';
+        $notifikasi->pesan = 'Pengajuan perizinan dari ' . $pengguna->nama_pegawai . '. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/ajuanlembur'; 
+        $notifikasi->id_users = $notifikasiAdmin->id_users;
+        $notifikasi->save();
+
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
@@ -238,7 +271,31 @@ class LemburController extends Controller
         $lembur->status_izin_atasan = null;
 
         $lembur->save();
+
+        $pengguna = User::where('kode_finger', $request->kode_finger)->first();
+        if($lembur->status_izin_atasan === '1'){
+            $notifikasi = new Notifikasi();
+            $notifikasi->judul = 'Persetujua Lembur';
+            $notifikasi->pesan = 'Pengajuan Lembur anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
+            $notifikasi->is_dibaca = 'tidak_dibaca';
+            $notifikasi->label = 'info';
+            $notifikasi->link = '/lembur';
+            $notifikasi->id_users = $pengguna->id_users;
+            $notifikasi->save();
+            return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+
+        }else{
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Persetujuan Lembur ';
+        $notifikasi->pesan = 'Pengajuan lembur anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/lembur'; 
+        $notifikasi->id_users = $request->id_atasan;
+        $notifikasi->save();
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+
+        }
 
     }
 
