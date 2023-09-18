@@ -390,6 +390,17 @@ return [
             ],
         ],
         [
+            'icon' => 'fas fa-edit',
+            'text' => 'Surat',
+            'submenu' => [
+                [
+                    'text' => 'Nomor Surat',
+                    'url' => '/surat',
+                    'can' => '',
+                ],
+            ],
+        ],
+        [
             'icon' => 'fas fa-user-cog',
             'text' => 'Menu Master',
             'can' => 'isAdmin',
@@ -439,6 +450,11 @@ return [
                 [
                     'text' => 'General Setting',
                     'url' => '/generalsetting',
+                    'can' => 'isAdmin',
+                ],
+                [
+                    'text' => 'Kode Surat',
+                    'url' => '/kodesurat',
                     'can' => 'isAdmin',
                 ],
                 [
