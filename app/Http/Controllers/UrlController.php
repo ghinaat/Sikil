@@ -25,7 +25,7 @@ class UrlController extends Controller
         //Menyimpan Data Keluarga Baru
         $request->validate([
             'id_users' => 'required',
-            'url_address' => 'required',
+            'url_address' => 'required|url',
             'jenis' => 'required',
             'url_short' => 'required',
 
@@ -36,7 +36,6 @@ class UrlController extends Controller
         $url->url_address = $request->url_address;
         $url->jenis = $request->jenis;
         $customCode = $request->input('url_short');
-        
         $url->url_short = $this->generateShortCode($customCode);
         $qrcode = $this->generateQRCode($request->input('url_address'));
         $url->qrcode_image = $qrcode;
@@ -47,34 +46,42 @@ class UrlController extends Controller
     }
 
     private function generateShortCode($customCode)
-{
-    $code = 'https://s.' . uniqid(); // Menghasilkan kode unik
+    {
+        $existingUrl = Url::where('url_short', $customCode)->first();
 
-    // Check if the generated code already exists in the database
-    $exists = Url::where('url_short', $code)->exists();
+        if ($existingUrl) {
+            return redirect()->back()->with('error_message', 'URL pendek sudah ada dalam basis data.');
+        }
+    
 
-    // If the code exists, generate a new one until it's unique
-    while ($exists) {
-        $code = 'https://s.' . uniqid(); // Generate a new code
+        $code = $customCode;
+    
+        // Check if the generated code already exists in the database
         $exists = Url::where('url_short', $code)->exists();
+       
+        // If the code exists, generate a new one until it's unique
+        while ($exists) {
+            $code =  $customCode; // Generate a new code
+            $exists = Url::where('url_short', $code)->exists();
+        }
+    
+        return $code;
     }
 
-    return $code;
-}
 
 
         public function redirect($shortUrl)
     {
         // Look up the short URL in the database
         $urlRecord = Url::where('url_short', $shortUrl)->first();
-
+        
         // Check if the short URL exists in the database
         if ($urlRecord) {
             // Redirect to the original URL
-            return redirect($urlRecord->url_address);
+            return redirect()->away($urlRecord->url_address);
         } else {
             // Handle the case where the short URL does not exist
-            return view('not_found'); // You can create a "not_found" blade view
+            return redirect()->back()->with('error_message', 'Tidak Ditemukan Url.');
         }
     }
 
@@ -88,20 +95,42 @@ class UrlController extends Controller
         $urlExists = Url::where('url_address', $url)->exists();
     
         // Generate the QR code
-        $qrCode = QrCode::size(200)
-            ->format('png')
-            ->errorCorrection('M')
-            ->generate($url);
+        $qrCode = QrCode::size(200)->format('png')->errorCorrection('M')->generate($url);
     
         // Specify the file path where the QR code image should be saved
-        $filePath = public_path('qrcodes/' . $imageName . '.png');
+        $storagePath = 'qrcodes/' . $imageName . '.png';
+
+        // Store the QR code image in the storage directory
+        Storage::put($storagePath, $qrCode);
     
-        // Save the QR code image to the specified file path
-        file_put_contents($filePath, $qrCode);
-    
-        // Return the path to the generated QR code image
-        return $filePath;
+        // Return the URL to the stored QR code image
+         return $storagePath;
     }
+
+    public function update(Request $request, $id_url)
+    {
+        $request->validate([
+            'id_users' => 'required',
+            'url_address' => 'required|url',
+            'jenis' => 'required',
+            'url_short' => 'required',
+        ]);
+        $url = Url::find($id_url);
+        $url->id_users = $request->id_users;
+        $url->url_address = $request->url_address;
+        $url->jenis = $request->jenis;
+        if (!empty($url->qrcode_image)) {
+            Storage::delete('qrcodes/' . $url->qrcode_image);
+            $url->qrcode_image = null;
+        }
+        $customCode = $request->input('url_short');
+        $url->url_short = $this->generateShortCode($customCode);
+        $qrcode = $this->generateQRCode($request->input('url_address'));
+        $url->qrcode_image = $qrcode;
+        $url->save();
+            return redirect()->back()->with('success_message', 'Data telah tersimpan');
+        }
+       
     
 
     public function destroy($id_url)
@@ -109,7 +138,7 @@ class UrlController extends Controller
         $url = Url::find($id_url);
         if ($url) {
             if ($url->qrcode_image) {
-                Storage::disk('public')->delete($url->qrcode_image);
+                Storage::disk('public')->delete('qrcodes/'.$url->qrcode_image);
             }
             $url->delete();
         }
