@@ -13,7 +13,7 @@ class UrlController extends Controller
     public function index()
     {
         $url = Url::All();
-       
+
         return view('url.index', [
             'url' => $url,
             'user'   => User::where('is_deleted', '0')->get()
@@ -40,6 +40,7 @@ class UrlController extends Controller
         $qrcode = $this->generateQRCode($request->input('url_address'));
         $url->qrcode_image = $qrcode;
 
+        // dd($url);
         $url->save();
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan');
@@ -52,19 +53,19 @@ class UrlController extends Controller
         if ($existingUrl) {
             return redirect()->back()->with('error_message', 'URL pendek sudah ada dalam basis data.');
         }
-    
+
 
         $code = $customCode;
-    
+
         // Check if the generated code already exists in the database
         $exists = Url::where('url_short', $code)->exists();
-       
+
         // If the code exists, generate a new one until it's unique
         while ($exists) {
             $code =  $customCode; // Generate a new code
             $exists = Url::where('url_short', $code)->exists();
         }
-    
+
         return $code;
     }
 
@@ -74,7 +75,7 @@ class UrlController extends Controller
     {
         // Look up the short URL in the database
         $urlRecord = Url::where('url_short', $shortUrl)->first();
-        
+
         // Check if the short URL exists in the database
         if ($urlRecord) {
             // Redirect to the original URL
@@ -90,21 +91,22 @@ class UrlController extends Controller
         if (is_null($imageName)) {
             $imageName = uniqid('qrcode_');
         }
-    
+
         // Check if the URL exists in the database, assuming you have an 'Url' model
         $urlExists = Url::where('url_address', $url)->exists();
-    
+
         // Generate the QR code
         $qrCode = QrCode::size(200)->format('png')->errorCorrection('M')->generate($url);
-    
+
         // Specify the file path where the QR code image should be saved
-        $storagePath = 'qrcodes/' . $imageName . '.png';
+        $storagePath = 'public/qrcodes/' . $imageName . '.png';
 
         // Store the QR code image in the storage directory
         Storage::put($storagePath, $qrCode);
-    
+
         // Return the URL to the stored QR code image
-         return $storagePath;
+        // dd(str_replace('public/', '', $storagePath));
+         return $imageName . '.png';
     }
 
     public function update(Request $request, $id_url)
@@ -130,8 +132,8 @@ class UrlController extends Controller
         $url->save();
             return redirect()->back()->with('success_message', 'Data telah tersimpan');
         }
-       
-    
+
+
 
     public function destroy($id_url)
     {
