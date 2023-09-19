@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\KodeSurat;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class KodeSuratController extends Controller
@@ -14,7 +13,8 @@ class KodeSuratController extends Controller
     public function index()
     {
         $kodesurat = KodeSurat::where('is_deleted', '0')->get();
-        return view('kodesurat.index',[
+
+        return view('kodesurat.index', [
             'kodesurat' => $kodesurat,
         ]);
     }
@@ -38,7 +38,8 @@ class KodeSuratController extends Controller
         ]);
 
         KodeSurat::create($request->all());
-        return redirect()->route('kodesurat.index')->with('success', 'Kode Surat berhasil ditambahkan'); 
+
+        return redirect()->route('kodesurat.index')->with('success', 'Kode Surat berhasil ditambahkan');
     }
 
     /**
@@ -54,7 +55,7 @@ class KodeSuratController extends Controller
      */
     public function edit(KodeSurat $kodeSurat)
     {
-        
+
     }
 
     /**
@@ -79,7 +80,7 @@ class KodeSuratController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id_kode_surat)
+    public function destroy($id_kode_surat)
     {
         $kodesurat = KodeSurat::find($id_kode_surat);
 
@@ -91,5 +92,4 @@ class KodeSuratController extends Controller
 
         return redirect()->route('kodesurat.index')->with('success_message', 'Data telah terhapus');
     }
-    
 }

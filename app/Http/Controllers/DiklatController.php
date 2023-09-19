@@ -60,9 +60,8 @@ class DiklatController extends Controller
 
         $file = $request->file('file_sertifikat');
 
-        $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
+        $fileName = Str::random(20).'.'.$file->getClientOriginalExtension();
         $file->storeAs('file_sertifikat', $fileName, 'public');
-            
 
         $diklat->id_users = $request->id_users;
         $diklat->id_jenis_diklat = $request->id_jenis_diklat;
@@ -71,7 +70,7 @@ class DiklatController extends Controller
         $diklat->tanggal_diklat = $request->tanggal_diklat;
         $diklat->jp = $request->jp;
 
-        $diklat->file_sertifikat = $fileName;    
+        $diklat->file_sertifikat = $fileName;
 
         $diklat->save();
 

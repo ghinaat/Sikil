@@ -14,5 +14,4 @@ class EmailConfiguration extends Model
     protected $table = 'email_configuration';
 
     protected $primaryKey = 'id_email_configuration';
-
 }

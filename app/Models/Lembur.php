@@ -12,6 +12,7 @@ class Lembur extends Model
     protected $primaryKey = 'id_lembur';
 
     protected $table = 'lembur';
+
     protected $fillable = [
         'kode_finger',
         'id_atasan',
@@ -23,6 +24,7 @@ class Lembur extends Model
         'status_izin_atasan',
         'is_deleted',
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'kode_finger', 'kode_finger');
@@ -32,5 +34,4 @@ class Lembur extends Model
     {
         return $this->belongsTo(User::class, 'id_atasan', 'id_users');
     }
-
 }

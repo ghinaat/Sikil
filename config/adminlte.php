@@ -291,17 +291,17 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'type'         => 'navbar-notification',
-            'id'           => 'my-notification',      // An ID attribute (required).
-            'icon'         => 'fas fa-bell',          // A font awesome icon (required).
-            'icon_color'   => 'warning',              // The initial icon color (optional).
-            'label'        => 0,                      // The initial label for the badge (optional).
-            'label_color'  => 'danger',               // The initial badge color (optional).
-            'route'          => 'notifikasi.index',   // The url to access all notifications/elements (required).
+            'type' => 'navbar-notification',
+            'id' => 'my-notification',      // An ID attribute (required).
+            'icon' => 'fas fa-bell',          // A font awesome icon (required).
+            'icon_color' => 'warning',              // The initial icon color (optional).
+            'label' => 0,                      // The initial label for the badge (optional).
+            'label_color' => 'danger',               // The initial badge color (optional).
+            'route' => 'notifikasi.index',   // The url to access all notifications/elements (required).
             'topnav_right' => true,                   // Or "topnav => true" to place on the left (required).
-            'dropdown_mode'   => false,                // Enables the dropdown mode (optional).
+            'dropdown_mode' => false,                // Enables the dropdown mode (optional).
             'dropdown_flabel' => 'All notifications', // The label for the dropdown footer link (optional).
-            'update_cfg'   => [
+            'update_cfg' => [
                 'route' => 'notifikasi.fetch',         // The url to periodically fetch new data (optional).
                 'period' => 30,                       // The update period for get new data (in seconds, optional).
             ],
@@ -369,7 +369,7 @@ return [
                 [
                     'text' => 'Kelola Lembur',
                     'url' => '/ajuanlembur',
-                    'can' =>  ['isBod', 'isPpk', 'isKadiv', 'isAdmin'],
+                    'can' => ['isBod', 'isPpk', 'isKadiv', 'isAdmin'],
 
                 ],
                 [
@@ -446,7 +446,7 @@ return [
                 ],
                 [
                     'text' => 'Kelola Presensi',
-                     'url' => '/presensi/admin',
+                    'url' => '/presensi/admin',
                     'can' => '',
                 ],
                 [
@@ -474,7 +474,6 @@ return [
         ],
 
     ],
-
 
     /*
     |--------------------------------------------------------------------------

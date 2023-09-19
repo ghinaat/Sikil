@@ -50,7 +50,7 @@ class GeneralSettingController extends Controller
         $generalsetting->save();
 
         GeneralSetting::where('id_setting', '!=', $generalsetting->id_setting)
-                      ->update(['status' => '0']);
+            ->update(['status' => '0']);
 
         return redirect()->route('generalsetting.index')->with('success_message', 'Data telah tersimpan');
     }
@@ -74,7 +74,7 @@ class GeneralSettingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  $id_setting)
+    public function update(Request $request, $id_setting)
     {
         $request->validate([
             'tahun_aktif' => 'required',
@@ -91,7 +91,7 @@ class GeneralSettingController extends Controller
         $generalsetting->save();
 
         GeneralSetting::where('id_setting', '!=', $generalsetting->id_setting)
-                      ->update(['status' => '0']);
+            ->update(['status' => '0']);
 
         return redirect()->route('generalsetting.index')->with('success_message', 'Data telah tersimpan');
 

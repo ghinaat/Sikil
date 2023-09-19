@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('setting', function (Blueprint $table) {
             $table->increments('id_setting');
-            $table->string('tahun_aktif', 4 );
+            $table->string('tahun_aktif', 4);
             $table->unsignedInteger('id_users');
             $table->enum('status', ['0', '1']);
             $table->enum('is_deleted', ['0', '1'])->default('0');

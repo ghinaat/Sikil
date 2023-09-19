@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Surat extends Model
 {
     use HasFactory;
+
     protected $primaryKey = 'id_surat';
+
     protected $table = 'surat';
 
     protected $fillable = [
@@ -22,16 +24,17 @@ class Surat extends Model
         'keterangan',
         'status',
         'bulan_kegiatan',
-        'is_deleted'
+        'is_deleted',
 
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class, 'id_users', 'id_users');
     }
-    public function kodesurat(){
+
+    public function kodesurat()
+    {
         return $this->belongsTo(KodeSurat::class, 'id_kode_surat', 'id_kode_surat');
     }
-
-
 }

@@ -17,10 +17,8 @@ class GeneralSetting extends Model
         'tahun_aktif',
         'id_users',
         'status',
-        'is_deleted'
+        'is_deleted',
     ];
-
-
 
     public function users()
     {

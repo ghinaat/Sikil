@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
+use App\Mail\NotifikasiMail;
 use App\Models\Notifikasi;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\NotifikasiMail;
 
 class NotifikasiObserver
 {
