@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GeneralSetting;
 use App\Models\Perizinan;
 use App\Models\User;
 use App\Models\Notifikasi;
@@ -108,16 +109,45 @@ class PerizinanController extends Controller
         $perizinan->save();
 
         $notifikasi = new Notifikasi();
-
         $notifikasi->judul = 'Pengajuan Izin';
-        $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil dikirimkan. nantikan notifikasi selanjutnya.';
+        $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil dikirimkan. Kami telah mengirimkan notifikasi untuk memproses pengajuanmu.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->link = '/perizinan';
         $notifikasi->id_users = $pengguna->id_users;
-
         $notifikasi->save();
 
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Izin ';
+        $notifikasi->pesan = 'Pengajuan perizinan dari ' . $pengguna->nama_pegawai . '. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/ajuanperizinan'; 
+        $notifikasi->id_users = $request->id_atasan;
+        $notifikasi->save();
+
+        $ppk = GeneralSetting::where('status', '1')->first();
+        if($request->jenis_perizinan !== 'I'){
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Izin ';
+        $notifikasi->pesan = 'Pengajuan perizinan dari ' . $pengguna->nama_pegawai . '. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/ajuanperizinan'; 
+        $notifikasi->id_users = $ppk->id_users;
+        $notifikasi->save();
+        }
+
+        $notifikasiAdmin = User::where('level', 'admin')->first();
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Izin ';
+        $notifikasi->pesan = 'Pengajuan perizinan dari ' . $pengguna->nama_pegawai . '. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/ajuanperizinan'; 
+        $notifikasi->id_users = $notifikasiAdmin->id_users;
+        $notifikasi->save();
+        
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
