@@ -112,7 +112,7 @@ class ArsipController extends Controller
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $fileExtension = $file->getClientOriginalExtension();
-            $fileName = Str::random(5) . '.' . $fileExtension; // Nama file acak dengan ekstensi asli
+            $fileName = Str::random(5).'.'.$fileExtension; // Nama file acak dengan ekstensi asli
             $file->storeAs('arsip', $fileName, 'public'); // Simpan file di dalam folder public/arsip
             $arsip->file = $fileName; // Simpan nama file ke dalam kolom 'file'
         }
@@ -131,8 +131,6 @@ class ArsipController extends Controller
 
         return redirect()->route('arsip.index')->with('success_message', 'Data telah terhapus');
     }
-
-
 
     // /**
     //  * Store a newly created resource in storage.

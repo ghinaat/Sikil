@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Cuti;
+use App\Models\EmailConfiguration;
 use App\Models\GeneralSetting;
 use App\Models\HubunganKeluarga;
 use App\Models\Jabatan;
@@ -14,8 +16,6 @@ use App\Models\Presensi;
 use App\Models\TimKegiatan;
 use App\Models\TingkatPendidikan;
 use App\Models\User;
-use App\Models\Cuti;
-use App\Models\EmailConfiguration;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -105,7 +105,7 @@ class DatabaseSeeder extends Seeder
             'kode_finger' => '989898',
             'id_jabatan' => '1',
             'is_deleted' => '0',
-            'kode_finger' => '88121'
+            'kode_finger' => '88121',
         ]);
 
         User::create([
@@ -129,7 +129,6 @@ class DatabaseSeeder extends Seeder
             'id_jabatan' => '6',
             'is_deleted' => '0',
         ]);
-
 
         User::create([
             'nama_pegawai' => 'ppk',
@@ -205,7 +204,7 @@ class DatabaseSeeder extends Seeder
             'kode_surat' => 'II.F',
             'is_deleted' => '0',
         ]);
-      
+
         User::create([
             'nama_pegawai' => 'almer',
             'email' => 'kevinalmer4@gmail.com',
@@ -215,7 +214,7 @@ class DatabaseSeeder extends Seeder
             'kode_finger' => '545621',
             'id_jabatan' => '4',
             'is_deleted' => '0',
-            'kode_finger' => '82121'
+            'kode_finger' => '82121',
         ]);
 
         // GeneralSetting::create([

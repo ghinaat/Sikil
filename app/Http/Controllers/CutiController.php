@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Exports\CutiExport;
 use App\Models\Cuti;
 use App\Models\User;
-use App\Exports\CutiExport;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CutiController extends Controller
 {
-    public function export(Request $request) 
+    public function export(Request $request)
     {
         // $cutis['data'][] = [
         //     'user' => Cuti::all()->nama_pegawai,
@@ -22,6 +22,7 @@ class CutiController extends Controller
 
         return Excel::download(new CutiExport($cutis), 'cuti.xlsx');
     }
+
     public function index()
     {
         $cuti = Cuti::where('is_deleted', '0')->get();
@@ -54,10 +55,11 @@ class CutiController extends Controller
     public function edit(Cuti $cuti)
     {
         $users = User::all();
+
         return view('cuti.edit', compact('cuti', 'users'));
     }
 
-    public function update(Request $request,  $id_cuti)
+    public function update(Request $request, $id_cuti)
     {
         $validatedData = $request->validate([
             'id_users' => 'required',

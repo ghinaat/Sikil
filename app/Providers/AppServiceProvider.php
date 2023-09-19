@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\User;
 use App\Models\EmailConfiguration;
+use App\Models\User;
 use App\Observers\UserProfileObserver;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -42,7 +42,6 @@ class AppServiceProvider extends ServiceProvider
             //throw $th;
         }
 
-
         User::observe(UserProfileObserver::class);
 
         Gate::define('isAdmin', function (User $user) {
@@ -52,7 +51,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('isBod', function (User $user) {
             return $user->level === 'bod';
         });
-
 
         Gate::define('isPpk', function (User $user) {
             return $user->level === 'ppk';

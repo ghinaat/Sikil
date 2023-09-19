@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\Cuti;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CutiFactory extends Factory

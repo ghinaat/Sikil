@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\GeneralSetting;
+use App\Models\Notifikasi;
 use App\Models\Perizinan;
 use App\Models\User;
-use App\Models\Notifikasi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PerizinanController extends Controller
 {
@@ -21,13 +19,13 @@ class PerizinanController extends Controller
     {
         $user = auth()->user();
         $perizinan = Perizinan::where('is_deleted', '0')
-        ->whereIn('kode_finger', $user->ajuanperizinans->pluck('kode_finger'))
-        ->get();
+            ->whereIn('kode_finger', $user->ajuanperizinans->pluck('kode_finger'))
+            ->get();
 
         return view('izin.staff', [
             'perizinan' => $perizinan,
             'users' => User::where('is_deleted', '0')->get(),
-            "settingperizinan" => User::with(['setting'])->get(),
+            'settingperizinan' => User::with(['setting'])->get(),
         ]);
     }
 
@@ -54,8 +52,8 @@ class PerizinanController extends Controller
 
     public function Pengajuan(Request $request)
     {
-          //Menyimpan Data User Baru
-          $request->validate([
+        //Menyimpan Data User Baru
+        $request->validate([
             'kode_finger' => 'required',
             'tgl_absen_awal' => 'required',
             'tgl_absen_akhir' => 'required',
@@ -71,7 +69,7 @@ class PerizinanController extends Controller
         // Temukan pengguna berdasarkan kode finger
         $pengguna = User::where('kode_finger', $request->kode_finger)->first();
 
-        if (!$pengguna) {
+        if (! $pengguna) {
             return redirect()->back()->with('error', 'Pengguna dengan kode finger tersebut tidak ditemukan.');
         }
 
@@ -89,8 +87,8 @@ class PerizinanController extends Controller
         if ($request->hasFile('file_perizinan')) {
             // Upload dan simpan file jika ada
             $file_perizinan = $request->file('file_perizinan');
-            $namafile_perizinan = Str::random(10) . '.' . $file_perizinan->getClientOriginalExtension();
-            Storage::disk('public')->put('file_perizinan/' . $namafile_perizinan, file_get_contents($file_perizinan));
+            $namafile_perizinan = Str::random(10).'.'.$file_perizinan->getClientOriginalExtension();
+            Storage::disk('public')->put('file_perizinan/'.$namafile_perizinan, file_get_contents($file_perizinan));
             $perizinan->file_perizinan = $namafile_perizinan;
         } else {
             $perizinan->file_perizinan = null; // Atur kolom file_perizinan menjadi NULL jika tidak ada file diunggah
@@ -119,35 +117,35 @@ class PerizinanController extends Controller
 
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Izin ';
-        $notifikasi->pesan = 'Pengajuan perizinan dari ' . $pengguna->nama_pegawai . '. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
-        $notifikasi->link = '/ajuanperizinan'; 
+        $notifikasi->link = '/ajuanperizinan';
         $notifikasi->id_users = $request->id_atasan;
         $notifikasi->save();
 
         $ppk = GeneralSetting::where('status', '1')->first();
-        if($request->jenis_perizinan !== 'I'){
-        $notifikasi = new Notifikasi();
-        $notifikasi->judul = 'Pengajuan Izin ';
-        $notifikasi->pesan = 'Pengajuan perizinan dari ' . $pengguna->nama_pegawai . '. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
-        $notifikasi->is_dibaca = 'tidak_dibaca';
-        $notifikasi->label = 'info';
-        $notifikasi->link = '/ajuanperizinan'; 
-        $notifikasi->id_users = $ppk->id_users;
-        $notifikasi->save();
+        if ($request->jenis_perizinan !== 'I') {
+            $notifikasi = new Notifikasi();
+            $notifikasi->judul = 'Pengajuan Izin ';
+            $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+            $notifikasi->is_dibaca = 'tidak_dibaca';
+            $notifikasi->label = 'info';
+            $notifikasi->link = '/ajuanperizinan';
+            $notifikasi->id_users = $ppk->id_users;
+            $notifikasi->save();
         }
 
         $notifikasiAdmin = User::where('level', 'admin')->first();
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Izin ';
-        $notifikasi->pesan = 'Pengajuan perizinan dari ' . $pengguna->nama_pegawai . '. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
-        $notifikasi->link = '/ajuanperizinan'; 
+        $notifikasi->link = '/ajuanperizinan';
         $notifikasi->id_users = $notifikasiAdmin->id_users;
         $notifikasi->save();
-        
+
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
@@ -200,14 +198,13 @@ class PerizinanController extends Controller
             $perizinan->file_perizinan = $namafile_perizinan;
         }
 
-
-        if($request->jenis_perizinan === "CT"){
+        if ($request->jenis_perizinan === 'CT') {
             $perizinanUser = User::with('cuti')->where('kode_finger', $request->kode_finger)->first();
             if ($perizinanUser) {
                 if ($perizinanUser->cuti == null) {
                     return redirect()->back()->with('error', 'Anda belum memiliki cuti tahunan.');
                 }
-                $jumlahCuti = $request -> jumlah_hari_pengajuan;
+                $jumlahCuti = $request->jumlah_hari_pengajuan;
                 $jatahCutiTahunan = $perizinanUser->cuti->jatah_cuti;
                 if ($jatahCutiTahunan < $jumlahCuti) {
                     return redirect()->back()->with('error', 'Anda tidak memiliki jatah cuti tahunan yang cukup.');
