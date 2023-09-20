@@ -1,29 +1,27 @@
 <?php
 
 use App\Http\Controllers\AjuanPerizinanController;
-use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\CutiController;
-use App\Http\Controllers\LemburController;
 use App\Http\Controllers\DiklatController;
+use App\Http\Controllers\EmailConfigurationController;
 use App\Http\Controllers\GeneralSettingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\JenisDiklatController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\KeluargaController;
+use App\Http\Controllers\LemburController;
+use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\PendidikanController;
 use App\Http\Controllers\PengalamanKerjaController;
+use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SuratController;
 use App\Http\Controllers\TingkatPendidikanController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\UrlController;
-
-use App\Http\Controllers\EmailConfigurationController;
-
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Svg\Tag\Group;
 
@@ -160,7 +158,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'destroy'])->name('ajuanperizinan.destroy');
 });
 
-
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/perizinan', [PerizinanController::class, 'indexStaff'])->name('perizinan.index');
     Route::post('/perizinan', [PerizinanController::class, 'pengajuan'])->name('perizinan.pengajuan');
@@ -192,17 +189,16 @@ Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifik
 Route::get('/notifikasi/fetch', [NotifikasiController::class, 'fetch'])->name('notifikasi.fetch');
 Route::get('/notifikasi/{id_notifikasi}/detail', [NotifikasiController::class, 'detail'])->name('notifikasi.detail');
 
-
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/url', [UrlController::class, 'index'])->name('url.index');
     Route::post('/url', [UrlController::class, 'store'])->name('url.store');
-    Route::get('/{url_short}', [UrlController::class,'redirect'])->name('url.redirect');
+    Route::get('/{url_short}', [UrlController::class, 'redirect'])->name('url.redirect');
     Route::delete('/url/{id_url}', [UrlController::class, 'destroy'])->name('url.destroy');
     Route::put('/url/{id_url}', [UrlController::class, 'update'])->name('url.update');
     // Route::delete('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'destroy'])->name('ajuanperizinan.destroy');
 });
 
-Route::Group(['middleware' => ['auth']], function (){
+Route::Group(['middleware' => ['auth']], function () {
     Route::get('/surat', [SuratController::class, 'index'])->name('surat.index');
     Route::post('/surat', [SuratController::class, 'store'])->name('surat.store');
     Route::put('/surat/update/{id_surat}', [SuratController::class, 'update'])->name('surat.update');
@@ -210,6 +206,4 @@ Route::Group(['middleware' => ['auth']], function (){
 });
 
 Route::get('/email-configuration', [EmailConfigurationController::class, 'show'])->name('emailConfiguration.show');
- Route::post('/email-configuration', [EmailConfigurationController::class, 'update'])->name('emailConfiguration.update');
-
-
+Route::post('/email-configuration', [EmailConfigurationController::class, 'update'])->name('emailConfiguration.update');

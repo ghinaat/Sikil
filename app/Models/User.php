@@ -58,10 +58,9 @@ class User extends Authenticatable
     }
 
     public function cuti()
-{
-    return $this->hasOne(Cuti::class, 'id_users'); // Assuming 'id_users' is the foreign key in the 'cuti' table
-}
-
+    {
+        return $this->hasOne(Cuti::class, 'id_users'); // Assuming 'id_users' is the foreign key in the 'cuti' table
+    }
 
     public function diklat()
     {
@@ -77,28 +76,34 @@ class User extends Authenticatable
     {
         return $this->hasMany(Presensi::class, 'kode_finger', 'kode_finger');
     }
+
     public function ajuanperizinan()
     {
         return $this->hasMany(Perizinan::class, 'id_atasan', 'id_users');
     }
+
     public function ajuanperizinans()
     {
         return $this->hasMany(Perizinan::class, 'kode_finger', 'kode_finger');
     }
+
     public function lembur()
     {
         return $this->hasMany(Lembur::class, 'kode_finger', 'kode_finger');
     }
+
     public function lemburs()
     {
         return $this->hasMany(Lembur::class, 'id_atasan', 'id_users');
     }
 
-    public function notifikasi(){
+    public function notifikasi()
+    {
         return $this->hasMany(Notifikasi::class, 'id_users', 'id_users');
     }
 
-    public function surat(){
+    public function surat()
+    {
         return $this->hasMany(Surat::class, 'id_users', 'id_users');
     }
 
@@ -119,6 +124,7 @@ class User extends Authenticatable
             $user->kode_finger = $randomNumber;
         });
     }
+
     protected $hidden = [
         'password',
         // 'remember_token',

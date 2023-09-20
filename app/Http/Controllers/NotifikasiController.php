@@ -31,7 +31,8 @@ class NotifikasiController extends Controller
         ]);
     }
 
-    public function fetch(){
+    public function fetch()
+    {
         // For the sake of simplicity, assume we have a variable called
         // $notifications with the unread notifications. Each notification
         // have the next properties:
@@ -44,7 +45,9 @@ class NotifikasiController extends Controller
         $notifications = [];
 
         foreach (auth()->user()->notifikasi as $key => $notifikasi) {
-            if($notifikasi->is_dibaca == 'dibaca') continue;
+            if ($notifikasi->is_dibaca == 'dibaca') {
+                continue;
+            }
             $notifications[] = [
                 'icon' => 'fas fa-fw fa-envelope',
                 'text' => 'Pesan Belum Dibaca',
@@ -75,12 +78,11 @@ class NotifikasiController extends Controller
         // Return the new notification data.
 
         return [
-            'label'       => count($notifications),
+            'label' => count($notifications),
             'label_color' => 'danger',
-            'icon_color'  => 'dark',
-            'dropdown'    => $dropdownHtml,
+            'icon_color' => 'dark',
+            'dropdown' => $dropdownHtml,
         ];
 
     }
-
 }

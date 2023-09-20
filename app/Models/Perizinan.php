@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +12,7 @@ class Perizinan extends Model
     protected $primaryKey = 'id_perizinan';
 
     protected $table = 'perizinan';
+
     protected $fillable = [
         'id_atasan',
         'kode_finger',
@@ -25,8 +27,9 @@ class Perizinan extends Model
         'status_izin_ppk',
         'alasan_ditolak_ppk',
         'is_deleted',
-        'jumlah_hari_pengajuan'
+        'jumlah_hari_pengajuan',
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'kode_finger', 'kode_finger');
@@ -38,7 +41,7 @@ class Perizinan extends Model
     }
     // public function hitungJumlahHariPengajuan($tgl_awal, $tgl_akhir)
     // {
-     
+
     //     $tanggal_awal = \Carbon\Carbon::parse($tgl_awal);
     //     $tanggal_akhir = \Carbon\Carbon::parse($tgl_akhir);
     //     $jumlah_hari = $tanggal_awal->diffInDays($tanggal_akhir);
@@ -46,16 +49,13 @@ class Perizinan extends Model
     //     return $jumlah_hari;
     // }
 
-
     protected static function boot()
     {
         parent::boot();
-    
+
         static::creating(function ($model) {
             $model->tgl_ajuan = now();
         });
 
-          }
-
-  
+    }
 }

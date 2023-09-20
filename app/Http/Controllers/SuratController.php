@@ -13,12 +13,12 @@ class SuratController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
+    {
         $user = auth()->user();
         $surat = Surat::where('is_deleted', '0')
-        ->whereIn('id_users', $user->surat->pluck('id_users'))->get();
+            ->whereIn('id_users', $user->surat->pluck('id_users'))->get();
 
-        return view('surat.index',[
+        return view('surat.index', [
             'surat' => $surat,
             'users' => User::where('is_deleted', '0')->get(),
             'kodesurat' => KodeSurat::all(),
@@ -47,24 +47,24 @@ class SuratController extends Controller
             'id_kode_surat' => 'required',
             'urutan' => 'required',
             'keterangan' => 'required',
-            'no_surat' =>'required',
+            'no_surat' => 'required',
             'status' => 'required',
-            'bulan_kegiatan' =>'required'
+            'bulan_kegiatan' => 'required',
         ]);
         $surat = new Surat();
-        
+
         $surat->tgl_ajuan = now();
-        $surat-> tgl_surat = $request->tgl_surat;
-        $surat-> id_users = $request->id_users;
-        $surat-> jenis_surat = $request-> jenis_surat;
-        $surat-> id_kode_surat = $request->id_kode_surat;
-        $surat-> urutan = $request->urutan;
-        $surat-> keterangan = $request->keterangan;
-        $surat-> no_surat = $request-> no_surat;
-        $surat-> status = $request->status;
-        $surat-> bulan_kegiatan = $request->bulan_kegiatan;
+        $surat->tgl_surat = $request->tgl_surat;
+        $surat->id_users = $request->id_users;
+        $surat->jenis_surat = $request->jenis_surat;
+        $surat->id_kode_surat = $request->id_kode_surat;
+        $surat->urutan = $request->urutan;
+        $surat->keterangan = $request->keterangan;
+        $surat->no_surat = $request->no_surat;
+        $surat->status = $request->status;
+        $surat->bulan_kegiatan = $request->bulan_kegiatan;
         $surat->save();
-    
+
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
 
     }

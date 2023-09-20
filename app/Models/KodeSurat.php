@@ -10,13 +10,16 @@ class KodeSurat extends Model
     use HasFactory;
 
     protected $primaryKey = 'id_kode_surat';
+
     protected $table = 'kode_surat';
+
     protected $fillable = [
         'divisi',
-        'kode_surat'
+        'kode_surat',
     ];
 
-    public function surat(){
+    public function surat()
+    {
         return $this->hasMany(Surat::class, 'id_surat', 'id_surat');
     }
 }

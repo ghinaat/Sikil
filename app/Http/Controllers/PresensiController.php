@@ -152,48 +152,48 @@ class PresensiController extends Controller
             foreach ($presensiData as $pd) {
                 if ($pd->kehadiran) {
                     $kehadiran++;
-                }else{
+                } else {
                     switch ($pd->jenis_perizinan) {
                         case 'I':
                             $ijin++;
                             break;
-    
+
                         case 'S':
                             $sakit++;
                             break;
-    
+
                         case 'CS':
                             $cutiSakit++;
                             break;
-    
+
                         case 'CT':
                             $cutiTahunan++;
                             break;
-    
+
                         case 'CM':
                             $cutiMelahirkan++;
                             break;
-    
+
                         case 'DL':
                             $dinasLuar++;
                             break;
-    
+
                         case 'A':
                             $alpha++;
                             break;
-    
+
                         case 'CB':
                             $cutiBersama++;
                             break;
-    
+
                         case 'CH':
                             $cutiHaji++;
                             break;
-    
+
                         case 'TB':
                             $tugasBelajar++;
                             break;
-    
+
                         default:
                             // Handle any other case not covered above, if necessary.
                             break;
@@ -212,7 +212,7 @@ class PresensiController extends Controller
                         }
                     }
                 }
-               
+
             }
 
             $presensis['data'][] = [
@@ -268,50 +268,50 @@ class PresensiController extends Controller
             $presensiData = Presensi::where('kode_finger', $user->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
 
             foreach ($presensiData as $pd) {
-                if ($pd->kehadiran ) {
+                if ($pd->kehadiran) {
                     $kehadiran++;
-                }else{
+                } else {
                     switch ($pd->jenis_perizinan) {
                         case 'I':
                             $ijin++;
                             break;
-    
+
                         case 'S':
                             $sakit++;
                             break;
-    
+
                         case 'CS':
                             $cutiSakit++;
                             break;
-    
+
                         case 'CT':
                             $cutiTahunan++;
                             break;
-    
+
                         case 'CM':
                             $cutiMelahirkan++;
                             break;
-    
+
                         case 'DL':
                             $dinasLuar++;
                             break;
-    
+
                         case 'A':
                             $alpha++;
                             break;
-    
+
                         case 'CB':
                             $cutiBersama++;
                             break;
-    
+
                         case 'CH':
                             $cutiHaji++;
                             break;
-    
+
                         case 'TB':
                             $tugasBelajar++;
                             break;
-    
+
                         default:
                             // Handle any other case not covered above, if necessary.
                             break;
@@ -330,7 +330,7 @@ class PresensiController extends Controller
                         }
                     }
                 }
-               
+
             }
 
             $presensis[] = [
