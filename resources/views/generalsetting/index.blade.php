@@ -79,7 +79,8 @@
                                                     <select id="id_users" name="id_users"
                                                         class="form-select @error('id_users') is-invalid @enderror">
                                                         @foreach ($user as $us)
-                                                        <option value="{{ $us->id_users }}" @if( $gs->id_users === old('id_users', $us->id_users) ) selected @endif>
+                                                        <option value="{{ $us->id_users }}" @if( $gs->id_users ===
+                                                            old('id_users', $us->id_users) ) selected @endif>
                                                             {{ $us->nama_pegawai }}
                                                         </option>
                                                         @endforeach
@@ -102,7 +103,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <button type="button" class="btn btn-secondary"
+                                                    <button type="button" class="btn btn-danger"
                                                         data-dismiss="modal">Batal</button>
                                                 </div>
                                             </form>
@@ -165,7 +166,7 @@
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                     </div>
                 </form>
             </div>

@@ -32,10 +32,11 @@
                                 <td>{{$key+1}}</td>
                                 <td>{{$tp->nama_tingkat_pendidikan}}</td>
                                 @can('isAdmin')
-                            <td>
-                                @include('components.action-buttons', ['id' => $tp->id_tingkat_pendidikan, 'key' => $key, 'route' => 'tingkatpendidikan'])
-                            </td>
-                            @endcan
+                                <td>
+                                    @include('components.action-buttons', ['id' => $tp->id_tingkat_pendidikan, 'key' =>
+                                    $key, 'route' => 'tingkatpendidikan'])
+                                </td>
+                                @endcan
                             </tr>
                             @endforeach
                         </tbody>
@@ -68,7 +69,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                     </div>
                 </form>
             </div>
@@ -96,7 +97,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                     </div>
                 </form>
             </div>

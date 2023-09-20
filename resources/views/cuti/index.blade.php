@@ -14,7 +14,8 @@
                         Tambah
                     </button>
                     <a href="{{ route('cuti.xlsx') }}" class="btn btn-primary">Unduh Excel</a>
-                </div>
+                              
+                </div>
                 @endcan
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-stripped" id="example2">
@@ -36,7 +37,8 @@
                                 <td>{{$cuti->jatah_cuti}}</td>
                                 @can('isAdmin')
                                 <td>
-                                    @include('components.action-buttons', ['id' => $cuti->id_cuti, 'key' => $key, 'route' => 'cuti'])
+                                    @include('components.action-buttons', ['id' => $cuti->id_cuti, 'key' => $key,
+                                    'route' => 'cuti'])
                                 </td>
                                 @endcan
                             </tr>
@@ -71,10 +73,11 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="id_users">Pegawai</label>
-                                        <select class="form-control @error('id_users') is-invalid @enderror" id="id_users" name="id_users">
+                                        <select class="form-select @error('id_users') is-invalid @enderror"
+                                            id="id_users" name="id_users">
                                             <option value="">Pilih Pegawai</option>
                                             @foreach ($users as $user)
-                                                <option value="{{ $user->id_users }}">{{ $user->nama_pegawai }}</option>
+                                            <option value="{{ $user->id_users }}">{{ $user->nama_pegawai }}</option>
                                             @endforeach
                                         </select>
                                         @error('id_users') <span class="text-danger">{{ $message }}</span> @enderror
@@ -111,8 +114,8 @@
                 </button>
             </div>
             <div class="modal-body form">
-                <form action="{{ route('cuti.update',$cuti->id_cuti) }}" method="POST" id="form"
-                    class="form-horizontal" enctype="multipart/form-data">
+                <form action="{{ route('cuti.update',$cuti->id_cuti) }}" method="POST" id="form" class="form-horizontal"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="id" value="{{ $cuti->id_cuti }}">
@@ -122,13 +125,13 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="id_users">Pegawai</label>
-                                        <select class="form-control @error('id_users') is-invalid @enderror"
+                                        <select class="form-select @error('id_users') is-invalid @enderror"
                                             id="id_users" name="id_users">
                                             <option value="">Pilih Pegawai</option>
                                             @foreach ($users as $user)
-                                                <option value="{{ $user->id_users }}"
-                                                    {{ $user->id_users == $cuti->id_users ? 'selected' : '' }}>
-                                                    {{ $user->nama_pegawai }}</option>
+                                            <option value="{{ $user->id_users }}"
+                                                {{ $user->id_users == $cuti->id_users ? 'selected' : '' }}>
+                                                {{ $user->nama_pegawai }}</option>
                                             @endforeach
                                         </select>
                                         @error('id_users') <span class="text-danger">{{ $message }}</span> @enderror
