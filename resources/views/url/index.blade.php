@@ -8,6 +8,18 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                @if (session()->has('success_message'))
+                    <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                        {{ session('success_message') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if (session()->has('error_message'))
+                    <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                        {{ session('error_message') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
                     role="dialog">
                     Tambah
@@ -28,8 +40,8 @@
                             @foreach($url as $key => $url)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td> <a href="{{ route('url.redirect',$url->url_short) }}"
-                                        target="_blank">http://127.0.0.1:8000/{{$url->url_short}}</a></td>
+                                <td> <a href="{{ $url->url_short }}"
+                                        target="_blank">{{$url->url_short}}</a></td>
                                 <td>{{$url->jenis}}</td>
                                 <td>{{$url->url_address}}</td>
                                 <td id={{$key+1}}>
@@ -85,10 +97,10 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="url_short">Nama Shortlink</label>
+                                                            <label for="url_short">Nama Shortlink  </label>
                                                             <input type="text" class="form-control" id="url_short"
                                                                 name="url_short"
-                                                                value="{{$url -> url_short ?? old('url_short') }}"
+                                                                value="{{ str_replace(url('') . '/s/', '',  $url -> url_short) ??  str_replace(url('') . '/s/', '',  old('url_short')) }}"
                                                                 required>
                                                         </div>
                                                         <div class="form-group">

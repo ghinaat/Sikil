@@ -321,6 +321,18 @@ return [
         ],
         'MAIN NAVIGATION',
         [
+            'text' => 'Short Link / QR Code',
+            'url' => '/url',
+            'icon' => 'fas fa-qrcode',
+            'can' => '',
+        ],
+        [
+            'icon' => 'fas fa-envelope',
+            'text' => 'Surat',
+            'text' => 'Nomor Surat',
+            'url' => '/surat',
+        ],
+        [
             'icon' => 'fas fa-book',
             'text' => 'Data Kegiatan',
             'submenu' => [
@@ -389,24 +401,6 @@ return [
                 ],
 
             ],
-        ],
-        [
-            'text' => 'ShortUrl',
-            'url' => '/url',
-            'icon' => 'fas fa-home',
-            'can' => '',
-        ],
-        [
-            'icon' => 'fas fa-edit',
-            'text' => 'Surat',
-            'submenu' => [
-                [
-                    'text' => 'Nomor Surat',
-                    'url' => '/surat',
-                    'can' => '',
-                ],
-            ],
-
         ],
         [
             'icon' => 'fas fa-user-cog',
