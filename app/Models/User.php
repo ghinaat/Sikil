@@ -74,7 +74,7 @@ class User extends Authenticatable
 
     public function presensi()
     {
-        return $this->hasMany(Presensi::class, 'kode_finger', 'kode_finger');
+        return $this->hasOne(Presensi::class, 'kode_finger', 'kode_finger');
     }
 
     public function ajuanperizinan()

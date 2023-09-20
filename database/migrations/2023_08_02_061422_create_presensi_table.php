@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('presensi', function (Blueprint $table) {
             $table->increments('id_presensi');
-            $table->unsignedInteger('kode_finger')->nullable();
-            $table->foreign('kode_finger')->references('kode_finger')->on('users');
+            $table->unsignedInteger('kode_finger');
             $table->date('tanggal');
             $table->time('jam_masuk')->nullable();
             $table->time('jam_pulang')->nullable();
@@ -23,6 +22,7 @@ return new class extends Migration
             $table->time('kehadiran')->nullable();
             $table->enum('jenis_perizinan', ['I', 'DL', 'S', 'CS', 'Prajab', 'CT', 'CM', 'CAP', 'CH', 'CB', 'A', 'TB']);
             $table->enum('is_deleted', ['0', '1'])->default('0');
+            $table->foreign('kode_finger')->references('kode_finger')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

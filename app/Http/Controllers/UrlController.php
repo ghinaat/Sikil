@@ -91,7 +91,7 @@ class UrlController extends Controller
         }
 
         // Check if the URL exists in the database, assuming you have an 'Url' model
-        $urlExists = Url::where('url_address', $url)->exists();
+        $urlExists = Url::where('url_short', $url)->exists();
 
         // Generate the QR code
         $qrCode = QrCode::size(200)->format('png')->errorCorrection('M')->generate($url);
@@ -102,8 +102,6 @@ class UrlController extends Controller
         // Store the QR code image in the storage directory
         Storage::put($storagePath, $qrCode);
 
-        // Return the URL to the stored QR code image
-        // dd(str_replace('public/', '', $storagePath));
         return $imageName.'.png';
     }
 
