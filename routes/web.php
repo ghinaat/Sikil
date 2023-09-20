@@ -192,7 +192,6 @@ Route::get('/notifikasi/{id_notifikasi}/detail', [NotifikasiController::class, '
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/url', [UrlController::class, 'index'])->name('url.index');
     Route::post('/url', [UrlController::class, 'store'])->name('url.store');
-    Route::get('/{url_short}', [UrlController::class, 'redirect'])->name('url.redirect');
     Route::delete('/url/{id_url}', [UrlController::class, 'destroy'])->name('url.destroy');
     Route::put('/url/{id_url}', [UrlController::class, 'update'])->name('url.update');
     // Route::delete('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'destroy'])->name('ajuanperizinan.destroy');
@@ -207,3 +206,4 @@ Route::Group(['middleware' => ['auth']], function () {
 
 Route::get('/email-configuration', [EmailConfigurationController::class, 'show'])->name('emailConfiguration.show');
 Route::post('/email-configuration', [EmailConfigurationController::class, 'update'])->name('emailConfiguration.update');
+Route::get('/s/{url_short}', [UrlController::class, 'redirect'])->name('url.redirect');

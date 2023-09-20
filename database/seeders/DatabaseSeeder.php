@@ -217,11 +217,11 @@ class DatabaseSeeder extends Seeder
             'kode_finger' => '82121',
         ]);
 
-        // GeneralSetting::create([
-        //     'tahun_aktif' => '2023',
-        //     'id_users' => null,
-        //     'status' => '0',
-        // ]);
+        GeneralSetting::create([
+            'tahun_aktif' => '2023',
+            'id_users' => 4,
+            'status' => '1',
+        ]);
 
         User::factory(10)->create();
         Kegiatan::factory(40)->create();

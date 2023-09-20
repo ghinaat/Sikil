@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\URL as FacadesURL;
 
 class UrlController extends Controller
 {
@@ -29,16 +30,21 @@ class UrlController extends Controller
             'url_address' => 'required|url',
             'jenis' => 'required',
             'url_short' => 'required',
-
         ]);
+
+        $existingUrl = Url::where('url_short', FacadesURL::to('/') . '/s/' . $request->input('url_short'))->first();
+
+        if ($existingUrl) {
+            return redirect()->back()->with('error_message', 'URL pendek sudah ada dalam basis data.');
+        }
 
         $url = new Url();
         $url->id_users = $request->id_users;
         $url->url_address = $request->url_address;
         $url->jenis = $request->jenis;
         $customCode = $request->input('url_short');
-        $url->url_short = $this->generateShortCode($customCode);
-        $qrcode = $this->generateQRCode($request->input('url_address'));
+        $url->url_short = $this->generateShortCode(FacadesURL::to('/') . '/s/' . $customCode);
+        $qrcode = $this->generateQRCode($url->url_short);
         $url->qrcode_image = $qrcode;
 
         // dd($url);
@@ -72,7 +78,7 @@ class UrlController extends Controller
     public function redirect($shortUrl)
     {
         // Look up the short URL in the database
-        $urlRecord = Url::where('url_short', $shortUrl)->first();
+        $urlRecord = Url::where('url_short', FacadesURL::to('/') . '/s/' . $shortUrl)->first();
 
         // Check if the short URL exists in the database
         if ($urlRecord) {
@@ -94,7 +100,7 @@ class UrlController extends Controller
         $urlExists = Url::where('url_short', $url)->exists();
 
         // Generate the QR code
-        $qrCode = QrCode::size(200)->format('png')->errorCorrection('M')->generate($url);
+        $qrCode = QrCode::size(200)->format('png')->errorCorrection('M')->merge('/public/images/qitep.png', .3)->margin(1.5)->generate($url);
 
         // Specify the file path where the QR code image should be saved
         $storagePath = 'public/qrcodes/'.$imageName.'.png';
@@ -113,17 +119,20 @@ class UrlController extends Controller
             'jenis' => 'required',
             'url_short' => 'required',
         ]);
+
         $url = Url::find($id_url);
         $url->id_users = $request->id_users;
         $url->url_address = $request->url_address;
         $url->jenis = $request->jenis;
+
         if (! empty($url->qrcode_image)) {
             Storage::delete('qrcodes/'.$url->qrcode_image);
             $url->qrcode_image = null;
         }
+
         $customCode = $request->input('url_short');
-        $url->url_short = $this->generateShortCode($customCode);
-        $qrcode = $this->generateQRCode($request->input('url_address'));
+        $url->url_short = $this->generateShortCode(FacadesURL::to('/') . '/s/' . $customCode);
+        $qrcode = $this->generateQRCode($url->url_short);
         $url->qrcode_image = $qrcode;
         $url->save();
 
