@@ -7,7 +7,7 @@ use App\Models\Surat;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class SuratController extends Controller
+class AjuanSuratController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class SuratController extends Controller
         $surat = Surat::where('is_deleted', '0')
             ->whereIn('id_users', $user->surat->pluck('id_users'))->get();
 
-        return view('surat.index', [
+        return view('ajuansurat.index', [
             'surat' => $surat,
             'users' => User::where('is_deleted', '0')->get(),
             'kodesurat' => KodeSurat::all(),
@@ -58,6 +58,7 @@ class SuratController extends Controller
         $surat->id_kode_surat = $request->id_kode_surat;
         $surat->keterangan = $request->keterangan;
         $surat->bulan_kegiatan = $request->bulan_kegiatan;
+        $surat->status = '1';
 
         $surat->urutan = Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
 
@@ -104,7 +105,6 @@ class SuratController extends Controller
      */
     public function update(Request $request,  $id_surat)
     {
-
         $rules = [
             'id_users' => 'required',
             'jenis_surat' => 'required',
@@ -112,14 +112,14 @@ class SuratController extends Controller
             'keterangan' => 'required',
             'tgl_surat' => 'required|date',
             'bulan_kegiatan' => 'required',
+            'status' => 'required',
         ];
 
         $surat = Surat::where('id_surat',$id_surat)->get()[0];
 
         $request->validate($rules);
 
-
-        if($request->jenis_surat === $surat->jenis_surat && $request->id_kode_surat === $surat->id_kode_surat){
+        if($request->jenis_surat === $surat->jenis_surat && $request->id_kode_surat == $surat->id_kode_surat){
 
             $surat->tgl_surat = $request->tgl_surat;
             $surat->id_users = $request->id_users;
@@ -127,7 +127,7 @@ class SuratController extends Controller
             $surat->id_kode_surat = $request->id_kode_surat;
             $surat->keterangan = $request->keterangan;
             $surat->bulan_kegiatan = $request->bulan_kegiatan;
-
+            $surat->status = $request->status;
             $surat->save();
         }else{
             $surat->tgl_surat = $request->tgl_surat;
@@ -136,6 +136,7 @@ class SuratController extends Controller
             $surat->id_kode_surat = $request->id_kode_surat;
             $surat->keterangan = $request->keterangan;
             $surat->bulan_kegiatan = $request->bulan_kegiatan;
+            $surat->status = $request->status;
             $surat->urutan = Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
 
             $kode_surat = KodeSurat::find($request->id_kode_surat);
