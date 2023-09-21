@@ -16,7 +16,7 @@ class AjuanSuratController extends Controller
     {
         $user = auth()->user();
         $surat = Surat::where('is_deleted', '0')
-            ->whereIn('id_users', $user->surat->pluck('id_users'))->get();
+            ->get();
 
         return view('ajuansurat.index', [
             'surat' => $surat,
@@ -60,7 +60,7 @@ class AjuanSuratController extends Controller
         $surat->bulan_kegiatan = $request->bulan_kegiatan;
         $surat->status = '1';
 
-        $surat->urutan = Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
+        $surat->urutan = 33 + Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
 
         $kode_surat = KodeSurat::find($request->id_kode_surat);
 
@@ -137,7 +137,7 @@ class AjuanSuratController extends Controller
             $surat->keterangan = $request->keterangan;
             $surat->bulan_kegiatan = $request->bulan_kegiatan;
             $surat->status = $request->status;
-            $surat->urutan = Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
+            $surat->urutan = 33 + Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
 
             $kode_surat = KodeSurat::find($request->id_kode_surat);
 
@@ -187,7 +187,7 @@ class AjuanSuratController extends Controller
         foreach ($surats as $key => $surat) {
 
             // set urutan to 0
-            $surat->urutan = 0;
+            $surat->urutan = 33;
 
             // get all surat with same jenis_surat
             $surats2 = Surat::where('jenis_surat', $surat->jenis_surat)->where('is_deleted', '0')->get();
