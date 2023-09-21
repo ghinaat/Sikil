@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('tgl_surat');
             $table->string('keterangan', 100);
             $table->enum('bulan_kegiatan', ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'])->nullable();
-            $table->enum('status', ['0', '1']);
+            $table->enum('status', ['0', '1', '9'])->default('9');
 
             $table->unsignedInteger('id_users');
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');

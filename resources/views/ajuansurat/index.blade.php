@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'Nomor Surat')
 @section('content_header')
-<h1 class="m-0 text-dark">Pengajuan Nomor Surat</h1>
+<h1 class="m-0 text-dark">Kelola Nomor Surat</h1>
 @stop
 @section('content')
 <div class="row">
@@ -46,11 +46,7 @@
                                 <td id={{$key+1}}>Surat Keluar</td>
                                 @endif
                                 <td id={{$key+1}}>{{$sr->keterangan}}</td>
-                                @if($sr->status === '1')
                                 <td id={{$key+1}}>{{$sr->no_surat}}</td>
-                                @else
-                                <td></td>
-                                @endif
                                 <td id={{$key+1}}>
                                     @if($sr->status === '9')
                                     Menunggu Persetujuan
@@ -62,7 +58,7 @@
                                 </td>
                                 <td id={{$key+1}}>
                                     @include('components.action-buttons', ['id' => $sr->id_surat, 'key' => $key,
-                                'route' => 'surat'])
+                                'route' => 'ajuansurat'])
                                 </td>
                             </tr>
                             @endforeach
@@ -87,7 +83,7 @@
                 </button>
             </div>
             <div class="modal-body form">
-                <form action="{{ route('surat.store') }}" method="POST" id="form" class="form-horizontal"
+                <form action="{{ route('ajuansurat.store') }}" method="POST" id="form" class="form-horizontal"
                     enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" value="" name="id">
@@ -173,7 +169,7 @@
                 </button>
             </div>
             <div class="modal-body form">
-                <form action="{{ route('surat.update',$sr->id_surat) }}" method="POST" id="form"
+                <form action="{{ route('ajuansurat.update',$sr->id_surat) }}" method="POST" id="form"
                     class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -230,6 +226,18 @@
                                             <option value="11" @if($sr->bulan_kegiatan === "11" || old('bulan_kegiatan') === "11" ) selected @endif>November</option>
                                             <option value="12" @if($sr->bulan_kegiatan === "12" || old('bulan_kegiatan') === "12" ) selected @endif>Desember</option>
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="status_izin_atasan">Apakah anda menyetujui
+                                            Surat {{$sr->no_surat}}?</label>
+                                        <div class="input">
+                                            <input type="radio" name="status"
+                                                value="1" @if ($sr->status === '1')
+                                            checked @endif> Disetujui<br>
+                                            <input type="radio" name="status"
+                                                value="0" @if ($sr->status === '0')
+                                            checked @endif> Ditolak<br>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

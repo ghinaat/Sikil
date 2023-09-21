@@ -22,6 +22,7 @@ use App\Http\Controllers\SuratController;
 use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\UrlController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AjuanSuratController;
 use Illuminate\Support\Facades\Route;
 use Svg\Tag\Group;
 
@@ -202,6 +203,11 @@ Route::Group(['middleware' => ['auth']], function () {
     Route::post('/surat', [SuratController::class, 'store'])->name('surat.store');
     Route::put('/surat/update/{id_surat}', [SuratController::class, 'update'])->name('surat.update');
     Route::delete('/surat/{id_surat}', [SuratController::class, 'destroy'])->name('surat.destroy');
+
+    Route::get('/ajuansurat', [AjuanSuratController::class, 'index'])->name('ajuansurat.index');
+    Route::post('/ajuansurat', [AjuanSuratController::class, 'store'])->name('ajuansurat.store');
+    Route::put('/ajuansurat/update/{id_ajuansurat}', [AjuanSuratController::class, 'update'])->name('ajuansurat.update');
+    Route::delete('/ajuansurat/{id_ajuansurat}', [AjuanSuratController::class, 'destroy'])->name('ajuansurat.destroy');
 });
 
 Route::get('/email-configuration', [EmailConfigurationController::class, 'show'])->name('emailConfiguration.show');
