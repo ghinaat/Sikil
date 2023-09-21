@@ -439,12 +439,6 @@ return [
                     'can' => '',
                 ],
                 [
-                    'text' => 'Kelola Presensi',
-                    'url' => '/presensi/admin',
-                    'can' => '',
-                ],
-                [
-
                     'text' => 'Jatah Cuti',
                     'url' => '/cuti',
                     'can' => '',
