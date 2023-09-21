@@ -106,6 +106,36 @@ class LemburController extends Controller
         $lembur->status_izin_atasan = $request->status_izin_atasan;
 
         $lembur->save();
+        
+        // dd($lembur);
+        $pengguna = User::where('kode_finger', $lembur->kode_finger)->first();
+        if ($lembur->status_izin_atasan === '1') {
+
+            $notifikasi = new Notifikasi();
+            $notifikasi->judul = 'Persetujuan Lembur';
+            $notifikasi->pesan = 'Pengajuan Lembur anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
+            $notifikasi->is_dibaca = 'tidak_dibaca';
+            $notifikasi->label = 'info';
+            $notifikasi->link = '/lembur';
+            $notifikasi->id_users = $pengguna->id_users;
+            $notifikasi->save();
+
+            return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+
+        } elseif($lembur->status_izin_atasan === '0') {
+
+            $notifikasi = new Notifikasi();
+            $notifikasi->judul = 'Persetujuan Lembur ';
+            $notifikasi->pesan = 'Pengajuan lembur anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
+            $notifikasi->is_dibaca = 'tidak_dibaca';
+            $notifikasi->label = 'info';
+            $notifikasi->link = '/lembur';
+            $notifikasi->id_users = $request->id_users;
+            $notifikasi->save();
+
+            return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+
+        }
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
 
@@ -263,36 +293,42 @@ class LemburController extends Controller
         $lembur->jam_selesai = $request->input('jam_selesai');
 
         $lembur->tugas = $request->input('tugas');
-        $lembur->status_izin_atasan = null;
+        $lembur->status_izin_atasan = $request->status_izin_atasan;
 
         $lembur->save();
 
         $pengguna = User::where('kode_finger', $request->kode_finger)->first();
-        if ($lembur->status_izin_atasan === '1') {
-            $notifikasi = new Notifikasi();
-            $notifikasi->judul = 'Persetujua Lembur';
-            $notifikasi->pesan = 'Pengajuan Lembur anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
-            $notifikasi->is_dibaca = 'tidak_dibaca';
-            $notifikasi->label = 'info';
-            $notifikasi->link = '/lembur';
-            $notifikasi->id_users = $pengguna->id_users;
-            $notifikasi->save();
+       
 
-            return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Lembur';
+        $notifikasi->pesan = 'Pengajuan Lembur anda sudah berhasil dikirimkan. Kami telah mengirimkan notifikasi untuk memproses pengajuanmu.';
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/lembur';
+        $notifikasi->id_users = $pengguna->id_users;
+        $notifikasi->save();
 
-        } else {
-            $notifikasi = new Notifikasi();
-            $notifikasi->judul = 'Persetujuan Lembur ';
-            $notifikasi->pesan = 'Pengajuan lembur anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
-            $notifikasi->is_dibaca = 'tidak_dibaca';
-            $notifikasi->label = 'info';
-            $notifikasi->link = '/lembur';
-            $notifikasi->id_users = $request->id_atasan;
-            $notifikasi->save();
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Lembur ';
+        $notifikasi->pesan = 'Pengajuan Lembur dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/ajuanlembur';
+        $notifikasi->id_users = $request->id_atasan;
+        $notifikasi->save();
 
-            return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+        $notifikasiAdmin = User::where('level', 'admin')->first();
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Lembur ';
+        $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/ajuanlembur';
+        $notifikasi->id_users = $notifikasiAdmin->id_users;
+        $notifikasi->save();
 
-        }
+        
 
     }
 
