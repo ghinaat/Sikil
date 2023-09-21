@@ -52,18 +52,20 @@
                                 <td></td>
                                 @endif
                                 <td id={{$key+1}}>
-                                    @if($sr->status === '9')
-                                    Menunggu Persetujuan
-                                    @elseif($sr->status === '1')
+                                    @if($sr->status === '1')
                                     Disetujui
                                     @else
-                                    Ditolak
+                                    Menunggu Persetujuan
                                     @endif
                                 </td>
+                                @if($sr->status === '0')
                                 <td id={{$key+1}}>
                                     @include('components.action-buttons', ['id' => $sr->id_surat, 'key' => $key,
                                 'route' => 'surat'])
                                 </td>
+                                @else
+                                <td></td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

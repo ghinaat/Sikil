@@ -60,7 +60,7 @@ class AjuanSuratController extends Controller
         $surat->bulan_kegiatan = $request->bulan_kegiatan;
         $surat->status = '1';
 
-        $surat->urutan = Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->where('status', '!=', '0')->count() + 1;
+        $surat->urutan = Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
 
         $kode_surat = KodeSurat::find($request->id_kode_surat);
 
@@ -129,9 +129,6 @@ class AjuanSuratController extends Controller
             $surat->bulan_kegiatan = $request->bulan_kegiatan;
             $surat->status = $request->status;
             $surat->save();
-
-            $surats = Surat::where('is_deleted', '0')->where('status', '!=', '0')->get();
-            $this->repair($surats);
         }else{
             $surat->tgl_surat = $request->tgl_surat;
             $surat->id_users = $request->id_users;
@@ -140,7 +137,7 @@ class AjuanSuratController extends Controller
             $surat->keterangan = $request->keterangan;
             $surat->bulan_kegiatan = $request->bulan_kegiatan;
             $surat->status = $request->status;
-            $surat->urutan = Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->where('status', '!=', '0')->count() + 1;
+            $surat->urutan = Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
 
             $kode_surat = KodeSurat::find($request->id_kode_surat);
 
@@ -158,7 +155,7 @@ class AjuanSuratController extends Controller
 
             $surat->save();
 
-            $surats = Surat::where('is_deleted', '0')->where('jenis_surat', '!=', $request->jenis_surat)->where('status', '!=', '0')->get();
+            $surats = Surat::where('is_deleted', '0')->where('jenis_surat', '!=', $request->jenis_surat)->get();
             $this->repair($surats);
         }
 
@@ -193,7 +190,7 @@ class AjuanSuratController extends Controller
             $surat->urutan = 0;
 
             // get all surat with same jenis_surat
-            $surats2 = Surat::where('jenis_surat', $surat->jenis_surat)->where('is_deleted', '0')->where('status', '!=', '0')->get();
+            $surats2 = Surat::where('jenis_surat', $surat->jenis_surat)->where('is_deleted', '0')->get();
             foreach ($surats2 as $key => $surat2) {
 
                 // and where id_surat not higher than current id_surat

@@ -48,18 +48,21 @@
                                 <td id={{$key+1}}>{{$sr->keterangan}}</td>
                                 <td id={{$key+1}}>{{$sr->no_surat}}</td>
                                 <td id={{$key+1}}>
-                                    @if($sr->status === '9')
-                                    Menunggu Persetujuan
-                                    @elseif($sr->status === '1')
+                                    @if($sr->status === '1')
                                     Disetujui
                                     @else
-                                    Ditolak
+                                    Menunggu Persetujuan
                                     @endif
                                 </td>
+                                @if($sr->status === '0')
                                 <td id={{$key+1}}>
                                     @include('components.action-buttons', ['id' => $sr->id_surat, 'key' => $key,
                                 'route' => 'ajuansurat'])
                                 </td>
+                                </td>
+                                @else
+                                <td></td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>
@@ -234,9 +237,6 @@
                                             <input type="radio" name="status"
                                                 value="1" @if ($sr->status === '1')
                                             checked @endif> Disetujui<br>
-                                            <input type="radio" name="status"
-                                                value="0" @if ($sr->status === '0')
-                                            checked @endif> Ditolak<br>
                                         </div>
                                     </div>
                                 </div>
