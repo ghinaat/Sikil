@@ -63,6 +63,7 @@ class UserController extends Controller
             'password' => 'required',
             'level' => 'required',
             'id_jabatan' => 'required',
+            'kode_finger' => 'required'
         ]);
 
         $array = $request->only([
@@ -77,9 +78,22 @@ class UserController extends Controller
 
         $user = User::create($array);
 
+        $array['kode_finger'] = $this->generateUniqueKodeFinger();
+
         return redirect()->route('user.index')->with([
             'success_message' => 'Data telah tersimpan',
         ]);
+    }
+
+        private function generateUniqueKodeFinger()
+    {        
+        $kodeFinger = uniqid(); 
+
+        while (User::where('kode_finger', $kodeFinger)->exists()) {
+            $kodeFinger = uniqid();
+        }
+
+        return $kodeFinger;
     }
 
     public function edit($id_users)

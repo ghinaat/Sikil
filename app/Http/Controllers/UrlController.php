@@ -43,7 +43,8 @@ class UrlController extends Controller
         $url->url_address = $request->url_address;
         $url->jenis = $request->jenis;
         $customCode = $request->input('url_short');
-        $url->url_short = $this->generateShortCode(FacadesURL::to('/') . '/s/' . $customCode);
+        $slug = Str::slug($customCode, '-');
+        $url->url_short = $this->generateShortCode(FacadesURL::to('/') . '/s/' . $slug);
         $qrcode = $this->generateQRCode($url->url_short);
         $url->qrcode_image = $qrcode;
 
@@ -53,22 +54,22 @@ class UrlController extends Controller
         return redirect()->back()->with('success_message', 'Data telah tersimpan');
     }
 
-    private function generateShortCode($customCode)
+    private function generateShortCode($slug)
     {
-        $existingUrl = Url::where('url_short', $customCode)->first();
+        $existingUrl = Url::where('url_short', $slug)->first();
 
         if ($existingUrl) {
             return redirect()->back()->with('error_message', 'URL pendek sudah ada dalam basis data.');
         }
 
-        $code = $customCode;
-
+        $code = $slug;
+        
         // Check if the generated code already exists in the database
         $exists = Url::where('url_short', $code)->exists();
 
         // If the code exists, generate a new one until it's unique
         while ($exists) {
-            $code = $customCode; // Generate a new code
+            $code = $slug; // Generate a new code
             $exists = Url::where('url_short', $code)->exists();
         }
 
