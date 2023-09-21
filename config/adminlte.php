@@ -338,7 +338,7 @@ return [
                 [
                     'text' => 'Kelola Surat',
                     'url' => '/ajuansurat',
-                    'can' => '',
+                    'can' => 'isAdmin',
                 ],
             ],
         ],
