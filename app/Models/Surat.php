@@ -33,7 +33,7 @@ class Surat extends Model
         return $this->belongsTo(User::class, 'id_users', 'id_users');
     }
 
-    public function kodesurat()
+    public function kode_surat()
     {
         return $this->belongsTo(KodeSurat::class, 'id_kode_surat', 'id_kode_surat');
     }

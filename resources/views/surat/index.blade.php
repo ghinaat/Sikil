@@ -33,10 +33,20 @@
                             @foreach($surat as $key => $sr)
                             <tr>
                                 <td id={{$key+1}}>{{$key+1}}</td>
-                                <td id={{$key+1}}>{{$sr->tgl_ajuan}}</td>
+                                <td id={{$key+1}}>{{$sr->created_at}}</td>
                                 <td id={{$key+1}}>{{$sr->tgl_surat}}</td>
-                                <td id={{$key+1}}>{{$sr->user->id_users}}</td>
-                                <td id={{$key+1}}>{{$sr->jenis_surat}}</td>
+                                <td id={{$key+1}}>{{$sr->user->nama_pegawai}}</td>
+                                @if($sr->jenis_surat === 'nota_dinas')
+                                <td id={{$key+1}}>Nota Dinas</td>
+                                @elseif($sr->jenis_surat === 'notula_rapat')
+                                <td id={{$key+1}}>Notula Rapat</td>
+                                @elseif($sr->jenis_surat === 'sertifikat_kegiatan')
+                                <td id={{$key+1}}>Sertifikat Kegiatan</td>
+                                @elseif($sr->jenis_surat === 'sertifikat_magang')
+                                <td id={{$key+1}}>Sertifikat Magang</td>
+                                @elseif($sr->jenis_surat === 'surat_keluar')
+                                <td id={{$key+1}}>Surat Keluar</td>
+                                @endif
                                 <td id={{$key+1}}>{{$sr->keterangan}}</td>
                                 <td id={{$key+1}}>{{$sr->no_surat}}</td>
                                 <td id={{$key+1}}>
@@ -47,8 +57,8 @@
                                     @endif
                                 </td>
                                 <td id={{$key+1}}>
-                                    @include('components.action-buttons', ['id' => $sr->id_kode_surat, 'key' => $key,
-                                    'route' => 'kodesurat'])
+                                    @include('components.action-buttons', ['id' => $sr->id_surat, 'key' => $key,
+                                'route' => 'surat'])
                                 </td>
                             </tr>
                             @endforeach
@@ -114,7 +124,7 @@
                                     <div class="form-group">
                                         <label for="tgl_surat">Tanggal Surat</label>
                                         <input type="date" class="form-control @error('tgl_surat') is-invalid @enderror"
-                                        id="tgl_surat" name="tgl_surat" value="{{old('tgl_surat')}}"> 
+                                        id="tgl_surat" name="tgl_surat" value="{{old('tgl_surat')}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="bulan_kegiatan">Bulan Kegiatan</label>
@@ -148,8 +158,8 @@
 </div><!-- /.modal -->
 
 <!-- Bootstrap modal Edit -->
-@foreach($kodesurat as $sr)
-<div class="modal fade" id="editModal{{$sr->id_kode_surat}}" role="dialog">
+@foreach($surat as $sr)
+<div class="modal fade" id="editModal{{$sr->id_surat}}" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -159,39 +169,63 @@
                 </button>
             </div>
             <div class="modal-body form">
-                <form action="{{ route('kodesurat.update',$sr->id_kode_surat) }}" method="POST" id="form"
+                <form action="{{ route('surat.update',$sr->id_surat) }}" method="POST" id="form"
                     class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="id" value="{{ $sr->id_kode_surat }}">
+                    <input type="hidden" name="id" value="{{ $sr->id_surat }}">
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
+                                <input type="hidden" name="id_users" value="{{ Auth::user()->id_users}}">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="divisi">Divisi</label>
-                                        <input type="text"
-                                            class="form-control @error('divisi') is-invalid @enderror"
-                                            id="divisi" placeholder="Masukkan Nama Jenis Diklat"
-                                            name="divisi"
-                                            value="{{ $sr->divisi ?? old('divisi') }}">
-                                        @error('divisi')
-                                        <span class="textdanger">{{ $message }}</span>
-                                        @enderror
+                                        <label for="exampleInputName">Jenis Surat </label>
+                                        <select class="form-select  @error('jenis_surat') is-invalid @enderror" id="jenis_surat" name="jenis_surat">
+                                            <option value="nota_dinas" @if($sr->jenis_surat === 'nota_dinas' || old('jenis_surat') === 'nota_dinas') selected @endif>Nota Dinas</option>
+                                            <option value="notula_rapat" @if($sr->jenis_surat === 'notula_rapat' || old('jenis_surat') === 'notula_rapat') selected @endif>Notula Rapat</option>
+                                            <option value="sertifikat_kegiatan" @if($sr->jenis_surat === 'sertifikat_kegiatan' || old('jenis_surat') === 'sertifikat_kegiatan') selected @endif>Sertifikat Kegiatan</option>
+                                            <option value="sertifikat_magang" @if($sr->jenis_surat === 'sertifikat_magang' || old('jenis_surat') === 'sertifikat_magang') selected @endif>Sertifikat Magang</option>
+                                            <option value="surat_keluar" @if($sr->jenis_surat === 'surat_keluar' || old('jenis_surat') === 'surat_keluar') selected @endif>Surat Keluar</option>
+                                        </select>
+                                        @error('divisi') <span class="text-danger">{{$message}}</span> @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="kode_surat">Kode Surat</label>
-                                        <input type="text"
-                                            class="form-control @error('kode_surat') is-invalid @enderror"
-                                            name="kode_surat" value="{{ $sr->kode_surat ?? old('kode_surat') }}">
-                                        @error('kode_surat')
-                                        <span class="textdanger">{{ $message }}</span>
-                                        @enderror
+                                        <label for="id_kode_surat">Kode Surat</label>
+                                        <select id="id_kode_surat" name="id_kode_surat"class="form-select @error('id_kode_surat') is-invalid @enderror">
+                                            @foreach ($kodesurat as $ks)
+                                            <option value="{{ $ks->id_kode_surat }}" @if($sr->id_kode_surat === $ks->id_kode_surat || old('id_kode_surat') === $ks->id_kode_surat) selected @endif>
+                                                {{ $ks->kode_surat }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('kode_surat') <span class="text-danger">{{$message}}</span> @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="keterangan">Keterangan</label>
-                                        <textarea rows="4" class="form-control @error('keterangan') is-invalid @enderror"
-                                        id="keterangan" value="{{old('keterangan')}}"></textarea>
+                                        <textarea rows="3" class="form-control @error('keterangan') is-invalid @enderror"
+                                        id="keterangan" name="keterangan" value="{{old('keterangan', $sr->keterangan )}}">{{old('id_kode_surat', $sr->keterangan )}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tgl_surat">Tanggal Surat</label>
+                                        <input type="date" class="form-control @error('tgl_surat') is-invalid @enderror"
+                                        id="tgl_surat" name="tgl_surat" value="{{old('tgl_surat', $sr->tgl_surat)}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bulan_kegiatan">Bulan Kegiatan</label>
+                                        <select class="form-select" id="bulan_kegiatan" name="bulan_kegiatan">
+                                            <option value="1" @if($sr->bulan_kegiatan === "1" || old('bulan_kegiatan') === "1" ) selected @endif>Januari</option>
+                                            <option value="2" @if($sr->bulan_kegiatan === "2" || old('bulan_kegiatan') === "2" ) selected @endif>Februari</option>
+                                            <option value="3" @if($sr->bulan_kegiatan === "3" || old('bulan_kegiatan') === "3" ) selected @endif>Maret</option>
+                                            <option value="4" @if($sr->bulan_kegiatan === "4" || old('bulan_kegiatan') === "4" ) selected @endif>April</option>
+                                            <option value="5" @if($sr->bulan_kegiatan === "5" || old('bulan_kegiatan') === "5" ) selected @endif>Mei</option>
+                                            <option value="6" @if($sr->bulan_kegiatan === "6" || old('bulan_kegiatan') === "6" ) selected @endif>Juni</option>
+                                            <option value="7" @if($sr->bulan_kegiatan === "7" || old('bulan_kegiatan') === "7" ) selected @endif>Juli</option>
+                                            <option value="8" @if($sr->bulan_kegiatan === "8" || old('bulan_kegiatan') === "8" ) selected @endif>Agustus</option>
+                                            <option value="9" @if($sr->bulan_kegiatan === "9" || old('bulan_kegiatan') === "9" ) selected @endif>September</option>
+                                            <option value="10" @if($sr->bulan_kegiatan === "10" || old('bulan_kegiatan') === "10" ) selected @endif>Oktober</option>
+                                            <option value="11" @if($sr->bulan_kegiatan === "11" || old('bulan_kegiatan') === "11" ) selected @endif>November</option>
+                                            <option value="12" @if($sr->bulan_kegiatan === "12" || old('bulan_kegiatan') === "12" ) selected @endif>Desember</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

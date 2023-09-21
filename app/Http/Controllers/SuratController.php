@@ -38,34 +38,48 @@ class SuratController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        $request->validate([
-            'tgl_ajuan' => 'required',
-            'tgl_surat' => 'required',
+
+        $rules = [
             'id_users' => 'required',
             'jenis_surat' => 'required',
             'id_kode_surat' => 'required',
-            'urutan' => 'required',
             'keterangan' => 'required',
-            'no_surat' => 'required',
-            'status' => 'required',
+            'tgl_surat' => 'required|date',
             'bulan_kegiatan' => 'required',
-        ]);
+        ];
+
+        $request->validate($rules);
+
         $surat = new Surat();
 
-        $surat->tgl_ajuan = now();
         $surat->tgl_surat = $request->tgl_surat;
         $surat->id_users = $request->id_users;
         $surat->jenis_surat = $request->jenis_surat;
         $surat->id_kode_surat = $request->id_kode_surat;
-        $surat->urutan = $request->urutan;
         $surat->keterangan = $request->keterangan;
-        $surat->no_surat = $request->no_surat;
-        $surat->status = $request->status;
         $surat->bulan_kegiatan = $request->bulan_kegiatan;
+
+        $surat->urutan = Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
+
+        $kode_surat = KodeSurat::find($request->id_kode_surat);
+
+        if($request->jenis_surat == 'nota_dinas'){
+            $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/ND/' . date('Y', strtotime($surat->tgl_surat));
+        }else if($request->jenis_surat == 'notula_rapat'){
+            $surat->no_surat = $surat->urutan .  '/NR/' . date('Y', strtotime($surat->tgl_surat));
+        }else if($request->jenis_surat == 'sertifikat_kegiatan'){
+            $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/II/' . date('Y', strtotime($surat->tgl_surat));
+        }else if($request->jenis_surat == 'sertifikat_magang'){
+            $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/I/' . date('Y', strtotime($surat->tgl_surat));
+        }else if($request->jenis_surat == 'surat_keluar'){
+            $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . date('Y', strtotime($surat->tgl_surat));
+        }
+
         $surat->save();
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+
+        $this->repair();
 
     }
 
@@ -88,16 +102,146 @@ class SuratController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Surat $surat)
+    public function update(Request $request,  $id_surat)
     {
-        //
+        $rules = [
+            'id_users' => 'required',
+            'jenis_surat' => 'required',
+            'id_kode_surat' => 'required',
+            'keterangan' => 'required',
+            'tgl_surat' => 'required|date',
+            'bulan_kegiatan' => 'required',
+        ];
+
+        $surat = Surat::where('id_surat',$id_surat)->get()[0];
+
+        $request->validate($rules);
+
+
+        if($request->jenis_surat === $surat->jenis_surat && $request->id_kode_surat === $surat->id_kode_surat){
+
+            $surat->tgl_surat = $request->tgl_surat;
+            $surat->id_users = $request->id_users;
+            $surat->jenis_surat = $request->jenis_surat;
+            $surat->id_kode_surat = $request->id_kode_surat;
+            $surat->keterangan = $request->keterangan;
+            $surat->bulan_kegiatan = $request->bulan_kegiatan;
+
+            $surat->save();
+        }else{
+            $surat->tgl_surat = $request->tgl_surat;
+            $surat->id_users = $request->id_users;
+            $surat->jenis_surat = $request->jenis_surat;
+            $surat->id_kode_surat = $request->id_kode_surat;
+            $surat->keterangan = $request->keterangan;
+            $surat->bulan_kegiatan = $request->bulan_kegiatan;
+            $surat->urutan = Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
+
+            $kode_surat = KodeSurat::find($request->id_kode_surat);
+
+            if($request->jenis_surat == 'nota_dinas'){
+                $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/ND/' . date('Y', strtotime($surat->tgl_surat));
+            }else if($request->jenis_surat == 'notula_rapat'){
+                $surat->no_surat = $surat->urutan .  '/NR/' . date('Y', strtotime($surat->tgl_surat));
+            }else if($request->jenis_surat == 'sertifikat_kegiatan'){
+                $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/II/' . date('Y', strtotime($surat->tgl_surat));
+            }else if($request->jenis_surat == 'sertifikat_magang'){
+                $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/I/' . date('Y', strtotime($surat->tgl_surat));
+            }else if($request->jenis_surat == 'surat_keluar'){
+                $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . date('Y', strtotime($surat->tgl_surat));
+            }
+
+            $surat->save();
+
+        }
+
+        $this->repair();
+
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Surat $surat)
+    public function destroy($id_surat)
     {
-        //
+        $surat = Surat::find($id_surat);
+        if ($surat) {
+            $surat->update([
+                'is_deleted' => '1',
+            ]);
+        }
+
+        $this->repair();
+
+        return redirect()->back()->with('success_message', 'Data telah terhapus');
+
+    }
+
+    public function repair(){
+        // repair urutan surat so when there is something missing in the middle of the data, it will be repaired
+
+        $surats = Surat::where('is_deleted', '0')->get();
+        foreach ($surats as $key => $surat) {
+
+            // set urutan to 0
+            $surat->urutan = 0;
+
+            // get all surat with same jenis_surat
+            $surats2 = Surat::where('jenis_surat', $surat->jenis_surat)->where('is_deleted', '0')->get();
+            foreach ($surats2 as $key => $surat2) {
+
+                // and where id_surat not higher than current id_surat
+                if ($surat2->id_surat <= $surat->id_surat) {
+                    $surat->urutan++;
+                }
+
+
+                $kode_surat = KodeSurat::find($surat->id_kode_surat);
+
+                if($surat->jenis_surat == 'nota_dinas'){
+                    $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/ND/' . date('Y', strtotime($surat->tgl_surat));
+                }else if($surat->jenis_surat == 'notula_rapat'){
+                    $surat->no_surat = $surat->urutan .  '/NR/' . date('Y', strtotime($surat->tgl_surat));
+                }else if($surat->jenis_surat == 'sertifikat_kegiatan'){
+                    $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/II/' . date('Y', strtotime($surat->tgl_surat));
+                }else if($surat->jenis_surat == 'sertifikat_magang'){
+                    $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/I/' . date('Y', strtotime($surat->tgl_surat));
+                }else if($surat->jenis_surat == 'surat_keluar'){
+                    $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . date('Y', strtotime($surat->tgl_surat));
+                }
+
+
+            }
+
+
+
+            $surat->save();
+        }
+
+
+
+        // foreach ($surats as $key => $surat) {
+
+        //     // and where id_surat not higher than current id_surat
+        //     $surat->urutan = Surat::where('jenis_surat', $surat->jenis_surat)->where('is_deleted', '0')->count() + 1;
+
+
+        //     $kode_surat = KodeSurat::find($surat->id_kode_surat);
+
+        //     if($surat->jenis_surat == 'nota_dinas'){
+        //         $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/ND/' . date('Y', strtotime($surat->tgl_surat));
+        //     }else if($surat->jenis_surat == 'notula_rapat'){
+        //         $surat->no_surat = $surat->urutan .  '/NR/' . date('Y', strtotime($surat->tgl_surat));
+        //     }else if($surat->jenis_surat == 'sertifikat_kegiatan'){
+        //         $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/II/' . date('Y', strtotime($surat->tgl_surat));
+        //     }else if($surat->jenis_surat == 'sertifikat_magang'){
+        //         $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/I/' . date('Y', strtotime($surat->tgl_surat));
+        //     }else if($surat->jenis_surat == 'surat_keluar'){
+        //         $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . date('Y', strtotime($surat->tgl_surat));
+        //     }
+
+        //     $surat->save();
+        // }
     }
 }

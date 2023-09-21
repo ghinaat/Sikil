@@ -328,9 +328,19 @@ return [
         ],
         [
             'icon' => 'fas fa-envelope',
-            'text' => 'Surat',
             'text' => 'Nomor Surat',
-            'url' => '/surat',
+            'submenu' => [
+                [
+                    'text' => 'Surat',
+                    'url' => '/surat',
+                    'can' => '',
+                ],
+                [
+                    'text' => 'Kelola Surat',
+                    'url' => '/ajuansurat',
+                    'can' => '',
+                ],
+            ],
         ],
         [
             'icon' => 'fas fa-book',
