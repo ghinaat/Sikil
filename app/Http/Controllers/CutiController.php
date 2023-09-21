@@ -49,7 +49,7 @@ class CutiController extends Controller
 
         Cuti::create($request->all());
 
-        return redirect()->route('cuti.index')->with('success', 'Cuti berhasil ditambahkan');
+        return redirect()->route('cuti.index')->with('success_message', 'Data telah tersimpan');
     }
 
     public function edit(Cuti $cuti)
@@ -73,13 +73,13 @@ class CutiController extends Controller
 
         $cuti->save();
 
-        return redirect()->route('cuti.index')->with('success', 'Cuti berhasil diperbarui');
+        return redirect()->route('cuti.index')->with('success_message', 'Data telah tersimpan');
     }
 
     public function destroy(Cuti $cuti)
     {
         $cuti->delete();
 
-        return redirect()->route('cuti.index')->with('success', 'Cuti berhasil dihapus');
+        return redirect()->route('cuti.index')->with('success_message', 'Data telah tersimpan');
     }
 }
