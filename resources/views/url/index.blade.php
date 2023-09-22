@@ -45,7 +45,9 @@
                                 <td>{{$url->jenis}}</td>
                                 <td>{{$url->url_address}}</td>
                                 <td id={{$key+1}}>
-                                    <img src="{{ asset( 'qrcodes/' . $url->qrcode_image ) }}"
+
+                                    <img src="{{ asset( '/qrcodes/' . $url->qrcode_image ) }}"
+
                                         alt="Gambar Dokumen" width=95%>
                                 </td>
                                 <td>
