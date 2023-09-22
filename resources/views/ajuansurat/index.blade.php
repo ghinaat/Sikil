@@ -180,7 +180,7 @@
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
-                                <input type="hidden" name="id_users" value="{{ Auth::user()->id_users}}">
+                                <input type="hidden" name="id_users" value={{ $sr->id_users }}>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="exampleInputName">Jenis Surat </label>
