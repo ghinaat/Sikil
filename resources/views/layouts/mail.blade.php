@@ -3,7 +3,7 @@
 
 {{ $data['pesan'] }}
 
-<a href="http://127.0.0.1:8000{{  $data['link'] }}">
+<a href="{{ url('/') .  $data['link'] }}">
     Lihat Link Tautan
 </a>
 

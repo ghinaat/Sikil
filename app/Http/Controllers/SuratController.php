@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KodeSurat;
 use App\Models\Surat;
 use App\Models\User;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 
 class SuratController extends Controller
@@ -76,6 +77,24 @@ class SuratController extends Controller
         }
 
         $surat->save();
+
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Nomor Surat';
+        $notifikasi->pesan = 'Pengajuan nomor surat anda sudah berhasil dikirimkan.  Kami telah mengirimkan notifikasi untuk memproses nomor surat mu..';
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/surat';
+        $notifikasi->id_users = $request->id_users;
+        $notifikasi->save();
+
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Nomor Surat';
+        $notifikasi->pesan = 'Sebuah pengajuan nomor surat dari.  mohon memberikan persetujuan..';
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/surat';
+        $notifikasi->id_users = '1';
+        $notifikasi->save();
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
 

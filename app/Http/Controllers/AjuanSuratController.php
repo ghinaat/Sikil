@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KodeSurat;
 use App\Models\Surat;
 use App\Models\User;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 
 class AjuanSuratController extends Controller
@@ -112,7 +113,6 @@ class AjuanSuratController extends Controller
             'keterangan' => 'required',
             'tgl_surat' => 'required|date',
             'bulan_kegiatan' => 'required',
-            'status' => 'required',
         ];
 
         $surat = Surat::where('id_surat',$id_surat)->get()[0];
@@ -127,8 +127,24 @@ class AjuanSuratController extends Controller
             $surat->id_kode_surat = $request->id_kode_surat;
             $surat->keterangan = $request->keterangan;
             $surat->bulan_kegiatan = $request->bulan_kegiatan;
-            $surat->status = $request->status;
+            if(isset($request->status)){
+                $surat->status = $request->status;
+            }
             $surat->save();
+
+            if(isset($request->status)){
+                if($surat->status === '1'){
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Pengajuan Nomor Surat';
+                    $notifikasi->pesan = 'Pengajuan nomor surat anda sudah berhasil disetujui dikirimkan.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/surat';
+                    $notifikasi->id_users = $surat->id_users;
+                    $notifikasi->save();
+                }
+            }
+
         }else{
             $surat->tgl_surat = $request->tgl_surat;
             $surat->id_users = $request->id_users;
@@ -136,7 +152,9 @@ class AjuanSuratController extends Controller
             $surat->id_kode_surat = $request->id_kode_surat;
             $surat->keterangan = $request->keterangan;
             $surat->bulan_kegiatan = $request->bulan_kegiatan;
-            $surat->status = $request->status;
+            if(isset($request->status)){
+                $surat->status = $request->status;
+            }
             $surat->urutan = 33 + Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
 
             $kode_surat = KodeSurat::find($request->id_kode_surat);
@@ -154,6 +172,19 @@ class AjuanSuratController extends Controller
             }
 
             $surat->save();
+
+            if(isset($request->status)){
+                if($surat->status === '1'){
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Pengajuan Nomor Surat';
+                    $notifikasi->pesan = 'Pengajuan nomor surat anda sudah berhasil disetujui dikirimkan.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/surat';
+                    $notifikasi->id_users = $surat->id_users;
+                    $notifikasi->save();
+                }
+            }
 
             $surats = Surat::where('is_deleted', '0')->where('jenis_surat', '!=', $request->jenis_surat)->get();
             $this->repair($surats);
