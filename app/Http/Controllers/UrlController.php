@@ -7,7 +7,21 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\LabelAlignment;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\QrCodeInterface;
+use Endroid\QrCode\Writer\Result\GdResult;
+use Endroid\QrCode\Writer\Result\PngResult;
+use Endroid\QrCode\Writer\Result\ResultInterface;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\ValidationException;
+use Endroid\QrCode\Matrix\MatrixInterface;
+use Endroid\QrCode\Writer\WriterInterface;
 use Illuminate\Support\Facades\URL as FacadesURL;
 
 class UrlController extends Controller
@@ -91,26 +105,33 @@ class UrlController extends Controller
         }
     }
 
-    private function generateQRCode($url, $imageName = null)
+    private function generateQRCode( $url, $imageName = null)
     {
         if (is_null($imageName)) {
             $imageName = uniqid('qrcode_');
         }
-
-        // Check if the URL exists in the database, assuming you have an 'Url' model
+     
         $urlExists = Url::where('url_short', $url)->exists();
 
-        // Generate the QR code
-        $qrCode = QrCode::size(200)->format('png')->errorCorrection('M')->merge('/public/images/qitep.png', .3)->margin(1.5)->generate($url);
 
-        // Specify the file path where the QR code image should be saved
-        $storagePath = 'public/qrcodes/'.$imageName.'.png';
+        $qrCode = QrCode::create($url)->setSize(200)->setMargin(15)->setErrorCorrectionLevel(new ErrorCorrectionLevelLow());
+    
+        $storagePath = public_path('qrcodes/' . $imageName . '.png');
 
-        // Store the QR code image in the storage directory
-        Storage::put($storagePath, $qrCode);
+        // Create a PngWriter instance
+        $writer = new PngWriter();
+    
+        $qrCodeData = $writer->write($qrCode)->getString();
 
-        return $imageName.'.png';
+        file_put_contents($storagePath, $qrCodeData);
+
+        // Return the filename (including the extension) for further use if needed
+        return $imageName . '.png';
     }
+
+
+
+
 
     public function update(Request $request, $id_url)
     {
