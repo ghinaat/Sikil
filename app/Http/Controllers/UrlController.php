@@ -77,7 +77,7 @@ class UrlController extends Controller
         }
 
         $code = $slug;
-        
+
         // Check if the generated code already exists in the database
         $exists = Url::where('url_short', $code)->exists();
 
@@ -110,17 +110,17 @@ class UrlController extends Controller
         if (is_null($imageName)) {
             $imageName = uniqid('qrcode_');
         }
-     
+
         $urlExists = Url::where('url_short', $url)->exists();
 
 
-        $qrCode = QrCode::create($url)->setSize(200)->setMargin(15)->setErrorCorrectionLevel(new ErrorCorrectionLevelLow());
-    
+        $qrCode = QrCode::create($url)->setSize(200)->setMargin(10)->setErrorCorrectionLevel(new ErrorCorrectionLevelLow());
+
         $storagePath = public_path('qrcodes/' . $imageName . '.png');
 
         // Create a PngWriter instance
         $writer = new PngWriter();
-    
+
         $qrCodeData = $writer->write($qrCode)->getString();
 
         file_put_contents($storagePath, $qrCodeData);
@@ -148,14 +148,19 @@ class UrlController extends Controller
         $url->jenis = $request->jenis;
 
         if (! empty($url->qrcode_image)) {
-            Storage::delete('qrcodes/'.$url->qrcode_image);
             $url->qrcode_image = null;
         }
 
-        $customCode = $request->input('url_short');
-        $url->url_short = $this->generateShortCode(FacadesURL::to('/') . '/s/' . $customCode);
+        $lasUrl = Url::where('id_url', $id_url)->get()[0];
+
+        if($lasUrl->url_short !== (FacadesURL::to('/') . '/s/' . $request->url_short)){
+            $customCode = $request->url_short;
+            $url->url_short = $this->generateShortCode(FacadesURL::to('/') . '/s/' . $customCode);
+        }
+
         $qrcode = $this->generateQRCode($url->url_short);
         $url->qrcode_image = $qrcode;
+
         $url->save();
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan');
