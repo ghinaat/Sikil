@@ -127,9 +127,7 @@ table-stripped" id="example2">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <a href="{{route('kegiatan.index')}}" class="btn btn-danger">
-                                                        Batal
-                                                    </a>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                                 </div>
                                             </form>
                                         </div>
