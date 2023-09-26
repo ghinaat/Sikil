@@ -56,9 +56,9 @@
                                                                 <td>{{$kel->tanggal_lahir}}</td>
                                                                 <td>{{$kel->gender}}</td>
                                                                 <td>{{$kel->status}}</td>
-                            <td>
-                                @include('components.action-buttons', ['id' => $kel->id_keluarga, 'key' => $key, 'route' => 'keluarga'])
-                            </td>
+                                                                <td>
+                                                                    @include('components.action-buttons', ['id' => $kel->id_keluarga, 'key' => $key, 'route' => 'keluarga'])
+                                                                </td>
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
@@ -68,7 +68,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Modal Tambah Keluarga -->
                                 <div class="modal fade" id="modal_form" role="dialog">
                                     <div class="modal-dialog modal-lg">
@@ -83,17 +83,11 @@
                                                 <form action="{{ route('keluarga.store') }}" method="POST" id="form" class="form-horizontal"
                                                     enctype="multipart/form-data">
                                                     @csrf
-                                                    <input type="hidden" name="id_users" value="{{ Auth::user()->id_users}}">
+                                                    <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
                                                     <div class="form-body">
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                <!-- <div class="form-group">
-                                                                        <label for="exampleInputUsers">Nama Pegawai</label>
-                                                                        <input type="text" class="form-control @error('nama_pegawai') is-invalid @enderror"
-                                                                            id="nama_pegawai" name="nama_pegawai" value="{{ Auth::user()->nama_pegawai}}" readonly>
-                                                                        @error('nama_pegawai')<span class="textdanger">{{ $message }}</span>@enderror
-                                                                    </div> -->
                                                                     <div class="form-group">
                                                                         <label for="exampleInputUsersHubkel">Hubungan Keluarga</label>
                                                                         <select class="form-select @error('nama') isinvalid @enderror"
@@ -155,7 +149,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Modal Edit Keluarga -->
                                 @foreach($keluarga as $kel)
                                 <div class="modal fade" id="editModal{{$kel->id_keluarga}}" role="dialog">
@@ -177,18 +171,12 @@
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                <!-- <div class="form-group">
-                                                                        <label for="exampleInputUsers">Nama Pegawai</label>
-                                                                        <input type="text" class="form-control @error('nama_pegawai') is-invalid @enderror"
-                                                                            id="nama_pegawai" name="nama_pegawai" value="{{ Auth::user()->nama_pegawai}}" readonly>
-                                                                        @error('nama_pegawai')<span class="textdanger">{{ $message }}</span>@enderror
-                                                                    </div> -->
                                                                     <div class="form-group">
                                                                         <label for="exampleInputUsersHubkel">Hubungan Keluarga</label>
                                                                         <select class="form-select @error('nama') isinvalid @enderror"
                                                                             id="exampleInputHubkel" name="id_hubungan">
                                                                             @foreach ($hubkel as $hk)
-                                                                            <option value="{{ $hk->id_hubungan }}" @if($kel->id_hubungan == $hk->id_hubungan) selected @endif> 
+                                                                            <option value="{{ $hk->id_hubungan }}" @if($kel->id_hubungan == $hk->id_hubungan) selected @endif>
                                                                                 {{ $hk->nama }}</option>
                                                                             @endforeach
                                                                         </select>

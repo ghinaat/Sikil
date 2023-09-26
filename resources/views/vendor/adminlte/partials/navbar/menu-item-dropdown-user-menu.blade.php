@@ -30,7 +30,7 @@
     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
         <li class="user-footer">
-            <a href="{{ route('user.changePassword') }}" class="btn btn-outline-dark w-100">Change Password</a>
+            <a href="{{ route('user.changePassword') }}" class="btn btn-outline-dark w-100">Ubah Password</a>
         </li>
 
         {{-- User menu header --}}

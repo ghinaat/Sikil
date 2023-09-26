@@ -80,8 +80,7 @@
                                     </div>
 
                                     <div class="d-flex justify-content-end align-items-center">
-                                        <input type="submit" value="Masuk" class="btn btn-outline-secondary">
-                                        {{-- <a href="" class="forgor text-secondary">Lupa Kata Sandi?</a> --}}
+                                        <input type="submit" value="Masuk" class="btn btn-outline-primary">
                                     </div>
                                 </form>
                             </div>

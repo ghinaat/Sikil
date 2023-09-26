@@ -31,12 +31,7 @@ class KeluargaController extends Controller
 
     public function create()
     {
-        //Menampilkan Form Tambah Keluarga
-        // return view(
-        //     'keluarga.create', [
-        //     'users' => User::where('is_deleted', '0')->get(),
-        //     'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get()
-        // ]);
+
     }
 
     public function store(Request $request)
@@ -126,33 +121,4 @@ class KeluargaController extends Controller
             'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get(),
         ]);
     }
-
-    // public function show(Keluarga $keluarga)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
-    // public function edit(Keluarga $keluarga)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Update the specified resource in storage.
-    //  */
-    // public function update(Request $request, Keluarga $keluarga)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  */
-    // public function destroy(Keluarga $keluarga)
-    // {
-    //     //
-    // }
 }
