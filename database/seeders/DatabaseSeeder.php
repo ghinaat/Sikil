@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Cuti;
 use App\Models\EmailConfiguration;
 use App\Models\GeneralSetting;
@@ -97,6 +96,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
+            'nama_pegawai' => 'almer',
+            'email' => 'kevinalmer4@gmail.com',
+            'password' => '12345678',
+            '_password_' => '12345678',
+            'level' => 'staf',
+            'id_jabatan' => '4',
+            'is_deleted' => '0',
+            'kode_finger' => '82121',
+        ]);
+
+        User::create([
             'nama_pegawai' => 'Admin',
             'email' => 'admin@admin.com',
             'password' => '12345678',
@@ -143,8 +153,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
-            'nama_pegawai' => 'kevin',
-            'email' => 'kevin@gmail.com',
+            'nama_pegawai' => 'staf',
+            'email' => 'staf@staf.com',
             'password' => '12345678',
             '_password_' => '12345678',
             'level' => 'staf',
@@ -203,18 +213,6 @@ class DatabaseSeeder extends Seeder
             'divisi' => 'Keuangan',
             'kode_surat' => 'II.F',
             'is_deleted' => '0',
-        ]);
-
-        User::create([
-            'nama_pegawai' => 'almer',
-            'email' => 'kevinalmer4@gmail.com',
-            'password' => '12345678',
-            '_password_' => '12345678',
-            'level' => 'staf',
-            'kode_finger' => '545621',
-            'id_jabatan' => '4',
-            'is_deleted' => '0',
-            'kode_finger' => '82121',
         ]);
 
         GeneralSetting::create([
