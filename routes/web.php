@@ -195,10 +195,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/url', [UrlController::class, 'store'])->name('url.store');
     Route::delete('/url/{id_url}', [UrlController::class, 'destroy'])->name('url.destroy');
     Route::put('/url/{id_url}', [UrlController::class, 'update'])->name('url.update');
-    // Route::delete('/ajuanperizinan/{id_perizinan}', [AjuanPerizinanController::class, 'destroy'])->name('ajuanperizinan.destroy');
 });
 
-Route::Group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/surat', [SuratController::class, 'index'])->name('surat.index');
     Route::post('/surat', [SuratController::class, 'store'])->name('surat.store');
     Route::put('/surat/update/{id_surat}', [SuratController::class, 'update'])->name('surat.update');

@@ -1,5 +1,3 @@
-{{-- @extends('adminlte::auth.login') --}}
-
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -29,7 +27,7 @@
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        
+
     <link rel="icon" type="image/x-icon" href="{{ asset('/favicons/favicon.ico') }}">
 
 </head>
@@ -42,7 +40,7 @@
                 <!--kiri-->
 
                 <div class="box-1 mt-md-0 mt-5">
-                    <img src="https://source.unsplash.com/random/600x1000" class="image" alt="masjid">
+                    <img src="https://source.unsplash.com/random/600x1000?nature" class="image" alt="Random Image">
                     <div class="text">
                         <p>"Ing Ngarso Sung Tulodo, Ing Madyo Mangun Karsa, Tut Wuri Handayani"</p>
                     </div>
@@ -53,15 +51,15 @@
                 <div class=" box-2 d-flex flex-column h-100">
                     <div class="mt-auto mb-auto">
                         <p class="heading mb-3 h-1 text-black">Holla!</p>
-                        <p class="desc p-color-2 mb-3 text-black">Selamat datang kembali.</p>
+                        <p class="desc p-color-2 mb-3 text-black">Selamat datang kembali, di siklis.</p>
                         <div class="d-flex flex-column">
                             <div class="mt-5">
                                 @if (session()->has('error'))
                                 <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" >
                                     {{ session('error') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>    
-                                @endif 
+                                </div>
+                                @endif
                                 <form action="{{ route('login') }}" method="POST">
                                     @csrf
                                     <div class="input-group mb-3">
@@ -81,9 +79,9 @@
                                             placeholder="Kata Sandi" aria-label="Password" aria-describedby="basic-addon1">
                                     </div>
 
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-end align-items-center">
                                         <input type="submit" value="Masuk" class="btn btn-outline-secondary">
-                                        <a href="" class="forgor text-secondary">Lupa Kata Sandi?</a>
+                                        {{-- <a href="" class="forgor text-secondary">Lupa Kata Sandi?</a> --}}
                                     </div>
                                 </form>
                             </div>
@@ -91,8 +89,9 @@
                     </div>
                     <div class="mt-auto">
                         <p class="footer mb-0 mt-md-0 mt-3 text-secondary">
-                            siklis
+                            SIKLIS
                             <span class="p-color me-1">1.0</span>
+                            Develop by SEAQIL's ICT Team
                         </p>
                     </div>
                 </div>
