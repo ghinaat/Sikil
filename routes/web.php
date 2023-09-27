@@ -74,7 +74,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
     Route::post('/kegiatan', [KegiatanController::class, 'store'])->name('kegiatan.store')->middleware('isAdmin');
     Route::post('/kegiatan/timkegiatan', [KegiatanController::class, 'storeTimKegiatan'])->name('kegiatan.storeTimKegiatan')->middleware('isAdmin'); // URL berbeda untuk fungsi storeTimKegiatan
-    Route::get('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'show'])->name('kegiatan.show')->middleware('isAdmin');
+    Route::get('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'show'])->name('kegiatan.show');
     Route::get('/kegiatan/{id_kegiatan}/edit', [KegiatanController::class, 'edit'])->name('kegiatan.edit')->middleware('isAdmin');
     Route::put('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'update'])->name('kegiatan.update')->middleware('isAdmin');
     Route::delete('/kegiatan/{id_kegiatan}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy')->middleware('isAdmin');
