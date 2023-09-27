@@ -33,10 +33,9 @@ class PresensiImport implements ToModel, WithStartRow
                 'pulang_cepat' => $row[9],
                 'kehadiran' => $row[12],
             ]);
-            
             // Save the Presensi model to the database
             $presensi->save();
-    
+
             return $presensi;
         }
     }

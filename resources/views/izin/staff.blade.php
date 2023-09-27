@@ -216,13 +216,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="file_perizinan">Unggah Lampiran</label>
-                                                                @if ($p->file_perizinan)
-                                                                <p>Previous File: <a
-                                                                        href="{{ asset('/storage/file_perizinan/' . $p->file_perizinan) }}"
-                                                                        target="_blank">{{ $p->file_perizinan }}</a></p>
-                                                                @endif
-                                                                <small class="form-text text-muted">Allow file
-                                                                    extensions: .jpeg .jpg .png .pdf .docx</small>
+                                                                
                                                                 <input type="file"
                                                                     class="form-control @error('file_perizinan') is-invalid @enderror"
                                                                     id="file_perizinan_edit" name="file_perizinan"
@@ -233,15 +227,20 @@
                                                                 @error('file_perizinan')
                                                                 <span class="text-danger">{{ $message }}</span>
                                                                 @enderror
+                                                                <small class="form-text text-muted">Allow file
+                                                                    extensions: .jpeg .jpg .png .pdf .docx</small>
+                                                                @if ($p->file_perizinan)
+                                                                <p>Previous File: <a
+                                                                        href="{{ asset('/storage/file_perizinan/' . $p->file_perizinan) }}"
+                                                                        target="_blank">{{ $p->file_perizinan }}</a></p>
+                                                                @endif
+                                                                
                                                             </div>
 
                                                             <div class="modal-footer">
                                                                 <button type="submit"
                                                                     class="btn btn-primary">Simpan</button>
-                                                                <a href="{{route('perizinan.index')}}"
-                                                                    class="btn btn-danger">
-                                                                    Batal
-                                                                </a>
+                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -357,12 +356,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="file_perizinan">Unggah Lampiran</label>
-                                    <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf
-                                        .docx</small>
                                     <input type="file"
                                         class="form-control @error('file_perizinan') is-invalid @enderror"
                                         id="file_perizinan" name="file_perizinan"
                                         onchange="validateFile(this, 'fileErrorCreate')">
+                                        <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf
+                                            .docx</small>
                                     <div class="invalid-feedback" id="fileErrorCreate" style="display: none;">Tipe file
                                         tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
                                     @error('file_perizinan')

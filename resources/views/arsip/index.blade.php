@@ -101,12 +101,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="file">File</label><br>
-                                        <small class="form-text text-muted">Allow file extensions : .jpeg
-                                            .jpg .png .pdf
-                                            .docx</small>
-                                        <input type="file" name="file" id="file"
-                                            accept=".jpg, .jpeg, .png, .pdf, .doc, .docx" required> @error('file')<span
-                                            class="textdanger">{{ $message }}</span>@enderror
+                                        
+                                        <input type="file" class="form-control" id="file"
+                                    enctype="multipart/form-data" name="file" @error('file') <span
+                                    class="invalid" role="alert">{{$message}}</span>
+                                @enderror
+                                            <small class="form-text text-muted">Allow file extensions : .jpeg
+                                                .jpg .png .pdf
+                                                .docx</small>
                                     </div>
                                 </div>
                             </div>
@@ -172,14 +174,17 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="file">File</label><br>
+                                        
+                                        <input type="file" name="file" id="file"
+                                                        class="form-control">
+                                                    @error('file')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                         <small class="form-text text-muted">Allow file extensions : .jpeg
                                             .jpg .png .pdf
                                             .docx</small>
                                         <p>Previous File: <a href="{{ asset('/storage/arsip/'. $ap->file) }}"
                                                 target="_blank">{{ $ap->file }}</a></p>
-                                        <input type="file" name="file" id="file"
-                                            accept=".jpg, .jpeg, .png, .pdf, .doc, .docx">
-                                        @error('file')<span class="textdanger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                             </div>

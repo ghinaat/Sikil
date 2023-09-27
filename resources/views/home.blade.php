@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'SIKLIS')
+@section('title', 'SIKLIS | Home')
 
 @section('content_header')
 
@@ -9,18 +9,21 @@
     .header-text-home {
         font-size: 24px;
     }
+
+    h2{
+        font-size: 24px;
+    }
+
+    h3{
+        font-size: 20px;
+    }
 }
 </style>
 
 @stop
 
-
-
 @section('content')
 <div class="container" style="overflow:scroll; height:90vh;">
-
-    <hr>
-
     <div class="row">
         <div class="col-md-4">
             <div class="small-box bg-gradient-success">
@@ -74,7 +77,7 @@
                         <br> Lokasi: {{ $kegiatan->lokasi }}
                     </p>
 
-                    <a class="btn btn-outline-dark" href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}">Lihat
+                    <a class="btn btn-primary" href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}">Lihat
                         Kegiatan</a>
                 </div>
             </div>
@@ -85,7 +88,6 @@
     <hr>
 
     <h2 class="mb-4">Acara Tahun Ini</h2>
-
     <table class="table">
         <thead>
             <tr>
@@ -101,13 +103,13 @@
                 $nomor_urutan = 1;
             @endphp
             @foreach ($all_kegiatan as $kegiatan)
-            @if ($kegiatan->tgl_mulai > now()) 
+            @if ($kegiatan->tgl_mulai > now())
             <tr>
                 <th scope="row">{{ $nomor_urutan }}</th>
                 <td>{{ $kegiatan->nama_kegiatan }}</td>
                 <td>{{ $kegiatan->tgl_mulai }}</td>
                 <td>{{ $kegiatan->tgl_selesai }}</td>
-                <td><a href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}" class="btn btn-outline-secondary">Lihat</a></td>
+                <td><a href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}" class="btn btn-primary">Lihat</a></td>
             </tr>
             @php
                 $nomor_urutan++;
@@ -116,7 +118,7 @@
             @endforeach
         </tbody>
     </table>
-</div>
 
+</div>
 
 @stop
