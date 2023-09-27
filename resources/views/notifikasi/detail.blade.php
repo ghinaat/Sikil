@@ -20,15 +20,17 @@
         <div class="card">
             <div class="card-body">
                 <div class="container">
-                    <a href="{{ route('notifikasi.index') }}" class="btn btn-outline-secondary">Back</a>
                     <h1 class="mt-5">{{ $notifikasi->judul }}</h1>
                     {!! $notifikasi->pesan !!}
                     <br>
                     <br>
-                        <div class="row">
+                    <div class="row">
                         <div class="col-md-9"></div>
                         <div class="col-md-3">
-                            <a href="{{ $notifikasi->link }}" class="btn btn-primary w-100">Lihat Link</a>
+                            <!-- Tombol Lihat Link -->
+                            <a href="{{ $notifikasi->link }}" class="btn btn-primary w-50">Lihat Link</a>&nbsp;
+                            <!-- Tombol Back -->
+                            <a href="{{ route('notifikasi.index') }}" class="btn btn-secondary">Kembali</a>
                         </div>
                     </div>
                 </div>
@@ -36,4 +38,5 @@
         </div>
     </div>
 </div>
+
 @stop

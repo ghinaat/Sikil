@@ -1,7 +1,7 @@
 @extends('adminlte::page')
-@section('title', 'Report Generate')
+@section('title', 'Laporan Kegiatan')
 @section('content_header')
-<h1 class="m-0 text-dark">&nbsp; Report Generate</h1>
+<h1 class="m-0 text-dark">&nbsp; Laporan Kegiatan</h1>
 @stop
 @section('content')
 <div class="container">
