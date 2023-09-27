@@ -264,17 +264,18 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="file_perizinan">Unggah Lampiran</label>
-                                                    @if ($ap->file_perizinan)
-                                                    <p>Previous File: <a
-                                                            href="{{ asset('/storage/file_perizinan/' . $ap->file_perizinan) }}"
-                                                            target="_blank">{{ $ap->file_perizinan }}</a></p>
-                                                    @endif
-                                                    <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf .docx</small>
+                                                    
                                                     <input type="file" class="form-control @error('file_perizinan') is-invalid @enderror" id="file_perizinan" name="file_perizinan" onchange="validateFile(this)">
                                                     <div class="invalid-feedback" id="fileError" style="display: none;">Tipe file tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
                                                     @error('file_perizinan')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
+                                                    <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf .docx</small>
+                                                    @if ($ap->file_perizinan)
+                                                    <p>Previous File: <a
+                                                            href="{{ asset('/storage/file_perizinan/' . $ap->file_perizinan) }}"
+                                                            target="_blank">{{ $ap->file_perizinan }}</a></p>
+                                                    @endif
                                                 </div>
                                                 @endcan
                                                 @if($ap->id_atasan == auth()->user()->id_users or auth()->user()->level=='admin')
@@ -315,9 +316,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-primary">Simpan</button>
-                                            <a href="{{route('ajuanperizinan.index')}}" class="btn btn-danger">
-                                                Batal
-                                            </a>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                         </div>
                                         </form>
                                     </div>
@@ -431,8 +430,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="file_perizinan">Unggah Lampiran</label>
-                                <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf .docx</small>
                                 <input type="file" class="form-control @error('file_perizinan') is-invalid @enderror" id="file_perizinan" name="file_perizinan" onchange="validateFile(this)">
+                                <small class="form-text text-muted">Allow file extensions: .jpeg .jpg .png .pdf .docx</small>
                                 <div class="invalid-feedback" id="fileError" style="display: none;">Tipe file tidak valid. Harap unggah file dengan ekstensi yang diizinkan.</div>
                                 @error('file_perizinan')
                                     <span class="text-danger">{{ $message }}</span>

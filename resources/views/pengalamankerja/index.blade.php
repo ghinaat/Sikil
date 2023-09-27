@@ -114,6 +114,11 @@ table-stripped" id="example2">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="file_kerja">Surat Pengalaman</label>
+                                                    <input type="file" name="file_kerja" id="file_kerja"
+                                                        class="form-control">
+                                                    @error('file_kerja')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                     <small class="form-text text-muted">Allow file extensions : .jpeg
                                                         .jpg .png .pdf
                                                         .docx</small>
@@ -122,17 +127,10 @@ table-stripped" id="example2">
                                                             href="{{ asset('/storage/pengalaman_kerja/' . $pk->file_kerja) }}"
                                                             target="_blank">{{ $pk->file_kerja }}</a></p>
                                                     @endif
-                                                    <input type="file" name="file_kerja" id="file_kerja"
-                                                        class="form-control">
-                                                    @error('file_kerja')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <a href="{{route('pendidikan.index')}}" class="btn btn-danger">
-                                                        Batal
-                                                    </a>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -190,11 +188,11 @@ table-stripped" id="example2">
                     </div>
                     <div class="form-group">
                         <label for="file_kerja">Surat Pengalaman</label>
+                        <input type="file" name="file_kerja" id="file_kerja" class="form-control"> @error('file_kerja')
+                        <span class="textdanger">{{$message}}</span> @enderror
                         <small class="form-text text-muted">Allow file extensions : .jpeg
                             .jpg .png .pdf
                             .docx</small>
-                        <input type="file" name="file_kerja" id="file_kerja" class="form-control"> @error('file_kerja')
-                        <span class="textdanger">{{$message}}</span> @enderror
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>

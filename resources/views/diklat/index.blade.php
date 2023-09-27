@@ -139,6 +139,12 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="file_sertifikat">File Sertifikat</label>
+                                                    
+                                                    <input type="file" class="form-control" id="file_sertifikat"
+                                                        enctype="multipart/form-data" name="file_sertifikat"
+                                                        @error('file_sertifikat') <span class="invalid"
+                                                        role="alert">{{$message}}</span>
+                                                    @enderror
                                                     <small class="form-text text-muted">Allow file extensions : .jpeg
                                                         .jpg .png .pdf
                                                         .docx</small>
@@ -147,17 +153,10 @@
                                                             href="{{ asset('/storage/file_sertifikat/' . $dk->file_sertifikat) }}"
                                                             target="_blank">{{ $dk->file_sertifikat }}</a></p>
                                                     @endif
-                                                    <input type="file" class="form-control" id="file_sertifikat"
-                                                        enctype="multipart/form-data" name="file_sertifikat"
-                                                        @error('file_sertifikat') <span class="invalid"
-                                                        role="alert">{{$message}}</span>
-                                                    @enderror
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <a href="{{route('kegiatan.index')}}" class="btn btn-danger">
-                                                        Batal
-                                                    </a>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -226,12 +225,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="file_sertifikat">File Sertifikat</label>
-                                <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf
-                                    .docx</small>
+                                
                                 <input type="file" class="form-control" id="file_sertifikat"
                                     enctype="multipart/form-data" name="file_sertifikat" @error('file_sertifikat') <span
                                     class="invalid" role="alert">{{$message}}</span>
                                 @enderror
+                                <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf
+                                    .docx</small>
                             </div>
                         </div>
                     </div>

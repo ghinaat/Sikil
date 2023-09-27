@@ -136,6 +136,9 @@ table-stripped" id="example2">
 
                                                     <label for="ijazah">Ijazah Kelulusan</label>
 
+                                                    <input type="file" name="ijazah" id="ijazah" class="form-control">
+                                                    @error('ijazah')
+                                                    <span class="textdanger">{{$message}}</span> @enderror
                                                     <small class="form-text text-muted">Allow file extensions : .jpeg
                                                         .jpg .png .pdf
                                                         .docx</small>
@@ -146,16 +149,10 @@ table-stripped" id="example2">
                                                             target="_blank">{{ $pd->ijazah }}</a></p>
                                                     @endif
 
-                                                    <input type="file" name="ijazah" id="ijazah" class="form-control">
-                                                    @error('ijazah')
-                                                    <span class="textdanger">{{$message}}</span> @enderror
-
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <a href="{{route('pendidikan.index')}}" class="btn btn-danger">
-                                                        Batal
-                                                    </a>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -233,12 +230,11 @@ table-stripped" id="example2">
 
                         <label for="ijazah">Ijazah Kelulusan</label>
 
+                        <input type="file" name="ijazah" id="ijazah" class="form-control"> @error('ijazah')
+                        <span class="textdanger">{{$message}}</span> @enderror
                         <small class="form-text text-muted">Allow file extensions : .jpeg
                             .jpg .png .pdf
                             .docx</small>
-
-                        <input type="file" name="ijazah" id="ijazah" class="form-control"> @error('ijazah')
-                        <span class="textdanger">{{$message}}</span> @enderror
 
                     </div>
                     <div class="modal-footer">

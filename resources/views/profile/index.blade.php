@@ -456,6 +456,11 @@
                                                             </div>
                                                             <div class="my-2">
                                                                 <label for="photo">Photo Profile</label>
+                                                                <input type="file" name="photo" id="photo"
+                                                                    class="form-control">
+                                                                @error('photo')
+                                                                <span class="text-danger">{{ $message }}</span>
+                                                                @enderror
                                                                 @if ($user->photo === 'no_pp.png')
                                                                 <p>Previous File: <a
                                                                         href="{{ asset('/public/' . $user->photo) }}"
@@ -465,11 +470,6 @@
                                                                         href="{{ asset('/storage/profile/' . $user->photo) }}"
                                                                         target="_blank">{{ $user->photo }}</a></p>
                                                                 @endif
-                                                                <input type="file" name="photo" id="photo"
-                                                                    class="form-control">
-                                                                @error('photo')
-                                                                <span class="text-danger">{{ $message }}</span>
-                                                                @enderror
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="submit" class="btn btn-primary">Simpan</button>
