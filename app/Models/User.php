@@ -114,16 +114,6 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    // protected static function booted()
-    // {
-    //     static::creating(function ($user) {
-    //         do {
-    //             $randomNumber = random_int(10000, 99999); // Angka acak antara 100 dan 999
-    //         } while (static::where('kode_finger', $randomNumber)->exists());
-
-    //         $user->kode_finger = $randomNumber;
-    //     });
-    // }
 
     protected $hidden = [
         'password',
