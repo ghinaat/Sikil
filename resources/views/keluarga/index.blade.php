@@ -7,24 +7,14 @@
 @stop
 
 @section('content')
-<!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
         <div class="row">
-            <div class="col">
+            <div class="col-12">
                 <div class="card">
                     @if (Route::currentRouteName() === 'keluarga.showAdmin')
                         @include('partials.nav-pills-profile-admin', ['id_users' => $id_users])
                     @else
                         @include('partials.nav-pills-profile')
                     @endcan
-
-                    <div class="card-body">
-                        <div class="tab-content">
-                            <div class="active tab-pane" id="data-pribadi">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="card">
                                             <div class="card-body">
                                                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
                                                     role="dialog">Tambah</button>
