@@ -32,6 +32,7 @@ class UsersImport implements ToModel, WithStartRow
             'nama_pegawai' => $nama_pegawai,
             'email' => $email,
             'password' => Hash::make('12345678'),
+            'level' => 'staf',
 
         ]);
     }
