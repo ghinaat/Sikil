@@ -74,10 +74,20 @@ class AjuanSuratController extends Controller
         }else if($request->jenis_surat == 'sertifikat_magang'){
             $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/I/' . date('Y', strtotime($surat->tgl_surat));
         }else if($request->jenis_surat == 'surat_keluar'){
-            $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . date('Y', strtotime($surat->tgl_surat));
-        }
+            $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/' . date('Y', strtotime($surat->tgl_surat));
+        }        
 
         $surat->save();
+        
+        $notifikasiAdmin = User::where('level', 'admin')->first();
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Izin ';
+        $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/ajuansurat';
+        $notifikasi->id_users = $notifikasiAdmin->id_users;
+        $notifikasi->save();
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
 
@@ -168,8 +178,8 @@ class AjuanSuratController extends Controller
             }else if($request->jenis_surat == 'sertifikat_magang'){
                 $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/I/' . date('Y', strtotime($surat->tgl_surat));
             }else if($request->jenis_surat == 'surat_keluar'){
-                $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . date('Y', strtotime($surat->tgl_surat));
-            }
+                $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/' . date('Y', strtotime($surat->tgl_surat));
+            }            
 
             $surat->save();
 
