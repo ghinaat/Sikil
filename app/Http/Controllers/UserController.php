@@ -85,15 +85,18 @@ class UserController extends Controller
         ]);
     }
 
-        private function generateUniqueKodeFinger()
+
+    private function generateUniqueKodeFinger()
     {
-        $kodeFinger = uniqid();
-
-        while (User::where('kode_finger', $kodeFinger)->exists()) {
-            $kodeFinger = uniqid();
-        }
-
-        return $kodeFinger;
+        $maxRetries = 5; // Jumlah maksimum percobaan yang diizinkan
+    
+        for ($i = 0; $i < $maxRetries; $i++) {
+            $kodeFinger = substr(uniqid(), 0, 5);
+    
+            // Periksa apakah kode finger sudah ada di database
+            if (!User::where('kode_finger', $kodeFinger)->exists()) {
+                return $kodeFinger; // Kode finger unik ditemukan
+            }
     }
 
     public function edit($id_users)

@@ -22,6 +22,11 @@ class PresensiImport implements ToModel, WithStartRow
         $tanggal = date_format($formattedDate, 'Y-m-d');
         $kodeFinger = $row[0];
         $user = User::where('kode_finger', $kodeFinger)->first();
+        if ($row[6] === '00:00' && $row[7] === '00:00' ) {
+            $kehadiran = null;
+        } else {
+            $kehadiran = $row[12];
+        }
 
         if ($user) {
             $presensi = new Presensi([
@@ -31,7 +36,7 @@ class PresensiImport implements ToModel, WithStartRow
                 'jam_pulang' => $row[7],
                 'terlambat' => $row[8],
                 'pulang_cepat' => $row[9],
-                'kehadiran' => $row[12],
+                'kehadiran' => $kehadiran,
             ]);
             // Save the Presensi model to the database
             $presensi->save();
