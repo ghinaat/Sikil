@@ -46,35 +46,41 @@
                 <div style="margin-top: 30px;"></div>
                 <label>Data Tim SEAQIL</label>
                 <div class="table-container">
-                <div class="table-responsive">
-                    <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form">Add</button>
-                    <table class="table table-hover table-bordered table-stripped">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Nama pegawai</th>
-                                <th>Jabatan</th>
-                                <th>Peran</th>
-                                <th>Opsi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($timkegiatan as $key => $tk)
-                            <tr>
-                                <td>{{$key+1}}</td>
-                                <td>{{$tk->user->nama_pegawai}}</td>
-                                <td>{{ $tk->user->jabatan->nama_jabatan }}</td>
-                                <td>{{$tk->peran->nama_peran}}</td>
-                                <td> <a href="{{route('timkegiatan.destroy', $tk->id_tim)}}"
-                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                        class="btn btn-danger btn-xs">
-                                        Delete
-                                    </a></td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="table-responsive">
+                        @can('isAdmin')
+                        <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form">Add</button>
+                        @endcan
+                        <table class="table table-hover table-bordered table-stripped">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Nama pegawai</th>
+                                    <th>Jabatan</th>
+                                    <th>Peran</th>
+                                    @can('isAdmin')
+                                    <th>Opsi</th>
+                                    @endcan
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($timkegiatan as $key => $tk)
+                                <tr>
+                                    <td>{{$key+1}}</td>
+                                    <td>{{$tk->user->nama_pegawai}}</td>
+                                    <td>{{ $tk->user->jabatan->nama_jabatan }}</td>
+                                    <td>{{$tk->peran->nama_peran}}</td>
+                                    @can('isAdmin')
+                                    <td> <a href="{{route('timkegiatan.destroy', $tk->id_tim)}}"
+                                            onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
+                                            class="btn btn-danger btn-xs">
+                                            Delete
+                                        </a></td>
+                                    @endcan
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
             </div>
