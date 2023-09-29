@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $all_kegiatan = Kegiatan::all();
-        $kegiatans = Kegiatan::whereDate('tgl_mulai', '=', today())
+        $kegiatans = Kegiatan::whereDate('tgl_mulai', '<=', today())
             ->where('tgl_selesai', '>=', today())
             ->get();
 
