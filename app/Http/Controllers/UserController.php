@@ -56,15 +56,15 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        //Menyimpan Data pegawai
-        $request->validate([
+        $rules = [
             'nama_pegawai' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'email' => 'required|unique:users,email',
+            'password' => 'required|confirmed',
             'level' => 'required',
             'id_jabatan' => 'required',
-        ]);
-      
+        ];
+
+        $request->validate($rules);
 
         $array = $request->only([
             'nama_pegawai',
@@ -85,6 +85,7 @@ class UserController extends Controller
         ]);
     }
 
+
     private function generateUniqueKodeFinger()
     {
         $maxRetries = 5; // Jumlah maksimum percobaan yang diizinkan
@@ -96,7 +97,6 @@ class UserController extends Controller
             if (!User::where('kode_finger', $kodeFinger)->exists()) {
                 return $kodeFinger; // Kode finger unik ditemukan
             }
-        }
     }
 
     public function edit($id_users)
@@ -115,14 +115,21 @@ class UserController extends Controller
 
     public function update(Request $request, $id_users)
     {
-        //Mengedit Data User
-        $request->validate([
+
+        $rules = [
             'nama_pegawai' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'email' => 'required|unique:users,email,'.$id_users.',id_users',
             'level' => 'required',
             'id_jabatan' => 'required',
-        ]);
+            'level' => 'required',
+        ];
+
+        if (isset($request->password)) {
+            $rules['password'] = 'required|confirmed';
+        }
+
+        $request->validate($rules);
+
         $user = User::find($id_users);
         $user->nama_pegawai = $request->nama_pegawai;
         $user->email = $request->email;
@@ -131,6 +138,7 @@ class UserController extends Controller
         }
         $user->level = $request->level;
         $user->id_jabatan = $request->id_jabatan;
+        $user->_password_ = $request->password;
         $user->save();
 
         return redirect()->route('user.index')->with([

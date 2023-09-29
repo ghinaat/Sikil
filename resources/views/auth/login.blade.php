@@ -80,7 +80,7 @@
                                     </div>
 
                                     <div class="d-flex justify-content-end align-items-center">
-                                        <input type="submit" value="Masuk" class="btn btn-outline-primary">
+                                        <input type="submit" value="Masuk" class="btn btn-secondary">
                                     </div>
                                 </form>
                             </div>

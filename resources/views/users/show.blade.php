@@ -29,11 +29,19 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="jabatan" class='form-label'>jabatan</label>
+                    <label for="jabatan" class='form-label'>Jabatan</label>
                     <div class="form-input">
                         <input type="text" class="form-control @error('jabatan') is-invalid @enderror" id="jabatan" placeholder="jabatan" name="jabatan"
                             value="{{$user->jabatan->nama_jabatan ?? old('jabatan')}}" readonly>
                         @error('jabatan') <span class="textdanger">{{$message}}</span> @enderror
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="level" class='form-label'>Level</label>
+                    <div class="form-input">
+                        <input type="text" class="form-control @error('level') is-invalid @enderror" id="level" placeholder="level" name="level"
+                            value="{{$user->level ?? old('level')}}" readonly>
+                        @error('level') <span class="textdanger">{{$message}}</span> @enderror
                     </div>
                 </div>
             </div>
