@@ -73,8 +73,8 @@ class SuratController extends Controller
         }else if($request->jenis_surat == 'sertifikat_magang'){
             $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/I/' . date('Y', strtotime($surat->tgl_surat));
         }else if($request->jenis_surat == 'surat_keluar'){
-            $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . date('Y', strtotime($surat->tgl_surat));
-        }
+            $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/' . date('Y', strtotime($surat->tgl_surat));
+        }        
 
         $surat->save();
 
@@ -93,7 +93,7 @@ class SuratController extends Controller
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->link = '/surat';
-        $notifikasi->id_users = '1';
+        $notifikasi->id_users = User::where('level', 'admin')->get()[0]->id_users;
         $notifikasi->save();
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
@@ -168,8 +168,8 @@ class SuratController extends Controller
             }else if($request->jenis_surat == 'sertifikat_magang'){
                 $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/I/' . date('Y', strtotime($surat->tgl_surat));
             }else if($request->jenis_surat == 'surat_keluar'){
-                $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . date('Y', strtotime($surat->tgl_surat));
-            }
+                $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/' . date('Y', strtotime($surat->tgl_surat));
+            }            
 
             $surat->save();
 
