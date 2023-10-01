@@ -93,9 +93,9 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Profile $profile)
+    public function update(Request $request, $id_users)
     {
-        $request->validate([
+        $rules = [
             'nip' => 'required',
             'nik' => 'required',
             'kk' => 'required',
@@ -112,40 +112,33 @@ class ProfileController extends Controller
             'status_kawin' => 'required',
             'bpjs' => 'required',
             'id_tingkat_pendidikan' => 'required',
-        ]);
+        ];
 
-        $array = $request->only([
-            'nip',
-            'nik',
-            'kk',
-            'gelar_depan',
-            'gelar_belakang',
-            'tempat_lahir',
-            'tanggal_lahir',
-            'alamat',
-            'no_hp',
-            'agama',
-            'gender',
-            'pendidikan',
-            'tmt',
-            'status_kawin',
-            'bpjs',
-            'id_tingkat_pendidikan',
-        ]);
 
         if ($request->file('photo')) {
-            if ($profile->photo) {
-                Storage::delete($profile->photo);
-            }
-
-            $array['photo'] = str_replace('public/profile/', '', $request->file('photo')->store('public/profile'));
+            $rules['photo'] = 'required|image|mimes:jpeg,png,jpg';
         }
 
-        $array['id_users'] = auth()->user()->id_users;
 
-        Profile::where('id_users', auth()->user()->id_users)->update($array);
+        $validatedData = $request->validate($rules);
 
-        return redirect()->route('profile.index');
+        $lastProfile = Profile::where('id_users', $id_users)->first();
+
+        if ($request->file('photo')) {
+            if ($lastProfile->photo) {
+                Storage::delete($lastProfile->photo);
+            }
+
+            $validatedData['photo'] = str_replace('public/profile/', '', $request->file('photo')->store('public/profile'));
+        }
+
+        $validatedData['id_users'] = $id_users;
+
+        Profile::where('id_users', $id_users)->update($validatedData);
+
+        return redirect()->back()->with([
+            'success_message' => 'Profile berhasil diubah!.',
+        ]);
     }
 
     /**

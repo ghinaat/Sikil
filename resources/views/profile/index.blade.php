@@ -108,7 +108,7 @@
                                         : {{ $user->tempat_lahir }}
                                         </div>
                                     </div>
-                                    <div class="form-group"> 
+                                    <div class="form-group">
                                         <label for="tanggal_lahir" class='form-label'>Tanggal Lahir</label>
                                         <div class="form-input">
                                         : {{ date_format( new DateTime($user->tanggal_lahir), 'd F Y')}}
@@ -154,7 +154,8 @@
                                         <label for="masa_kerja" class='form-label'>Masa Kerja</label>
                                         <div class="form-input">
                                         @if (isset($user->tmt))
-                                        : {{ date_format( new DateTime(date('Y-m-d', strtotime('+2 year', strtotime($user->tmt) ))) ,'d F Y')}}
+                                        {{-- give me day from today minus tmt --}}
+                                        : {{ date_diff(new DateTime(date('Y-m-d')), new DateTime($user->tmt))->format('%y Tahun %m Bulan %d Hari') }}
                                         @else
                                         :
                                         @endif
@@ -207,7 +208,7 @@
                                                                         id="nip" placeholder="NIP" name="nip"
                                                                         value="{{$user->nip ?? old('nip')}}">
                                                                     @error('nip') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -218,7 +219,7 @@
                                                                         id="nik" placeholder="NIK" name="nik"
                                                                         value="{{$user->nik ?? old('nik')}}">
                                                                     @error('nik') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group form-group">
@@ -229,7 +230,7 @@
                                                                         id="kk" placeholder="KK" name="kk"
                                                                         value="{{$user->kk ?? old('kk')}}">
                                                                     @error('kk') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group form-group">
@@ -240,7 +241,7 @@
                                                                         id="gelar_depan" placeholder="Gelar Depan" name="gelar_depan"
                                                                         value="{{$user->gelar_depan ?? old('gelar_depan')}}">
                                                                     @error('gelar_depan') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group form-group">
@@ -251,7 +252,7 @@
                                                                         id="gelar_belakang" placeholder="Gelar Belakang" name="gelar_belakang"
                                                                         value="{{$user->gelar_belakang ?? old('gelar_belakang')}}">
                                                                     @error('gelar_belakang') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -263,7 +264,7 @@
                                                                         name="tempat_lahir"
                                                                         value="{{$user->tempat_lahir ?? old('tempat_lahir')}}">
                                                                     @error('tempat_lahir') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -281,7 +282,7 @@
                                                                         id="alamat" placeholder="Alamat" name="alamat"
                                                                         value="{{$user->alamat ?? old('alamat')}}">
                                                                     @error('alamat') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -292,7 +293,7 @@
                                                                         id="no_hp" placeholder="No HP" name="no_hp"
                                                                         value="{{$user->no_hp ?? old('no_hp')}}">
                                                                     @error('no_hp') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -322,7 +323,7 @@
                                                                         selected @endif>konghucu</option>
                                                                 </select>
                                                                 @error('agama') <span
-                                                                    class="textdanger">{{$message}}</span>
+                                                                    class="text-danger">{{$message}}</span>
                                                                 @enderror
                                                                 @else
                                                                 <select
@@ -336,7 +337,7 @@
                                                                     <option value="konghucu">konghucu</option>
                                                                 </select>
                                                                 @error('agama') <span
-                                                                    class="textdanger">{{$message}}</span>
+                                                                    class="text-danger">{{$message}}</span>
                                                                 @enderror
                                                                 @endif
                                                                 </div>
@@ -356,7 +357,7 @@
                                                                         selected @endif>perempuan</option>
                                                                 </select>
                                                                 @error('gender') <span
-                                                                    class="textdanger">{{$message}}</span>
+                                                                    class="text-danger">{{$message}}</span>
                                                                 @enderror
                                                                 @else
                                                                 <select
@@ -366,7 +367,7 @@
                                                                     <option value="perempuan">perempuan</option>
                                                                 </select>
                                                                 @error('gender') <span
-                                                                    class="textdanger">{{$message}}</span>
+                                                                    class="text-danger">{{$message}}</span>
                                                                 @enderror
                                                                 @endif
                                                                 </div>
@@ -380,7 +381,7 @@
                                                                         name="pendidikan"
                                                                         value="{{$user->pendidikan ?? old('pendidikan')}}">
                                                                     @error('pendidikan') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -391,7 +392,7 @@
                                                                         id="tmt" placeholder="Tanggal Mulai Tugas"
                                                                         name="tmt" value="{{$user->tmt ?? old('tmt')}}">
                                                                     @error('tmt') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -410,7 +411,7 @@
                                                                         @endif>belum menikah</option>
                                                                 </select>
                                                                 @error('status_kawin') <span
-                                                                    class="textdanger">{{$message}}</span>
+                                                                    class="text-danger">{{$message}}</span>
                                                                 @enderror
                                                                 @else
                                                                 <select
@@ -420,7 +421,7 @@
                                                                     <option value="belum_menikah">belum menikah</option>
                                                                 </select>
                                                                 @error('status_kawin') <span
-                                                                    class="textdanger">{{$message}}</span>
+                                                                    class="text-danger">{{$message}}</span>
                                                                 @enderror
                                                                 @endif
                                                                 </div>
@@ -433,7 +434,7 @@
                                                                         id="bpjs" placeholder="BPJS" name="bpjs"
                                                                         value="{{$user->bpjs ?? old('bpjs')}}">
                                                                     @error('bpjs') <span
-                                                                        class="textdanger">{{$message}}</span> @enderror
+                                                                        class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -446,7 +447,7 @@
                                                                         @foreach ($tingkat_pendidikans as $tingkat_pendidikan)
                                                                         <option
                                                                             value="{{ $tingkat_pendidikan->id_tingkat_pendidikan }}"
-                                                                            @if(old('id_tingkat_pendidikan')==$tingkat_pendidikan -> id_tingkat_pendidikan ) 
+                                                                            @if(old('id_tingkat_pendidikan')==$tingkat_pendidikan -> id_tingkat_pendidikan )
                                                                             selected @endif>
                                                                             {{ $tingkat_pendidikan->nama_tingkat_pendidikan }}
                                                                         </option>
@@ -457,7 +458,8 @@
                                                             <div class="my-2">
                                                                 <label for="photo">Photo Profile</label>
                                                                 <input type="file" name="photo" id="photo"
-                                                                    class="form-control">
+                                                                    class="form-control" accept=".jpg, .jpeg, .png" >
+                                                                <small class="form-text text-muted">dokumen extensions yang diijinkan : .jpeg .jpg .png</small>
                                                                 @error('photo')
                                                                 <span class="text-danger">{{ $message }}</span>
                                                                 @enderror
@@ -493,10 +495,6 @@
                                         @endif
                                     </div>
                                 </div>
-
-                            </div>
-                            <div class="tab-pane" id="timeline">
-                                <h1>test</h1>
 
                             </div>
                         </div>
@@ -536,6 +534,15 @@
 
 </script>
 
+@if(count($errors))
+<script>
+Swal.fire({
+    title: 'Input tidak sesuai!',
+    text: 'Pastikan inputan sudah sesuai',
+    icon: 'error',
+});
+</script>
+@endif
 
 
 @endpush

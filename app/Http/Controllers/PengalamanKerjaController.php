@@ -105,7 +105,7 @@ class PengalamanKerjaController extends Controller
         $request->validate([
             'nama_perusahaan' => 'required',
             'masa_kerja' => 'required',
-            'file_kerja' => 'mimes:|mimes:pdf,doc,docx,png,jpg,jpeg', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
+            'file_kerja' => 'required:|mimes:pdf,doc,docx,png,jpg,jpeg', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
             'posisi' => 'required',
             'id_users' => 'required',
         ]);
