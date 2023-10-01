@@ -63,7 +63,7 @@ class PendidikanController extends Controller
             'nama_sekolah' => 'required',
             'jurusan' => 'required',
             'ijazah' => 'required|mimes:pdf,doc,docx,png,jpg,jpeg', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
-            'tahun_lulus' => 'required',
+            'tahun_lulus' => 'required|digits:4|integer|min:1950',
             'id_users' => 'required',
             'id_tingkat_pendidikan' => 'required',
         ]);
@@ -111,7 +111,7 @@ class PendidikanController extends Controller
             'nama_sekolah' => 'required',
             'jurusan' => 'required',
             'ijazah' => 'mimes:pdf,doc,docx,png,jpg,jpeg|max:2048', // Izinkan file PDF, DOC, DOCX, PNG, JPG, dan JPEG, maksimal ukuran 2MB.
-            'tahun_lulus' => 'required',
+            'tahun_lulus' => 'required|digits:4|integer|min:1950',
             'id_users' => 'required',
             'id_tingkat_pendidikan' => 'required',
         ]);

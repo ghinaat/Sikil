@@ -82,11 +82,11 @@ table-stripped" id="example2">
                                                 @csrf
                                                 @method('PUT')
                                                 <input type="hidden" name="id_users"
-                                                    value="{{ Auth::user()->id_users}}">
+                                                    value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
 
                                                 <div class="form-group">
                                                     <label for="id_tingkat_pendidikan"> Tingkat Pendidikan</label>
-                                                    <select class="form-select @error('nama') isinvalid @enderror"
+                                                    <select class="form-select @error('nama') is-invalid @enderror"
                                                         id="id_tingkat_pendidikan" name="id_tingkat_pendidikan">
                                                         @foreach ($tingpen as $tp)
                                                         <option value="{{ $tp->id_tingkat_pendidikan }}" @if(
@@ -96,7 +96,7 @@ table-stripped" id="example2">
                                                             {{ $tp->nama_tingkat_pendidikan }}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('level') <span class="textdanger">{{$message}}</span>
+                                                    @error('level') <span class="text-danger">{{$message}}</span>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
@@ -105,8 +105,8 @@ table-stripped" id="example2">
                                                     <input type="text"
                                                         class="form-control @error('nama_sekolah') is-invalid @enderror"
                                                         id="nama_sekolah" name="nama_sekolah"
-                                                        value="{{$pd ->nama_sekolah ?? old('nama_sekolah')}}">
-                                                    @error('nama_sekolah') <span class="textdanger">{{$message}}</span>
+                                                        value="{{$pd ->nama_sekolah ?? old('nama_sekolah')}}" required>
+                                                    @error('nama_sekolah') <span class="text-danger">{{$message}}</span>
                                                     @enderror
 
                                                 </div>
@@ -116,8 +116,8 @@ table-stripped" id="example2">
                                                     <input type="text"
                                                         class="form-control @error('jurusan') is-invalid @enderror"
                                                         id="jurusan" name="jurusan"
-                                                        value="{{$pd ->jurusan ?? old('jurusan')}}">
-                                                    @error('jurusan') <span class="textdanger">{{$message}}</span>
+                                                        value="{{$pd ->jurusan ?? old('jurusan')}}" required>
+                                                    @error('jurusan') <span class="text-danger">{{$message}}</span>
                                                     @enderror
 
                                                 </div>
@@ -128,17 +128,17 @@ table-stripped" id="example2">
                                                         class="form-control @error('tahun_lulus') is-invalid @enderror"
                                                         id="tahun_lulus" name="tahun_lulus"
                                                         value="{{$pd ->tahun_lulus ?? old('tahun_lulus')}}"
-                                                        maxlength="4">
-                                                    @error('tahun_lulus') <span class="textdanger">{{$message}}</span>
+                                                        maxlength="4" required>
+                                                    @error('tahun_lulus') <span class="text-danger">{{$message}}</span>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
 
                                                     <label for="ijazah">Ijazah Kelulusan</label>
 
-                                                    <input type="file" name="ijazah" id="ijazah" class="form-control">
+                                                    <input type="file" name="ijazah" id="ijazah" class="form-control" required>
                                                     @error('ijazah')
-                                                    <span class="textdanger">{{$message}}</span> @enderror
+                                                    <span class="text-danger @error('ijazah') is-invalid @enderror">{{$message}}</span> @enderror
                                                     <small class="form-text text-muted">Allow file extensions : .jpeg
                                                         .jpg .png .pdf
                                                         .docx</small>
@@ -183,11 +183,12 @@ table-stripped" id="example2">
             <div class="modal-body">
                 <form action="{{ route('pendidikan.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="id_users" value="{{ Auth::user()->id_users}}">
+
+                    <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
 
                     <div class="form-group">
                         <label for="id_tingkat_pendidikan"> Tingkat Pendidikan</label>
-                        <select class="form-select @error('nama') isinvalid @enderror" id="id_tingkat_pendidikan"
+                        <select class="form-select @error('nama') is-invalid @enderror" id="id_tingkat_pendidikan"
                             name="id_tingkat_pendidikan">
                             @foreach ($tingpen as $tp)
                             <option value="{{ $tp->id_tingkat_pendidikan }}" @if( old('id_tingkat_pendidikan')==$tp->
@@ -196,15 +197,15 @@ table-stripped" id="example2">
                                 {{ $tp->nama_tingkat_pendidikan }}</option>
                             @endforeach
                         </select>
-                        @error('level') <span class="textdanger">{{$message}}</span>
+                        @error('level') <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="nama_sekolah" class="form-label">Nama
                             Sekolah</label>
                         <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror"
-                            id="nama_sekolah" name="nama_sekolah" value="{{old('nama_sekolah')}}">
-                        @error('nama_sekolah') <span class="textdanger">{{$message}}</span>
+                            id="nama_sekolah" name="nama_sekolah" value="{{old('nama_sekolah')}}" required>
+                        @error('nama_sekolah') <span class="text-danger">{{$message}}</span>
                         @enderror
 
                     </div>
@@ -212,8 +213,8 @@ table-stripped" id="example2">
                         <label for="jurusan" class="form-label"> Jurusan</label>
 
                         <input type="text" class="form-control @error('jurusan') is-invalid @enderror" id="jurusan"
-                            name="jurusan" value="{{ old('jurusan')}}">
-                        @error('jurusan') <span class="textdanger">{{$message}}</span>
+                            name="jurusan" value="{{ old('jurusan')}}" required>
+                        @error('jurusan') <span class="text-danger">{{$message}}</span>
                         @enderror
 
                     </div>
@@ -221,8 +222,8 @@ table-stripped" id="example2">
                         <label for="tahun_lulus" class="form-label">Tahun Lulus</label>
 
                         <input type="text" class="form-control @error('tahun_lulus') is-invalid @enderror"
-                            id="tahun_lulus" name="tahun_lulus" value="{{  old('tahun_lulus')}}" maxlength="4">
-                        @error('tahun_lulus') <span class="textdanger">{{$message}}</span>
+                            id="tahun_lulus" name="tahun_lulus" value="{{  old('tahun_lulus')}}" maxlength="4" required>
+                        @error('tahun_lulus') <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -230,8 +231,8 @@ table-stripped" id="example2">
 
                         <label for="ijazah">Ijazah Kelulusan</label>
 
-                        <input type="file" name="ijazah" id="ijazah" class="form-control"> @error('ijazah')
-                        <span class="textdanger">{{$message}}</span> @enderror
+                        <input type="file" name="ijazah" id="ijazah" class="form-control @error('ijazah') is-invalid @enderror" accept=".jpeg, .jpg, .png, .pdf, .doc, .docx" required> @error('ijazah')
+                        <span class="text-danger">{{$message}}</span> @enderror
                         <small class="form-text text-muted">Allow file extensions : .jpeg
                             .jpg .png .pdf
                             .docx</small>
@@ -258,4 +259,15 @@ $('#example2').DataTable({
     "responsive": true,
 });
 </script>
+
+@if(count($errors))
+<script>
+Swal.fire({
+    title: 'Input tidak sesuai!',
+    text: 'Pastikan inputan sudah sesuai',
+    icon: 'error',
+});
+</script>
+@endif
+
 @endpush
