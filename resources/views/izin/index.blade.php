@@ -169,16 +169,7 @@
                                                 @csrf
                                                 @method('PUT')
                                                 @can('isAdmin')
-                                                <div class="form-group">
-                                                    <label for="kode_finger">Nama Pegawai</label>
-                                                    <select id="kode_finger" name="kode_finger" class="form-select @error('kode_finger') is-invalid @enderror">
-                                                        @foreach ($users as $u)
-                                                        <option value="{{ $u->kode_finger }}" {{ $ap->kode_finger == $u->kode_finger ? 'selected' : '' }}>
-                                                            {{ $u->nama_pegawai }} 
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+                                                <input type="hidden" name="kode_finger" value="{{ old('kode_finger', Auth::user()->kode_finger) }}">
                                                 <div class="form-group">
                                                     <label for="tgl_absen_awal" class='form-label'>Tanggal Awal
                                                         Izin</label>
@@ -256,7 +247,7 @@
                                                     <select id="id_atasan" name="id_atasan"
                                                         class="form-select @error('id_atasan') is-invalid @enderror">
                                                         @foreach ($users as $us)
-                                                        <option value="{{ $us->id_users }}" @if( $ap->id_atasan === old('id_atasan', $us->id_users) ) selected @endif>
+                                                        <option value="{{ $us->id_users }}" @if( $ap->id_atasan == old('id_atasan', $us->id_users) ) selected @endif>
                                                             {{ $us->nama_pegawai }}
                                                         </option>
                                                         @endforeach
