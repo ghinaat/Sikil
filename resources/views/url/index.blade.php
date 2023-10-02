@@ -20,6 +20,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
                     role="dialog">
                     Tambah
@@ -32,7 +33,7 @@
                                 <th>Nama Shortlink</th>
                                 <th>Jenis</th>
                                 <th>Tautan</th>
-                                <th>Unduh Qrcode</th>
+                                <th style="width: 15%">Unduh Qrcode</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>
@@ -46,9 +47,10 @@
                                 <td>{{$url->url_address}}</td>
                                 <td id={{$key+1}}>
 
-                                    <img src="{{ asset( '/qrcodes/' . $url->qrcode_image ) }}"
-
-                                        alt="Gambar Dokumen" width=95%>
+                                    <a href="{{ asset('/qrcodes/' . $url->qrcode_image) }}" download>
+                                        <img src="{{ asset('/qrcodes/' . $url->qrcode_image) }}" alt="Gambar Dokumen" width="95%">
+                                    </a>
+                                    
                                 </td>
                                 <td>
                                     @include('components.action-buttons', ['id' => $url->id_url, 'key' => $key, 'route'
@@ -153,7 +155,7 @@
                             <div class="form-group">
                                 <label for="jenis">Jenis URL</label>
                                 <select class="form-select  @error('jenis') is-invalid @enderror" id="jenis"
-                                    name="jenis">
+                                    name="jenis" required>
                                     <option value="Form">Form</option>
                                     <option value="Sertifikat">Seritfikat</option>
                                     <option value="Laporan">Laporan</option>
@@ -187,9 +189,18 @@
     @method('delete')
     @csrf
 </form>
+{{-- @if(count($errors))
 <script>
-$('#example2').DataTable({
-    "responsive": true,
+    Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'Mohon isi semua data!',
+    });
+</script>    
+@endif --}}
+<script>
+    $('#example2').DataTable({
+        "responsive": true,
 });
 
 function notificationBeforeDelete(event, el) {
