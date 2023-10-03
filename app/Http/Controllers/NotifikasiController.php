@@ -18,7 +18,7 @@ class NotifikasiController extends Controller
     {
         $notifikasi = Notifikasi::find($id_notifikasi);
 
-        if ($notifikasi->id_users !== auth()->user()->id_users) {
+        if ($notifikasi->id_users != auth()->user()->id_users) {
             return abort(403);
         }
 

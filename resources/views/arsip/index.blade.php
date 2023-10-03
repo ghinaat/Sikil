@@ -93,6 +93,8 @@
                                         <input type="file" class="form-control" id="file" enctype="multipart/form-data" name="file" accept="image/jpeg, image/jpg, image/png, image/pdf, image/docx, "required>
                                         @error('file') <span class="invalid" role="alert">{{$message}}</span> @enderror
                                         <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
+                                            id="keterangan" name="keterangan" value="{{old('keterangan')}}">
+                                        @error('keterangan')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                             </div>
@@ -196,3 +198,4 @@ Swal.fire({
 @endif
 
 @endpush
+

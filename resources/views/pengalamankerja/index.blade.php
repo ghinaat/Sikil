@@ -107,7 +107,7 @@ table-stripped" id="example2">
                                                     <input type="text"
                                                         class="form-control @error('posisi') is-invalid @enderror"
                                                         id="posisi" name="posisi"
-                                                        value="{{$pk ->posisi ?? old('posisi')}}" required>
+                                                        value="{{old('posisi', $pk->posisi)}}" required>
                                                     @error('posisi') <span class="text-danger">{{$message}}</span>
                                                     @enderror
                                                 </div>

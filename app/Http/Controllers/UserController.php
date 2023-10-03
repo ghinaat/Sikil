@@ -15,10 +15,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        $user = User::where('is_deleted', '0')->get();
-
         return view('users.index', [
-            'user' => $user,
+            'user' => User::where('is_deleted', '0')->orderBy('nama_pegawai', 'ASC')->get(),
             'jabatans' => Jabatan::all(),
         ]);
     }
@@ -72,13 +70,13 @@ class UserController extends Controller
             'password',
             'level',
             'id_jabatan',
+            
         ]);
 
         $array['_password_'] = $request->password;
+        $array['kode_finger'] = $this->generateUniqueKodeFinger();
 
         $user = User::create($array);
-
-        $array['kode_finger'] = $this->generateUniqueKodeFinger();
 
         return redirect()->route('user.index')->with([
             'success_message' => 'Data telah tersimpan',
@@ -88,10 +86,10 @@ class UserController extends Controller
 
     private function generateUniqueKodeFinger()
     {
-        $maxRetries = 5; // Jumlah maksimum percobaan yang diizinkan
+        $maxRetries = 4; // Jumlah maksimum percobaan yang diizinkan
 
         for ($i = 0; $i < $maxRetries; $i++) {
-            $kodeFinger = substr(uniqid(), 0, 5);
+            $kodeFinger = mt_rand(1000, 9999);
 
             // Periksa apakah kode finger sudah ada di database
             if (!User::where('kode_finger', $kodeFinger)->exists()) {

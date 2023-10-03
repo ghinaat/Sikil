@@ -205,6 +205,39 @@
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="form-group">
+                                                                <label for="nama_pegawai" class='form-label'>Nama</label>
+                                                                <div class="form-input">
+                                                                    <input type="text"
+                                                                        class="form-control @error('nama_pegawai') is-invalid @enderror"
+                                                                        id="nama_pegawai" placeholder="nama_pegawai" name="nama_pegawai"
+                                                                        value="{{$main_user->nama_pegawai ?? old('nama_pegawai')}}">
+                                                                    @error('nama_pegawai') <span
+                                                                        class="text-danger">{{$message}}</span> @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="jabatan" class='form-label'>Jabatan</label>
+                                                                <div class="form-input">
+                                                                    <input type="text"
+                                                                        class="form-control @error('jabatan') is-invalid @enderror"
+                                                                        id="jabatan" placeholder="jabatan" name="jabatan"
+                                                                        value="{{$main_user->jabatan->nama_jabatan ?? old('jabatan')}}" readonly>
+                                                                    @error('jabatan') <span
+                                                                        class="text-danger">{{$message}}</span> @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="email" class='form-label'>Email</label>
+                                                                <div class="form-input">
+                                                                    <input type="text"
+                                                                        class="form-control @error('email') is-invalid @enderror"
+                                                                        id="email" placeholder="email" name="email"
+                                                                        value="{{$main_user->email ?? old('email')}}">
+                                                                    @error('email') <span
+                                                                        class="text-danger">{{$message}}</span> @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <label for="nip" class='form-label'>NIP</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
