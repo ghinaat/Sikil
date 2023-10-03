@@ -54,15 +54,13 @@
                                     Menunggu Persetujuan
                                     @endif
                                 </td>
-                                @if($sr->status === '0')
                                 <td id={{$key+1}}>
-                                    @include('components.action-buttons', ['id' => $sr->id_surat, 'key' => $key,
-                                'route' => 'ajuansurat'])
+                                    @if($sr->status === '1')
+                                        -
+                                    @else
+                                        @include('components.action-buttons', ['id' => $sr->id_surat, 'key' => $key, 'route' => 'ajuansurat'])
+                                    @endif
                                 </td>
-                                </td>
-                                @else
-                                <td></td>
-                                @endif
                             </tr>
                             @endforeach
                         </tbody>

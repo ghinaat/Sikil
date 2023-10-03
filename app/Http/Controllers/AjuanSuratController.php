@@ -51,6 +51,10 @@ class AjuanSuratController extends Controller
 
         $request->validate($rules);
 
+        $countSurat = Surat::where('jenis_surat', $request->jenis_surat)
+        ->where('is_deleted', '0')
+        ->count();
+
         $surat = new Surat();
 
         $surat->tgl_surat = $request->tgl_surat;
@@ -61,8 +65,7 @@ class AjuanSuratController extends Controller
         $surat->bulan_kegiatan = $request->bulan_kegiatan;
         $surat->status = '1';
 
-        $surat->urutan = 33 + Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
-
+        $surat->urutan = $countSurat + 1;
         $kode_surat = KodeSurat::find($request->id_kode_surat);
 
         if($request->jenis_surat == 'nota_dinas'){
@@ -82,7 +85,7 @@ class AjuanSuratController extends Controller
         $notifikasiAdmin = User::where('level', 'admin')->first();
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Izin ';
-        $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->pesan = 'Pengajuan perizinan dari '.$surat->user->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuansurat';
@@ -165,7 +168,7 @@ class AjuanSuratController extends Controller
             if(isset($request->status)){
                 $surat->status = $request->status;
             }
-            $surat->urutan = 33 + Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
+            $surat->urutan = 1 + Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
 
             $kode_surat = KodeSurat::find($request->id_kode_surat);
 
