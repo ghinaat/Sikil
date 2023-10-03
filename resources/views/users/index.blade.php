@@ -93,7 +93,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword">Email</label>
                                                     <input type="email" name="email" id="exampleInputEmail"
-                                                        class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $user->nama_pegawai) }}">
+                                                        class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $user->email) }}">
                                                     @error('email')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}

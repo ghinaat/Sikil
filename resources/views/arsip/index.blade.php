@@ -97,11 +97,11 @@
                                         <input type="text"
                                             class="form-control @error('keterangan') is-invalid @enderror"
                                             id="keterangan" name="keterangan" value="{{old('keterangan')}}">
-                                        @error('keterangan')<span class="textdanger">{{ $message }}</span>@enderror
+                                        @error('keterangan')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="file">File</label><br>
-                                        
+
                                         <input type="file" class="form-control" id="file"
                                     enctype="multipart/form-data" name="file" @error('file') <span
                                     class="invalid" role="alert">{{$message}}</span>
@@ -162,7 +162,7 @@
                                         <label for="jenis">Jenis Arsip</label>
                                         <input type="text" class="form-control @error('jenis') is-invalid @enderror"
                                             id="jenis" name="jenis" value="{{$ap->jenis ??old('jenis') }}">
-                                        @error('jenis')<span class="textdanger">{{ $message }}</span>@enderror
+                                        @error('jenis')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="keterangan">Keterangan</label>
@@ -170,11 +170,11 @@
                                             class="form-control @error('keterangan') is-invalid @enderror"
                                             id="keterangan" name="keterangan"
                                             value="{{$ap->keterangan ??old('keterangan')}}">
-                                        @error('keterangan')<span class="textdanger">{{ $message }}</span>@enderror
+                                        @error('keterangan')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="file">File</label><br>
-                                        
+
                                         <input type="file" name="file" id="file"
                                                         class="form-control">
                                                     @error('file')
