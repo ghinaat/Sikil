@@ -50,7 +50,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('keluarga.showAdmin', $id_users) }}" >Keluarga</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('pendidikan.showAdmin', $id_users) }}" >Pendidikan</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('penker.showAdmin', $id_users) }}" >Pengalaman Kerja</a></li>
-            <li class="nav-item"><a class="nav-link active" href="{{ route('diklat.showAdmin', $id_users) }}" >Diklat</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('diklat.showAdmin', $id_users) }}" >Diklat</a></li>
             <li class="nav-item"><a class="nav-link active" href="{{ route('arsip.showAdmin', $id_users) }}">Arsip</a></li>
         @endif
     </ul>

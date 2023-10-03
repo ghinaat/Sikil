@@ -25,7 +25,7 @@
                                 @endcan
                                 <th>Jenis Arsip</th>
                                 <th>Keterangan</th>
-                                <th>File</th>
+                                <th>File Arsip</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>
@@ -38,9 +38,10 @@
                                 @endcan
                                 <td>{{$ap->jenis}}</td>
                                 <td>{{$ap->keterangan}}</td>
-                                <td id={{$key+1}}>
-                                    <a href="{{ asset('/storage/arsip/'. $ap->file) }}" target="_blank">Lihat
-                                        Dokumen</a>
+                                <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
+                                    <a href="{{ asset('/storage/arsip/'. $ap->file) }}" download>
+                                        <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
+                                    </a>
                                 </td>
                             <td>
                                 @include('components.action-buttons', ['id' => $ap->id_arsip, 'key' => $key, 'route' => 'arsip'])
@@ -69,46 +70,31 @@
                 <form action="{{ route('arsip.store') }}" method="POST" id="form" class="form-horizontal"
                     enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="id_users" value="{{ Auth::user()->id_users}}">
+                    <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <!-- <div class="form-group">
-                                        <label for="exampleInputUsers">Nama Pegawai</label>
-                                        <select class="form-select @error('nama_pegawai') isinvalid @enderror"
-                                            id="exampleInputUsers" name="id_users">
-                                            @foreach ($users as $user)
-                                            <option value="{{ $user->id_users }}" @if( old('id_users')==$user->id_users)
-                                                selected @endif">
-                                                {{ $user->nama_pegawai }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('level') <span class="textdanger">{{$message}}</span> @enderror
-                                    </div> -->
                                     <div class="form-group">
                                         <label for="jenis">Jenis Arsip</label>
                                         <input type="text" class="form-control @error('jenis') is-invalid @enderror"
-                                            id="jenis" name="jenis" value="{{old('jenis') }}">
+                                            id="jenis" name="jenis" value="{{old('jenis') }}" required>
                                         @error('jenis')<span class="textdanger">{{ $message }}</span>@enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="keterangan">Keterangan</label>
                                         <input type="text"
                                             class="form-control @error('keterangan') is-invalid @enderror"
-                                            id="keterangan" name="keterangan" value="{{old('keterangan')}}">
-                                        @error('keterangan')<span class="text-danger">{{ $message }}</span>@enderror
+                                            id="keterangan" name="keterangan" value="{{old('keterangan')}}" required>
+                                        @error('keterangan')<span class="textdanger">{{ $message }}</span>@enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="file">File</label><br>
-
-                                        <input type="file" class="form-control" id="file"
-                                    enctype="multipart/form-data" name="file" @error('file') <span
-                                    class="invalid" role="alert">{{$message}}</span>
-                                @enderror
-                                            <small class="form-text text-muted">Allow file extensions : .jpeg
-                                                .jpg .png .pdf
-                                                .docx</small>
+                                        <input type="file" class="form-control" id="file" enctype="multipart/form-data" name="file" accept="image/jpeg, image/jpg, image/png, image/pdf, image/docx, "required>
+                                        @error('file') <span class="invalid" role="alert">{{$message}}</span> @enderror
+                                        <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
+                                            id="keterangan" name="keterangan" value="{{old('keterangan')}}">
+                                        @error('keterangan')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                             </div>
@@ -140,49 +126,30 @@
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="id_users" value="{{ Auth::user()->id_users}}">
+                    <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <!-- <div class="form-group">
-                                        <label for="exampleInputUsers">Nama Pegawai</label>
-                                        <select class="form-select @error('nama_pegawai') isinvalid @enderror"
-                                            id="exampleInputUsers" name="id_users">
-                                            @foreach ($users as $user)
-                                            <option value="{{ $user->id_users }}" @if( old('id_users')==$user->id_users
-                                                )
-                                                selected @endif">
-                                                {{ $user->nama_pegawai }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('level') <span class="textdanger">{{$message}}</span> @enderror
-                                    </div> -->
                                     <div class="form-group">
                                         <label for="jenis">Jenis Arsip</label>
                                         <input type="text" class="form-control @error('jenis') is-invalid @enderror"
-                                            id="jenis" name="jenis" value="{{$ap->jenis ??old('jenis') }}">
-                                        @error('jenis')<span class="text-danger">{{ $message }}</span>@enderror
+                                            id="jenis" name="jenis" value="{{$ap->jenis ??old('jenis') }}"required>
+                                        @error('jenis')<span class="textdanger">{{ $message }}</span>@enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="keterangan">Keterangan</label>
                                         <input type="text"
                                             class="form-control @error('keterangan') is-invalid @enderror"
                                             id="keterangan" name="keterangan"
-                                            value="{{$ap->keterangan ??old('keterangan')}}">
-                                        @error('keterangan')<span class="text-danger">{{ $message }}</span>@enderror
+                                            value="{{$ap->keterangan ??old('keterangan')}}" required>
+                                        @error('keterangan')<span class="textdanger">{{ $message }}</span>@enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="file">File</label><br>
-
-                                        <input type="file" name="file" id="file"
-                                                        class="form-control">
-                                                    @error('file')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                        <small class="form-text text-muted">Allow file extensions : .jpeg
-                                            .jpg .png .pdf
-                                            .docx</small>
+                                            <input type="file" name="file" id="file" class="form-control">
+                                            @error('file') <span class="text-danger">{{ $message }}</span> @enderror
+                                        <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                                         <p>Previous File: <a href="{{ asset('/storage/arsip/'. $ap->file) }}"
                                                 target="_blank">{{ $ap->file }}</a></p>
                                     </div>
@@ -219,4 +186,16 @@ function notificationBeforeDelete(event, el) {
     }
 }
 </script>
+
+@if(count($errors))
+<script>
+Swal.fire({
+    title: 'Input tidak sesuai!',
+    text: 'Pastikan inputan sudah sesuai',
+    icon: 'error',
+});
+</script>
+@endif
+
 @endpush
+
