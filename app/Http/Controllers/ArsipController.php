@@ -73,7 +73,7 @@ class ArsipController extends Controller
 
         $arsip->save();
 
-        return redirect()->route('arsip.index')->with('success_message', 'Data telah tersimpan');
+        return redirect()->back()->with('success_message', 'Data telah terhapus.');
     }
 
     public function edit($id_arsip)
@@ -86,7 +86,7 @@ class ArsipController extends Controller
 
         return view('arsip.edit', [
             'arsip' => $arsip,
-            'users' => Users::where('is_deleted', '0')->get(),
+            'users' => User::where('is_deleted', '0')->get(),
         ]);
     }
 
@@ -102,7 +102,7 @@ class ArsipController extends Controller
 
         $arsip = Arsip::find($id_arsip);
         if (! $arsip) {
-            return redirect()->route('arsip.index')->with('error_message', 'Data dengan id '.$id_arsip.' tidak ditemukan');
+            return redirect()->back()->with('success_message', 'Data telah tersimpan.');
         }
 
         $arsip->id_users = $request->id_users;
@@ -118,7 +118,7 @@ class ArsipController extends Controller
         }
         $arsip->save();
 
-        return redirect()->route('arsip.index')->with('success_message', 'Data telah tersimpan');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     public function destroy($id_arsip)
@@ -129,7 +129,7 @@ class ArsipController extends Controller
             $arsip->save();
         }
 
-        return redirect()->route('arsip.index')->with('success_message', 'Data telah terhapus');
+        return redirect()->back()->with('success_message', 'Data telah terhapus.');
     }
 
     // /**

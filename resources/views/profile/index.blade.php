@@ -48,7 +48,11 @@
                                     <div class="form-group">
                                         <label for="nama" class='form-label'>Nama</label>
                                         <div class="form-input">
+                                            @if($user->gelar_depan)
                                             : {{ $user->gelar_depan }}. {{ $main_user->nama_pegawai }} {{ $user->gelar_belakang }}
+                                            @else
+                                            : {{ $main_user->nama_pegawai }} {{ $user->gelar_belakang }}
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
