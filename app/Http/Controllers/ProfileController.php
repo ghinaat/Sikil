@@ -96,6 +96,8 @@ class ProfileController extends Controller
     public function update(Request $request, $id_users)
     {
         $rules = [
+            'nama_pegawai' => 'required',
+            'email' => 'required|unique:users,email,'.$id_users.',id_users',
             'nip' => 'required',
             'nik' => 'required',
             'kk' => 'required',
@@ -119,7 +121,6 @@ class ProfileController extends Controller
             $rules['photo'] = 'required|image|mimes:jpeg,png,jpg';
         }
 
-
         $validatedData = $request->validate($rules);
 
         $lastProfile = Profile::where('id_users', $id_users)->first();
@@ -134,13 +135,23 @@ class ProfileController extends Controller
 
         $validatedData['id_users'] = $id_users;
 
+        $profile = $this->arrayExclude($validatedData, ['nama_pegawai', 'email']);
+        dd($profile);
+
         Profile::where('id_users', $id_users)->update($validatedData);
+        User::where('id_users', $id_users)->update($validatedData);
 
         return redirect()->back()->with([
             'success_message' => 'Profile berhasil diubah!.',
         ]);
     }
 
+    public function arrayExclude($array, Array $excludeKeys){
+        foreach($excludeKeys as $key){
+            unset($array[$key]);
+        }
+        return $array;
+    }
     /**
      * Remove the specified resource from storage.
      */
