@@ -82,6 +82,193 @@
                 <form action="{{ route('keluarga.store') }}" method="POST" id="form" class="form-horizontal"
                     enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="id_users"
+                        value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputUsersHubkel">Hubungan Keluarga</label>
+                                        <select class="form-select @error('id_hubungan') isinvalid @enderror"
+                                            id="exampleInputHubkel" name="id_hubungan">
+                                            @foreach ($hubkel as $hk)
+                                            <option value="{{ $hk->id_hubungan }}" @if( old('id_hubungan')==$hk->
+                                                id_hubungan )
+                                                selected @endif">
+                                                {{ $hk->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('level') <span class="text-danger">{{$message}}</span> @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nama">Nama Lengkap</label>
+                                        <input type="text" class="form-control @error('nama') is-invalid @enderror"
+                                            id="nama" name="nama" value="{{old('nama') }}" required>
+                                        @error('nama')<span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tanggal_lahir">Tanggal Lahir</label>
+                                        <input type="date" class="form-control"
+                                            class="form-control @error('tanggal_lahir') is-invalid @enderror"
+                                            id="tanggal_lahir" name="tanggal_lahir" value="{{old('tanggal_lahir')}}"
+                                            required>
+                                        @error('tanggal_lahir') <span class="text-danger">{{$message}}</span> @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputgender">Jenis Kelamin</label>
+                                        <select class="form-select @error('gender') isinvalid @enderror"
+                                            id="exampleInputgender" name="gender" required>
+                                            <option value="laki-laki" @if(old('gender')=='laki-laki' )selected @endif>
+                                                Laki-laki</option>
+                                            <option value="perempuan" @if(old('gender')=='perempuan' )selected @endif>
+                                                Perempuan</option>
+                                        </select>
+                                        @error('gender') <span class="text-danger">{{$message}}</span> @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputstatus">Status</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="status" value="hidup"
+                                                id="hidupRadio">
+                                            <label class="form-check-label" for="hidupRadio">Hidup</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="status" value="meninggal"
+                                                id="meninggalRadio">
+                                            <label class="form-check-label" for="meninggalRadio">Meninggal</label>
+                                        </div>
+                                        @error('status') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit Keluarga -->
+@foreach($keluarga as $kel)
+<div class="modal fade" id="editModal{{$kel->id_keluarga}}" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Edit Data Keluarga</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body form">
+                <form action="{{ route('keluarga.update',$kel->id_keluarga) }}" method="POST" id="form"
+                    class="form-horizontal" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id_users"
+                        value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputUsersHubkel">Hubungan Keluarga</label>
+                                        <select class="form-select @error('id_hubungan') isinvalid @enderror"
+                                            id="exampleInputHubkel" name="id_hubungan">
+                                            @foreach ($hubkel as $hk)
+                                            <option value="{{ $hk->id_hubungan }}" @if($kel->id_hubungan ==
+                                                $hk->id_hubungan) selected @endif>
+                                                {{ $hk->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('level') <span class="text-danger">{{$message}}</span> @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nama">Nama Lengkap</label>
+                                        <input type="text" class="form-control @error('nama') is-invalid @enderror"
+                                            id="nama" name="nama" value="{{ $kel->nama ?? old('nama') }}" required>
+                                        @error('nama')<span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tanggal_lahir">Tanggal Lahir</label>
+                                        <input type="date" class="form-control"
+                                            class="form-control @error('tanggal_lahir') is-invalid @enderror"
+                                            id="tanggal_lahir" name="tanggal_lahir"
+                                            value="{{$kel->tanggal_lahir ??old('tanggal_lahir')}}" required>
+                                        @error('tanggal_lahir') <span class="text-danger">{{$message}}</span> @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputgender">Jenis Kelamin</label>
+                                        <select class="form-select @error('gender') isinvalid @enderror"
+                                            id="exampleInputgender" name="gender" required>
+                                            <option value="laki-laki" @if(old('gender', $kel->gender) == 'laki-laki' )
+                                                selected @endif>
+                                                Laki-laki</option>
+                                            <option value="perempuan" @if(old('gender', $kel->gender) == 'perempuan' )
+                                                selected @endif>
+                                                Perempuan</option>
+                                        </select>
+                                        @error('gender') <span class="text-danger">{{$message}}</span> @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputstatus">Status</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="status" value="hidup"
+                                                id="hidupRadio" @if(old('status', $kel->status) == 'hidup') checked
+                                            @endif>
+                                            <label class="form-check-label" for="hidupRadio">Hidup</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="status" value="meninggal"
+                                                id="meninggalRadio" @if(old('status', $kel->status) == 'meninggal')
+                                            checked @endif>
+                                            <label class="form-check-label" for="meninggalRadio">Meninggal</label>
+                                        </div>
+                                        @error('status') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+</div>
+</div>
+</div>
+>>>>>>> a8f6b9441f0648badd782e925985540141c5cbc2
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Modal Tambah Keluarga -->
+<div class="modal fade" id="modal_form" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Tambah Data Keluarga</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body form">
+                <form action="{{ route('keluarga.store') }}" method="POST" id="form" class="form-horizontal"
+                    enctype="multipart/form-data">
+                    @csrf
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">

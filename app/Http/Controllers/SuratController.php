@@ -82,6 +82,8 @@ class SuratController extends Controller
 
         $surat->save();
 
+        $pengguna = User::where('id_users', $request->id_users)->first();
+
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Nomor Surat';
         $notifikasi->pesan = 'Pengajuan nomor surat anda sudah berhasil dikirimkan.  Kami telah mengirimkan notifikasi untuk memproses nomor surat mu..';
@@ -91,13 +93,14 @@ class SuratController extends Controller
         $notifikasi->id_users = $request->id_users;
         $notifikasi->save();
 
+        $notifikasiAdmin = User::where('level', 'admin')->first();
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Nomor Surat';
-        $notifikasi->pesan = 'Sebuah pengajuan nomor surat dari.  mohon memberikan persetujuan..';
+        $notifikasi->pesan = 'Pengajuan nomor surat dari '.$pengguna->nama_pegawai.'. mohon memberikan persetujuan..';
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
-        $notifikasi->link = '/surat';
-        $notifikasi->id_users = User::where('level', 'admin')->get()[0]->id_users;
+        $notifikasi->link = '/ajuansurat';
+        $notifikasi->id_users = $notifikasiAdmin->id_users;
         $notifikasi->save();
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');

@@ -147,6 +147,7 @@
 <script>
 $('#example2').DataTable({
     "responsive": true,
+    "order": [[0, 'desc']]
 });
 
 function notificationBeforeDelete(event, el) {

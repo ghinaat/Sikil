@@ -133,7 +133,8 @@ table-stripped" id="example2">
                                                     <label for="file_kerja">Surat Pengalaman</label>
                                                     <input type="file" name="file_kerja" id="file_kerja"
                                                         class="form-control @error('file_kerja') is-invalid @enderror"
-                                                        accept=".jpeg, .jpg, .png, .pdf, .docx">
+                                                        accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx">
+
                                                     @error('file_kerja')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -221,9 +222,11 @@ table-stripped" id="example2">
                     </div>
                     <div class="form-group">
                         <label for="file_kerja">Surat Pengalaman</label>
+
                         <input type="file" name="file_kerja" id="file_kerja"
                             class="form-control @error('file_kerja') is-invalid @enderror"
-                            accept=".jpeg, .jpg, .png, .pdf, .docx" required> @error('file_kerja')
+                            accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx" required>
+                        @error('file_kerja')
                         <span class="text-danger">{{$message}}</span> @enderror
                         <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                     </div>
