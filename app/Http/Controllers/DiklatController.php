@@ -19,9 +19,7 @@ class DiklatController extends Controller
             // Fetch the user's own work experiences
             $diklat = Diklat::where('is_deleted', '0')->get();
         } else {
-            $diklat = Diklat::where('id_users', $user->id_users)
-                ->where('is_deleted', '0')
-                ->get();
+            $diklat = $user->diklat()->where('is_deleted', '0')->get();
         }
 
         return view('diklat.index', [
@@ -34,7 +32,7 @@ class DiklatController extends Controller
     public function showAdmin(Request $request, $id_users)
     {
         $user = User::where('id_users', $id_users)->first();
-        $diklat = Diklat::where('id_users', $user->id_users)->where('is_deleted', '0')->get();
+        $diklat = $user->diklat()->where('is_deleted', '0')->get();
 
         return view('diklat.index', [
             'id_users' => $id_users,
@@ -46,6 +44,7 @@ class DiklatController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'id_users' => 'required',
             'id_jenis_diklat' => 'required',
@@ -74,7 +73,7 @@ class DiklatController extends Controller
 
         $diklat->save();
 
-        return redirect()->back()->with('success', 'Data telah tersimpan.');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
@@ -140,7 +139,7 @@ class DiklatController extends Controller
 
         $diklat->save();
 
-        return redirect()->route('diklat.index')->with('success_message', 'Data telah tersimpan');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
@@ -155,6 +154,6 @@ class DiklatController extends Controller
             ]);
         }
 
-        return redirect()->route('diklat.index')->with('success_message', 'Data telah terhapus');
+        return redirect()->back()->with('success_message', 'Data telah terhapus.');
     }
 }

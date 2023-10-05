@@ -48,12 +48,14 @@ class ProfileController extends Controller
     {
         $user = User::where('id_users', auth()->user()->id_users)->first();
         $user_profile = Profile::where('id_users', auth()->user()->id_users)->first();
+        $jabatan = Jabatan::all();
 
         $tingkat_pendidikan = TingkatPendidikan::all();
 
         return view('profile.index', [
             'main_user' => $user,
             'user' => $user_profile,
+            'jabatan' => $jabatan,
             'tingkat_pendidikans' => $tingkat_pendidikan,
         ]);
     }
@@ -93,9 +95,12 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Profile $profile)
+    public function update(Request $request, $id_users)
     {
-        $request->validate([
+        $rules = [
+            'nama_pegawai' => 'required',
+            'email' =>  'required|unique:users,email',
+            'id_jabatan' => 'required',
             'nip' => 'required',
             'nik' => 'required',
             'kk' => 'required',
@@ -112,42 +117,68 @@ class ProfileController extends Controller
             'status_kawin' => 'required',
             'bpjs' => 'required',
             'id_tingkat_pendidikan' => 'required',
-        ]);
+        ];
 
-        $array = $request->only([
-            'nip',
-            'nik',
-            'kk',
-            'gelar_depan',
-            'gelar_belakang',
-            'tempat_lahir',
-            'tanggal_lahir',
-            'alamat',
-            'no_hp',
-            'agama',
-            'gender',
-            'pendidikan',
-            'tmt',
-            'status_kawin',
-            'bpjs',
-            'id_tingkat_pendidikan',
-        ]);
 
         if ($request->file('photo')) {
-            if ($profile->photo) {
-                Storage::delete($profile->photo);
-            }
-
-            $array['photo'] = str_replace('public/profile/', '', $request->file('photo')->store('public/profile'));
+            $rules['photo'] = 'required|image|mimes:jpeg,png,jpg';
         }
 
-        $array['id_users'] = auth()->user()->id_users;
 
-        Profile::where('id_users', auth()->user()->id_users)->update($array);
+        $user = User::find($id_users);
 
-        return redirect()->route('profile.index');
+        $user->update([
+            'nama_pegawai' => $request->input('nama_pegawai'),
+            'email' => $request->input('email'),
+            'id_jabatan' => $request->input('id_jabatan'),
+        ]);
+
+        $validatedData = $request->validate($rules);
+
+        $lastProfile = Profile::where('id_users', $id_users)->first();
+
+        if ($request->file('photo')) {
+            if ($lastProfile->photo) {
+                Storage::delete($lastProfile->photo);
+            }
+
+            $validatedData['photo'] = str_replace('public/profile/', '', $request->file('photo')->store('public/profile'));
+        }
+
+        $profile = Profile::where('id_users', $id_users)->first();
+
+
+        $profile->update([
+            'nip' => $request->input('nip'),
+            'nik' => $request->input('nik'),
+            'kk' => $request->input('kk'),
+            'gelar_depan' => $request->input('gelar_depan'),
+            'gelar_belakang' => $request->input('gelar_belakang'),
+            'tempat_lahir' => $request->input('tempat_lahir'),
+            'tanggal_lahir' => $request->input('tanggal_lahir'),
+            'alamat' => $request->input('alamat'),
+            'no_hp' => $request->input('no_hp'),
+            'agama' => $request->input('agama'),
+            'gender' => $request->input('gender'),
+            'pendidikan' => $request->input('pendidikan'),
+            'tmt' => $request->input('tmt'),
+            'status_kawin' => $request->input('status_kawin'),
+            'bpjs' => $request->input('bpjs'),
+            'id_tingkat_pendidikan' => $request->input('id_tingkat_pendidikan'),
+        ]);
+
+
+        return redirect()->back()->with([
+            'success_message' => 'Profile berhasil diubah!.',
+        ]);
     }
 
+    public function arrayExclude($array, Array $excludeKeys){
+        foreach($excludeKeys as $key){
+            unset($array[$key]);
+        }
+        return $array;
+    }
     /**
      * Remove the specified resource from storage.
      */

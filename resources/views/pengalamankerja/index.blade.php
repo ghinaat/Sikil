@@ -48,10 +48,10 @@ table-stripped" id="example2">
                                 <td id={{$key+1}}>{{$pk->nama_perusahaan}}</td>
                                 <td id={{$key+1}}>{{$pk->masa_kerja}}</td>
                                 <td id={{$key+1}}>{{$pk->posisi}}</td>
-                                <td id={{$key+1}}>
-                                    <a href="{{ asset('/storage/pengalaman_kerja/'. $pk->file_kerja) }}"
-                                        target="_blank">Lihat
-                                        Dokumen</a>
+                                <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
+                                    <a href="{{ asset('/storage/pengalaman_kerja/'. $pk->file_kerja) }}" download>
+                                        <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
+                                        </a>
 
                                 </td>
                             <td>
@@ -77,18 +77,17 @@ table-stripped" id="example2">
                                                 method="post" enctype="multipart/form-data">
                                                 @csrf
                                                 @method('PUT')
-                                                <input type="hidden" name="id_users"
-                                                    value="{{ Auth::user()->id_users}}">
+                                                <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
                                                 <div class="form-group">
                                                     <label for="nama_perusahaan" class="form-label">Nama
                                                         Perusahaan</label>
                                                     <input type="text"
                                                         class="form-control @error('nama_perusahaan') is-invalid @enderror"
-                                                        id="nama_perusahaan" 
+                                                        id="nama_perusahaan"
                                                         name="nama_perusahaan"
-                                                        value="{{$pk ->nama_perusahaan ?? old('nama_perusahaan')}}">
+                                                        value="{{$pk ->nama_perusahaan ?? old('nama_perusahaan')}}" required>
                                                     @error('nama_perusahaan') <span
-                                                        class="textdanger">{{$message}}</span> @enderror
+                                                        class="text-danger">{{$message}}</span> @enderror
 
                                                 </div>
                                                 <div class="form-group">
@@ -97,8 +96,8 @@ table-stripped" id="example2">
                                                     <input type="text"
                                                         class="form-control @error('masa_kerja') is-invalid @enderror"
                                                         id="masa_kerja" name="masa_kerja"
-                                                        value="{{$pk ->masa_kerja ?? old('masa_kerja')}}">
-                                                    @error('masa_kerja') <span class="textdanger">{{$message}}</span>
+                                                        value="{{$pk ->masa_kerja ?? old('masa_kerja')}}" required>
+                                                    @error('masa_kerja') <span class="text-danger">{{$message}}</span>
                                                     @enderror
 
                                                 </div>
@@ -108,14 +107,14 @@ table-stripped" id="example2">
                                                     <input type="text"
                                                         class="form-control @error('posisi') is-invalid @enderror"
                                                         id="posisi" name="posisi"
-                                                        value="{{$pk ->posisi ?? old('posisi')}}">
-                                                    @error('posisi') <span class="textdanger">{{$message}}</span>
+                                                        value="{{old('posisi', $pk->posisi)}}" required>
+                                                    @error('posisi') <span class="text-danger">{{$message}}</span>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="file_kerja">Surat Pengalaman</label>
                                                     <input type="file" name="file_kerja" id="file_kerja"
-                                                        class="form-control">
+                                                        class="form-control @error('file_kerja') is-invalid @enderror" accept=".jpeg, .jpg, .png, .pdf, .docx" >
                                                     @error('file_kerja')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -161,14 +160,14 @@ table-stripped" id="example2">
             <div class="modal-body">
                 <form action="{{ route('penker.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="id_users" value="{{ Auth::user()->id_users}}">
+                    <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
                     <div class="form-group">
                         <label for="nama_perusahaan" class="form-label">Nama Perusahaan</label>
 
                         <input type="text" class="form-control @error('nama_perusahaan') is-invalid @enderror"
                             id="nama_perusahaan"  name="nama_perusahaan"
                             value="{{old('nama_perusahaan')}}" required>
-                        @error('nama_perusahaan') <span class="textdanger">{{$message}}</span> @enderror
+                        @error('nama_perusahaan') <span class="text-danger">{{$message}}</span> @enderror
 
                     </div>
                     <div class="form-group">
@@ -176,23 +175,21 @@ table-stripped" id="example2">
 
                         <input type="text" class="form-control @error('masa_kerja') is-invalid @enderror"
                             id="masa_kerja" name="masa_kerja" value="{{old('masa_kerja')}}" required>
-                        @error('masa_kerja') <span class="textdanger">{{$message}}</span> @enderror
+                        @error('masa_kerja') <span class="text-danger">{{$message}}</span> @enderror
 
                     </div>
                     <div class="form-group">
                         <label for="posisi" class="form-label">Posisi</label>
 
                         <input type="text" class="form-control @error('posisi') is-invalid @enderror" id="posisi"
-                            name="posisi" value="{{old('posisi')}}">
-                        @error('posisi') <span class="textdanger">{{$message}}</span> @enderror
+                            name="posisi" value="{{old('posisi')}}" required>
+                        @error('posisi') <span class="text-danger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">
                         <label for="file_kerja">Surat Pengalaman</label>
-                        <input type="file" name="file_kerja" id="file_kerja" class="form-control"> @error('file_kerja')
-                        <span class="textdanger">{{$message}}</span> @enderror
-                        <small class="form-text text-muted">Allow file extensions : .jpeg
-                            .jpg .png .pdf
-                            .docx</small>
+                        <input type="file" name="file_kerja" id="file_kerja" class="form-control @error('file_kerja') is-invalid @enderror" accept=".jpeg, .jpg, .png, .pdf, .docx" required> @error('file_kerja')
+                        <span class="text-danger">{{$message}}</span> @enderror
+                        <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -219,4 +216,15 @@ $('#example2').DataTable({
     "responsive": true,
 });
 </script>
+
+@if(count($errors))
+<script>
+Swal.fire({
+    title: 'Input tidak sesuai!',
+    text: 'Pastikan inputan sudah sesuai',
+    icon: 'error',
+});
+</script>
+@endif
+
 @endpush

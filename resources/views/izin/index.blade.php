@@ -22,31 +22,19 @@
                     <div class="form-group">    
                         <label for="jenis_perizinan">Jenis Perizinan :</label>&nbsp;&nbsp;
                         <select class="form-select" id="jenis_perizinan" name="jenis_perizinan">
-                            <option value="all">Semua Jenis Perizinan</option>
-                            <option value="I" @if(request()->input('jenis_perizinan')=='I' )selected
-                                @endif>Izin</option>
-                            <option value="DL" @if(request()->input('jenis_perizinan')=='DL' )selected
-                                @endif>Dinas Luar</option>
-                            <option value="S" @if(request()->input('jenis_perizinan')=='S' )selected
-                                @endif>Sakit</option>
-                            <option value="CS" @if(request()->input('jenis_perizinan')=='CS' )selected
-                                @endif>Cuti Sakit</option>
-                            <option value="Prajab" @if(request()->input('jenis_perizinan')=='Prajab'
-                                )selected @endif>Prajab</option>
-                            <option value="CT" @if(request()->input('jenis_perizinan')=='CT' )selected
-                                @endif>Cuti Tahunan</option>
-                            <option value="CM" @if(request()->input('jenis_perizinan')=='CM' )selected
-                                @endif>Cuti Melahirkan</option>
-                            <option value="CAP" @if(request()->input('jenis_perizinan')=='CAP' )selected
-                                @endif>CAP</option>
-                            <option value="CH" @if(request()->input('jenis_perizinan')=='CH' )selected
-                                @endif>Cuti Haji</option>
-                            <option value="CB" @if(request()->input('jenis_perizinan')=='CB' )selected
-                                @endif>Cuti Bersama</option>
-                            <option value="A" @if(request()->input('jenis_perizinan')=='A' )selected
-                                @endif>Alpha</option>
-                            <option value="TB" @if(request()->input('jenis_perizinan')=='TB' )selected
-                                @endif>Tugas Belajar</option>
+                        <option value="all">Semua Jenis Perizinan</option>
+                        <option value="A" @if(request()->input('jenis_perizinan')=='A' )selected @endif>Alpha</option>
+                        <option value="CAP" @if(request()->input('jenis_perizinan')=='CAP' )selected @endif>CAP</option>
+                        <option value="CB" @if(request()->input('jenis_perizinan')=='CB' )selected @endif>Cuti Bersama</option>
+                        <option value="CH" @if(request()->input('jenis_perizinan')=='CH' )selected @endif>Cuti Haji</option>
+                        <option value="CM" @if(request()->input('jenis_perizinan')=='CM' )selected @endif>Cuti Melahirkan</option>
+                        <option value="CS" @if(request()->input('jenis_perizinan')=='CS' )selected @endif>Cuti Sakit</option>
+                        <option value="CT" @if(request()->input('jenis_perizinan')=='CT' )selected @endif>Cuti Tahunan</option>
+                        <option value="DL" @if(request()->input('jenis_perizinan')=='DL' )selected @endif>Dinas Luar</option>
+                        <option value="I" @if(request()->input('jenis_perizinan')=='I' )selected @endif>Izin</option>
+                        <option value="Prajab" @if(request()->input('jenis_perizinan')=='Prajab' )selected @endif>Prajab</option>
+                        <option value="S" @if(request()->input('jenis_perizinan')=='S' )selected @endif>Sakit</option>
+                        <option value="TB" @if(request()->input('jenis_perizinan')=='TB' )selected @endif>Tugas Belajar</option>
                         </select>&nbsp;&nbsp;
                     </div>
                     <div class="form-group mb-2">
@@ -170,15 +158,15 @@
                                                 @method('PUT')
                                                 @can('isAdmin')
                                                 <div class="form-group">
-                                                    <label for="kode_finger">Nama Pegawai</label>
-                                                    <select id="kode_finger" name="kode_finger" class="form-select @error('kode_finger') is-invalid @enderror">
-                                                        @foreach ($users as $u)
-                                                        <option value="{{ $u->kode_finger }}" {{ $ap->kode_finger == $u->kode_finger ? 'selected' : '' }}>
-                                                            {{ $u->nama_pegawai }} 
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+                                                            <label for="kode_finger">Nama Pegawai</label>
+                                                            <select type="hidden" id="kode_finger" name="kode_finger" class="form-select @error('kode_finger') is-invalid @enderror">
+                                                                @foreach ($users as $u)
+                                                                <option value="{{ $u->kode_finger }}" {{ $ap->kode_finger == $u->kode_finger ? 'selected' : '' }}>
+                                                                    {{ $u->nama_pegawai }} 
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                 <div class="form-group">
                                                     <label for="tgl_absen_awal" class='form-label'>Tanggal Awal
                                                         Izin</label>
@@ -218,28 +206,28 @@
                                                     <select
                                                         class="form-select  @error('jenis_perizinan') is-invalid @enderror"
                                                         id="jenis_perizinan" name="jenis_perizinan">
-                                                        <option value="I" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='I')selected
-                                                            @endif>Izin</option>
-                                                        <option value="DL" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='DL' )selected
-                                                            @endif>Dinas Luar</option>
-                                                        <option value="S" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='S' )selected
-                                                            @endif>Sakit</option>
-                                                        <option value="CS" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CS' )selected
-                                                            @endif>Cuti Sakit</option>
-                                                        <option value="Prajab" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='Prajab'
-                                                            )selected @endif>Prajab</option>
-                                                        <option value="CT" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CT' )selected
-                                                            @endif>Cuti Tahunan</option>
-                                                        <option value="CM" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CM' )selected
-                                                            @endif>Cuti Melahirkan</option>
-                                                        <option value="CAP" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CAP' )selected
-                                                            @endif>CAP</option>
-                                                        <option value="CH" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CH' )selected
-                                                            @endif>Cuti Haji</option>
-                                                        <option value="CB" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CB' )selected
-                                                            @endif>Cuti Bersama</option>
                                                         <option value="A" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='A' )selected
                                                             @endif>Alpha</option>
+                                                        <option value="CAP" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CAP' )selected
+                                                            @endif>CAP</option>
+                                                        <option value="CB" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CB' )selected
+                                                            @endif>Cuti Bersama</option>
+                                                        <option value="CH" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CH' )selected
+                                                            @endif>Cuti Haji</option>
+                                                        <option value="CM" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CM' )selected
+                                                            @endif>Cuti Melahirkan</option>
+                                                        <option value="CS" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CS' )selected
+                                                            @endif>Cuti Sakit</option>
+                                                        <option value="CT" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='CT' )selected
+                                                            @endif>Cuti Tahunan</option>
+                                                        <option value="DL" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='DL' )selected
+                                                            @endif>Dinas Luar</option>
+                                                        <option value="I" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='I')selected
+                                                            @endif>Izin</option>
+                                                        <option value="Prajab" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='Prajab'
+                                                            )selected @endif>Prajab</option>
+                                                        <option value="S" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='S' )selected
+                                                            @endif>Sakit</option>
                                                         <option value="TB" @if(old('jenis_perizinan', $ap->jenis_perizinan)=='TB' )selected
                                                             @endif>Tugas Belajar</option>
                                                     </select>
@@ -256,7 +244,7 @@
                                                     <select id="id_atasan" name="id_atasan"
                                                         class="form-select @error('id_atasan') is-invalid @enderror">
                                                         @foreach ($users as $us)
-                                                        <option value="{{ $us->id_users }}" @if( $ap->id_atasan === old('id_atasan', $us->id_users) ) selected @endif>
+                                                        <option value="{{ $us->id_users }}" @if( $ap->id_atasan == old('id_atasan', $us->id_users) ) selected @endif>
                                                             {{ $us->nama_pegawai }}
                                                         </option>
                                                         @endforeach
@@ -385,17 +373,17 @@
                                 <label for="jenis_perizinan">Jenis Perizinan</label>
                                 <select class="form-select  @error('jenis_perizinan') is-invalid @enderror"
                                     id="jenis_perizinan" name="jenis_perizinan">
-                                    <option value="I">Izin</option>
-                                    <option value="DL">Dinas Luar</option>
-                                    <option value="S">Sakit</option>
-                                    <option value="CS">Cuti Sakit</option>
-                                    <option value="Prajab">Prajab</option>
-                                    <option value="CT">Cuti Tahunan</option>
-                                    <option value="CM">Cuti Melahirkan</option>
-                                    <option value="CAP">CAP</option>
-                                    <option value="CH">Cuti Haji</option>
-                                    <option value="CB">Cuti Bersama</option>
                                     <option value="A">Alpha</option>
+                                    <option value="CAP">CAP</option>
+                                    <option value="CB">Cuti Bersama</option>
+                                    <option value="CH">Cuti Haji</option>
+                                    <option value="CM">Cuti Melahirkan</option>
+                                    <option value="CS">Cuti Sakit</option>
+                                    <option value="CT">Cuti Tahunan</option>
+                                    <option value="DL">Dinas Luar</option>
+                                    <option value="I">Izin</option>
+                                    <option value="Prajab">Prajab</option>
+                                    <option value="S">Sakit</option>
                                     <option value="TB">Tugas Belajar</option>
                                 </select>
                                 @error('jenis_perizinan') <span class="textdanger">{{$message}}</span> @enderror

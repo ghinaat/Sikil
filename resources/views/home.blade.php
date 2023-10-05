@@ -28,31 +28,28 @@
         <div class="col-md-4">
             <div class="small-box bg-gradient-success">
                 <div class="inner">
-                    <h3>44</h3>
-                    <p>Staff Hadir</p>
+                    <h3>{{ $staf_dinas_luar }}</h3>
+                    <p>Staff Dinas Luar</p>
                 </div>
-                <div class="icon"><i class="fas fa-user"></i></div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="icon"><i class="fas fa-plane-departure"></i></div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="small-box bg-gradient-warning">
                 <div class="inner">
-                    <h3>44</h3>
-                    <p>Staff Ijin</p>
+                    <h3>{{ $staf_ijin }}</h3>
+                    <p>Staff Ijin/Cuti</p>
                 </div>
-                <div class="icon"><i class="fas fa-plane-departure"></i></div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="icon"><i class="fas fa-glass-cheers"></i></div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="small-box bg-gradient-danger">
                 <div class="inner">
-                    <h3>44</h3>
+                    <h3>{{ $staf_sakit }}</h3>
                     <p>Staff Sakit</p>
                 </div>
                 <div class="icon"><i class="fas fa-head-side-cough"></i></div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -69,10 +66,10 @@
                     <p class="card-text">
                         Tanggal Kegiatan:
                         @if($kegiatan->tgl_mulai === $kegiatan->tgl_selesai)
-                        {{ date_format(new DateTime($kegiatan->tgl_mulai), 'd F Y') }}
+                        {{ \Carbon\Carbon::parse($kegiatan->tgl_mulai)->format('d M Y') }}
                         @else
-                        {{ date_format(new DateTime($kegiatan->tgl_mulai), 'd F Y') }} &nbsp; s.d. &nbsp;
-                        {{ date_format(new DateTime($kegiatan->tgl_selesai), 'd F Y') }}
+                        {{ \Carbon\Carbon::parse($kegiatan->tgl_mulai)->format('d M Y') }} &nbsp; s.d. &nbsp;
+                        {{ \Carbon\Carbon::parse($kegiatan->tgl_selesai)->format('d M Y') }}
                         @endif
                         <br> Lokasi: {{ $kegiatan->lokasi }}
                     </p>
@@ -107,8 +104,8 @@
             <tr>
                 <th scope="row">{{ $nomor_urutan }}</th>
                 <td>{{ $kegiatan->nama_kegiatan }}</td>
-                <td>{{ $kegiatan->tgl_mulai }}</td>
-                <td>{{ $kegiatan->tgl_selesai }}</td>
+                <td>{{ \Carbon\Carbon::parse($kegiatan->tgl_mulai)->format('d M Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($kegiatan->tgl_selesai)->format('d M Y') }}</td>
                 <td><a href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}" class="btn btn-primary">Lihat</a></td>
             </tr>
             @php

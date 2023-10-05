@@ -150,7 +150,7 @@ class PresensiController extends Controller
             $presensiData = Presensi::where('kode_finger', $user->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
 
             foreach ($presensiData as $pd) {
-                if ($pd->kehadiran) {
+                if ($pd->kehadiran !== null && $pd->kehadiran !== '00:00') {
                     $kehadiran++;
                 } else {
                     switch ($pd->jenis_perizinan) {
@@ -268,7 +268,7 @@ class PresensiController extends Controller
             $presensiData = Presensi::where('kode_finger', $user->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
 
             foreach ($presensiData as $pd) {
-                if ($pd->kehadiran) {
+                if ($pd->kehadiran !== null && $pd->kehadiran !== '00:00:00') {
                     $kehadiran++;
                 } else {
                     switch ($pd->jenis_perizinan) {

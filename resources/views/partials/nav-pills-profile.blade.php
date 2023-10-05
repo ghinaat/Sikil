@@ -29,6 +29,7 @@
         @else
             <li class="nav-item"><a class="nav-link" href="{{ route('diklat.index') }}" >Diklat</a></li>
         @endif
+        
         @if (Route::currentRouteName() === 'arsip.index')
             <li class="nav-item"><a class="nav-link active" href="{{ route('arsip.index') }}">Arsip</a></li>
         @else

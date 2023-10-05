@@ -15,10 +15,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        $user = User::where('is_deleted', '0')->get();
-
         return view('users.index', [
-            'user' => $user,
+            'user' => User::where('is_deleted', '0')->orderBy('nama_pegawai', 'ASC')->get(),
             'jabatans' => Jabatan::all(),
         ]);
     }
@@ -27,12 +25,13 @@ class UserController extends Controller
     {
         $user = User::where('id_users', $id_users)->first();
         $user_profile = Profile::where('id_users', $id_users)->first();
-
+        $jabatan = Jabatan::all();
         $tingkat_pendidikan = TingkatPendidikan::all();
 
         return view('profile.index', [
             'main_user' => $user,
             'user' => $user_profile,
+            'jabatan' => $jabatan,
             'tingkat_pendidikans' => $tingkat_pendidikan,
         ]);
     }
@@ -56,15 +55,15 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        //Menyimpan Data pegawai
-        $request->validate([
+        $rules = [
             'nama_pegawai' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'email' => 'required|unique:users,email',
+            'password' => 'required|confirmed',
             'level' => 'required',
             'id_jabatan' => 'required',
-            'kode_finger' => 'required'
-        ]);
+        ];
+
+        $request->validate($rules);
 
         $array = $request->only([
             'nama_pegawai',
@@ -72,28 +71,32 @@ class UserController extends Controller
             'password',
             'level',
             'id_jabatan',
+            
         ]);
 
         $array['_password_'] = $request->password;
+        $array['kode_finger'] = $this->generateUniqueKodeFinger();
 
         $user = User::create($array);
-
-        $array['kode_finger'] = $this->generateUniqueKodeFinger();
 
         return redirect()->route('user.index')->with([
             'success_message' => 'Data telah tersimpan',
         ]);
     }
 
-        private function generateUniqueKodeFinger()
-    {        
-        $kodeFinger = uniqid(); 
 
-        while (User::where('kode_finger', $kodeFinger)->exists()) {
-            $kodeFinger = uniqid();
+    private function generateUniqueKodeFinger()
+    {
+        $maxRetries = 4; // Jumlah maksimum percobaan yang diizinkan
+
+        for ($i = 0; $i < $maxRetries; $i++) {
+            $kodeFinger = mt_rand(1000, 9999);
+
+            // Periksa apakah kode finger sudah ada di database
+            if (!User::where('kode_finger', $kodeFinger)->exists()) {
+                return $kodeFinger; // Kode finger unik ditemukan
+            }
         }
-
-        return $kodeFinger;
     }
 
     public function edit($id_users)
@@ -112,14 +115,21 @@ class UserController extends Controller
 
     public function update(Request $request, $id_users)
     {
-        //Mengedit Data User
-        $request->validate([
+
+        $rules = [
             'nama_pegawai' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'email' => 'required|unique:users,email,'.$id_users.',id_users',
             'level' => 'required',
             'id_jabatan' => 'required',
-        ]);
+            'level' => 'required',
+        ];
+
+        if (isset($request->password)) {
+            $rules['password'] = 'required|confirmed';
+        }
+
+        $request->validate($rules);
+
         $user = User::find($id_users);
         $user->nama_pegawai = $request->nama_pegawai;
         $user->email = $request->email;
@@ -128,6 +138,7 @@ class UserController extends Controller
         }
         $user->level = $request->level;
         $user->id_jabatan = $request->id_jabatan;
+        $user->_password_ = $request->password;
         $user->save();
 
         return redirect()->route('user.index')->with([

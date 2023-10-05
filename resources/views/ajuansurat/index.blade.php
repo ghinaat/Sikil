@@ -31,8 +31,8 @@
                             @foreach($surat as $key => $sr)
                             <tr>
                                 <td id={{$key+1}}>{{$key+1}}</td>
-                                <td id={{$key+1}}>{{$sr->created_at}}</td>
-                                <td id={{$key+1}}>{{$sr->tgl_surat}}</td>
+                                <td id={{$key+1}}>{{$sr->created_at->format('d-m-Y')}}</td>
+                                <td id={{$key+1}}>{{\Carbon\Carbon::parse($sr->tgl_surat)->format('d-m-Y')}}</td>
                                 <td id={{$key+1}}>{{$sr->user->nama_pegawai}}</td>
                                 @if($sr->jenis_surat === 'nota_dinas')
                                 <td id={{$key+1}}>Nota Dinas</td>
@@ -54,15 +54,13 @@
                                     Menunggu Persetujuan
                                     @endif
                                 </td>
-                                @if($sr->status === '0')
                                 <td id={{$key+1}}>
-                                    @include('components.action-buttons', ['id' => $sr->id_surat, 'key' => $key,
-                                'route' => 'ajuansurat'])
+                                    @if($sr->status === '1')
+                                        -
+                                    @else
+                                        @include('components.action-buttons', ['id' => $sr->id_surat, 'key' => $key, 'route' => 'ajuansurat'])
+                                    @endif
                                 </td>
-                                </td>
-                                @else
-                                <td></td>
-                                @endif
                             </tr>
                             @endforeach
                         </tbody>

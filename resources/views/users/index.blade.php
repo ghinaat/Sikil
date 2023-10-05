@@ -31,11 +31,10 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Pegawai</th>
-                                <th>Email</th>
-                                <th>Level</th>
+                                <th>Nama</th>
                                 <th>Jabatan</th>
-                                <th>Opsi</th>
+                                <th>Level</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,8 +44,6 @@
                             <tr>
                                 <td id="{{$key+1}}">{{$key+1}}</td>
                                 <td id="{{$key+1}}">{{$user->nama_pegawai}}</td>
-                                <td id="{{$key+1}}">{{$user->email}}</td>
-                                <td id="{{$key+1}}">{{$user->level}}</td>
                                 <td id={{$key+1}}>
                                     @if($user->jabatan)
                                     {{ $user->jabatan->nama_jabatan }}
@@ -54,6 +51,7 @@
                                     Data Kosong
                                     @endif
                                 </td>
+                                <td id="{{$key+1}}">{{$user->level}}</td>
                                 <td>
                                     @can('isAdmin')
                                     @include('components.action-buttons', ['id' => $user->id_users, 'key' => $key,
@@ -83,28 +81,28 @@
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="form-group">
-                                                    <label for="nama_pegawai">Nama Pegawai</label>
+                                                    <label for="nama_pegawai">Nama</label>
                                                     <input type="text" name="nama_pegawai" id="nama_pegawai"
-                                                        class="form-control" value="{{ $user->nama_pegawai }}" required>
+                                                        class="form-control @error('nama_pegawai') is-invalid @enderror" value="{{ old('nama_pegawai', $user->nama_pegawai) }}" required>
+                                                    @error('nama_pegawai')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                    @enderror
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword">Email</label>
                                                     <input type="email" name="email" id="exampleInputEmail"
-                                                        class="form-control" value="{{$user->email ??old('email')}}">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="exampleInputPassword">Password</label>
-                                                    <input type="password" name="password" id="exampleInputPassword"
-                                                        class="form-control" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="exampleInputPassword">Konfirmasi Password</label>
-                                                    <input type="password" name="password_confirmation"
-                                                        id="exampleInputPassword" class="form-control" required>
+                                                        class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $user->email) }}">
+                                                    @error('email')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                    @enderror
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputlevel">Level</label>
-                                                    <select class="form-select @error('level') isinvalid @enderror"
+                                                    <select class="form-select @error('level') is-invalid @enderror"
                                                         id="exampleInputlevel" name="level">
                                                         <option value="admin" @if($user->level == 'admin' ||
                                                             old('level')=='admin' )selected
@@ -122,22 +120,45 @@
                                                             old('level')=='staf' )selected
                                                             @endif>STAF</option>
                                                     </select>
-                                                    @error('level') <span class="textdanger">{{$message}}</span>
+                                                    @error('level')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputJabatan">Jabatan</label>
-                                                    <select class="form-select @error('jabatan') isinvalid @enderror"
+                                                    <select class="form-select @error('jabatan') is-invalid @enderror"
                                                         id="exampleInputJabatan" name="id_jabatan">
                                                         @foreach ($jabatans as $jabatan)
-                                                        <option value="{{ $jabatan->id_jabatan }}" @if(
-                                                            old('id_jabatan')==$jabatan->id_jabatan ) selected
-                                                            @endif">
-                                                            {{ $jabatan->nama_jabatan }}</option>
+                                                        <option value="{{ $jabatan->id_jabatan }}" @if(old('id_jabatan',$user->id_jabatan) === $jabatan->id_jabatan ) selected @endif>  {{ $jabatan->nama_jabatan }} </option>
                                                         @endforeach
 
                                                     </select>
-                                                    @error('level') <span class="textdanger">{{$message}}</span>
+                                                    @error('jabatan')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword">Password</label>
+                                                    <input type="password" name="password" id="exampleInputPassword"
+                                                        class="form-control @error('password') is-invalid @enderror">
+                                                    @error('password')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword">Konfirmasi Password</label>
+                                                    <input type="password" name="password_confirmation"
+                                                        id="exampleInputPassword" class="form-control @error('confirm_password') is-invalid @enderror">
+                                                    @error('confirm_password')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
                                                     @enderror
                                                 </div>
                                                 <div class="modal-footer">
@@ -177,20 +198,21 @@
                     @csrf
                     <div class="form-group">
                         <label for="nama_pegawai">Nama Pegawai</label>
-                        <input type="text" name="nama_pegawai" id="nama_pegawai" class="form-control" required>
+                        <input type="text" name="nama_pegawai" id="nama_pegawai" class="form-control @error('nama_pegawai') is-invalid @enderror" value="{{ old('nama_pegawai') }}"  required>
+                        @error('nama_pegawai')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail">Email</label>
-                        <input type="email" name="email" id="exampleInputEmail" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword">Password</label>
-                        <input type="password" name="password" id="exampleInputPasword" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password_confirmation">Konfirmasi Password</label>
-                        <input type="password" name="password_confirmation" id="exampleInputPassword"
-                            class="form-control" required>
+                        <input type="email" name="email" id="exampleInputEmail" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required>
+                        @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputlevel">Level</label>
@@ -202,7 +224,11 @@
                             <option value="ddo" @if(old('level')=='ddo' )selected @endif>DDO</option>
                             <option value="staf" @if(old('level')=='staf' )selected @endif>STAF</option>
                         </select>
-                        @error('level') <span class="textdanger">{{$message}}</span> @enderror
+                        @error('level')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputJabatan">Jabatan</label>
@@ -211,12 +237,35 @@
                             @foreach ($jabatans as $jabatan)
                             <option value="{{ $jabatan->id_jabatan }}" @if( old('id_jabatan')==$jabatan->id_jabatan
                                 )
-                                selected @endif">
+                                selected @endif>
                                 {{ $jabatan->nama_jabatan }}</option>
                             @endforeach
 
                         </select>
-                        @error('level') <span class="textdanger">{{$message}}</span> @enderror
+                        @error('jabatan')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" required>
+                        @error('password')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmation">Konfirmasi Password</label>
+                        <input type="password" name="password_confirmation" id="password_confirmation"
+                            class="form-control @error('password_confirmation') is-invalid @enderror" required>
+                        @error('confirm_password')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -243,5 +292,14 @@ $('#example2').DataTable({
 });
 </script>
 
+@if(count($errors))
+<script>
+Swal.fire({
+    title: 'Input tidak sesuai!',
+    text: 'Pastikan inputan sudah sesuai',
+    icon: 'error',
+});
+</script>
+@endif
 
 @endpush

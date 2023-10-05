@@ -413,15 +413,16 @@ return [
             ],
         ],
         [
+            'text' => 'Pegawai',
+            'url' => 'user',
+            'can' => 'isAdmin',
+            'icon' => 'fas fa-users',
+        ],
+        [
             'icon' => 'fas fa-user-cog',
             'text' => 'Menu Master',
             'can' => 'isAdmin',
             'submenu' => [
-                [
-                    'text' => 'Pegawai',
-                    'url' => 'user',
-                    'can' => '',
-                ],
                 [
                     'text' => 'Jabatan',
                     'url' => 'jabatan',
@@ -470,7 +471,6 @@ return [
                 ],
             ],
         ],
-
     ],
 
     /*

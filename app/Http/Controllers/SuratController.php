@@ -51,6 +51,10 @@ class SuratController extends Controller
 
         $request->validate($rules);
 
+        $countSurat = Surat::where('jenis_surat', $request->jenis_surat)
+        ->where('is_deleted', '0')
+        ->count();
+
         $surat = new Surat();
 
         $surat->tgl_surat = $request->tgl_surat;
@@ -60,7 +64,7 @@ class SuratController extends Controller
         $surat->keterangan = $request->keterangan;
         $surat->bulan_kegiatan = $request->bulan_kegiatan;
 
-        $surat->urutan = 33 + Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
+        $surat->urutan = $countSurat + 1;
 
         $kode_surat = KodeSurat::find($request->id_kode_surat);
 
@@ -73,8 +77,8 @@ class SuratController extends Controller
         }else if($request->jenis_surat == 'sertifikat_magang'){
             $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/I/' . date('Y', strtotime($surat->tgl_surat));
         }else if($request->jenis_surat == 'surat_keluar'){
-            $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . date('Y', strtotime($surat->tgl_surat));
-        }
+            $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/' . date('Y', strtotime($surat->tgl_surat));
+        }        
 
         $surat->save();
 
@@ -158,7 +162,7 @@ class SuratController extends Controller
             $surat->id_kode_surat = $request->id_kode_surat;
             $surat->keterangan = $request->keterangan;
             $surat->bulan_kegiatan = $request->bulan_kegiatan;
-            $surat->urutan = 33 +  Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
+            $surat->urutan = 1 +  Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
 
             $kode_surat = KodeSurat::find($request->id_kode_surat);
 
@@ -171,8 +175,8 @@ class SuratController extends Controller
             }else if($request->jenis_surat == 'sertifikat_magang'){
                 $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/I/' . date('Y', strtotime($surat->tgl_surat));
             }else if($request->jenis_surat == 'surat_keluar'){
-                $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . date('Y', strtotime($surat->tgl_surat));
-            }
+                $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/' . date('Y', strtotime($surat->tgl_surat));
+            }            
 
             $surat->save();
 
