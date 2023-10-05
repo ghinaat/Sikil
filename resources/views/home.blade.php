@@ -102,7 +102,7 @@
             @php
                 $nomor_urutan = 1;
             @endphp
-            @foreach ($all_kegiatan as $kegiatan)
+            @foreach ($all_kegiatan->where('tgl_mulai', '>', now())->sortBy('tgl_mulai') as $kegiatan)
             @if ($kegiatan->tgl_mulai > now())
             <tr>
                 <th scope="row">{{ $nomor_urutan }}</th>

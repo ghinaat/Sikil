@@ -136,7 +136,7 @@ class AjuanSuratController extends Controller
                 if($surat->status === '1'){
                     $notifikasi = new Notifikasi();
                     $notifikasi->judul = 'Pengajuan Nomor Surat';
-                    $notifikasi->pesan = 'Pengajuan nomor surat anda sudah berhasil disetujui dikirimkan.';
+                    $notifikasi->pesan = 'Pengajuan nomor surat anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/surat';
@@ -177,7 +177,7 @@ class AjuanSuratController extends Controller
                 if($surat->status === '1'){
                     $notifikasi = new Notifikasi();
                     $notifikasi->judul = 'Pengajuan Nomor Surat';
-                    $notifikasi->pesan = 'Pengajuan nomor surat anda sudah berhasil disetujui dikirimkan.';
+                    $notifikasi->pesan = 'Pengajuan nomor surat anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/surat';
