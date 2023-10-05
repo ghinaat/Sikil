@@ -32,7 +32,7 @@
 <body>
     <footer>
         <hr style="margin: -10px 20px 0 20px;height:0.1px;color:#000;padding:0px;">
-        <img src="images/footer.png" alt="" style="width:80%; padding-left:75px;">
+        <img src="{{asset("images/footer.png")}}" alt="" style="width:80%; padding-left:75px;">
         <p style="font-size:8px;"><i>Auto Generated File by <a href="#">SIKLIS</a></i></p>
     </footer>
     <main>
@@ -41,9 +41,9 @@
                 <table>
                     <tr>
                         <td style="width:33%;padding-left:15px;">
-                            <img src="images/tutwuri.png" alt="">
-                            <img src="images/seameo.png" alt="">
-                            <img src="images/qitep.png" alt="">        
+                            <img src="{{asset("images/tutwuri.png")}}" alt="">
+                            <img src="{{asset("images/seameo.png")}}" alt="">
+                            <img src="{{asset("images/qitep.png")}}" alt="">               
                         </td>
                         <td style="width:50%;">
                             <h5 style="margin-top: -40px;">The Southeast Asian Ministers of Education Organization (SEAMEO) <br>Regional Center for Quality Improvement of Teachers and Education Personnel (QITEP) in Language (SEAQIL) </h5>        

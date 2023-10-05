@@ -73,7 +73,7 @@ class ArsipController extends Controller
 
         $arsip->save();
 
-        return redirect()->back()->with('success_message', 'Data telah terhapus.');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     public function edit($id_arsip)
@@ -102,7 +102,7 @@ class ArsipController extends Controller
 
         $arsip = Arsip::find($id_arsip);
         if (! $arsip) {
-            return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+            return redirect()->back()->with('error_message', 'Data tidak ditemukan.');
         }
 
         $arsip->id_users = $request->id_users;

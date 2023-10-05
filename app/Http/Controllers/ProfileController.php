@@ -104,7 +104,7 @@ class ProfileController extends Controller
             'nip' => 'required',
             'nik' => 'required',
             'kk' => 'required',
-            'gelar_depan' => 'required',
+            'gelar_depan' => 'nullable',
             'gelar_belakang' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
@@ -168,9 +168,7 @@ class ProfileController extends Controller
         ]);
 
 
-        return redirect()->back()->with([
-            'success_message' => 'Profile berhasil diubah!.',
-        ]);
+        return redirect()->back()->with('success_message', 'Profile berhasil diubah!.');
     }
 
     public function arrayExclude($array, Array $excludeKeys){

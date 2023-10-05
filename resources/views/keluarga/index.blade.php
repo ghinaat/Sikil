@@ -108,13 +108,13 @@
                                                                         <label for="tanggal_lahir">Tanggal Lahir</label>
                                                                         <input type="date" class="form-control"
                                                                             class="form-control @error('tanggal_lahir') is-invalid @enderror"
-                                                                            id="tanggal_lahir" name="tanggal_lahir" value="{{old('tanggal_lahir')}}">
+                                                                            id="tanggal_lahir" name="tanggal_lahir" value="{{old('tanggal_lahir')}}" required>
                                                                         @error('tanggal_lahir') <span class="text-danger">{{$message}}</span> @enderror
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="exampleInputgender">Jenis Kelamin</label>
                                                                         <select class="form-select @error('gender') isinvalid @enderror"
-                                                                            id="exampleInputgender" name="gender">
+                                                                            id="exampleInputgender" name="gender" required>
                                                                             <option value="laki-laki" @if(old('gender')=='laki-laki' )selected @endif>
                                                                                 Laki-laki</option>
                                                                             <option value="perempuan" @if(old('gender')=='perempuan' )selected @endif>
@@ -183,20 +183,20 @@
                                                                     <div class="form-group">
                                                                         <label for="nama">Nama Lengkap</label>
                                                                         <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                                                            id="nama" name="nama" value="{{ $kel->nama ?? old('nama') }}">
+                                                                            id="nama" name="nama" value="{{ $kel->nama ?? old('nama') }}" required>
                                                                         @error('nama')<span class="text-danger">{{ $message }}</span>@enderror
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="tanggal_lahir">Tanggal Lahir</label>
                                                                         <input type="date" class="form-control"
                                                                             class="form-control @error('tanggal_lahir') is-invalid @enderror"
-                                                                            id="tanggal_lahir" name="tanggal_lahir" value="{{$kel->tanggal_lahir ??old('tanggal_lahir')}}">
+                                                                            id="tanggal_lahir" name="tanggal_lahir" value="{{$kel->tanggal_lahir ??old('tanggal_lahir')}}" required>
                                                                         @error('tanggal_lahir') <span class="text-danger">{{$message}}</span> @enderror
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="exampleInputgender">Jenis Kelamin</label>
                                                                         <select class="form-select @error('gender') isinvalid @enderror"
-                                                                            id="exampleInputgender" name="gender">
+                                                                            id="exampleInputgender" name="gender" required>
                                                                             <option value="laki-laki" @if(old('gender', $kel->gender) == 'laki-laki' ) selected @endif>
                                                                                 Laki-laki</option>
                                                                             <option value="perempuan" @if(old('gender', $kel->gender) == 'perempuan' ) selected @endif>
@@ -207,11 +207,11 @@
                                                                     <div class="form-group">
                                                                         <label for="exampleInputstatus">Status</label>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="status" id="hidupRadio" value="hidup" @if ($kel->status === 'hidup') checked @endif >
+                                                                            <input class="form-check-input" type="radio" name="status" value="hidup" id="hidupRadio" @if(old('status', $kel->status) == 'hidup') checked @endif>
                                                                             <label class="form-check-label" for="hidupRadio">Hidup</label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="status" id="meninggalRadio"  value="meninggal" @if ($kel->status === 'meninggal') checked @endif>
+                                                                            <input class="form-check-input" type="radio" name="status" value="meninggal" id="meninggalRadio"  @if(old('status', $kel->status) == 'meninggal') checked @endif>
                                                                             <label class="form-check-label" for="meninggalRadio">Meninggal</label>
                                                                         </div>
                                                                         @error('status') <span class="text-danger">{{ $message }}</span> @enderror

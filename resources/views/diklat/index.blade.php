@@ -79,7 +79,7 @@
                                                     <select id="id_jenis_diklat" name="id_jenis_diklat"
                                                         class="form-select @error('id_jenis_diklat') is-invalid @enderror" required>
                                                         @foreach ($jenisdiklat as $jd)
-                                                        <option value="{{ $jd->id_jenis_diklat }}" @if(old('id_jenis_diklat', $jd->id_jenis_diklat )=='id_jenis_diklat' ) selected @endif> 
+                                                        <option value="{{ $jd->id_jenis_diklat }}" @if($dk->id_jenis_diklat == $jd->id_jenis_diklat || old('id_jenis_diklat') === $jd->id_jenis_diklat) selected @endif> 
                                                             {{ $jd->nama_jenis_diklat }}
                                                         </option>
                                                         @endforeach
@@ -91,7 +91,7 @@
                                                         <input type="text" class="form-control @error('nama_diklat') is-invalid @enderror"
                                                             id="nama_diklat" placeholder="Nama Diklat"
                                                             name="nama_diklat" value="{{$dk->nama_diklat ?? old('nama_diklat')}}" required>
-                                                        @error('tgl_mulai') <span class="textdanger">{{$message}}</span> @enderror
+                                                        @error('nama_diklat') <span class="text-danger">{{$message}}</span> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -100,7 +100,7 @@
                                                         <input type="text" class="form-control @error('penyelenggara') is-invalid @enderror"
                                                             id="penyelenggara" placeholder="Penyelenggara" name="penyelenggara"
                                                             value="{{$dk->penyelenggara ?? old('penyelenggara')}}" required>
-                                                        @error('penyelenggara') <span class="textdanger">{{$message}}</span> @enderror
+                                                        @error('penyelenggara') <span class="text-danger">{{$message}}</span> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -110,7 +110,7 @@
                                                             class="form-control @error('tanggal_diklat') is-invalid @enderror"
                                                             id="tanggal_diklat" placeholder="Tanggal_diklat" name="tanggal_diklat"
                                                             value="{{$dk->tanggal_diklat ?? old('tanggal_diklat')}}" required>
-                                                        @error('tanggal_diklat') <span class="textdanger">{{$message}}</span> @enderror
+                                                        @error('tanggal_diklat') <span class="text-danger">{{$message}}</span> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -118,13 +118,13 @@
                                                     <div class="form-input">
                                                         <input type="text" class="form-control @error('jp') is-invalid @enderror"
                                                             id="jp" placeholder="Jp" name="jp" value="{{$dk->jp ?? old('jp')}}" required>
-                                                        @error('jp') <span class="textdanger">{{$message}}</span> @enderror
+                                                        @error('jp') <span class="text-danger">{{$message}}</span> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="file_sertifikat">File Sertifikat</label>
                                                     <input type="file"class="form-control @error('nama_diklat') is-invalid @enderror"  id="file_sertifikat"
-                                                        enctype="multipart/form-data" name="file_sertifikat">
+                                                        enctype="multipart/form-data" name="file_sertifikat" accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx">
                                                         @error('file_sertifikat') 
                                                         <span class="invalid" role="alert">{{$message}}</span>
                                                     @enderror
@@ -213,10 +213,10 @@
                             <div class="form-group">
                                 <label for="file_sertifikat">File Sertifikat</label>
                                 <input type="file" class="form-control @error('file_sertifikat') is-invalid @enderror"  
-                                    id="file_sertifikat" enctype="multipart/form-data" name="file_sertifikat">
+                                    id="file_sertifikat" enctype="multipart/form-data" name="file_sertifikat"
+                                    accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx">
                                     @error('file_sertifikat') <span class="invalid" role="alert">{{$message}}</span> @enderror
-                                <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf
-                                    .docx</small>
+                                <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                             </div>
                         </div>
                     </div>
