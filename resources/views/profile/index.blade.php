@@ -21,7 +21,7 @@
                                 src="{{ asset( 'images/' . $user->photo)  }}" alt="User profile picture">
                             @else
                             <img class="profile-user-img img-fluid img-rounded"
-                                src="{{ asset( 'storage/profile/' . $user->photo)  }}" alt="User profile picture">
+                                src="{{ asset( '/storage/profile/' . $user->photo)  }}" alt="User profile picture">
                             @endif
 
                             <h3 class="profile-username text-center">{{ $main_user->nama_pegawai }}</h3>
@@ -209,11 +209,13 @@
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="form-group">
+
                                                                 <label for="nama_pegawai" class='form-label'>Nama</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
                                                                         class="form-control @error('nama_pegawai') is-invalid @enderror"
                                                                         id="nama_pegawai" placeholder="nama_pegawai" name="nama_pegawai"
+
                                                                         value="{{$main_user->nama_pegawai ?? old('nama_pegawai')}}">
                                                                     @error('nama_pegawai') <span
                                                                         class="text-danger">{{$message}}</span> @enderror
@@ -233,11 +235,13 @@
                                                             <div class="form-group">
                                                                 <label for="email" class='form-label'>Email</label>
                                                                 <div class="form-input">
-                                                                    <input type="text"
-                                                                        class="form-control @error('email') is-invalid @enderror"
-                                                                        id="email" placeholder="email" name="email"
-                                                                        value="{{$main_user->email ?? old('email')}}">
-                                                                    @error('email') <span
+                                                                <select class="form-select @error('id_jabatan') is-invalid @enderror"
+                                                                    id="exampleInputJabatan" name="id_jabatan">
+                                                                    @foreach ($jabatan as $jabatan)
+                                                                    <option value="{{ $jabatan->id_jabatan }}" @if(old('id_jabatan',$main_user->id_jabatan) === $jabatan->id_jabatan ) selected @endif>  {{ $jabatan->nama_jabatan }} </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                    @error('id_jabatan') <span
                                                                         class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>

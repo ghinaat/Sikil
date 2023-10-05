@@ -43,7 +43,8 @@
                                                                 @endcan
                                                                 <td>{{$kel->hubkel->nama}}</td>
                                                                 <td>{{$kel->nama}}</td>
-                                                                <td>{{$kel->tanggal_lahir}}</td>
+                                                                <td>{{ date_format( new DateTime($kel->tanggal_lahir), 'd F Y')}}
+                                                                </td>
                                                                 <td>
                                                                     @if($kel->gender == 'laki-laki')
                                                                     Laki-Laki
@@ -51,6 +52,7 @@
                                                                     Perempuan
                                                                     @endif
                                                                 </td>
+
                                                                 <td>{{$kel->status}}</td>
                                                                 <td>
                                                                     @include('components.action-buttons', ['id' => $kel->id_keluarga, 'key' => $key, 'route' => 'keluarga'])

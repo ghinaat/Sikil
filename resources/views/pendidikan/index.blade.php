@@ -103,8 +103,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="tahun_lulus" class="form-label">Tahun Lulus</label>
-                                                    <input type="text" class="form-control @error('tahun_lulus') is-invalid @enderror"
-                                                        id="tahun_lulus" name="tahun_lulus" value="{{$pd ->tahun_lulus ?? old('tahun_lulus')}}" maxlength="4" required>
+                                                    <input type="number"
+                                                        class="form-control @error('tahun_lulus') is-invalid @enderror"
+                                                        id="tahun_lulus" name="tahun_lulus"
+                                                        value="{{$pd ->tahun_lulus ?? old('tahun_lulus')}}"
+                                                        maxlength="4" required>
                                                     @error('tahun_lulus') <span class="text-danger">{{$message}}</span>
                                                     @enderror
                                                 </div>
@@ -186,7 +189,7 @@
                     </div>
                     <div class="form-group">
                         <label for="tahun_lulus" class="form-label">Tahun Lulus</label>
-                        <input type="text" class="form-control @error('tahun_lulus') is-invalid @enderror"
+                        <input type="number" class="form-control @error('tahun_lulus') is-invalid @enderror"
                             id="tahun_lulus" name="tahun_lulus" value="{{  old('tahun_lulus')}}" maxlength="4" required>
                         @error('tahun_lulus') <span class="text-danger">{{$message}}</span>
                         @enderror

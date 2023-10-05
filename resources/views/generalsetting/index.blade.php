@@ -17,7 +17,7 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Pegawai</th>
+                                <th>Nama PPK</th>
                                 <th>Tahun Aktif</th>
                                 <th>Status</th>
                                 <th style="width:189px;">Opsi</th>
@@ -145,7 +145,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-6" for="id_users">Nama Pegawai</label>
+                        <label class="control-label col-md-6" for="id_users">Nama PPK</label>
                         <select id="id_users" name="id_users"
                             class="form-select @error('id_users') is-invalid @enderror">
                             @foreach ($user as $us)

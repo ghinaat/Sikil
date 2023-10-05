@@ -157,7 +157,16 @@
                                                 @csrf
                                                 @method('PUT')
                                                 @can('isAdmin')
-                                                <input type="hidden" name="kode_finger" value="{{ old('kode_finger', Auth::user()->kode_finger) }}">
+                                                <div class="form-group">
+                                                            <label for="kode_finger">Nama Pegawai</label>
+                                                            <select type="hidden" id="kode_finger" name="kode_finger" class="form-select @error('kode_finger') is-invalid @enderror">
+                                                                @foreach ($users as $u)
+                                                                <option value="{{ $u->kode_finger }}" {{ $ap->kode_finger == $u->kode_finger ? 'selected' : '' }}>
+                                                                    {{ $u->nama_pegawai }} 
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                 <div class="form-group">
                                                     <label for="tgl_absen_awal" class='form-label'>Tanggal Awal
                                                         Izin</label>

@@ -17,7 +17,7 @@ $(document).ready(function() {
             text: successMessage,
         });
     }
-    if (errorMessage) { // Tambahkan ini
+    if (errorMessage) { 
         Swal.fire({
             icon: 'error',
             title: 'Error!',

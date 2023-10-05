@@ -103,8 +103,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/diklat', [DiklatController::class, 'index'])->name('diklat.index');
     Route::get('/diklat/{id_users}/profile', [DiklatController::class, 'showAdmin'])->name('diklat.showAdmin')->middleware('isAdmin');
     Route::post('/diklat', [DiklatController::class, 'store'])->name('diklat.store');
-    Route::put('/diklat/{id_diklat}', [DiklatController::class, 'update'])->name('diklat.update')->middleware('isAdmin');
-    Route::delete('/diklat/{id_diklat}', [DiklatController::class, 'destroy'])->name('diklat.destroy')->middleware('isAdmin');
+    Route::put('/diklat/{id_diklat}', [DiklatController::class, 'update'])->name('diklat.update');
+    Route::delete('/diklat/{id_diklat}', [DiklatController::class, 'destroy'])->name('diklat.destroy');
 });
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/arsip', [ArsipController::class, 'index'])->name('arsip.index');

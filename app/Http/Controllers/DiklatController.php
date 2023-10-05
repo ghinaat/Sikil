@@ -19,9 +19,7 @@ class DiklatController extends Controller
             // Fetch the user's own work experiences
             $diklat = Diklat::where('is_deleted', '0')->get();
         } else {
-            $diklat = Diklat::where('id_users', $user->id_users)
-                ->where('is_deleted', '0')
-                ->get();
+            $diklat = $user->diklat()->where('is_deleted', '0')->get();
         }
 
         return view('diklat.index', [
@@ -34,7 +32,7 @@ class DiklatController extends Controller
     public function showAdmin(Request $request, $id_users)
     {
         $user = User::where('id_users', $id_users)->first();
-        $diklat = Diklat::where('id_users', $user->id_users)->where('is_deleted', '0')->get();
+        $diklat = $user->diklat()->where('is_deleted', '0')->get();
 
         return view('diklat.index', [
             'id_users' => $id_users,

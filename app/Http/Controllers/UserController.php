@@ -25,12 +25,13 @@ class UserController extends Controller
     {
         $user = User::where('id_users', $id_users)->first();
         $user_profile = Profile::where('id_users', $id_users)->first();
-
+        $jabatan = Jabatan::all();
         $tingkat_pendidikan = TingkatPendidikan::all();
 
         return view('profile.index', [
             'main_user' => $user,
             'user' => $user_profile,
+            'jabatan' => $jabatan,
             'tingkat_pendidikans' => $tingkat_pendidikan,
         ]);
     }
