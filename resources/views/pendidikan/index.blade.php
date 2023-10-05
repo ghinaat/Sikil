@@ -167,7 +167,7 @@
                             
                             @endforeach
                         </select>
-                        @error('level') <span class="text-danger">{{$message}}</span>
+                        @error('id_tingkat_pendidikan') <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="form-group">

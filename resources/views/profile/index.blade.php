@@ -168,7 +168,11 @@
                                     <div class="form-group">
                                         <label for="status_kawin" class='form-label'>Status Kawin</label>
                                         <div class="form-input">
-                                        : {{ $user->status_kawin }}
+                                        @if($user->status_kawin == 'belum_menikah')
+                                        : Belum menikah
+                                        @else
+                                        : Menikah
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
