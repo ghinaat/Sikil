@@ -59,6 +59,10 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('isKadiv', function (User $user) {
             return $user->level === 'kadiv';
         });
+		
+		Gate::define('isStaf', function (User $user) {
+            return $user->level === 'staf';
+        });
 
     }
 }

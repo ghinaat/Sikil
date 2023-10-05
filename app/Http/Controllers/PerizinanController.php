@@ -248,6 +248,7 @@ class PerizinanController extends Controller
         $notifikasi->id_users = $request->id_atasan;
         $notifikasi->save();
 
+
         $ppk = GeneralSetting::where('status', '1')->first();
         if ($request->jenis_perizinan !== 'I') {
             $notifikasi = new Notifikasi();

@@ -307,41 +307,25 @@ return [
             ],
         ],
         [
-            'text' => 'Home',
+            'text' => 'Beranda',
             'url' => '/home',
             'icon' => 'fas fa-home',
             'can' => '',
         ],
         // Sidebar items:
-        'ACCOUNT SETTINGS',
+        'PENGGUNA',
         [
-            'text' => 'Profile',
+            'text' => 'Profil',
             'route' => 'profile.index',
             'icon' => 'fas fa-fw fa-user',
         ],
-        'MAIN NAVIGATION',
-        [
-            'text' => 'Short Link / QR Code',
-            'url' => '/url',
-            'icon' => 'fas fa-qrcode',
-            'can' => '',
+		[
+            'text' => 'Pegawai',
+            'url' => 'user',
+            'can' => 'isAdmin',
+            'icon' => 'fas fa-users',
         ],
-        [
-            'icon' => 'fas fa-envelope',
-            'text' => 'Nomor Surat',
-            'submenu' => [
-                [
-                    'text' => 'Surat',
-                    'url' => '/surat',
-                    'can' => '',
-                ],
-                [
-                    'text' => 'Kelola Surat',
-                    'url' => '/ajuansurat',
-                    'can' => 'isAdmin',
-                ],
-            ],
-        ],
+        'MENU UTAMA',
         [
             'icon' => 'fas fa-book',
             'text' => 'Data Kegiatan',
@@ -354,39 +338,49 @@ return [
                 [
                     'text' => 'Tim Kegiatan',
                     'url' => 'timkegiatan',
-                    'can' => '',
+                    'can' => 'isAdmin',
                 ],
                 [
-                    'text' => 'Laporan',
+                    'text' => 'Rekap Peran',
                     'url' => '/laporan',
-                    'can' => '',
+                    'can' => 'isAdmin',
                 ],
 
             ],
         ],
-        [
+		[
             'icon' => 'fas fa-edit',
             'text' => 'Kehadiran',
             'submenu' => [
-                [
+				[
                     'text' => 'Presensi',
                     'url' => '/presensi',
                     'can' => '',
                 ],
+				[
+                    'text' => 'Kelola Presensi',
+                    'url' => '/presensi/admin',
+                    'can' => 'isAdmin',
+                ],
                 [
                     'text' => 'Perizinan',
                     'url' => '/perizinan',
-                    'can' => '',
+                    'can' => ['isBod', 'isPpk', 'isKadiv', 'isStaf'],
+                ],
+				[
+                    'text' => 'Persetujuan Perizinan',
+                    'url' => '/ajuanperizinan',
+                    'can' => ['isBod', 'isPpk', 'isKadiv'],
+                ],
+				[
+                    'text' => 'Kelola Perizinan',
+                    'url' => '/ajuanperizinan',
+                    'can' => ['isAdmin'],
                 ],
                 [
                     'text' => 'Lembur',
                     'url' => '/lembur',
-                    'can' => '',
-                ],
-                [
-                    'text' => 'Kelola Perizinan',
-                    'url' => '/ajuanperizinan',
-                    'can' => ['isBod', 'isPpk', 'isKadiv'],
+                    'can' => ['isBod', 'isPpk', 'isKadiv', 'isStaf'],
                 ],
                 [
                     'text' => 'Kelola Lembur',
@@ -394,16 +388,8 @@ return [
                     'can' => ['isBod', 'isPpk', 'isKadiv', 'isAdmin'],
 
                 ],
-                [
-                    'text' => 'Kelola Presensi',
-                    'url' => '/presensi/admin',
-                    'can' => 'isAdmin',
-                ],
-                [
-                    'text' => 'Kelola Perizinan',
-                    'url' => '/ajuanperizinan',
-                    'can' => 'isAdmin',
-                ],
+                
+                
                 [
                     'text' => 'Rekap Lembur',
                     'url' => '/lembur/rekap',
@@ -412,15 +398,28 @@ return [
 
             ],
         ],
-        [
-            'text' => 'Pegawai',
-            'url' => 'user',
-            'can' => 'isAdmin',
-            'icon' => 'fas fa-users',
+		[
+            'icon' => 'fas fa-envelope',
+            'text' => 'Nomor Surat',
+			'url' => '/surat',
+			'can' => ['isBod', 'isPpk', 'isKadiv', 'isStaf'],
+        ],
+		[
+            'icon' => 'fas fa-envelope',
+            'text' => 'Nomor Surat',
+			'url' => '/ajuansurat',
+			'can' => 'isAdmin',
+        ],
+		
+		[
+            'text' => 'Short Link / QR Code',
+            'url' => '/url',
+            'icon' => 'fas fa-qrcode',
+            'can' => '',
         ],
         [
             'icon' => 'fas fa-user-cog',
-            'text' => 'Menu Master',
+            'text' => 'Master Data',
             'can' => 'isAdmin',
             'submenu' => [
                 [

@@ -29,6 +29,7 @@ class PendidikanController extends Controller
 
         return view('pendidikan.index', [
             'pendidikan' => $pendidikan,
+            'user' => User::where('is_deleted', '0')->get(),
             'tingpen' => TingkatPendidikan::where('is_deleted', '0')->get(),
         ]);
     }

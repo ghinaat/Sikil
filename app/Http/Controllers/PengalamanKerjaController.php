@@ -27,7 +27,8 @@ class PengalamanKerjaController extends Controller
         }
 
         return view('pengalamankerja.index', [
-            'penker' => $penker,
+        'penker' => $penker,
+        'user' => User::where('is_deleted', '0')->get(),
         ]);
     }
 

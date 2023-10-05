@@ -451,7 +451,18 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->save();
 
                     return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+                }elseif($ajuanperizinan->status_izin_atasan === '1' && $ajuanperizinan->status_izin_ppk === null) {
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Persetujuan Izin ';
+                    $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui oleh kadiv. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/perizinan';
+                    $notifikasi->id_users = $pengguna->id_users;
+                    $notifikasi->save();
 
+                    return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+                    
                 } elseif ($ajuanperizinan->status_izin_atasan === '0' && $ajuanperizinan->status_izin_ppk === '0') {
                     $notifikasi = new Notifikasi();
                     $notifikasi->judul = 'Persetujuan Izin ';

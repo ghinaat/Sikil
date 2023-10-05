@@ -73,7 +73,21 @@
                                             <form action="{{ route('diklat.update', $dk->id_diklat) }}" method="post">
                                                 @csrf
                                                 @method('PUT')
+                                                @if (isset($id_users) || Auth()->user()->level != 'admin')
                                                 <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
+                                                @else
+                                                <div class="form-group">
+                                                    <label class="id_users" for="id_users">Nama Pegawai</label>
+                                                    <select id="id_users" name="id_users"
+                                                        class="form-select @error('id_users') is-invalid @enderror">
+                                                            @foreach ($users as $us)
+                                                            <option value="{{ $us->id_users }}" @if( $dk->id_users === old('id_users', $us->id_users) ) selected @endif>
+                                                            {{ $us->nama_pegawai }}
+                                                            </option>
+                                                            @endforeach
+                                                    </select>
+                                                </div>
+                                                @endif
                                                 <div class="form-group">
                                                     <label class="control-label col-md-6" for="id_jenis_diklat">Jenis Diklat</label>
                                                     <select id="id_jenis_diklat" name="id_jenis_diklat"
@@ -170,7 +184,21 @@
                 <form action="{{ route('diklat.store') }}" method="POST" id="form" class="form-horizontal"
                     enctype="multipart/form-data">
                     @csrf
+                    @if (isset($id_users) || Auth()->user()->level != 'admin')
                     <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
+                    @else
+                    <div class="form-group">
+                    <label class="id_users" for="id_users">Nama Pegawai</label>
+                    <select id="id_users" name="id_users"
+                    class="form-select @error('id_users') is-invalid @enderror">
+                    @foreach ($users as $us)
+                    <option value="{{ $us->id_users }}" @if( old('id_users', $us->id_users) ) selected @endif>
+                    {{ $us->nama_pegawai }}
+                    </option>
+                    @endforeach
+                    </select>
+                    </div>            
+                    @endif                                              
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-12">

@@ -10,9 +10,9 @@
     <div class="col-12">
         <div class="card">
             @if (Route::currentRouteName() === 'penker.showAdmin')
-                @include('partials.nav-pills-profile-admin', ['id_users' => $id_users])
+            @include('partials.nav-pills-profile-admin', ['id_users' => $id_users])
             @else
-                @include('partials.nav-pills-profile')
+            @include('partials.nav-pills-profile')
             @endcan
             <div class="card-body">
                 <div class="table-responsive">
@@ -50,13 +50,15 @@ table-stripped" id="example2">
                                 <td id={{$key+1}}>{{$pk->posisi}}</td>
                                 <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
                                     <a href="{{ asset('/storage/pengalaman_kerja/'. $pk->file_kerja) }}" download>
-                                        <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
-                                        </a>
+                                        <i class="fas fa-download"
+                                            style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
+                                    </a>
 
                                 </td>
-                            <td>
-                                @include('components.action-buttons', ['id' => $pk->id_pengalaman_kerja, 'key' => $key, 'route' => 'penker'])
-                            </td>
+                                <td>
+                                    @include('components.action-buttons', ['id' => $pk->id_pengalaman_kerja, 'key' =>
+                                    $key, 'route' => 'penker'])
+                                </td>
 
                             </tr>
                             <!-- Edit modal -->
@@ -77,15 +79,31 @@ table-stripped" id="example2">
                                                 method="post" enctype="multipart/form-data">
                                                 @csrf
                                                 @method('PUT')
-                                                <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
+                                                @if (isset($id_users) || Auth()->user()->level != 'admin')
+                                                <input type="hidden" name="id_users"
+                                                    value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
+                                                @else
+                                                <div class="form-group">
+                                                    <label class="id_users" for="id_users">Nama Pegawai</label>
+                                                    <select id="id_users" name="id_users"
+                                                        class="form-select @error('id_users') is-invalid @enderror">
+                                                        @foreach ($user as $us)
+                                                        <option value="{{ $us->id_users }}" @if( $pk->id_users ===
+                                                            old('id_users', $us->id_users) ) selected @endif>
+                                                            {{ $us->nama_pegawai }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                @endif
                                                 <div class="form-group">
                                                     <label for="nama_perusahaan" class="form-label">Nama
                                                         Perusahaan</label>
                                                     <input type="text"
                                                         class="form-control @error('nama_perusahaan') is-invalid @enderror"
-                                                        id="nama_perusahaan"
-                                                        name="nama_perusahaan"
-                                                        value="{{$pk ->nama_perusahaan ?? old('nama_perusahaan')}}" required>
+                                                        id="nama_perusahaan" name="nama_perusahaan"
+                                                        value="{{$pk ->nama_perusahaan ?? old('nama_perusahaan')}}"
+                                                        required>
                                                     @error('nama_perusahaan') <span
                                                         class="text-danger">{{$message}}</span> @enderror
 
@@ -106,15 +124,16 @@ table-stripped" id="example2">
 
                                                     <input type="text"
                                                         class="form-control @error('posisi') is-invalid @enderror"
-                                                        id="posisi" name="posisi"
-                                                        value="{{old('posisi', $pk->posisi)}}" required>
+                                                        id="posisi" name="posisi" value="{{old('posisi', $pk->posisi)}}"
+                                                        required>
                                                     @error('posisi') <span class="text-danger">{{$message}}</span>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="file_kerja">Surat Pengalaman</label>
                                                     <input type="file" name="file_kerja" id="file_kerja"
-                                                        class="form-control @error('file_kerja') is-invalid @enderror" accept=".jpeg, .jpg, .png, .pdf, .docx" >
+                                                        class="form-control @error('file_kerja') is-invalid @enderror"
+                                                        accept=".jpeg, .jpg, .png, .pdf, .docx">
                                                     @error('file_kerja')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -129,7 +148,8 @@ table-stripped" id="example2">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                                    <button type="button" class="btn btn-danger"
+                                                        data-dismiss="modal">Batal</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -160,13 +180,27 @@ table-stripped" id="example2">
             <div class="modal-body">
                 <form action="{{ route('penker.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
+                    @if (isset($id_users) || Auth()->user()->level != 'admin')
+                    <input type="hidden" name="id_users"
+                        value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
+                    @else
+                    <div class="form-group">
+                        <label class="id_users" for="id_users">Nama Pegawai</label>
+                        <select id="id_users" name="id_users"
+                            class="form-select @error('id_users') is-invalid @enderror">
+                            @foreach ($user as $us)
+                            <option value="{{ $us->id_users }}" @if( old('id_users', $us->id_users) ) selected @endif>
+                                {{ $us->nama_pegawai }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
                     <div class="form-group">
                         <label for="nama_perusahaan" class="form-label">Nama Perusahaan</label>
 
                         <input type="text" class="form-control @error('nama_perusahaan') is-invalid @enderror"
-                            id="nama_perusahaan"  name="nama_perusahaan"
-                            value="{{old('nama_perusahaan')}}" required>
+                            id="nama_perusahaan" name="nama_perusahaan" value="{{old('nama_perusahaan')}}" required>
                         @error('nama_perusahaan') <span class="text-danger">{{$message}}</span> @enderror
 
                     </div>
@@ -187,7 +221,9 @@ table-stripped" id="example2">
                     </div>
                     <div class="form-group">
                         <label for="file_kerja">Surat Pengalaman</label>
-                        <input type="file" name="file_kerja" id="file_kerja" class="form-control @error('file_kerja') is-invalid @enderror" accept=".jpeg, .jpg, .png, .pdf, .docx" required> @error('file_kerja')
+                        <input type="file" name="file_kerja" id="file_kerja"
+                            class="form-control @error('file_kerja') is-invalid @enderror"
+                            accept=".jpeg, .jpg, .png, .pdf, .docx" required> @error('file_kerja')
                         <span class="text-danger">{{$message}}</span> @enderror
                         <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                     </div>
