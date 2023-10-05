@@ -43,7 +43,8 @@
                                                                 @endcan
                                                                 <td>{{$kel->hubkel->nama}}</td>
                                                                 <td>{{$kel->nama}}</td>
-                                                                <td>{{$kel->tanggal_lahir}}</td>
+                                                                <td>{{ date_format( new DateTime($kel->tanggal_lahir), 'd F Y')}}
+                                                                </td>
                                                                 <td>{{$kel->gender}}</td>
                                                                 <td>{{$kel->status}}</td>
                                                                 <td>
@@ -199,11 +200,11 @@
                                                                     <div class="form-group">
                                                                         <label for="exampleInputstatus">Status</label>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="status" value="hidup" id="hidupRadio" @if(old('status', $kel->status) === 'hidup') checked @endif>
+                                                                            <input class="form-check-input" type="radio" name="status" id="hidupRadio" value="hidup" @if ($kel->status === 'hidup') checked @endif >
                                                                             <label class="form-check-label" for="hidupRadio">Hidup</label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="status" value="meninggal" id="meninggalRadio"  @if(old('status', $kel->status) === 'meninggal') checked @endif>
+                                                                            <input class="form-check-input" type="radio" name="status" id="meninggalRadio"  value="meninggal" @if ($kel->status === 'meninggal') checked @endif>
                                                                             <label class="form-check-label" for="meninggalRadio">Meninggal</label>
                                                                         </div>
                                                                         @error('status') <span class="text-danger">{{ $message }}</span> @enderror

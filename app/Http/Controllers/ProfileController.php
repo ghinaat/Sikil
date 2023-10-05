@@ -48,12 +48,14 @@ class ProfileController extends Controller
     {
         $user = User::where('id_users', auth()->user()->id_users)->first();
         $user_profile = Profile::where('id_users', auth()->user()->id_users)->first();
+        $jabatan = Jabatan::all();
 
         $tingkat_pendidikan = TingkatPendidikan::all();
 
         return view('profile.index', [
             'main_user' => $user,
             'user' => $user_profile,
+            'jabatan' => $jabatan,
             'tingkat_pendidikans' => $tingkat_pendidikan,
         ]);
     }
@@ -96,6 +98,9 @@ class ProfileController extends Controller
     public function update(Request $request, $id_users)
     {
         $rules = [
+            'nama_pegawai' => 'required',
+            'email' => 'required',
+            'id_jabatan' => 'required',
             'nip' => 'required',
             'nik' => 'required',
             'kk' => 'required',
@@ -119,6 +124,13 @@ class ProfileController extends Controller
             $rules['photo'] = 'required|image|mimes:jpeg,png,jpg';
         }
 
+        $user = User::find($id_users);
+
+        $user->update([
+            'nama_pegawai' => $request->input('nama_pegawai'),
+            'email' => $request->input('email'),
+            'id_jabatan' => $request->input('id_jabatan'),
+        ]);
 
         $validatedData = $request->validate($rules);
 
@@ -132,9 +144,26 @@ class ProfileController extends Controller
             $validatedData['photo'] = str_replace('public/profile/', '', $request->file('photo')->store('public/profile'));
         }
 
-        $validatedData['id_users'] = $id_users;
+        $profile = Profile::where('id_users', $id_users)->first();
 
-        Profile::where('id_users', $id_users)->update($validatedData);
+        $profile->update([
+            'nip' => $request->input('nip'),
+            'nik' => $request->input('nik'),
+            'kk' => $request->input('kk'),
+            'gelar_depan' => $request->input('gelar_depan'),
+            'gelar_belakang' => $request->input('gelar_belakang'),
+            'tempat_lahir' => $request->input('tempat_lahir'),
+            'tanggal_lahir' => $request->input('tanggal_lahir'),
+            'alamat' => $request->input('alamat'),
+            'no_hp' => $request->input('no_hp'),
+            'agama' => $request->input('agama'),
+            'gender' => $request->input('gender'),
+            'pendidikan' => $request->input('pendidikan'),
+            'tmt' => $request->input('tmt'),
+            'status_kawin' => $request->input('status_kawin'),
+            'bpjs' => $request->input('bpjs'),
+            'id_tingkat_pendidikan' => $request->input('id_tingkat_pendidikan'),
+        ]);
 
         return redirect()->back()->with([
             'success_message' => 'Profile berhasil diubah!.',
