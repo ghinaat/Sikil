@@ -88,7 +88,7 @@ class PengalamanKerjaController extends Controller
     {
         //
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
@@ -96,16 +96,17 @@ class PengalamanKerjaController extends Controller
     {
         //
     }
-
+    
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id_pengalaman_kerja)
     {
+        // dd($request);
         $request->validate([
             'nama_perusahaan' => 'required',
             'masa_kerja' => 'required',
-            'file_kerja' => 'required:|mimes:pdf,doc,docx,png,jpg,jpeg|max:2048', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
+            'file_kerja' => 'mimes:pdf,doc,docx,png,jpg,jpeg|max:2048', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
             'posisi' => 'required',
             'id_users' => 'required',
         ]);
@@ -134,7 +135,7 @@ class PengalamanKerjaController extends Controller
 
         $penker->save();
 
-        return redirect()->route('penker.index')->with('success_message', 'Data telah tersimpan');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**

@@ -56,7 +56,7 @@ class KeluargaController extends Controller
         ]);
         $keluarga = Keluarga::create($array);
 
-        return redirect()->back()->with('success_message', 'Data telah tersimpan');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     public function edit($id_keluarga)
@@ -69,7 +69,7 @@ class KeluargaController extends Controller
 
         return view('keluarga.edit', [
             'keluarga' => $keluarga,
-            'users' => Users::where('is_deleted', '0')->get(),
+            'users' => User::where('is_deleted', '0')->get(),
             'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get(),
         ]);
     }
@@ -95,7 +95,7 @@ class KeluargaController extends Controller
         $keluarga->status = $request->status;
         $keluarga->save();
 
-        return redirect()->route('keluarga.index')->with('success_message', 'Data telah tersimpan');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     public function destroy($id_keluarga)
@@ -106,7 +106,7 @@ class KeluargaController extends Controller
             $keluarga->save();
         }
 
-        return redirect()->route('keluarga.index')->with('success_message', 'Data telah terhapus');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     public function showAdmin(Request $request, $id_users)

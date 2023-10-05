@@ -48,7 +48,11 @@
                                     <div class="form-group">
                                         <label for="nama" class='form-label'>Nama</label>
                                         <div class="form-input">
+                                            @if($user->gelar_depan)
                                             : {{ $user->gelar_depan }}. {{ $main_user->nama_pegawai }} {{ $user->gelar_belakang }}
+                                            @else
+                                            : {{ $main_user->nama_pegawai }} {{ $user->gelar_belakang }}
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -201,29 +205,31 @@
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="form-group">
-                                                                <label for="nama_pegawai" class='form-label'>Nama Pegawai</label>
+
+                                                                <label for="nama_pegawai" class='form-label'>Nama</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
                                                                         class="form-control @error('nama_pegawai') is-invalid @enderror"
-                                                                        id="nama_pegawai" placeholder="NIP" name="nama_pegawai"
+                                                                        id="nama_pegawai" placeholder="nama_pegawai" name="nama_pegawai"
+
                                                                         value="{{$main_user->nama_pegawai ?? old('nama_pegawai')}}">
                                                                     @error('nama_pegawai') <span
                                                                         class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="email" class='form-label'>Email</label>
+                                                                <label for="jabatan" class='form-label'>Jabatan</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
-                                                                        class="form-control @error('email') is-invalid @enderror"
-                                                                        id="email" placeholder="NIP" name="email"
-                                                                        value="{{$main_user->email ?? old('email')}}">
-                                                                    @error('email') <span
+                                                                        class="form-control @error('jabatan') is-invalid @enderror"
+                                                                        id="jabatan" placeholder="jabatan" name="jabatan"
+                                                                        value="{{$main_user->jabatan->nama_jabatan ?? old('jabatan')}}" readonly>
+                                                                    @error('jabatan') <span
                                                                         class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="id_jabatan" class='form-label'>Jabatan</label>
+                                                                <label for="email" class='form-label'>Email</label>
                                                                 <div class="form-input">
                                                                 <select class="form-select @error('id_jabatan') is-invalid @enderror"
                                                                     id="exampleInputJabatan" name="id_jabatan">

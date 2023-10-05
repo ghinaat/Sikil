@@ -48,9 +48,10 @@
                                 <td id={{$key+1}}>{{$dk->penyelenggara}}</td>
                                 <td id={{$key+1}}>{{$dk->tanggal_diklat}}</td>
                                 <td id={{$key+1}}>{{$dk->jp}}</td>
-                                <td id={{$key+1}}>
-                                    <a href="{{ asset('/storage/file_sertifikat/'. $dk->file_sertifikat) }}"
-                                        target="_blank">Lihat Dokumen</a>
+                                <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
+                                    <a href="{{ asset('/storage/file_sertifikat/'. $dk->file_sertifikat) }}" download>
+                                        <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
+                                    </a>
                                 </td>
                                 <td>
                                     @include('components.action-buttons', ['id' => $dk->id_diklat, 'key' => $key,
@@ -72,17 +73,13 @@
                                             <form action="{{ route('diklat.update', $dk->id_diklat) }}" method="post">
                                                 @csrf
                                                 @method('PUT')
-                                                <input type="hidden" name="id_users"
-                                                    value="{{ Auth::user()->id_users}}">
+                                                <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-6" for="id_jenis_diklat">Jenis
-                                                        Diklat</label>
+                                                    <label class="control-label col-md-6" for="id_jenis_diklat">Jenis Diklat</label>
                                                     <select id="id_jenis_diklat" name="id_jenis_diklat"
-                                                        class="form-select @error('id_jenis_diklat') is-invalid @enderror">
+                                                        class="form-select @error('id_jenis_diklat') is-invalid @enderror" required>
                                                         @foreach ($jenisdiklat as $jd)
-                                                        <option value="{{ $jd->id_jenis_diklat }}" @if(
-                                                            old('id_jenis_diklat')==$jd->id_jenis_diklat
-                                                            ) selected @endif>
+                                                        <option value="{{ $jd->id_jenis_diklat }}" @if(old('id_jenis_diklat', $jd->id_jenis_diklat )=='id_jenis_diklat' ) selected @endif> 
                                                             {{ $jd->nama_jenis_diklat }}
                                                         </option>
                                                         @endforeach
@@ -91,63 +88,47 @@
                                                 <div class="form-group">
                                                     <label for="tgl_mulai" class='form-label'>Nama Diklat</label>
                                                     <div class="form-input">
-                                                        <input type="text" class="form-control"
-                                                            class="form-control @error('nama_diklat') is-invalid @enderror"
+                                                        <input type="text" class="form-control @error('nama_diklat') is-invalid @enderror"
                                                             id="nama_diklat" placeholder="Nama Diklat"
-                                                            name="nama_diklat"
-                                                            value="{{$dk -> nama_diklat ?? old('nama_diklat')}}">
-                                                        @error('tgl_mulai') <span class="textdanger">{{$message}}</span>
-                                                        @enderror
+                                                            name="nama_diklat" value="{{$dk->nama_diklat ?? old('nama_diklat')}}" required>
+                                                        @error('tgl_mulai') <span class="textdanger">{{$message}}</span> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="penyelenggara" class="form-label">Penyelenggara</label>
                                                     <div class="form-input">
-                                                        <input type="text" class="form-control"
-                                                            class="form-control @error('penyelenggara') is-invalid @enderror"
-                                                            id="penyelenggara" placeholder="Penyelenggara"
-                                                            name="penyelenggara"
-                                                            value="{{$dk -> penyelenggara ?? old('penyelenggara')}}">
-                                                        @error('penyelenggara') <span
-                                                            class="textdanger">{{$message}}</span> @enderror
+                                                        <input type="text" class="form-control @error('penyelenggara') is-invalid @enderror"
+                                                            id="penyelenggara" placeholder="Penyelenggara" name="penyelenggara"
+                                                            value="{{$dk->penyelenggara ?? old('penyelenggara')}}" required>
+                                                        @error('penyelenggara') <span class="textdanger">{{$message}}</span> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="tanggal_diklat" class="form-label">Tanggal
-                                                        Diklat</label>
+                                                    <label for="tanggal_diklat" class="form-label">Tanggal Diklat</label>
                                                     <div class="form-input">
                                                         <input type="date"
                                                             class="form-control @error('tanggal_diklat') is-invalid @enderror"
-                                                            id="tanggal_diklat" placeholder="Tanggal_diklat"
-                                                            name="tanggal_diklat"
-                                                            value="{{$dk -> tanggal_diklat ?? old('tanggal_diklat')}}">
-                                                        @error('tanggal_diklat') <span
-                                                            class="textdanger">{{$message}}</span>
-                                                        @enderror
+                                                            id="tanggal_diklat" placeholder="Tanggal_diklat" name="tanggal_diklat"
+                                                            value="{{$dk->tanggal_diklat ?? old('tanggal_diklat')}}" required>
+                                                        @error('tanggal_diklat') <span class="textdanger">{{$message}}</span> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jp" class="form-label">Jam Pelajaran</label>
                                                     <div class="form-input">
-                                                        <input type="text"
-                                                            class="form-control @error('jp') is-invalid @enderror"
-                                                            id="jp" placeholder="Jp" name="jp"
-                                                            value="{{$dk -> jp ?? old('jp')}}">
-                                                        @error('jp') <span class="textdanger">{{$message}}</span>
-                                                        @enderror
+                                                        <input type="text" class="form-control @error('jp') is-invalid @enderror"
+                                                            id="jp" placeholder="Jp" name="jp" value="{{$dk->jp ?? old('jp')}}" required>
+                                                        @error('jp') <span class="textdanger">{{$message}}</span> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="file_sertifikat">File Sertifikat</label>
-                                                    
-                                                    <input type="file" class="form-control" id="file_sertifikat"
-                                                        enctype="multipart/form-data" name="file_sertifikat"
-                                                        @error('file_sertifikat') <span class="invalid"
-                                                        role="alert">{{$message}}</span>
+                                                    <input type="file"class="form-control @error('nama_diklat') is-invalid @enderror"  id="file_sertifikat"
+                                                        enctype="multipart/form-data" name="file_sertifikat">
+                                                        @error('file_sertifikat') 
+                                                        <span class="invalid" role="alert">{{$message}}</span>
                                                     @enderror
-                                                    <small class="form-text text-muted">Allow file extensions : .jpeg
-                                                        .jpg .png .pdf
-                                                        .docx</small>
+                                                    <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                                                     @if ($dk->file_sertifikat)
                                                     <p>Previous File: <a
                                                             href="{{ asset('/storage/file_sertifikat/' . $dk->file_sertifikat) }}"
@@ -189,17 +170,16 @@
                 <form action="{{ route('diklat.store') }}" method="POST" id="form" class="form-horizontal"
                     enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" value="{{ Auth::user()->id_users}}" name="id_users">
+                    <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-6" for="id_jenis_diklat">Jenis Diklat</label>
                                     <select id="id_jenis_diklat" name="id_jenis_diklat"
-                                        class="form-select @error('id_jenis_diklat') is-invalid @enderror">
+                                        class="form-select @error('id_jenis_diklat') is-invalid @enderror" required>
                                         @foreach ($jenisdiklat as $jd)
-                                        <option value="{{ $jd->id_jenis_diklat }}" @if( old('id_jenis_diklat')==$jd->
-                                            id_jenis_diklat )selected @endif>
+                                        <option value="{{ $jd->id_jenis_diklat }}" @if( old('id_jenis_diklat')==$jd->id_jenis_diklat )selected @endif>
                                             {{ $jd->nama_jenis_diklat }}</option>
                                         @endforeach
                                     </select>
@@ -207,29 +187,34 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputName">Nama Diklat</label>
-                                <input type="text" class="form-control" id="nama_diklat" name="nama_diklat" required>
+                                <input type="text" class="form-control @error('nama_diklat') is-invalid @enderror" 
+                                    id="nama_diklat" name="nama_diklat" required>
+                                    @error('nama_diklat')<span class="text-danger">{{ $message }}</span>@enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputName">Penyelenggara</label>
-                                <input type="text" class="form-control" id="penyelenggara" name="penyelenggara"
-                                    required>
+                                <input type="text" class="form-control @error('penyelenggara') is-invalid @enderror"  
+                                    id="penyelenggara" name="penyelenggara" required>
+                                    @error('penyelenggara')<span class="text-danger">{{ $message }}</span>@enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputName">Tanggal Diklat</label>
-                                <input type="date" class="form-control" id="tanggal_diklat" name="tanggal_diklat"
-                                    required>
+                                <input type="date" class="form-control @error('tanggal_diklat') is-invalid @enderror"  
+                                    id="tanggal_diklat" name="tanggal_diklat" required>
+                                    @error('tanggal_diklat')<span class="text-danger">{{ $message }}</span>@enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputName">Jam Pelajaran</label>
-                                <input type="number" class="form-control" id="jp" name="jp" required>
+                                <input type="number" class="form-control @error('jp') is-invalid @enderror"  
+                                    id="jp" name="jp" required>
+                                @error('jp')<span class="text-danger">{{ $message }}</span>@enderror
+
                             </div>
                             <div class="form-group">
                                 <label for="file_sertifikat">File Sertifikat</label>
-                                
-                                <input type="file" class="form-control" id="file_sertifikat"
-                                    enctype="multipart/form-data" name="file_sertifikat" @error('file_sertifikat') <span
-                                    class="invalid" role="alert">{{$message}}</span>
-                                @enderror
+                                <input type="file" class="form-control @error('file_sertifikat') is-invalid @enderror"  
+                                    id="file_sertifikat" enctype="multipart/form-data" name="file_sertifikat">
+                                    @error('file_sertifikat') <span class="invalid" role="alert">{{$message}}</span> @enderror
                                 <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf
                                     .docx</small>
                             </div>
@@ -259,4 +244,14 @@ $('#example2').DataTable({
     "responsive": true,
 });
 </script>
+
+@if(count($errors))
+<script>
+Swal.fire({
+    title: 'Input tidak sesuai!',
+    text: 'Pastikan inputan sudah sesuai',
+    icon: 'error',
+});
+</script>
+@endif
 @endpush

@@ -45,7 +45,14 @@
                                                                 <td>{{$kel->nama}}</td>
                                                                 <td>{{ date_format( new DateTime($kel->tanggal_lahir), 'd F Y')}}
                                                                 </td>
-                                                                <td>{{$kel->gender}}</td>
+                                                                <td>
+                                                                    @if($kel->gender == 'laki-laki')
+                                                                    Laki-Laki
+                                                                    @else
+                                                                    Perempuan
+                                                                    @endif
+                                                                </td>
+
                                                                 <td>{{$kel->status}}</td>
                                                                 <td>
                                                                     @include('components.action-buttons', ['id' => $kel->id_keluarga, 'key' => $key, 'route' => 'keluarga'])
@@ -94,7 +101,7 @@
                                                                     <div class="form-group">
                                                                         <label for="nama">Nama Lengkap</label>
                                                                         <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                                                            id="nama" name="nama" value="{{old('nama') }}">
+                                                                            id="nama" name="nama" value="{{old('nama') }}" required>
                                                                         @error('nama')<span class="text-danger">{{ $message }}</span>@enderror
                                                                     </div>
                                                                     <div class="form-group">
@@ -157,7 +164,7 @@
                                                     class="form-horizontal" enctype="multipart/form-data">
                                                     @csrf
                                                     @method('PUT')
-                                                    <input type="hidden" name="id_users" value="{{ Auth::user()->id_users}}">
+                                                    <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
                                                     <div class="form-body">
                                                         <div class="form-group">
                                                             <div class="row">

@@ -8,24 +8,17 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-
             @if (Route::currentRouteName() === 'pendidikan.showAdmin')
             @include('partials.nav-pills-profile-admin', ['id_users' => $id_users])
             @else
             @include('partials.nav-pills-profile')
             @endcan
-
-
-
             <div class="card-body">
                 <div class="table-responsive">
-
                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#createModal">
                         Tambah
                     </button>
-
-                    <table class="table table-hover table-bordered
-table-stripped" id="example2">
+                    <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -53,9 +46,10 @@ table-stripped" id="example2">
                                 <td id={{$key+1}}>{{$pd->nama_sekolah}}</td>
                                 <td id={{$key+1}}>{{$pd->jurusan}}</td>
                                 <td id={{$key+1}}>{{$pd->tahun_lulus}}</td>
-                                <td id={{$key+1}}>
-                                    <a href="{{ asset('/storage/pendidikan/'. $pd->ijazah) }}" target="_blank">Lihat
-                                        Dokumen</a>
+                                <td id={{$key+1}}  style="text-align: center; vertical-align: middle;">
+                                    <a href="{{ asset('/storage/pendidikan/'. $pd->ijazah) }}" download>
+                                        <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
+                                    </a>
 
                                 </td>
                                 <td>
@@ -83,16 +77,12 @@ table-stripped" id="example2">
                                                 @method('PUT')
                                                 <input type="hidden" name="id_users"
                                                     value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
-
                                                 <div class="form-group">
                                                     <label for="id_tingkat_pendidikan"> Tingkat Pendidikan</label>
                                                     <select class="form-select @error('nama') is-invalid @enderror"
-                                                        id="id_tingkat_pendidikan" name="id_tingkat_pendidikan">
+                                                        id="id_tingkat_pendidikan" name="id_tingkat_pendidikan" required>
                                                         @foreach ($tingpen as $tp)
-                                                        <option value="{{ $tp->id_tingkat_pendidikan }}" @if(
-                                                            old('id_tingkat_pendidikan')==$tp->
-                                                            id_tingkat_pendidikan )
-                                                            selected @endif">
+                                                        <option value="{{ $tp->id_tingkat_pendidikan }}"@if(old('id_tingkat_pendidikan', $tp->id_tingkat_pendidikan )=='id_tingkat_pendidikan' )selected @endif>
                                                             {{ $tp->nama_tingkat_pendidikan }}</option>
                                                         @endforeach
                                                     </select>
@@ -100,30 +90,19 @@ table-stripped" id="example2">
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="nama_sekolah" class="form-label">Nama
-                                                        Pendidikan</label>
-                                                    <input type="text"
-                                                        class="form-control @error('nama_sekolah') is-invalid @enderror"
-                                                        id="nama_sekolah" name="nama_sekolah"
-                                                        value="{{$pd ->nama_sekolah ?? old('nama_sekolah')}}" required>
-                                                    @error('nama_sekolah') <span class="text-danger">{{$message}}</span>
-                                                    @enderror
-
+                                                    <label for="nama_sekolah" class="form-label">Nama Pendidikan</label>
+                                                    <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror"
+                                                        id="nama_sekolah" name="nama_sekolah" value="{{$pd ->nama_sekolah ?? old('nama_sekolah')}}" required>
+                                                    @error('nama_sekolah') <span class="text-danger">{{$message}}</span> @enderror
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jurusan" class="form-label">Jurusan</label>
-
-                                                    <input type="text"
-                                                        class="form-control @error('jurusan') is-invalid @enderror"
-                                                        id="jurusan" name="jurusan"
-                                                        value="{{$pd ->jurusan ?? old('jurusan')}}" required>
-                                                    @error('jurusan') <span class="text-danger">{{$message}}</span>
-                                                    @enderror
-
+                                                    <input type="text" class="form-control @error('jurusan') is-invalid @enderror"
+                                                        id="jurusan" name="jurusan" value="{{$pd ->jurusan ?? old('jurusan')}}" required>
+                                                    @error('jurusan') <span class="text-danger">{{$message}}</span> @enderror
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="tahun_lulus" class="form-label">Tahun Lulus</label>
-
                                                     <input type="number"
                                                         class="form-control @error('tahun_lulus') is-invalid @enderror"
                                                         id="tahun_lulus" name="tahun_lulus"
@@ -133,22 +112,16 @@ table-stripped" id="example2">
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-
                                                     <label for="ijazah">Ijazah Kelulusan</label>
-
-                                                    <input type="file" name="ijazah" id="ijazah" class="form-control" required>
+                                                    <input type="file" name="ijazah" id="ijazah" class="form-control" >
                                                     @error('ijazah')
                                                     <span class="text-danger @error('ijazah') is-invalid @enderror">{{$message}}</span> @enderror
-                                                    <small class="form-text text-muted">Allow file extensions : .jpeg
-                                                        .jpg .png .pdf
-                                                        .docx</small>
-
+                                                    <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                                                     @if ($pd->ijazah)
                                                     <p>Previous File: <a
                                                             href="{{ asset('/storage/pendidikan/' . $pd->ijazah) }}"
                                                             target="_blank">{{ $pd->ijazah }}</a></p>
                                                     @endif
-
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -189,54 +162,44 @@ table-stripped" id="example2">
                     <div class="form-group">
                         <label for="id_tingkat_pendidikan"> Tingkat Pendidikan</label>
                         <select class="form-select @error('nama') is-invalid @enderror" id="id_tingkat_pendidikan"
-                            name="id_tingkat_pendidikan">
+                            name="id_tingkat_pendidikan" required>
                             @foreach ($tingpen as $tp)
-                            <option value="{{ $tp->id_tingkat_pendidikan }}" @if( old('id_tingkat_pendidikan')==$tp->
-                                id_tingkat_pendidikan )
-                                selected @endif">
-                                {{ $tp->nama_tingkat_pendidikan }}</option>
+                            <option value="{{ $tp->id_tingkat_pendidikan }}" @if( old('id_tingkat_pendidikan')==$tp->id_tingkat_pendidikan )
+                                selected @endif > {{ $tp->nama_tingkat_pendidikan }}
+                            </option>
+                            
                             @endforeach
                         </select>
                         @error('level') <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="nama_sekolah" class="form-label">Nama
-                            Sekolah</label>
+                        <label for="nama_sekolah" class="form-label">Nama Sekolah</label>
                         <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror"
                             id="nama_sekolah" name="nama_sekolah" value="{{old('nama_sekolah')}}" required>
                         @error('nama_sekolah') <span class="text-danger">{{$message}}</span>
                         @enderror
-
                     </div>
                     <div class="form-group">
                         <label for="jurusan" class="form-label"> Jurusan</label>
-
                         <input type="text" class="form-control @error('jurusan') is-invalid @enderror" id="jurusan"
                             name="jurusan" value="{{ old('jurusan')}}" required>
                         @error('jurusan') <span class="text-danger">{{$message}}</span>
                         @enderror
-
                     </div>
                     <div class="form-group">
                         <label for="tahun_lulus" class="form-label">Tahun Lulus</label>
-
                         <input type="number" class="form-control @error('tahun_lulus') is-invalid @enderror"
                             id="tahun_lulus" name="tahun_lulus" value="{{  old('tahun_lulus')}}" maxlength="4" required>
                         @error('tahun_lulus') <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="form-group">
-
-
                         <label for="ijazah">Ijazah Kelulusan</label>
-
-                        <input type="file" name="ijazah" id="ijazah" class="form-control @error('ijazah') is-invalid @enderror" accept=".jpeg, .jpg, .png, .pdf, .doc, .docx" required> @error('ijazah')
+                        <input type="file" name="ijazah" id="ijazah" class="form-control @error('ijazah') is-invalid @enderror" 
+                            accept=".jpeg, .jpg, .png, .pdf, .doc, .docx" required> @error('ijazah')
                         <span class="text-danger">{{$message}}</span> @enderror
-                        <small class="form-text text-muted">Allow file extensions : .jpeg
-                            .jpg .png .pdf
-                            .docx</small>
-
+                        <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>

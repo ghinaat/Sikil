@@ -44,6 +44,7 @@ class DiklatController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'id_users' => 'required',
             'id_jenis_diklat' => 'required',
@@ -72,7 +73,7 @@ class DiklatController extends Controller
 
         $diklat->save();
 
-        return redirect()->back()->with('success', 'Data telah tersimpan.');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
@@ -138,7 +139,7 @@ class DiklatController extends Controller
 
         $diklat->save();
 
-        return redirect()->route('diklat.index')->with('success_message', 'Data telah tersimpan');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
@@ -153,6 +154,6 @@ class DiklatController extends Controller
             ]);
         }
 
-        return redirect()->route('diklat.index')->with('success_message', 'Data telah terhapus');
+        return redirect()->back()->with('success_message', 'Data telah terhapus.');
     }
 }

@@ -99,7 +99,7 @@ class ProfileController extends Controller
     {
         $rules = [
             'nama_pegawai' => 'required',
-            'email' => 'required',
+            'email' =>  'required|unique:users,email',
             'id_jabatan' => 'required',
             'nip' => 'required',
             'nik' => 'required',
@@ -124,6 +124,7 @@ class ProfileController extends Controller
             $rules['photo'] = 'required|image|mimes:jpeg,png,jpg';
         }
 
+
         $user = User::find($id_users);
 
         $user->update([
@@ -146,6 +147,7 @@ class ProfileController extends Controller
 
         $profile = Profile::where('id_users', $id_users)->first();
 
+
         $profile->update([
             'nip' => $request->input('nip'),
             'nik' => $request->input('nik'),
@@ -165,11 +167,18 @@ class ProfileController extends Controller
             'id_tingkat_pendidikan' => $request->input('id_tingkat_pendidikan'),
         ]);
 
+
         return redirect()->back()->with([
             'success_message' => 'Profile berhasil diubah!.',
         ]);
     }
 
+    public function arrayExclude($array, Array $excludeKeys){
+        foreach($excludeKeys as $key){
+            unset($array[$key]);
+        }
+        return $array;
+    }
     /**
      * Remove the specified resource from storage.
      */
