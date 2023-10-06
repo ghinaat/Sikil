@@ -130,7 +130,7 @@ class LemburController extends Controller
             $notifikasi->is_dibaca = 'tidak_dibaca';
             $notifikasi->label = 'info';
             $notifikasi->link = '/lembur';
-            $notifikasi->id_users = $request->id_users;
+            $notifikasi->id_users = $pengguna->id_users;
             $notifikasi->save();
 
             return redirect()->back()->with('success_message', 'Data telah tersimpan.');
@@ -328,6 +328,7 @@ class LemburController extends Controller
         $notifikasi->id_users = $notifikasiAdmin->id_users;
         $notifikasi->save();
 
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
         
 
     }

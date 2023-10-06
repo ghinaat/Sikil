@@ -238,6 +238,109 @@ class AjuanPerizinanController extends Controller
             // dd($statusPPK, $request->jenis_perizinan);
             $ajuanperizinan->save();
 
+            $pengguna = User::where('kode_finger', $ajuanperizinan->kode_finger)->first();
+            if($ajuanperizinan->jenis_perizinan === 'I') {
+                if ($ajuanperizinan->status_izin_atasan === '1' && $ajuanperizinan->status_izin_ppk === null) {
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Persetujuan Izin ';
+                    $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/perizinan';
+                    $notifikasi->id_users = $pengguna->id_users;
+                    $notifikasi->save();
+
+                    return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+
+                } elseif ($ajuanperizinan->status_izin_atasan === '0' && $ajuanperizinan->status_izin_ppk === null) {
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Persetujuan Izin ';
+                    $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/perizinan';
+                    $notifikasi->id_users = $pengguna->id_users;
+                    $notifikasi->save();
+
+                    return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+
+                }
+
+            }
+            if ($ajuanperizinan->jenis_perizinan != 'I') {
+                if ($ajuanperizinan->status_izin_atasan === '1' && $ajuanperizinan->status_izin_ppk === '1') {
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Persetujuan Izin ';
+                    $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/perizinan';
+                    $notifikasi->id_users = $pengguna->id_users;
+                    $notifikasi->save();
+
+                    return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+                }elseif($ajuanperizinan->status_izin_atasan === '1' && $ajuanperizinan->status_izin_ppk === null) {
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Persetujuan Izin ';
+                    $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui oleh atasan. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/perizinan';
+                    $notifikasi->id_users = $pengguna->id_users;
+                    $notifikasi->save();
+
+                    return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+                
+                }elseif($ajuanperizinan->status_izin_atasan === '0' && $ajuanperizinan->status_izin_ppk === null) {
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Persetujuan Izin ';
+                    $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan oleh atasan. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/perizinan';
+                    $notifikasi->id_users = $pengguna->id_users;
+                    $notifikasi->save();
+
+                    return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+                }elseif($ajuanperizinan->status_izin_atasan === null && $ajuanperizinan->status_izin_ppk === '1') {
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Persetujuan Izin ';
+                    $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui oleh ppk. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/perizinan';
+                    $notifikasi->id_users = $pengguna->id_users;
+                    $notifikasi->save();
+
+                    return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+                
+                }elseif($ajuanperizinan->status_izin_atasan === null && $ajuanperizinan->status_izin_ppk === '0') {
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Persetujuan Izin ';
+                    $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan oleh ppk. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/perizinan';
+                    $notifikasi->id_users = $pengguna->id_users;
+                    $notifikasi->save();
+
+                    return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+                    
+                } elseif ($ajuanperizinan->status_izin_atasan === '0' && $ajuanperizinan->status_izin_ppk === '0') {
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->judul = 'Persetujuan Izin ';
+                    $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
+                    $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->label = 'info';
+                    $notifikasi->link = '/perizinan';
+                    $notifikasi->id_users = $pengguna->id_users;
+                    $notifikasi->save();
+
+                    return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
+                }
+            }
+            
+
             return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
         } elseif (auth()->user()->level === 'ppk') {
             $ajuanperizinan = Perizinan::find($id_perizinan);
@@ -302,6 +405,8 @@ class AjuanPerizinanController extends Controller
             // dd($request);
 
             $ajuanperizinan->save();
+
+            
 
             return redirect()->route('ajuanperizinan.index')->with('success_message', 'Data telah tersimpan');
         } else {
@@ -439,7 +544,7 @@ class AjuanPerizinanController extends Controller
                 }
 
             }
-            if ($ajuanperizinan->jenis_perizinan !== 'I') {
+            if ($ajuanperizinan->jenis_perizinan != 'I') {
                 if ($ajuanperizinan->status_izin_atasan === '1' && $ajuanperizinan->status_izin_ppk === '1') {
                     $notifikasi = new Notifikasi();
                     $notifikasi->judul = 'Persetujuan Izin ';
