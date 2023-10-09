@@ -146,7 +146,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <div class="col-md-12 mt-4">
+                                <div class="col-md-12 mt-4" id="scroll-target">
                                     <div class="form-group ">
                                         <label class="control-label col-md-6">Nama Pegawai</label>
                                         <!-- Tambahkan input tersembunyi untuk menyimpan data yang dipilih -->
@@ -252,6 +252,12 @@ function pilih(id, nama_pegawai) {
     // Mengisi nilai input dengan data yang dipilih dari tabel
     document.getElementById('selected_id_users').value = id;
     document.getElementById('pegawai').value = nama_pegawai;
+
+    // Gulir ke elemen dengan id "scroll-target"
+    const scrollTarget = document.getElementById('scroll-target');
+    scrollTarget.scrollIntoView({
+        behavior: 'smooth'
+    });
 }
 </script>
 

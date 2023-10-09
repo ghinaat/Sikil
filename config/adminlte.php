@@ -393,7 +393,7 @@ return [
                 [
                     'text' => 'Rekap Lembur',
                     'url' => '/lembur/rekap',
-                    'can' => 'isAdmin',
+                    'can' =>  ['isBod', 'isKadiv', 'isAdmin'],
                 ],
 
             ],

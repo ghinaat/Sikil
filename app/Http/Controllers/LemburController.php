@@ -104,6 +104,9 @@ class LemburController extends Controller
         $lembur = Lembur::find($id_lembur);
 
         $lembur->status_izin_atasan = $request->status_izin_atasan;
+        if ($request->status_izin_atasan === '0') {
+            $lembur->alasan_ditolak_atasan = $request->alasan_ditolak_atasan;
+        }
 
         $lembur->save();
         

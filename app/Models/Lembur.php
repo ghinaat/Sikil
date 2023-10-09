@@ -22,6 +22,7 @@ class Lembur extends Model
         'jam_lembur',
         'tugas',
         'status_izin_atasan',
+        'alasan_ditolak_atasan',
         'is_deleted',
     ];
 

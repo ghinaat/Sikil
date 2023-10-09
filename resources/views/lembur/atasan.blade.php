@@ -46,7 +46,7 @@
                                     {{ \Carbon\Carbon::createFromFormat('H:i:s', $lr->jam_lembur)->format('H:i') }}</td>
                                 <td id={{$key+1}}>{{$lr->tugas}}</td>
                                 @can('isAdmin')
-                                <td id={{$key+1}}>       
+                                <td id={{$key+1}}>
                                     @if($lr->status_izin_atasan == '0')
                                     Ditolak
                                     @elseif($lr->status_izin_atasan == '1')
@@ -58,32 +58,34 @@
                                 @endcan
                                 <td>
                                     <div class="btn-group">
-                                    @if($lr->id_atasan == auth()->user()->id_users && auth()->user()->level != 'admin' ) 
-                                    @if($lr->status_izin_atasan === '1')
-                                    Sudah Disetujui
-                                    @elseif($lr->status_izin_atasan === '0')
-                                    Tidak Disetujui
-                                    @else
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                        data-target="#editModal{{$lr->id_lembur}}" data-id="{{$lr->id_lembur}}">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    @endif
-                                    @endif
-                                    @can('isAdmin' )
-                                    @if($lr->status_izin_atasan === '1')
-                                    Sudah Disetujui
-                                    @else
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                        data-target="#editModal{{$lr->id_lembur}}" data-id="{{$lr->id_lembur}}">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="{{ route('lembur' . '.destroy', $lr->id_lembur) }}"
-                                    onclick="notificationBeforeDelete(event, this, {{$key+1}})" class="btn btn-danger btn-xs mx-1">
-                                    <i class="fa fa-trash"></i>
-                                    </a>
-                                    @endif
-                                    @endcan
+                                        @if($lr->id_atasan == auth()->user()->id_users && auth()->user()->level !=
+                                        'admin' )
+                                        @if($lr->status_izin_atasan === '1')
+                                        Sudah Disetujui
+                                        @elseif($lr->status_izin_atasan === '0')
+                                        Tidak Disetujui
+                                        @else
+                                        <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                            data-target="#editModal{{$lr->id_lembur}}" data-id="{{$lr->id_lembur}}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        @endif
+                                        @endif
+                                        @can('isAdmin' )
+                                        @if($lr->status_izin_atasan === '1')
+                                        Sudah Disetujui
+                                        @else
+                                        <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                            data-target="#editModal{{$lr->id_lembur}}" data-id="{{$lr->id_lembur}}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="{{ route('lembur' . '.destroy', $lr->id_lembur) }}"
+                                            onclick="notificationBeforeDelete(event, this, {{$key+1}})"
+                                            class="btn btn-danger btn-xs mx-1">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                        @endif
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
@@ -102,18 +104,20 @@
                                                 <div class="form-body">
                                                     <div class="form-group">
                                                         <div class="row">
-                                                        @can('isAdmin')
-                                                        <div class="form-group">
-                                                            <label for="kode_finger">Nama Pegawai</label>
-                                                            <select id="kode_finger" name="kode_finger" class="form-select @error('kode_finger') is-invalid @enderror">
-                                                                @foreach ($users as $u)
-                                                                <option value="{{ $u->kode_finger }}" {{ $lr->kode_finger == $u->kode_finger ? 'selected' : '' }}>
-                                                                    {{ $u->nama_pegawai }} 
-                                                                </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
+                                                            @can('isAdmin')
+                                                            <div class="form-group">
+                                                                <label for="kode_finger">Nama Pegawai</label>
+                                                                <select id="kode_finger" name="kode_finger"
+                                                                    class="form-select @error('kode_finger') is-invalid @enderror">
+                                                                    @foreach ($users as $u)
+                                                                    <option value="{{ $u->kode_finger }}"
+                                                                        {{ $lr->kode_finger == $u->kode_finger ? 'selected' : '' }}>
+                                                                        {{ $u->nama_pegawai }}
+                                                                    </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <label for="tanggal">Tanggal</label>
                                                                 <input type="date" name="tanggal" id="tanggal"
                                                                     value="{{$lr -> tanggal ?? old('tanggal')}}"
@@ -137,11 +141,14 @@
                                                                     required>{{$lr -> tugas ?? old('tugas')}}</textarea>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="id_atasan" for="id_atasan">Atasan Langsung</label>
+                                                                <label class="id_atasan" for="id_atasan">Atasan
+                                                                    Langsung</label>
                                                                 <select id="id_atasan" name="id_atasan"
                                                                     class="form-select @error('id_atasan') is-invalid @enderror">
                                                                     @foreach ($users as $us)
-                                                                    <option value="{{ $us->id_users }}" @if( $lr->id_atasan === old('id_atasan', $us->id_users) ) selected @endif>
+                                                                    <option value="{{ $us->id_users }}" @if( $lr->
+                                                                        id_atasan === old('id_atasan', $us->id_users) )
+                                                                        selected @endif>
                                                                         {{ $us->nama_pegawai }}
                                                                     </option>
                                                                     @endforeach
@@ -159,6 +166,14 @@
                                                                         value="0" @if ($lr->status_izin_atasan === '0')
                                                                     checked @endif> Ditolak<br>
                                                                 </div>
+                                                            </div>
+                                                            <div id="alasan_ditolak_atasan" style="display: none;"
+                                                                class="form-group">
+                                                                <label for="alasan_ditolak_atasan">Alasan
+                                                                    Ditolak</label>
+                                                                <textarea name="alasan_ditolak_atasan"
+                                                                    id="alasan_ditolak_atasan" cols="30" rows="3"
+                                                                    class="form-control">{{ $lr->alasan_ditolak_atasan }}</textarea>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="submit"
@@ -198,63 +213,63 @@
                     enctype="multipart/form-data">
                     @csrf
                     <div class="form-body">
-                            <div class="row">
-                                <div class="form-group">
-                                        <label class="control-label col-md-6"  for="kode_finger">Nama Pegawai</label>
-                                        <select id="kode_finger" name="kode_finger" class="form-select @error('kode_finger') is-invalid @enderror">
-                                            @foreach ($users as $us)
-                                            <option value="{{ $us->kode_finger }}" @if( old('kode_finger')==$us->id_users
-                                                )selected @endif>
-                                                {{ $us->nama_pegawai }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('kode_finger') <span class="textdanger">{{$message}}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="tanggal">Tanggal</label>
-                                    <input type="date" name="tanggal" id="tanggal"
-                                        value="{{ old('tanggal')}}" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="jam_mulai">Jam Mulai</label>
-                                    <input type="time" name="jam_mulai" id="jam_mulai"
-                                        value="{{ old('jam_mulai')}}" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="jam_selesai">Jam Selesai</label>
-                                    <input type="time" name="jam_selesai" id="jam_selesai"
-                                        value="{{ old('jam_selesai')}}" class="form-control"
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="tugas">Uraian Tugas</label>
-                                    <textarea name="tugas" id="tugas" class="form-control"
-                                        value="{{ old('tugas')}}" required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-6" for="id_atasan">Atasan Langsung</label>
-                                    <select id="id_atasan" name="id_atasan"
-                                        class="form-select @error('id_atasan') is-invalid @enderror">
-                                        @foreach ($users as $us)
-                                        <option value="{{ $us->id_users }}" @if( old('id_atasan', $us->id_users) )
-                                            selected @endif>
-                                            {{ $us->nama_pegawai }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-md-6" for="kode_finger">Nama Pegawai</label>
+                                <select id="kode_finger" name="kode_finger"
+                                    class="form-select @error('kode_finger') is-invalid @enderror">
+                                    @foreach ($users as $us)
+                                    <option value="{{ $us->kode_finger }}" @if( old('kode_finger')==$us->id_users
+                                        )selected @endif>
+                                        {{ $us->nama_pegawai }}</option>
+                                    @endforeach
+                                </select>
+                                @error('kode_finger') <span class="textdanger">{{$message}}</span> @enderror
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="tanggal">Tanggal</label>
+                            <input type="date" name="tanggal" id="tanggal" value="{{ old('tanggal')}}"
+                                class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jam_mulai">Jam Mulai</label>
+                            <input type="time" name="jam_mulai" id="jam_mulai" value="{{ old('jam_mulai')}}"
+                                class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jam_selesai">Jam Selesai</label>
+                            <input type="time" name="jam_selesai" id="jam_selesai" value="{{ old('jam_selesai')}}"
+                                class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tugas">Uraian Tugas</label>
+                            <textarea name="tugas" id="tugas" class="form-control" value="{{ old('tugas')}}"
+                                required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-6" for="id_atasan">Atasan Langsung</label>
+                            <select id="id_atasan" name="id_atasan"
+                                class="form-select @error('id_atasan') is-invalid @enderror">
+                                @foreach ($users as $us)
+                                <option value="{{ $us->id_users }}" @if( old('id_atasan', $us->id_users) )
+                                    selected @endif>
+                                    {{ $us->nama_pegawai }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                        </div>
                     </div>
-                </form>
             </div>
         </div>
+        </form>
     </div>
+</div>
+</div>
 </div>
 
 @stop
@@ -268,6 +283,23 @@
 $('#example2').DataTable({
     "responsive": true,
 });
+document.querySelectorAll('input[type=radio][name=status_izin_atasan]').forEach(input => input.addEventListener(
+    'change',
+    function() {
+        const alasanDitolakElement = this.parentNode.parentNode.parentNode.querySelector(
+            '#alasan_ditolak_atasan');
+        const alasanTextarea = alasanDitolakElement.querySelector('textarea[name=alasan_ditolak_atasan]');
+
+        if (this.value === '0') {
+            alasanDitolakElement.style.display = 'block';
+            // Tambahkan atribut required
+            alasanTextarea.setAttribute('required', 'true');
+        } else {
+            alasanDitolakElement.style.display = 'none';
+            // Hapus atribut required
+            alasanTextarea.removeAttribute('required');
+        }
+    }));
 
 function updateRecord(event, rowNumber, id_lembur, newStatus) {
     event.preventDefault(); // Prevent the default link behavior
