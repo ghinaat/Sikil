@@ -48,6 +48,10 @@ class DatabaseSeeder extends Seeder
             'nama_jabatan' => 'bod',
         ]);
 
+        Jabatan::create([
+            'nama_jabatan' => 'direktur',
+        ]);
+
         TingkatPendidikan::create([
             'nama_tingkat_pendidikan' => 'Sarjana',
         ]);
@@ -160,6 +164,17 @@ class DatabaseSeeder extends Seeder
             'level' => 'staf',
             'kode_finger' => '545621',
             'id_jabatan' => '4',
+            'is_deleted' => '0',
+        ]);
+
+        User::create([
+            'nama_pegawai' => 'direktur',
+            'email' => 'direktur@direktur.com',
+            'password' => '12345678',
+            '_password_' => '12345678',
+            'level' => 'bod',
+            'kode_finger' => '784028',
+            'id_jabatan' => '7',
             'is_deleted' => '0',
         ]);
 

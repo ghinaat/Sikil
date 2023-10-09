@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('perizinan', function (Blueprint $table) {
             $table->increments('id_perizinan');
-            $table->unsignedInteger('id_atasan');
+            $table->unsignedInteger('id_atasan')->nullable();
             $table->string('kode_finger', 8);
             $table->enum('jenis_perizinan', ['I', 'DL', 'S', 'CS', 'Prajab', 'CT', 'CM', 'CAP', 'CH', 'CB', 'A', 'TB']);
             $table->date('tgl_ajuan');

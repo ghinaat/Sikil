@@ -239,6 +239,7 @@
                                                         id="keterangan"
                                                         name="keterangan" required>{{$ap -> keterangan ?? old('keterangan')}}</textarea>
                                                 </div>
+                                                @if($user->id_jabatan != '7')
                                                 <div class="form-group">
                                                     <label class="id_atasan" for="id_atasan">Atasan Langsung</label>
                                                     <select id="id_atasan" name="id_atasan"
@@ -250,6 +251,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                                @endif
                                                 <div class="form-group">
                                                     <label for="file_perizinan">Unggah Lampiran</label>
                                                     
@@ -414,6 +416,7 @@
                                         {{ $us->nama_pegawai }}</option>
                                     @endforeach
                                 </select>
+                                <small class="form-text text-muted">Direktur doesn't required</small>
                                 @error('id_atasan') <span class="textdanger">{{$message}}</span> @enderror
                             </div>
                             <div class="form-group">

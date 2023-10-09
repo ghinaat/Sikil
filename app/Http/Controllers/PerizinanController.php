@@ -52,13 +52,14 @@ class PerizinanController extends Controller
 
     public function Pengajuan(Request $request)
     {
+        // dd($request);
         //Menyimpan Data User Baru
         $request->validate([
             'kode_finger' => 'required',
             'tgl_absen_awal' => 'required',
             'tgl_absen_akhir' => 'required',
             'jumlah_hari_pengajuan' => 'required',
-            'id_atasan' => 'required',
+            'id_atasan' => 'nullable',
             'keterangan' => 'required',
             'jenis_perizinan' => 'required',
             'file_perizinan' => 'mimes:pdf,doc,docx,png,jpg,jpeg',
@@ -99,9 +100,20 @@ class PerizinanController extends Controller
         $perizinan->jenis_perizinan = $request->jenis_perizinan;
         $perizinan->tgl_absen_akhir = $request->tgl_absen_akhir;
         $perizinan->jumlah_hari_pengajuan = $jumlah_hari_pengajuan;
-        $perizinan->id_atasan = $request->id_atasan;
         $perizinan->keterangan = $request->keterangan;
-        $perizinan->status_izin_atasan = null;
+
+        if($pengguna->id_jabatan == '7'){
+            $perizinan->id_atasan = null;
+        }else {
+            $perizinan->id_atasan = $request->id_atasan;
+        }
+
+        if($pengguna->id_jabatan == '7'){
+            $perizinan->status_izin_atasan = '1';    
+        }else{
+            $perizinan->status_izin_atasan = null;
+        }
+
         $perizinan->status_izin_ppk = null;
 
         $perizinan->save();
@@ -115,14 +127,16 @@ class PerizinanController extends Controller
         $notifikasi->id_users = $pengguna->id_users;
         $notifikasi->save();
 
-        $notifikasi = new Notifikasi();
-        $notifikasi->judul = 'Pengajuan Izin ';
-        $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
-        $notifikasi->is_dibaca = 'tidak_dibaca';
-        $notifikasi->label = 'info';
-        $notifikasi->link = '/ajuanperizinan';
-        $notifikasi->id_users = $request->id_atasan;
-        $notifikasi->save();
+        if($pengguna->id_jabatan != '7'){
+            $notifikasi = new Notifikasi();
+            $notifikasi->judul = 'Pengajuan Izin ';
+            $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+            $notifikasi->is_dibaca = 'tidak_dibaca';
+            $notifikasi->label = 'info';
+            $notifikasi->link = '/ajuanperizinan';
+            $notifikasi->id_users = $request->id_atasan;
+            $notifikasi->save();
+            }
 
         $ppk = GeneralSetting::where('status', '1')->first();
         if ($request->jenis_perizinan !== 'I') {

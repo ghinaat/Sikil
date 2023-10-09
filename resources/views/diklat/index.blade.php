@@ -70,7 +70,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{ route('diklat.update', $dk->id_diklat) }}" method="post">
+                                            <form action="{{ route('diklat.update', $dk->id_diklat) }}" method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 @method('PUT')
                                                 @if (isset($id_users) || Auth()->user()->level != 'admin')
@@ -137,8 +137,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="file_sertifikat">File Sertifikat</label>
-                                                    <input type="file"class="form-control @error('nama_diklat') is-invalid @enderror"  id="file_sertifikat"
-                                                        enctype="multipart/form-data" name="file_sertifikat" accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx">
+                                                    <input type="file" class="form-control @error('file_sertifikat') is-invalid @enderror" id="file_sertifikat" name="file_sertifikat"
+                                                    accept="image/jpeg ,image/jpg ,image/png ,application/pdf ,application/docx">
                                                         @error('file_sertifikat') 
                                                         <span class="invalid" role="alert">{{$message}}</span>
                                                     @enderror
@@ -242,7 +242,7 @@
                                 <label for="file_sertifikat">File Sertifikat</label>
                                 <input type="file" class="form-control @error('file_sertifikat') is-invalid @enderror"  
                                     id="file_sertifikat" enctype="multipart/form-data" name="file_sertifikat"
-                                    accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx">
+                                    accept="image/jpeg ,image/jpg ,image/png ,application/pdf ,application/docx">
                                     @error('file_sertifikat') <span class="invalid" role="alert">{{$message}}</span> @enderror
                                 <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                             </div>
