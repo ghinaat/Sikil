@@ -25,9 +25,7 @@ table-stripped" id="example2">
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
                                 <th>Status</th>
-                                @can('isAdmin')
                                 <th>Opsi</th>
-                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -42,11 +40,23 @@ table-stripped" id="example2">
                                 <td id={{$key+1}}>{{$kg->tgl_mulai}}</td>
                                 <td id={{$key+1}}>{{$kg->tgl_selesai}}</td>
                                 <td id={{$key+1}}>{{$kg->status}}</td>
-                                @can('isAdmin')
                             <td>
-                                @include('components.action-buttons', ['id' => $kg->id_kegiatan, 'key' => $key+1, 'showDetail' => true, 'route' => 'kegiatan' ])
+                                @can('isAdmin')
+                                <div class="btn-group">
+                                <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                    data-target="#editModal{{$kg->id_kegiatan}}" data-id="{{$kg->id_kegiatan}}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="{{ route('kegiatan' . '.destroy', $kg->id_kegiatan) }}"
+                                    onclick="notificationBeforeDelete(event, this, {{$key+1}})" class="btn btn-danger btn-xs mx-1">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                                @endcan
+                                <a href="{{ route('kegiatan' . '.show', $kg->id_kegiatan) }}" class="btn btn-info btn-xs mx-1">
+                                    <i class="fa fa-info"></i>
+                                </a>
+                                </div>
                             </td>
-                            @endcan
                             </tr>
                             @php
                             $nomor++; // Increment the sequence for the next row

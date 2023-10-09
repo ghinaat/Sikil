@@ -31,8 +31,8 @@
                             @foreach($surat as $key => $sr)
                             <tr>
                                 <td id={{$key+1}}>{{$key+1}}</td>
-                                <td id={{$key+1}}>{{$sr->created_at->format('d-m-Y')}}</td>
-                                <td id={{$key+1}}>{{\Carbon\Carbon::parse($sr->tgl_surat)->format('d-m-Y')}}</td>
+                                <td id={{$key+1}}>{{$sr->created_at->format('d F Y')}}</td>
+                                <td id={{$key+1}}>{{date_format( new DateTime($sr->tgl_surat), 'd F Y')}}</td>
                                 <td id={{$key+1}}>{{$sr->user->nama_pegawai}}</td>
                                 @if($sr->jenis_surat === 'nota_dinas')
                                 <td id={{$key+1}}>Nota Dinas</td>

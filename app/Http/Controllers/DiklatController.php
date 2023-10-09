@@ -46,6 +46,7 @@ class DiklatController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->file('file_sertifikat'));
         // dd($request);
         $request->validate([
             'id_users' => 'required',
@@ -103,6 +104,7 @@ class DiklatController extends Controller
 
     public function update(Request $request, $id_diklat)
     {
+        // dd($request);
         $request->validate([
             'id_users' => 'required',
             'id_jenis_diklat' => 'required',
@@ -110,8 +112,9 @@ class DiklatController extends Controller
             'penyelenggara' => 'required',
             'tanggal_diklat' => 'required',
             'jp' => 'required',
-            'file_sertifikat' => 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg',
+            'file_sertifikat' => 'mimes:pdf,doc,docx,png,jpg,jpeg',
         ]);
+
 
         $diklat = Diklat::find($id_diklat);
 
@@ -134,7 +137,7 @@ class DiklatController extends Controller
 
             // Upload file file_sertifikat baru
             $file_sertifikat = $request->file('file_sertifikat');
-            $namafile_sertifikat = time().'.'.$file_sertifikat->getClientOriginalExtension();
+            $namafile_sertifikat = Str::random(10).'.'.$file_sertifikat->getClientOriginalExtension();
             Storage::disk('public')->put('file_sertifikat/'.$namafile_sertifikat, file_get_contents($file_sertifikat));
             $diklat->file_sertifikat = $namafile_sertifikat;
         }

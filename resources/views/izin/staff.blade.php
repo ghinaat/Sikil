@@ -47,13 +47,13 @@
                                 </td>
                                 <td id={{$key+1}}>{{$p->jumlah_hari_pengajuan}}</td>
                                 <td id={{$key+1}}>
-                                    @if($p->status_izin_atasan == '0')
-                                    Ditolak
-                                    @elseif($p->status_izin_atasan == '1')
-                                    Disetujui
-                                    @else
-                                    Menunggu Persetujuan
-                                    @endif
+                                        @if($p->status_izin_atasan == '0')
+                                        Ditolak
+                                        @elseif($p->status_izin_atasan == '1')
+                                        Disetujui
+                                        @else
+                                        Menunggu Persetujuan
+                                        @endif
                                 </td>
                                 <td id={{$key+1}}>
                                     @if($p->status_izin_ppk == '0')
@@ -175,6 +175,7 @@
                                                                     name="keterangan"
                                                                     required>{{$p -> keterangan ?? old('keterangan')}}</textarea>
                                                             </div>
+                                                            @if(auth()->user()->id_jabatan != '7')
                                                             <div class="form-group">
                                                                 <label class="id_atasan" for="id_atasan">Atasan
                                                                     Langsung</label>
@@ -188,6 +189,7 @@
                                                                     </option>
                                                                     @endforeach
                                                                 </select>
+                                                            @endif
                                                             </div>
                                                             <div class="form-group">
                                                                 @foreach ($settingperizinan as $ps)
@@ -315,6 +317,7 @@
                                         <option value="TB">Tugas Belajar</option>
                                     </select>
                                 </div>
+                                @if(auth()->user()->id_jabatan != '7')
                                 <div class="form-group">
                                     <label class="control-label col-md-6" for="id_atasan">Atasan Langsung</label>
                                     <select id="id_atasan" name="id_atasan"
@@ -326,6 +329,7 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="keterangan">Keterangan</label>
                                     <textarea rows="4" class="form-control @error('keterangan') is-invalid @enderror"
