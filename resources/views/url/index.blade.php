@@ -34,15 +34,15 @@
                                 <th>Jenis</th>
                                 <th>Tautan</th>
                                 <th style="width: 15%">Unduh Qrcode</th>
-                                <th>Opsi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($url as $key => $url)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td> <a href="{{ $url->url_short }}"
-                                        target="_blank">{{$url->url_short}}</a></td>
+                                <td> <a href="https://s.qiteplanguage.org/{{ $url->url_short }}"
+                                        target="_blank">https://s.qiteplanguage.org/{{$url->url_short}}</a></td>
                                 <td>{{$url->jenis}}</td>
                                 <td>{{$url->url_address}}</td>
                                 <td id={{$key+1}}>
