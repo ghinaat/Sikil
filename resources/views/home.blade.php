@@ -74,7 +74,7 @@
                         <br> Lokasi: {{ $kegiatan->lokasi }}
                     </p>
 
-                    <a class="btn btn-primary" href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}">Lihat
+                    <a class="btn btn-primary" href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}">Detail
                         Kegiatan</a>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                 <td>{{ $kegiatan->nama_kegiatan }}</td>
                 <td>{{ \Carbon\Carbon::parse($kegiatan->tgl_mulai)->format('d M Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($kegiatan->tgl_selesai)->format('d M Y') }}</td>
-                <td><a href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}" class="btn btn-primary">Lihat</a></td>
+                <td><a href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}" class="btn btn-primary">Detail</a></td>
             </tr>
             @php
                 $nomor_urutan++;

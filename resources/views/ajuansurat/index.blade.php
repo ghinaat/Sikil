@@ -28,11 +28,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($surat as $key => $sr)
+                            @php
+                            $sortedAjuanSurat = $surat->sortByDesc('created_at');
+                            $nomor = 1; // Initialize a variable to keep track of the sequence
+                            @endphp
+                            @foreach($sortedAjuanSurat as $key => $sr)
                             <tr>
-                                <td id={{$key+1}}>{{$key+1}}</td>
-                                <td id={{$key+1}}>{{$sr->created_at->format('d F Y')}}</td>
-                                <td id={{$key+1}}>{{date_format( new DateTime($sr->tgl_surat), 'd F Y')}}</td>
+                                <td id={{$key+1}}>{{$nomor}}</td>
+                                <td id={{$key+1}}>{{$sr->created_at->format('d M Y')}}</td>
+                                <td id={{$key+1}}>{{date_format( new DateTime($sr->tgl_surat), 'd M Y')}}</td>
                                 <td id={{$key+1}}>{{$sr->user->nama_pegawai}}</td>
                                 @if($sr->jenis_surat === 'nota_dinas')
                                 <td id={{$key+1}}>Nota Dinas</td>
@@ -56,7 +60,7 @@
                                 </td>
                                 <td id={{$key+1}}>
                                     @if($sr->status === '1')
-                                        -
+                                        <i class="fas fa-check-circle  fa-2x" style="color: #42e619; align-items: center;"></i>
                                     @else
                                         @include('components.action-buttons', ['id' => $sr->id_surat, 'key' => $key, 'route' => 'ajuansurat'])
                                     @endif
@@ -130,18 +134,18 @@
                                     <div class="form-group">
                                         <label for="bulan_kegiatan">Bulan Kegiatan</label>
                                         <select class="form-select" id="bulan_kegiatan" name="bulan_kegiatan">
-                                            <option value="1">Januari</option>
-                                            <option value="2">Februari</option>
-                                            <option value="3">Maret</option>
-                                            <option value="4">April</option>
-                                            <option value="5">Mei</option>
-                                            <option value="6">Juni</option>
-                                            <option value="7">Juli</option>
-                                            <option value="8">Agustus</option>
-                                            <option value="9">September</option>
-                                            <option value="10">Oktober</option>
-                                            <option value="11">November</option>
-                                            <option value="12">Desember</option>
+                                            <option value="I">Januari</option>
+                                            <option value="II">Februari</option>
+                                            <option value="III">Maret</option>
+                                            <option value="IV">April</option>
+                                            <option value="V">Mei</option>
+                                            <option value="VI">Juni</option>
+                                            <option value="VII">Juli</option>
+                                            <option value="VIII">Agustus</option>
+                                            <option value="IX">September</option>
+                                            <option value="X">Oktober</option>
+                                            <option value="XI">November</option>
+                                            <option value="XII">Desember</option>
                                         </select>
                                     </div>
                                 </div>
@@ -214,18 +218,18 @@
                                     <div class="form-group">
                                         <label for="bulan_kegiatan">Bulan Kegiatan</label>
                                         <select class="form-select" id="bulan_kegiatan" name="bulan_kegiatan">
-                                            <option value="1" @if($sr->bulan_kegiatan === "1" || old('bulan_kegiatan') === "1" ) selected @endif>Januari</option>
-                                            <option value="2" @if($sr->bulan_kegiatan === "2" || old('bulan_kegiatan') === "2" ) selected @endif>Februari</option>
-                                            <option value="3" @if($sr->bulan_kegiatan === "3" || old('bulan_kegiatan') === "3" ) selected @endif>Maret</option>
-                                            <option value="4" @if($sr->bulan_kegiatan === "4" || old('bulan_kegiatan') === "4" ) selected @endif>April</option>
-                                            <option value="5" @if($sr->bulan_kegiatan === "5" || old('bulan_kegiatan') === "5" ) selected @endif>Mei</option>
-                                            <option value="6" @if($sr->bulan_kegiatan === "6" || old('bulan_kegiatan') === "6" ) selected @endif>Juni</option>
-                                            <option value="7" @if($sr->bulan_kegiatan === "7" || old('bulan_kegiatan') === "7" ) selected @endif>Juli</option>
-                                            <option value="8" @if($sr->bulan_kegiatan === "8" || old('bulan_kegiatan') === "8" ) selected @endif>Agustus</option>
-                                            <option value="9" @if($sr->bulan_kegiatan === "9" || old('bulan_kegiatan') === "9" ) selected @endif>September</option>
-                                            <option value="10" @if($sr->bulan_kegiatan === "10" || old('bulan_kegiatan') === "10" ) selected @endif>Oktober</option>
-                                            <option value="11" @if($sr->bulan_kegiatan === "11" || old('bulan_kegiatan') === "11" ) selected @endif>November</option>
-                                            <option value="12" @if($sr->bulan_kegiatan === "12" || old('bulan_kegiatan') === "12" ) selected @endif>Desember</option>
+                                            <option value="I" @if($sr->bulan_kegiatan === "I" || old('bulan_kegiatan') === "I" ) selected @endif>Januari</option>
+                                            <option value="II" @if($sr->bulan_kegiatan === "II" || old('bulan_kegiatan') === "II" ) selected @endif>Februari</option>
+                                            <option value="III" @if($sr->bulan_kegiatan === "III" || old('bulan_kegiatan') === "III" ) selected @endif>Maret</option>
+                                            <option value="IV" @if($sr->bulan_kegiatan === "IV" || old('bulan_kegiatan') === "IV" ) selected @endif>April</option>
+                                            <option value="V" @if($sr->bulan_kegiatan === "V" || old('bulan_kegiatan') === "V" ) selected @endif>Mei</option>
+                                            <option value="VI" @if($sr->bulan_kegiatan === "VI" || old('bulan_kegiatan') === "VI" ) selected @endif>Juni</option>
+                                            <option value="VII" @if($sr->bulan_kegiatan === "VII" || old('bulan_kegiatan') === "VII" ) selected @endif>Juli</option>
+                                            <option value="VIII" @if($sr->bulan_kegiatan === "VIII" || old('bulan_kegiatan') === "VIII" ) selected @endif>Agustus</option>
+                                            <option value="IX" @if($sr->bulan_kegiatan === "IX" || old('bulan_kegiatan') === "IX" ) selected @endif>September</option>
+                                            <option value="X" @if($sr->bulan_kegiatan === "X" || old('bulan_kegiatan') === "X" ) selected @endif>Oktober</option>
+                                            <option value="XI" @if($sr->bulan_kegiatan === "XI" || old('bulan_kegiatan') === "XI" ) selected @endif>November</option>
+                                            <option value="XII" @if($sr->bulan_kegiatan === "XII" || old('bulan_kegiatan') === "XII" ) selected @endif>Desember</option>
                                         </select>
                                     </div>
                                     <div class="form-group">

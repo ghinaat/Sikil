@@ -4,7 +4,7 @@
 
 @section('content_header')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-<h1 class="m-0 text-dark">Detail Profile</h1>
+<h1 class="m-0 text-dark"> Profile : {{$main_user->nama_pegawai}}</h1>
 @stop
 
 @section('content')
@@ -222,26 +222,26 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="jabatan" class='form-label'>Jabatan</label>
+                                                                <label for="email" class='form-label'>Jabatan</label>
                                                                 <div class="form-input">
-                                                                    <input type="text"
-                                                                        class="form-control @error('jabatan') is-invalid @enderror"
-                                                                        id="jabatan" placeholder="jabatan" name="jabatan"
-                                                                        value="{{$main_user->jabatan->nama_jabatan ?? old('jabatan')}}" readonly>
-                                                                    @error('jabatan') <span
+                                                                <select class="form-select @error('id_jabatan') is-invalid @enderror"
+                                                                    id="exampleInputJabatan" name="id_jabatan">
+                                                                    @foreach ($jabatan as $jabatan)
+                                                                    <option value="{{ $jabatan->id_jabatan }}" @if(old('id_jabatan',$main_user->id_jabatan) == $jabatan->id_jabatan ) selected @endif>  {{ $jabatan->nama_jabatan }} </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                    @error('id_jabatan') <span
                                                                         class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="email" class='form-label'>Email</label>
                                                                 <div class="form-input">
-                                                                <select class="form-select @error('id_jabatan') is-invalid @enderror"
-                                                                    id="exampleInputJabatan" name="id_jabatan">
-                                                                    @foreach ($jabatan as $jabatan)
-                                                                    <option value="{{ $jabatan->id_jabatan }}" @if(old('id_jabatan',$main_user->id_jabatan) === $jabatan->id_jabatan ) selected @endif>  {{ $jabatan->nama_jabatan }} </option>
-                                                                    @endforeach
-                                                                </select>
-                                                                    @error('id_jabatan') <span
+                                                                    <input type="text"
+                                                                        class="form-control @error('email') is-invalid @enderror"
+                                                                        id="nip" placeholder="Email" name="email"
+                                                                        value="{{ old('email', $main_user->email) }}">
+                                                                    @error('email') <span
                                                                         class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
@@ -504,7 +504,7 @@
                                                                 <label for="photo">Photo Profile</label>
                                                                 <input type="file" name="photo" id="photo"
                                                                     class="form-control" accept=".jpg, .jpeg, .png" >
-                                                                <small class="form-text text-muted">dokumen extensions yang diijinkan : .jpeg .jpg .png</small>
+                                                                <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png</small>
                                                                 @error('photo')
                                                                 <span class="text-danger">{{ $message }}</span>
                                                                 @enderror

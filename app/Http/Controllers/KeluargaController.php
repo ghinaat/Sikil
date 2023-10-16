@@ -117,7 +117,7 @@ class KeluargaController extends Controller
         return view('keluarga.index', [
             'id_users' => $id_users,
             'keluarga' => $keluarga,
-            'users' => User::where('is_deleted', '0')->get(),
+            'users' => User::where('id_users', $id_users)->first(),
             'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get(),
         ]);
     }
