@@ -77,7 +77,7 @@ class LemburController extends Controller
 
         return view('lembur.atasan', [
             'lembur' => $lembur,
-            'users' => User::where('is_deleted', '0')->get(),
+            'users' => User::where('is_deleted', '0')->orderBy('nama_pegawai', 'asc')->get(),
         ]);
 
     }
