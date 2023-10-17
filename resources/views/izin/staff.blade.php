@@ -22,10 +22,10 @@
                                 <th>Tanggal Pelaksanaan</th>
                                 <th>Keterangan</th>
                                 <th>Lampiran</th>
-                                <th>Jumlah Hari Cuti</th>
+                                <th>Jml Hari</th>
                                 <th>Persetujuan Atasan</th>
                                 <th>Persetujuan PPK</th>
-                                <th>Opsi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,16 +33,16 @@
                             <tr>
                                 <td id={{$key+1}}>{{$key+1}}</td>
                                 <td id={{$key+1}}>{{$p->jenis_perizinan}}</td>
-                                <td id={{$key+1}}>{{date_format( new DateTime($p->tgl_ajuan), 'd F Y')}}</td>
-                                <td id={{$key+1}}>{{date_format( new DateTime($p->tgl_absen_awal), 'd F Y')}} s.d.
-                                    {{ date_format( new DateTime($p->tgl_absen_akhir), 'd F Y')}}</td>
+                                <td id={{$key+1}}> {{ \Carbon\Carbon::parse($p->tgl_ajuan)->format('d M Y') }}</td>
+                                <td id={{$key+1}}> {{ \Carbon\Carbon::parse($p->tgl_absen_awal)->format('d M Y') }} -
+                                {{ \Carbon\Carbon::parse($p->tgl_absen_akhir)->format('d M Y') }}</td>
                                 <td id={{$key+1}}>{{$p->keterangan}}</td>
                                 <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
                                     @if($p->file_perizinan)
                                     <a href="{{ asset('/storage/file_perizinan/'. $p->file_perizinan) }}"
                                         target="_blank"><i class="fa fa-download"></i></a>
                                     @else
-                                    Tidak Melampirkan Dokumen
+                                    -
                                     @endif
                                 </td>
                                 <td id={{$key+1}}>{{$p->jumlah_hari_pengajuan}}</td>
@@ -61,14 +61,13 @@
                                     @elseif($p->status_izin_ppk == '1')
                                     Disetujui
                                     @elseif($p->jenis_perizinan == 'I')
-
                                     @else
                                     Menunggu Persetujuan
                                     @endif
                                 </td>
                                 <td>
                                     @if($p->status_izin_atasan == '1' && $p->status_izin_ppk == '1' )
-                                    Sudah Disetujui
+                                    Disetujui
                                     @else
                                     @include('components.action-buttons', ['id' => $p->id_perizinan, 'key' => $key,
                                     'route' => 'perizinan'])
@@ -177,18 +176,15 @@
                                                             </div>
                                                             @if(auth()->user()->id_jabatan != '7')
                                                             <div class="form-group">
-                                                                <label class="id_atasan" for="id_atasan">Atasan
-                                                                    Langsung</label>
-                                                                <select id="id_atasan" name="id_atasan"
-                                                                    class="form-select @error('id_atasan') is-invalid @enderror">
-                                                                    @foreach ($users as $us)
-                                                                    <option value="{{ $us->id_users }}" @if( $p->
-                                                                        id_atasan === old('id_atasan', $us->id_users) )
-                                                                        selected @endif>
-                                                                        {{ $us->nama_pegawai }}
-                                                                    </option>
-                                                                    @endforeach
-                                                                </select>
+                                                            <label class="id_atasan" for="id_atasan">Atasan Langsung</label>
+                                                            <select id="id_atasan" name="id_atasan"
+                                                                class="form-select @error('id_atasan') is-invalid @enderror">
+                                                                @foreach ($users as $us)
+                                                                <option value="{{ $us->id_users }}" @if( $p->id_atasan == old('id_atasan', $us->id_users) ) selected @endif>
+                                                                    {{ $us->nama_pegawai }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
                                                             @endif
                                                             </div>
                                                             <div class="form-group">

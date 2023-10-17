@@ -222,18 +222,18 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="jabatan" class='form-label'>Jabatan</label>
+                                                                <label for="email" class='form-label'>Email</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
-                                                                        class="form-control @error('jabatan') is-invalid @enderror"
-                                                                        id="jabatan" placeholder="jabatan" name="jabatan"
-                                                                        value="{{$main_user->jabatan->nama_jabatan ?? old('jabatan')}}" readonly>
-                                                                    @error('jabatan') <span
+                                                                        class="form-control @error('email') is-invalid @enderror"
+                                                                        id="email" placeholder="email" name="email"
+                                                                        value="{{$main_user->email ?? old('email')}}" >
+                                                                    @error('email') <span
                                                                         class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="email" class='form-label'>Email</label>
+                                                                <label for="email" class='form-label'>Jabatan</label>
                                                                 <div class="form-input">
                                                                 <select class="form-select @error('id_jabatan') is-invalid @enderror"
                                                                     id="exampleInputJabatan" name="id_jabatan">

@@ -30,7 +30,21 @@ class HomeController extends Controller
             ->where('tgl_selesai', '>=', today())
             ->get();
 
-        $staf_ijin = Perizinan::whereDate('tgl_absen_awal', '<=', today())->where('tgl_absen_akhir', '>=', today())->where('jenis_perizinan', 'I')->where('status_izin_atasan', '1')->count();
+        $jenis_perizinan = ['CT', 'Prajab', 'CAP', 'CM', 'CH', 'CB'];
+
+        $staf_ijin = Perizinan::whereDate('tgl_absen_awal', '<=', today())
+                ->whereDate('tgl_absen_akhir', '>=', today())
+                ->where(function ($query) use ($jenis_perizinan) {
+                    $query->where(function ($subquery) {
+                        $subquery->where('jenis_perizinan', 'I')
+                                ->where('status_izin_atasan', '1');
+                    })->orWhere(function ($subquery) use ($jenis_perizinan) {
+                        $subquery->whereIn('jenis_perizinan', $jenis_perizinan)
+                                ->where('status_izin_ppk', '1')
+                                ->where('status_izin_atasan', '1');
+                    });
+                })
+                ->count();
         $staf_dinas_luar = Perizinan::whereDate('tgl_absen_awal', '<=', today())->where('tgl_absen_akhir', '>=', today())->where('jenis_perizinan', 'DL')->where('status_izin_atasan', '1')->where('status_izin_ppk', '1')->count();
         $staf_sakit = Perizinan::whereDate('tgl_absen_awal', '<=', today())->where('tgl_absen_akhir', '>=', today())->where('jenis_perizinan', 'S')->where('status_izin_atasan', '1')->where('status_izin_ppk', '1')->count();
 

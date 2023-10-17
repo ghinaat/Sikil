@@ -46,7 +46,7 @@ class UrlController extends Controller
             'url_short' => 'required',
         ]);
 
-        $existingUrl = Url::where('url_short', FacadesURL::to('/') . '/s/' . $request->input('url_short'))->first();
+        $existingUrl = Url::where('url_short', $request->input('url_short'))->first();
 
         if ($existingUrl) {
             return redirect()->back()->with('error_message', 'URL pendek sudah ada dalam basis data.');
@@ -58,8 +58,9 @@ class UrlController extends Controller
         $url->jenis = $request->jenis;
         $customCode = $request->input('url_short');
         $slug = Str::slug($customCode, '-');
-        $url->url_short = $this->generateShortCode(FacadesURL::to('/') . '/s/' . $slug);
-        $qrcode = $this->generateQRCode($url->url_short);
+        $short = $this->generateShortCode( $slug);
+        $url->url_short = $short;
+        $qrcode = $this->generateQRCode($url->url_short, $short);
         $url->qrcode_image = $qrcode;
 
         // dd($url);
@@ -93,7 +94,7 @@ class UrlController extends Controller
     public function redirect($shortUrl)
     {
         // Look up the short URL in the database
-        $urlRecord = Url::where('url_short', FacadesURL::to('/') . '/s/' . $shortUrl)->first();
+        $urlRecord = Url::where('url_short', "https://s.qiteplanguage.org/" . $shortUrl)->first();
 
         // Check if the short URL exists in the database
         if ($urlRecord) {
@@ -105,10 +106,10 @@ class UrlController extends Controller
         }
     }
 
-    private function generateQRCode( $url, $imageName = null)
+    private function generateQRCode( $url, $imageName)
     {
         if (is_null($imageName)) {
-            $imageName = uniqid('qrcode_');
+            $imageName = uniqid('qrcode_',);
         }
 
         $urlExists = Url::where('url_short', $url)->exists();
@@ -153,12 +154,14 @@ class UrlController extends Controller
 
         $lasUrl = Url::where('id_url', $id_url)->get()[0];
 
-        if($lasUrl->url_short !== (FacadesURL::to('/') . '/s/' . $request->url_short)){
-            $customCode = $request->url_short;
-            $url->url_short = $this->generateShortCode(FacadesURL::to('/') . '/s/' . $customCode);
+        if($lasUrl->url_short !== $request->url_short){
+            $customCode = $request->input('url_short');
+            $slug = Str::slug($customCode, '-');
+            $short = $this->generateShortCode( $slug);
+            $url->url_short = $short;
         }
 
-        $qrcode = $this->generateQRCode($url->url_short);
+        $qrcode = $this->generateQRCode($url->url_short, $short);
         $url->qrcode_image = $qrcode;
 
         $url->save();
