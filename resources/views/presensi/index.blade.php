@@ -63,7 +63,7 @@
                                     @if(auth()->user()->level === 'admin') 
                                     <td>{{optional($pn->user)->nama_pegawai}}</td>
                                     @endif
-                                    <td>{{$pn->tanggal}}</td>
+                                    <td> {{ \Carbon\Carbon::parse($pn->tanggal)->format('d M Y') }}</td>
                                     <td>{{$pn->jam_masuk}}</td>
                                     <td>{{$pn->jam_pulang}}</td>
                                     <td>{{$pn->terlambat}}</td>

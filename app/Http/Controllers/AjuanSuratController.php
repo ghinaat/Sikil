@@ -16,7 +16,7 @@ class AjuanSuratController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $surat = Surat::where('is_deleted', '0')
+        $surat = Surat::where('is_deleted', '0')->orderBy('id_surat', 'desc')
             ->get();
 
         return view('ajuansurat.index', [
@@ -168,7 +168,20 @@ class AjuanSuratController extends Controller
             if(isset($request->status)){
                 $surat->status = $request->status;
             }
-            $surat->urutan = 1 + Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
+            $existingSurats = Surat::where('jenis_surat', $request->jenis_surat)
+            ->where('is_deleted', '0')
+            ->orderBy('urutan', 'asc')
+            ->get();
+
+            $urutan = 1;
+
+            foreach ($existingSurats as $existingSurat) {
+            $existingSurat->urutan = $urutan++;
+            $existingSurat->save();
+            }
+
+            // Sekarang, atur urutan surat yang sedang diedit dengan urutan terakhir
+            $surat->urutan = $urutan;
 
             $kode_surat = KodeSurat::find($request->id_kode_surat);
 
@@ -231,7 +244,7 @@ class AjuanSuratController extends Controller
         foreach ($surats as $key => $surat) {
 
             // set urutan to 0
-            $surat->urutan = 33;
+            $surat->urutan = 0;
 
             // get all surat with same jenis_surat
             $surats2 = Surat::where('jenis_surat', $surat->jenis_surat)->where('is_deleted', '0')->get();

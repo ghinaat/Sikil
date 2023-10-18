@@ -70,6 +70,8 @@
                                         <th>CB</th>
                                         <th>CH</th>
                                         <th>TB</th>
+                                        <th>CAP</th>
+                                        <th>Prajab</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,6 +91,8 @@
                                         <td>{{ $presensi['cutiBersama'] }}</td>
                                         <td>{{ $presensi['cutiHaji'] }}</td>
                                         <td>{{ $presensi['tugasBelajar'] }}</td>
+                                        <td>{{ $presensi['cap'] }}</td>
+                                        <td>{{ $presensi['prajab'] }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

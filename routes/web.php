@@ -111,11 +111,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/arsip/{id_users}/profile', [ArsipController::class, 'showAdmin'])->name('arsip.showAdmin')->middleware('isAdmin');
     Route::post('/arsip', [ArsipController::class, 'store'])->name('arsip.store');
     Route::put('/arsip/{id_arsip}', [ArsipController::class, 'update'])->name('arsip.update');
-    Route::delete('/arsip/{id_arsip}', [ArsipController::class, 'destroy'])->name('arsip.destroy')->middleware('isAdmin');
-});
+        Route::delete('/arsip/{id_arsip}', [ArsipController::class, 'destroy'])->name('arsip.destroy')->middleware('isAdmin');
+    });
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/generalsetting', [GeneralSettingController::class, 'index'])->name('generalsetting.index');
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/generalsetting', [GeneralSettingController::class, 'index'])->name('generalsetting.index');
     Route::post('/generalsetting', [GeneralSettingController::class, 'store'])->name('generalsetting.store');
     Route::put('/generalsetting/{id_setting}', [GeneralSettingController::class, 'update'])->name('generalsetting.update')->middleware('isAdmin');
     Route::delete('/generalsettingsip/{id_setting}', [GeneralSettingController::class, 'destroy'])->name('generalsetting.destroy')->middleware('isAdmin');
@@ -211,4 +211,4 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/email-configuration', [EmailConfigurationController::class, 'show'])->name('emailConfiguration.show');
 Route::post('/email-configuration', [EmailConfigurationController::class, 'update'])->name('emailConfiguration.update');
-Route::get('/s/{url_short}', [UrlController::class, 'redirect'])->name('url.redirect');
+Route::get('https://s.qiteplanguage.org/{url_short}', [UrlController::class, 'redirect'])->name('url.redirect');

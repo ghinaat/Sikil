@@ -264,6 +264,8 @@ class PresensiController extends Controller
             $cutiBersama = 0;
             $cutiHaji = 0;
             $tugasBelajar = 0;
+            $cap = 0;
+            $prajab = 0;
 
             $presensiData = Presensi::where('kode_finger', $user->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
 
@@ -312,6 +314,15 @@ class PresensiController extends Controller
                             $tugasBelajar++;
                             break;
 
+                        case 'CAP':
+                            $cap++;
+                            break;
+
+                        case 'Prajab':
+                            $prajab++;
+                            break;
+        
+
                         default:
                             // Handle any other case not covered above, if necessary.
                             break;
@@ -347,6 +358,8 @@ class PresensiController extends Controller
                 'cutiBersama' => $cutiBersama,
                 'cutiHaji' => $cutiHaji,
                 'tugasBelajar' => $tugasBelajar,
+                'cap' => $cap,
+                'prajab' => $prajab,
             ];
 
         }

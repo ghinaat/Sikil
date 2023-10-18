@@ -19,12 +19,12 @@ class PerizinanController extends Controller
     {
         $user = auth()->user();
         $perizinan = Perizinan::where('is_deleted', '0')
-            ->whereIn('kode_finger', $user->ajuanperizinans->pluck('kode_finger'))
+            ->whereIn('kode_finger', $user->ajuanperizinans->pluck('kode_finger'))->orderBy('id_perizinan','desc')
             ->get();
 
         return view('izin.staff', [
             'perizinan' => $perizinan,
-            'users' => User::where('is_deleted', '0')->get(),
+            'users' => User::where('is_deleted', '0')->orderByRaw("LOWER(nama_pegawai)")->get(),
             'settingperizinan' => User::with(['setting'])->get(),
         ]);
     }
@@ -303,6 +303,6 @@ class PerizinanController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+        return redirect()->back()->with('success_message', 'Data telah terhapus.');
     }
 }

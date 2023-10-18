@@ -67,12 +67,12 @@
                                 <th>Tanggal Pelaksanaan</th>
                                 <th>Keterangan</th>
                                 <th>Lampiran</th>
-                                <th>Jumlah Hari Perizinan</th>
+                                <th>Jml Hari</th>
                                 <th>Persetujuan Atasan</th>
                                 @if(auth()->user()->level=='ppk' or auth()->user()->level=='admin')
                                 <th>Persetujuan PPK</th>
                                 @endif
-                                <th>Opsi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,9 +81,9 @@
                                 <td id={{$key+1}}>{{$key+1}}</td>
                                 <td id={{$key+1}}>{{$ap->user->nama_pegawai}}</td>
                                 <td id={{$key+1}}>{{$ap->jenis_perizinan}}</td>
-                                <td id={{$key+1}}>{{date_format( new DateTime($ap->tgl_ajuan), 'd F Y')}}</td>
-                                <td id={{$key+1}}>{{date_format( new DateTime($ap->tgl_absen_awal), 'd F Y')}} s.d.
-                                    {{ date_format( new DateTime($ap->tgl_absen_akhir), 'd F Y')}}</td>
+                                <td id={{$key+1}}> {{ \Carbon\Carbon::parse($ap->tgl_ajuan)->format('d M Y') }}</td>
+                                <td id={{$key+1}}> {{ \Carbon\Carbon::parse($ap->tgl_absen_awal)->format('d M Y') }} -
+                                {{ \Carbon\Carbon::parse($ap->tgl_absen_akhir)->format('d M Y') }}</td>
                                 <td id={{$key+1}}>{{$ap->keterangan}}</td>
                                 <td id="{{ $key + 1 }}" style="text-align: center; vertical-align: middle;">
                                 @if($ap->file_perizinan)
@@ -91,7 +91,7 @@
                                         <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
                                     </a>
                                 @else
-                                Tidak Melampirkan Dokumen
+                                -
                                 @endif
                                 </td>
                                 <td id={{$key+1}}>{{$ap->jumlah_hari_pengajuan}}</td>
@@ -129,6 +129,9 @@
                                 </td>
                                 @endif
                                 <td>
+                                    @if($ap->status_izin_atasan == '1' && $ap->status_izin_ppk == '1' )
+                                    Disetujui
+                                    @else
                                     <div class="btn-group">
                                         <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                             data-target="#editModal{{$ap->id_perizinan}}" data-id="{{$ap->id_perizinan}}">
@@ -141,6 +144,7 @@
                                         </a>
                                         @endif
                                     </div>
+                                    @endif
                                 </td>
                             </tr>
                             <div class="modal fade" id="editModal{{$ap->id_perizinan}}" tabindex="-1" role="dialog"
@@ -160,15 +164,15 @@
                                                 @method('PUT')
                                                 @can('isAdmin')
                                                 <div class="form-group">
-                                                            <label for="kode_finger">Nama Pegawai</label>
-                                                            <select type="hidden" id="kode_finger" name="kode_finger" class="form-select @error('kode_finger') is-invalid @enderror">
-                                                                @foreach ($users as $u)
-                                                                <option value="{{ $u->kode_finger }}" {{ $ap->kode_finger == $u->kode_finger ? 'selected' : '' }}>
-                                                                    {{ $u->nama_pegawai }} 
-                                                                </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
+                                                    <label for="kode_finger">Nama Pegawai</label>
+                                                    <select type="hidden" id="kode_finger" name="kode_finger" class="form-select @error('kode_finger') is-invalid @enderror">
+                                                    @foreach ($users as $u)
+                                                        <option value="{{ $u->kode_finger }}" {{ $ap->kode_finger == $u->kode_finger ? 'selected' : '' }}>
+                                                            {{ $u->nama_pegawai }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="tgl_absen_awal" class='form-label'>Tanggal Awal
                                                         Izin</label>
