@@ -60,22 +60,25 @@ class PengalamanKerjaController extends Controller
         $request->validate([
             'nama_perusahaan' => 'required',
             'masa_kerja' => 'required',
-            'file_kerja' => 'required|mimes:pdf,doc,docx,png,jpg,jpeg|max:2048', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
+            'file_kerja' => 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg|max:2048', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
             'posisi' => 'required',
             'id_users' => 'required',
         ]);
 
         $penker = new PengalamanKerja();
 
-        $file = $request->file('file_kerja');
-        $fileName = Str::random(20).'.'.$file->getClientOriginalExtension();
-        $file->storeAs('pengalaman_kerja', $fileName, 'public');
+        if ($request->hasFile('file_kerja')) {
+            $file = $request->file('file_kerja');
+            $fileName = Str::random(20).'.'.$file->getClientOriginalExtension();
+            $file->storeAs('pengalaman_kerja', $fileName, 'public');
+
+            $penker->file_kerja = $fileName; // Simpan nama file ke dalam kolom 'file_kerja'
+        }
 
         $penker->nama_perusahaan = $request->nama_perusahaan;
         $penker->masa_kerja = $request->masa_kerja;
         $penker->posisi = $request->posisi;
         $penker->id_users = $request->id_users;
-        $penker->file_kerja = $fileName; // Simpan nama file ke dalam kolom 'file_kerja'
 
         $penker->save();
 
@@ -151,6 +154,6 @@ class PengalamanKerjaController extends Controller
             ]);
         }
 
-        return redirect()->route('penker.index')->with('success_message', 'Data telah terhapus');
+        return redirect()->route('penker.index')->with('success_message', 'Data telah terhapus.');
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_sekolah', 100);
             $table->string('jurusan', 100);
             $table->string('tahun_lulus', 20);
-            $table->string('ijazah', 20);
+            $table->string('ijazah', 20)->nullable();
             $table->unsignedInteger('id_users');
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->unsignedInteger('id_tingkat_pendidikan');

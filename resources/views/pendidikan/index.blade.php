@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'List Pendidikan')
 @section('content_header')
-<h1 class="m-0 text-dark">Detail Profile</h1>
+<h1 class="m-0 text-dark">Profile : {{ Auth::user()->nama_pegawai }}</h1>
 
 @stop
 @section('content')
@@ -29,9 +29,9 @@
                                 <th>Nama Sekolah</th>
                                 <th>Jurusan</th>
                                 <th>Tahun Lulus</th>
-                                <th>No. Ijazah</th>
+                                <th>Ijazah</th>
 
-                                <th>Opsi</th>
+                                <th>Aksi</th>
 
                             </tr>
                         </thead>
@@ -59,8 +59,8 @@
                                 </td>
 
                             </tr>
+                            
                             <!-- Edit modal -->
-
                             <div class="modal fade" id="editModal{{$pd->id_pendidikan}}" tabindex="-1" role="dialog"
                                 aria-labelledby="editModalLabel{{$pd->id_pendidikan}}" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
@@ -84,7 +84,7 @@
                                                     <label class="id_users" for="id_users">Nama Pegawai</label>
                                                     <select id="id_users" name="id_users"
                                                         class="form-select @error('id_users') is-invalid @enderror">
-                                                        @foreach ($user as $us)
+                                                        @foreach ($user->sortBy('nama_pegawai') as $us)
                                                         <option value="{{ $us->id_users }}" @if( $pd->id_users ===
                                                             old('id_users', $us->id_users) ) selected @endif>
                                                             {{ $us->nama_pegawai }}
@@ -98,10 +98,9 @@
                                                     <select class="form-select @error('nama') is-invalid @enderror"
                                                         id="id_tingkat_pendidikan" name="id_tingkat_pendidikan"
                                                         required>
-                                                        @foreach ($tingpen as $tp)
+                                                        @foreach ($tingpen->sortBy('nama_tingkat_pendidikan') as $tp)
                                                         <option value="{{ $tp->id_tingkat_pendidikan }}"
-                                                            @if(old('id_tingkat_pendidikan', $tp->id_tingkat_pendidikan
-                                                            )=='id_tingkat_pendidikan' )selected @endif>
+                                                            @if($pd->id_tingkat_pendidikan === old('id_tingkat_pendidikan', $tp->id_tingkat_pendidikan)) selected @endif>
                                                             {{ $tp->nama_tingkat_pendidikan }}</option>
                                                         @endforeach
                                                     </select>
@@ -146,8 +145,7 @@
                                                     <small class="form-text text-muted">Allow file extensions : .jpeg
                                                         .jpg .png .pdf .docx</small>
                                                     @if ($pd->ijazah)
-                                                    <p>Previous File: <a
-                                                            href="{{ asset('/storage/pendidikan/' . $pd->ijazah) }}"
+                                                    <p>Previous File: <a href="{{ asset('/storage/pendidikan/' . $pd->ijazah) }}"
                                                             target="_blank">{{ $pd->ijazah }}</a></p>
                                                     @endif
                                                 </div>
@@ -171,7 +169,7 @@
     </div>
 </div>
 
-
+<!-- Create Modal -->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="addMeditlLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -193,8 +191,8 @@
                         <label class="id_users" for="id_users">Nama Pegawai</label>
                         <select id="id_users" name="id_users"
                             class="form-select @error('id_users') is-invalid @enderror">
-                            @foreach ($user as $us)
-                            <option value="{{ $us->id_users }}" @if( old('id_users', $us->id_users) ) selected @endif>
+                            @foreach ($user->sortBy('nama_pegawai') as $us)
+                            <option value="{{ $us->id_users }}" @if( old('id_users')==$us->id_users) selected @endif>
                                 {{ $us->nama_pegawai }}
                             </option>
                             @endforeach
@@ -205,10 +203,8 @@
                         <label for="id_tingkat_pendidikan"> Tingkat Pendidikan</label>
                         <select class="form-select @error('nama') is-invalid @enderror" id="id_tingkat_pendidikan"
                             name="id_tingkat_pendidikan" required>
-                            @foreach ($tingpen as $tp)
-                            <option value="{{ $tp->id_tingkat_pendidikan }}" @if( old('id_tingkat_pendidikan')==$tp->
-                                id_tingkat_pendidikan )
-                                selected @endif > {{ $tp->nama_tingkat_pendidikan }}
+                            @foreach ($tingpen->sortBy('nama_tingkat_pendidikan') as $tp)
+                            <option value="{{ $tp->id_tingkat_pendidikan }}" @if( old('id_tingkat_pendidikan')==$tp->id_tingkat_pendidikan) selected @endif > {{ $tp->nama_tingkat_pendidikan }}
                             </option>
                             @endforeach
                         </select>
@@ -240,7 +236,7 @@
                         <label for="ijazah">Ijazah Kelulusan</label>
                         <input type="file" name="ijazah" id="ijazah"
                             class="form-control @error('ijazah') is-invalid @enderror"
-                            accept=".jpeg, .jpg, .png, .pdf, .doc, .docx" required> @error('ijazah')
+                            accept=".jpeg, .jpg, .png, .pdf, .doc, .docx"> @error('ijazah')
                         <span class="text-danger">{{$message}}</span> @enderror
                         <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                     </div>
