@@ -50,7 +50,7 @@
                                 </td>
                                 <td>
                                     @if($lr->status_izin_atasan === '1')
-                                    Sudah Disetujui
+                                    Disetujui
                                     @else
                                     @include('components.action-buttons', ['id' => $lr->id_lembur, 'key' => $key,
                                     'route' => 'lembur'])
@@ -151,7 +151,7 @@
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
-                                <input type="hidden" name="kode_finger" value="{{ Auth::user()->kode_finger}}">
+                            <input type="hidden" name="kode_finger" value="{{ Auth::user()->kode_finger}}">
                                 <div class="form-group">
                                     <label for="tanggal">Tanggal</label>
                                     <input type="date" name="tanggal" id="tanggal"

@@ -3,7 +3,7 @@
 @section('title', 'Detail User')
 
 @section('content_header')
-<h1 class="m-0 text-dark">Detail Profile</h1>
+<h1 class="m-0 text-dark"> Profile : {{$users->nama_pegawai}}</h1>
 @stop
 
 @section('content')
@@ -31,7 +31,7 @@
                                 <th>Tanggal Lahir</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Status</th>
-                                <th>Opsi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,7 +43,7 @@
                                 @endcan
                                 <td>{{$kel->hubkel->nama}}</td>
                                 <td>{{$kel->nama}}</td>
-                                <td>{{ date_format( new DateTime($kel->tanggal_lahir), 'd F Y')}}
+                                <td>{{ date_format( new DateTime($kel->tanggal_lahir), 'd M Y')}}
                                 </td>
                                 <td>
                                     @if($kel->gender == 'laki-laki')

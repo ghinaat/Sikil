@@ -61,6 +61,7 @@ class UserController extends Controller
             'password' => 'required|confirmed',
             'level' => 'required',
             'id_jabatan' => 'required',
+            'kode_finger' => 'required',
         ];
 
         $request->validate($rules);
@@ -71,11 +72,11 @@ class UserController extends Controller
             'password',
             'level',
             'id_jabatan',
+            'kode_finger',
             
         ]);
 
         $array['_password_'] = $request->password;
-        $array['kode_finger'] = $this->generateUniqueKodeFinger();
 
         $user = User::create($array);
 
@@ -85,19 +86,19 @@ class UserController extends Controller
     }
 
 
-    private function generateUniqueKodeFinger()
-    {
-        $maxRetries = 4; // Jumlah maksimum percobaan yang diizinkan
+    // private function generateUniqueKodeFinger()
+    // {
+    //     $maxRetries = 4; // Jumlah maksimum percobaan yang diizinkan
 
-        for ($i = 0; $i < $maxRetries; $i++) {
-            $kodeFinger = mt_rand(1000, 9999);
+    //     for ($i = 0; $i < $maxRetries; $i++) {
+    //         $kodeFinger = mt_rand(1000, 9999);
 
-            // Periksa apakah kode finger sudah ada di database
-            if (!User::where('kode_finger', $kodeFinger)->exists()) {
-                return $kodeFinger; // Kode finger unik ditemukan
-            }
-        }
-    }
+    //         // Periksa apakah kode finger sudah ada di database
+    //         if (!User::where('kode_finger', $kodeFinger)->exists()) {
+    //             return $kodeFinger; // Kode finger unik ditemukan
+    //         }
+    //     }
+    // }
 
     public function edit($id_users)
     {
@@ -121,7 +122,8 @@ class UserController extends Controller
             'email' => 'required|unique:users,email,'.$id_users.',id_users',
             'level' => 'required',
             'id_jabatan' => 'required',
-            'level' => 'required',
+            'kode_finger' => 'required',
+
         ];
 
         if (isset($request->password)) {
@@ -138,6 +140,7 @@ class UserController extends Controller
         }
         $user->level = $request->level;
         $user->id_jabatan = $request->id_jabatan;
+        $user->kode_finger = $request->kode_finger;
         $user->_password_ = $request->password;
         $user->save();
 

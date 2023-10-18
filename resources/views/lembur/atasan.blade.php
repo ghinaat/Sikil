@@ -28,14 +28,14 @@
                                 @can('isAdmin')
                                 <th>Status</th>
                                 @endif
-                                <th>Opsi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($lembur as $key => $lr)
                             <tr>
                                 <td id={{$key+1}}>{{$key+1}}</td>
-                                <td id={{$key+1}}>{{date_format( new DateTime($lr->tanggal), 'd F Y')}}</td>
+                                <td id={{$key+1}}>{{date_format( new DateTime($lr->tanggal), 'd M Y')}}</td>
                                 <td id={{$key+1}}>{{$lr->user->nama_pegawai}}</td>
                                 <td id={{$key+1}}>
                                     {{ \Carbon\Carbon::createFromFormat('H:i:s', $lr->jam_mulai)->format('H:i') }}</td>
@@ -73,7 +73,7 @@
                                         @endif
                                         @can('isAdmin' )
                                         @if($lr->status_izin_atasan === '1')
-                                        Sudah Disetujui
+                                        Disetujui
                                         @else
                                         <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                             data-target="#editModal{{$lr->id_lembur}}" data-id="{{$lr->id_lembur}}">
@@ -147,7 +147,7 @@
                                                                     class="form-select @error('id_atasan') is-invalid @enderror">
                                                                     @foreach ($users as $us)
                                                                     <option value="{{ $us->id_users }}" @if( $lr->
-                                                                        id_atasan === old('id_atasan', $us->id_users) )
+                                                                        id_atasan == old('id_atasan', $us->id_users) )
                                                                         selected @endif>
                                                                         {{ $us->nama_pegawai }}
                                                                     </option>
@@ -213,63 +213,63 @@
                     enctype="multipart/form-data">
                     @csrf
                     <div class="form-body">
-                        <div class="row">
-                            <div class="form-group">
-                                <label class="control-label col-md-6" for="kode_finger">Nama Pegawai</label>
-                                <select id="kode_finger" name="kode_finger"
-                                    class="form-select @error('kode_finger') is-invalid @enderror">
-                                    @foreach ($users as $us)
-                                    <option value="{{ $us->kode_finger }}" @if( old('kode_finger')==$us->id_users
-                                        )selected @endif>
-                                        {{ $us->nama_pegawai }}</option>
-                                    @endforeach
-                                </select>
-                                @error('kode_finger') <span class="textdanger">{{$message}}</span> @enderror
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6" for="kode_finger">Nama Pegawai</label>
+                                    <select id="kode_finger" name="kode_finger"
+                                        class="form-select @error('kode_finger') is-invalid @enderror">
+                                        @foreach ($users as $us)
+                                        <option value="{{ $us->kode_finger }}" @if( old('kode_finger')==$us->id_users
+                                            )selected @endif>
+                                            {{ $us->nama_pegawai }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('kode_finger') <span class="textdanger">{{$message}}</span> @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="tanggal">Tanggal</label>
+                                    <input type="date" name="tanggal" id="tanggal" value="{{ old('tanggal')}}"
+                                        class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="jam_mulai">Jam Mulai</label>
+                                    <input type="time" name="jam_mulai" id="jam_mulai" value="{{ old('jam_mulai')}}"
+                                        class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="jam_selesai">Jam Selesai</label>
+                                    <input type="time" name="jam_selesai" id="jam_selesai" value="{{ old('jam_selesai')}}"
+                                        class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tugas">Uraian Tugas</label>
+                                    <textarea name="tugas" id="tugas" class="form-control" value="{{ old('tugas')}}"
+                                        required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-6" for="id_atasan">Atasan Langsung</label>
+                                    <select id="id_atasan" name="id_atasan"
+                                        class="form-select @error('id_atasan') is-invalid @enderror">
+                                        @foreach ($users as $us)
+                                        <option value="{{ $us->id_users }}" @if( old('id_atasan', $us->id_users) )
+                                            selected @endif>
+                                            {{ $us->nama_pegawai }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="tanggal">Tanggal</label>
-                            <input type="date" name="tanggal" id="tanggal" value="{{ old('tanggal')}}"
-                                class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="jam_mulai">Jam Mulai</label>
-                            <input type="time" name="jam_mulai" id="jam_mulai" value="{{ old('jam_mulai')}}"
-                                class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="jam_selesai">Jam Selesai</label>
-                            <input type="time" name="jam_selesai" id="jam_selesai" value="{{ old('jam_selesai')}}"
-                                class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tugas">Uraian Tugas</label>
-                            <textarea name="tugas" id="tugas" class="form-control" value="{{ old('tugas')}}"
-                                required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-6" for="id_atasan">Atasan Langsung</label>
-                            <select id="id_atasan" name="id_atasan"
-                                class="form-select @error('id_atasan') is-invalid @enderror">
-                                @foreach ($users as $us)
-                                <option value="{{ $us->id_users }}" @if( old('id_atasan', $us->id_users) )
-                                    selected @endif>
-                                    {{ $us->nama_pegawai }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                        </div>
-                    </div>
+                    </div>        
+                </form>
             </div>
         </div>
-        </form>
     </div>
-</div>
-</div>
 </div>
 
 @stop

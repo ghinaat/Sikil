@@ -21,13 +21,13 @@
                 <div class="form-group">
                     <label for="tgl_mulai" class='form-label'>Tanggal Mulai</label>
                     <div class="form-input">
-                        : {{$kegiatan -> tgl_mulai ?? old('tgl_mulai')}}
+                        : {{ \Carbon\Carbon::parse($kegiatan->tgl_mulai)->format('d M Y') ?? old('tgl_mulai')}}
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                     <div class="form-input">
-                        : {{$kegiatan -> tgl_selesai ?? old('tgl_selesai')}}
+                        : {{ \Carbon\Carbon::parse($kegiatan->tgl_selesai)->format('d M Y') ?? old('tgl_selesai')}}
                     </div>
                 </div>
                 <div class="form-group">
@@ -86,7 +86,7 @@
             </div>
             <div class="modal-footer">
                 <a href="{{route('kegiatan.index')}}" class="btn btn-primary ">
-                    Daftar Kegiatan
+                    Daftar Seluruh Kegiatan
                 </a>
             </div>
         </div>

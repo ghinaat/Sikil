@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('urutan');
             $table->date('tgl_surat');
             $table->string('keterangan', 100);
-            $table->enum('bulan_kegiatan', ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'])->nullable();
+            $table->enum('bulan_kegiatan', ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'])->nullable();
             $table->enum('status', ['0', '1'])->default('0');
 
             $table->unsignedInteger('id_users');
