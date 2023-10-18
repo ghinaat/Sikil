@@ -62,7 +62,7 @@ class PendidikanController extends Controller
         $request->validate([
             'nama_sekolah' => 'required',
             'jurusan' => 'required',
-            'ijazah' => 'required|mimes:pdf,doc,docx,png,jpg,jpeg|max:2048', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
+            'ijazah' => 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg|max:2048', // Izinkan file PDF, DOC, DOCX, PNG, dan JPG, maksimal ukuran 2MB.
             'tahun_lulus' => 'required|digits:4|integer|min:1950',
             'id_users' => 'required',
             'id_tingkat_pendidikan' => 'required',
@@ -70,16 +70,19 @@ class PendidikanController extends Controller
 
         $pendidikan = new Pendidikan();
 
-        $file = $request->file('ijazah');
-        $fileName = Str::random(5).'.'.$file->getClientOriginalExtension();
-        $file->storeAs('pendidikan', $fileName, 'public'); // Simpan file di dalam folder public/ Kerja
+        if ($request->hasFile('ijazah')) {
+            $file = $request->file('ijazah');
+            $fileName = Str::random(5) . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('pendidikan', $fileName, 'public'); // Simpan file di dalam folder public/ Kerja
+    
+            $pendidikan->ijazah = $fileName; // Simpan nama file ke dalam kolom 'ijazah'
+        }
 
         $pendidikan->nama_sekolah = $request->nama_sekolah;
         $pendidikan->jurusan = $request->jurusan;
         $pendidikan->tahun_lulus = $request->tahun_lulus;
         $pendidikan->id_users = $request->id_users;
         $pendidikan->id_tingkat_pendidikan = $request->id_tingkat_pendidikan;
-        $pendidikan->ijazah = $fileName; // Simpan nama file ke dalam kolom 'file_kerja'
 
         $pendidikan->save();
 
@@ -153,6 +156,6 @@ class PendidikanController extends Controller
             ]);
         }
 
-        return redirect()->route('pendidikan$pendidikan.index')->with('success_message', 'Data telah terhapus');
+        return redirect()->route('pendidikan.index')->with('success_message', 'Data telah terhapus.');
     }
 }

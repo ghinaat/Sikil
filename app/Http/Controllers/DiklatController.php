@@ -51,26 +51,29 @@ class DiklatController extends Controller
             'id_jenis_diklat' => 'required',
             'nama_diklat' => 'required',
             'penyelenggara' => 'required',
-            'tanggal_diklat' => 'required',
+            'tgl_mulai' => 'required|date',
+            'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
             'jp' => 'required',
-            'file_sertifikat' => 'required|mimes:pdf,doc,docx,png,jpg,jpeg',
+            'file_sertifikat' => 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg',
         ]);
 
         $diklat = new Diklat();
 
-        $file = $request->file('file_sertifikat');
-
-        $fileName = Str::random(20).'.'.$file->getClientOriginalExtension();
-        $file->storeAs('file_sertifikat', $fileName, 'public');
+        if($request->hasFile('file_sertifikat')) {
+            $file = $request->file('file_sertifikat');
+            $fileName = Str::random(20).'.'.$file->getClientOriginalExtension();
+            $file->storeAs('file_sertifikat', $fileName, 'public');
+            
+            $diklat->file_sertifikat = $fileName;
+        }
 
         $diklat->id_users = $request->id_users;
         $diklat->id_jenis_diklat = $request->id_jenis_diklat;
         $diklat->nama_diklat = $request->nama_diklat;
         $diklat->penyelenggara = $request->penyelenggara;
-        $diklat->tanggal_diklat = $request->tanggal_diklat;
+        $diklat->tgl_mulai = $request->tgl_mulai;
+        $diklat->tgl_selesai = $request->tgl_selesai;
         $diklat->jp = $request->jp;
-
-        $diklat->file_sertifikat = $fileName;
 
         $diklat->save();
 
@@ -108,7 +111,8 @@ class DiklatController extends Controller
             'id_jenis_diklat' => 'required',
             'nama_diklat' => 'required',
             'penyelenggara' => 'required',
-            'tanggal_diklat' => 'required',
+            'tgl_mulai' => 'required',
+            'tgl_selesai' => 'required',
             'jp' => 'required',
             'file_sertifikat' => 'mimes:pdf,doc,docx,png,jpg,jpeg',
         ]);
@@ -124,7 +128,8 @@ class DiklatController extends Controller
         $diklat->id_jenis_diklat = $request->id_jenis_diklat;
         $diklat->nama_diklat = $request->nama_diklat;
         $diklat->penyelenggara = $request->penyelenggara;
-        $diklat->tanggal_diklat = $request->tanggal_diklat;
+        $diklat->tgl_mulai = $request->tgl_mulai;
+        $diklat->tgl_selesai = $request->tgl_selesai;
         $diklat->jp = $request->jp;
 
         if ($request->hasFile('file_sertifikat')) {

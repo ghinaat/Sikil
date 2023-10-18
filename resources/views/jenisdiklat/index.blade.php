@@ -28,7 +28,7 @@
                         <tbody>
                             @foreach($jenisdiklat as $key => $jd)
                             <tr>
-                                <td>{{$key+1}}</td>
+                                <td>{{$key+1}}</td> <!-- Placeholder untuk nomor asli -->
                                 <td>{{$jd->nama_jenis_diklat}}</td>
                                 @can('isAdmin')
                                 <td>
@@ -140,14 +140,22 @@
 
 @stop
 @push('js')
-<form action="" id="delete-form" method="post">
-    @method('delete')
-    @csrf
-</form>
 <script>
-$('#example2').DataTable({
-    "responsive": true,
-    "order": [[0, 'desc']]
+$(document).ready(function() {
+    var table = $('#example2').DataTable({
+        "responsive": true,
+        "order": [[1, 'desc']],
+        "columnDefs": [
+            { "orderable": false, "targets": [0] }
+        ]
+    });
+
+    // Inisialisasi nomor yang disimpan di data-attribute
+    table.on('order.dt search.dt', function () {
+        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
 });
 
 function notificationBeforeDelete(event, el) {

@@ -57,19 +57,23 @@ class ArsipController extends Controller
             'id_users' => 'required',
             'jenis' => 'required',
             'keterangan' => 'required',
-            'file' => 'required|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
+            'file' => 'nullable|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
         ]);
 
         $arsip = new Arsip();
-        $file = $request->file('file');
-        $fileExtension = $file->getClientOriginalExtension();
-        $fileName = Str::random(20).'.'.$fileExtension; // Nama file acak dengan ekstensi asli
-        $file->storeAs('arsip', $fileName, 'public'); // Simpan file di dalam folder public/arsip
+
+        if($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileExtension = $file->getClientOriginalExtension();
+            $fileName = Str::random(20).'.'.$fileExtension; // Nama file acak dengan ekstensi asli
+            $file->storeAs('arsip', $fileName, 'public'); // Simpan file di dalam folder public/arsip
+
+            $arsip->file = $fileName; // Simpan nama file ke dalam kolom 'file_kerja'
+        }
 
         $arsip->id_users = $request->id_users;
         $arsip->jenis = $request->jenis;
         $arsip->keterangan = $request->keterangan;
-        $arsip->file = $fileName; // Simpan nama file ke dalam kolom 'file_kerja'
 
         $arsip->save();
 

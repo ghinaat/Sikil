@@ -25,7 +25,7 @@ table-stripped" id="example2">
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
                                 <th>Status</th>
-                                <th>Opsi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,12 +37,16 @@ table-stripped" id="example2">
                             <tr>
                                 <td id={{$key+1}}>{{$nomor}}</td>
                                 <td id={{$key+1}}>{{$kg->nama_kegiatan}}</td>
-                                <td id={{$key+1}}>{{$kg->tgl_mulai}}</td>
-                                <td id={{$key+1}}>{{$kg->tgl_selesai}}</td>
+                                <td id={{$key+1}}>{{ \Carbon\Carbon::parse($kg->tgl_mulai)->format('d M Y') }}</td>
+                                <td id={{$key+1}}>{{ \Carbon\Carbon::parse($kg->tgl_selesai)->format('d M Y') }}</td>
                                 <td id={{$key+1}}>{{$kg->status}}</td>
                             <td>
                                 @can('isAdmin')
                                 <div class="btn-group">
+                                     @endcan
+                                <a href="{{ route('kegiatan' . '.show', $kg->id_kegiatan) }}" class="btn btn-info btn-xs mx-1">
+                                    <i class="fa fa-info"></i>
+                                </a>
                                 <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                     data-target="#editModal{{$kg->id_kegiatan}}" data-id="{{$kg->id_kegiatan}}">
                                     <i class="fa fa-edit"></i>
@@ -51,16 +55,13 @@ table-stripped" id="example2">
                                     onclick="notificationBeforeDelete(event, this, {{$key+1}})" class="btn btn-danger btn-xs mx-1">
                                     <i class="fa fa-trash"></i>
                                 </a>
-                                @endcan
-                                <a href="{{ route('kegiatan' . '.show', $kg->id_kegiatan) }}" class="btn btn-info btn-xs mx-1">
-                                    <i class="fa fa-info"></i>
-                                </a>
                                 </div>
                             </td>
                             </tr>
                             @php
                             $nomor++; // Increment the sequence for the next row
                             @endphp
+
                             <!-- Edit modal -->
                             @can('isAdmin')
                             <div class="modal fade" id="editModal{{$kg->id_kegiatan}}" tabindex="-1" role="dialog"
@@ -91,8 +92,7 @@ table-stripped" id="example2">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="tgl_mulai" class='form-label'>Tanggal Mulai
-                                                        Acara</label>
+                                                    <label for="tgl_mulai" class='form-label'>Tanggal Mulai Acara</label>
                                                     <div class="form-input">
                                                         <input type="date" class="form-control"
                                                             class="form-control @error('tgl_mulai') is-invalid @enderror"
@@ -154,6 +154,7 @@ table-stripped" id="example2">
     </div>
 </div>
 
+<!-- Create Modal -->
 @can('isAdmin')
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="addMeditlLabel"
     aria-hidden="true">
@@ -227,12 +228,29 @@ table-stripped" id="example2">
 </form>
 <script>
 $(document).ready(function() {
-    $('#example2').DataTable({
+    var table = $('#example2').DataTable({
         "responsive": true,
-        "order": [
-            [2, "desc"]
-        ] // Sort the first column (Tanggal Mulai) in descending order
+        "columnDefs": [
+            { "orderable": false, 
+                "targets": [2],
+                "type": "date",
+                "render": function (data, type, row) {
+                    if (type === 'sort') {
+                        // Format tanggal untuk sort secara descending ke format ISO 8601
+                        return data.split(' ').reverse().join('-');
+                    }
+                    return data;
+                },
+            },
+        ],
     });
+
+    // Inisialisasi nomor yang disimpan di data-attribute
+    table.on('order.dt search.dt', function () {
+        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
 });
 </script>
 @endpush

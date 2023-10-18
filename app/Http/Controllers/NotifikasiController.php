@@ -9,8 +9,10 @@ class NotifikasiController extends Controller
 {
     public function index()
     {
+        $notifikasi = auth()->user()->notifikasi()->orderBy('created_at', 'desc')->get();
+    
         return view('notifikasi.index', [
-            'notifikasis' => auth()->user()->notifikasi,
+            'notifikasis' => $notifikasi,
         ]);
     }
 
