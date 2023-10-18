@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'List Diklat')
 @section('content_header')
-<h1 class="m-0 text-dark">List Diklat</h1>
+<h1 class="m-0 text-dark">Profile : {{ Auth::user()->nama_pegawai }}</h1>
 @stop
 @section('content')
 <div class="row">
@@ -30,10 +30,10 @@
                                 <th>Jenis Diklat</th>
                                 <th>Nama Diklat</th>
                                 <th>Penyelenggara</th>
-                                <th>Tanggal Diklat</th>
-                                <th>Jam Pelajaran</th>
-                                <th>File Sertifikat</th>
-                                <th>Opsi</th>
+                                <th>Tanggal Pelaksanaan</th>
+                                <th>JP</th>
+                                <th>Sertifikat</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,7 +46,7 @@
                                 <td id={{$key+1}}>{{$dk->jenisdiklat->nama_jenis_diklat}}</td>
                                 <td id={{$key+1}}>{{$dk->nama_diklat}}</td>
                                 <td id={{$key+1}}>{{$dk->penyelenggara}}</td>
-                                <td id={{$key+1}}>{{$dk->tanggal_diklat}}</td>
+                                <td id={{$key+1}}>{{ \Carbon\Carbon::parse($dk->tgl_mulai)->format('d M Y') }} -- {{ \Carbon\Carbon::parse($dk->tgl_selesai)->format('d M Y') }}</td>
                                 <td id={{$key+1}}>{{$dk->jp}}</td>
                                 <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
                                     <a href="{{ asset('/storage/file_sertifikat/'. $dk->file_sertifikat) }}" download>
@@ -58,6 +58,7 @@
                                     'route' => 'diklat'])
                                 </td>
                             </tr>
+
                             <!-- Edit modal -->
                             <div class="modal fade" id="editModal{{$dk->id_diklat}}" tabindex="-1" role="dialog"
                                 aria-labelledby="editModalLabel{{$dk->id_diklat}}" aria-hidden="true">
@@ -80,7 +81,7 @@
                                                     <label class="id_users" for="id_users">Nama Pegawai</label>
                                                     <select id="id_users" name="id_users"
                                                         class="form-select @error('id_users') is-invalid @enderror">
-                                                            @foreach ($users as $us)
+                                                            @foreach ($users->sortBy('nama_pegawai') as $us)
                                                             <option value="{{ $us->id_users }}" @if( $dk->id_users === old('id_users', $us->id_users) ) selected @endif>
                                                             {{ $us->nama_pegawai }}
                                                             </option>
@@ -118,13 +119,25 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="tanggal_diklat" class="form-label">Tanggal Diklat</label>
+                                                    <label for="tgl_mulai" class='form-label'>Tanggal Mulai</label>
                                                     <div class="form-input">
-                                                        <input type="date"
-                                                            class="form-control @error('tanggal_diklat') is-invalid @enderror"
-                                                            id="tanggal_diklat" placeholder="Tanggal_diklat" name="tanggal_diklat"
-                                                            value="{{$dk->tanggal_diklat ?? old('tanggal_diklat')}}" required>
-                                                        @error('tanggal_diklat') <span class="text-danger">{{$message}}</span> @enderror
+                                                        <input type="date" class="form-control"
+                                                            class="form-control @error('tgl_mulai') is-invalid @enderror"
+                                                            id="tgl_mulai" name="tgl_mulai"
+                                                            value="{{$dk -> tgl_mulai ?? old('tgl_mulai')}}">
+                                                        @error('tgl_mulai') <span class="textdanger">{{$message}}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
+                                                    <div class="form-input">
+                                                        <input type="date" class="form-control"
+                                                            class="form-control @error('tgl_selesai') is-invalid @enderror"
+                                                            id="tgl_selesai" name="tgl_selesai"
+                                                            value="{{$dk -> tgl_selesai ?? old('tgl_selesai')}}">
+                                                        @error('tgl_selesai') <span
+                                                            class="textdanger">{{$message}}</span> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -158,7 +171,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             @endforeach
                         </tbody>
                     </table>
@@ -168,9 +180,7 @@
     </div>
 </div>
 
-
-<!-- Modal -->
-<!-- Bootstrap modal Create -->
+<!-- Create Modal -->
 <div class="modal fade" id="modal_form" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -191,8 +201,8 @@
                     <label class="id_users" for="id_users">Nama Pegawai</label>
                     <select id="id_users" name="id_users"
                     class="form-select @error('id_users') is-invalid @enderror">
-                    @foreach ($users as $us)
-                    <option value="{{ $us->id_users }}" @if( old('id_users', $us->id_users) ) selected @endif>
+                    @foreach ($users->sortBy('nama_pegawai') as $us)
+                    <option value="{{ $us->id_users }}" @if( old('id_users')==$us->id_users) selected @endif>
                     {{ $us->nama_pegawai }}
                     </option>
                     @endforeach
@@ -206,7 +216,7 @@
                                     <label class="control-label col-md-6" for="id_jenis_diklat">Jenis Diklat</label>
                                     <select id="id_jenis_diklat" name="id_jenis_diklat"
                                         class="form-select @error('id_jenis_diklat') is-invalid @enderror" required>
-                                        @foreach ($jenisdiklat as $jd)
+                                        @foreach ($jenisdiklat->sortByDesc('id_jenis_diklat') as $jd)
                                         <option value="{{ $jd->id_jenis_diklat }}" @if( old('id_jenis_diklat')==$jd->id_jenis_diklat )selected @endif>
                                             {{ $jd->nama_jenis_diklat }}</option>
                                         @endforeach
@@ -226,10 +236,21 @@
                                     @error('penyelenggara')<span class="text-danger">{{ $message }}</span>@enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputName">Tanggal Diklat</label>
-                                <input type="date" class="form-control @error('tanggal_diklat') is-invalid @enderror"  
-                                    id="tanggal_diklat" name="tanggal_diklat" required>
-                                    @error('tanggal_diklat')<span class="text-danger">{{ $message }}</span>@enderror
+                                <label for="tgl_mulai" class="form-label">Tanggal Mulai</label>
+                                <div class="form-input">
+                                    <input type="date" class="form-control @error('tgl_mulai') is-invalid @enderror"
+                                        id="tgl_mulai" name="tgl_mulai" value="{{ old('tgl_mulai')}}">
+                                    @error('tgl_mulai') <span class="textdanger">{{$message}}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
+                                <div class="form-input">
+                                    <input type="date" class="form-control"
+                                        class="form-control @error('tgl_selesai') is-invalid @enderror" id="tgl_selesai"
+                                        name="tgl_selesai" value="{{old('tgl_selesai')}}">
+                                    @error('tgl_selesai') <span class="textdanger">{{$message}}</span> @enderror
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputName">Jam Pelajaran</label>

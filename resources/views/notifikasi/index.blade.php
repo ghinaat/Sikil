@@ -184,8 +184,10 @@
                                                 <div class="media-body">
                                                     <div class="media-heading">
                                                         <a href="{{ route('notifikasi.detail', $notifikasi->id_notifikasi) }}" class="m-r-10">{{ $notifikasi->judul }}</a>
-                                                        <span class="badge bg-secondary">{{ $notifikasi->label }}</span>
-                                                        <small class="float-right text-muted"><time class="hidden-sm-down" datetime="2017">{{ $notifikasi->created_at }}</time><i class="zmdi zmdi-attachment-alt"></i> </small>
+                                                        @if($notifikasi->is_dibaca === 'tidak_dibaca')
+                                                            <span class="badge bg-secondary">{{ $notifikasi->label }}</span>
+                                                        @endif
+                                                        <small class="float-right text-muted"><time class="hidden-sm-down" datetime="{{ $notifikasi->created_at->tz('Asia/Jakarta')->format('d M Y, H:i:s') }}">{{ $notifikasi->created_at->tz('Asia/Jakarta')->format('d M Y, H:i:s') }}</time><i class="zmdi zmdi-attachment-alt"></i> </small>
                                                     </div>
                                                     <p class="msg">{{ substr($notifikasi->pesan, 0, 40)  }}...</p>
                                                 </div>

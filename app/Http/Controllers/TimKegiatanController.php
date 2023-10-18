@@ -17,7 +17,10 @@ class TimKegiatanController extends Controller
 
     public function index()
     {
-
+        $kegiatan = Kegiatan::whereYear('tgl_mulai', '=', now()->year)
+        ->orderBy('tgl_mulai', 'desc')
+        ->get(); 
+    
         $timkegiatan = TimKegiatan::all();
 
         return view('timkegiatan.index', [

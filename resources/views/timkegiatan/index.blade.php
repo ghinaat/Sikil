@@ -19,10 +19,11 @@
                         <tr>
                             <th>No.</th>
                             <th>Nama Kegiatan</th>
+                            <td></td>
                             <th>Nama pegawai</th>
                             <th>Peran</th>
                             @can('isAdmin')
-                            <th>Opsi</th>
+                            <th>Aksi</th>
                             @endcan
                         </tr>
                     </thead>
@@ -31,6 +32,7 @@
                         <tr>
                             <td>{{$key+1}}</td>
                             <td>{{$tk->kegiatan->nama_kegiatan }}</td>
+                            <td>{{ \Carbon\Carbon::parse($tk->kegiatan->tgl_mulai)->format('d M Y') }}</td>
                             <td>{{$tk->user->nama_pegawai}}</td>
                             <td>{{$tk->peran->nama_peran}}</td>
                             @can('isAdmin')
@@ -50,7 +52,7 @@
 
 @can('isAdmin')
 
-<!-- Bootstrap modal Create -->
+<!-- Create Modal -->
 <div class="modal fade" id="modal_form" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -73,11 +75,10 @@
                                     <label class="control-label col-md-6" for="id_kegiatan">Nama Kegiatan</label>
                                     <select id="id_kegiatan" name="id_kegiatan"
                                         class="form-select @error('id_kegiatan') is-invalid @enderror">
-                                        @foreach ($kegiatan as $kg)
-                                        <option value="{{ $kg->id_kegiatan }}" @if( old('id_kegiatan')==$kg->id_kegiatan
-                                            ) selected @endif>
-                                            {{ $kg->nama_kegiatan }}
-                                        </option>
+                                        @foreach ($kegiatan->sortByDesc('tgl_mulai') as $kg)
+                                            @if (date('Y', strtotime($kg->tgl_mulai)) == now()->year)
+                                                <option value="{{ $kg->id_kegiatan }}">{{ $kg->nama_kegiatan }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -87,7 +88,7 @@
                                     <label class="control-label col-md-6" for="id_users">Nama Pegawai</label>
                                     <select id="id_users" name="id_users"
                                         class="form-select @error('id_users') is-invalid @enderror">
-                                        @foreach ($user as $us)
+                                        @foreach ($user->sortBy('nama_pegawai') as $us)
                                         <option value="{{ $us->id_users }}" @if( old('id_users')==$us->id_users )
                                             selected @endif">
                                             {{ $us->nama_pegawai }}</option>
@@ -120,11 +121,11 @@
                 </form>
             </div>
         </div>
-    </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+</div>
+</div>
 
-<!-- Bootstrap modal Edit -->
+<!-- Edit Modal -->
 @foreach($timkegiatan as $tk)
 <div class="modal fade" id="editModal{{$tk->id_tim}}" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -149,11 +150,11 @@
                                     <label class="control-label col-md-6" for="id_kegiatan">Nama Kegiatan</label>
                                     <select id="id_kegiatan" name="id_kegiatan"
                                         class="form-select @error('id_kegiatan') is-invalid @enderror">
-                                        @foreach ($kegiatan as $kg)
-                                        <option value="{{ $kg->id_kegiatan }}" @if( $tk->id_kegiatan === old('id_kegiatan', $kg->id_kegiatan
-                                            ) ) selected @endif>
-                                            {{ $kg->nama_kegiatan }}
-                                        </option>
+                                        @foreach ($kegiatan->sortByDesc('tgl_mulai') as $kg)
+                                            @if (date('Y', strtotime($kg->tgl_mulai)) == now()->year)
+                                                <option value="{{ $kg->id_kegiatan }}" @if( $tk->id_kegiatan === old('id_kegiatan', $kg->id_kegiatan)) selected @endif>
+                                                    {{ $kg->nama_kegiatan }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -163,7 +164,7 @@
                                     <label class="control-label col-md-6" for="id_users">Nama Pegawai</label>
                                     <select id="id_users" name="id_users"
                                         class="form-select @error('id_users') is-invalid @enderror">
-                                        @foreach ($user as $us)
+                                        @foreach ($user->sortBy('nama_pegawai') as $us)
                                         <option value="{{ $us->id_users }}" @if( $tk->id_users === old('id_users', $us->id_users) ) selected @endif>
                                             {{ $us->nama_pegawai }}</option>
                                         @endforeach
@@ -176,9 +177,7 @@
                                     <select class="form-select @error('nama') isinvalid @enderror" id="id_peran"
                                         name="id_peran">
                                         @foreach ($peran as $p)
-                                        <option value="{{ $p->id_peran }}" @if( $tk-> id_peran ===  old('id_peran',$p->
-                                            id_peran ))
-                                            selected @endif">
+                                        <option value="{{ $p->id_peran }}" @if( $tk-> id_peran ===  old('id_peran',$p->id_peran )) selected @endif">
                                             {{ $p->nama_peran }}</option>
                                         @endforeach
                                     </select>
@@ -198,28 +197,34 @@
     </div>
 </div>
 @endforeach
-
 @endcan
-
-
 @stop
-
 @push('js')
 <form action="" id="delete-form" method="post">
     @method('delete')
     @csrf
 </form>
 <script>
-$('#example2').DataTable({
-    "responsive": true,
+$(document).ready(function() {
+    var table = $('#example2').DataTable({
+        "responsive": true,
+        "order": [[2, 'desc']],
+        "columnDefs": [
+            { type: 'date', targets: 2 },
+            { "visible": false, "targets": [2] }
+        ],
+    });
+
+    // Inisialisasi nomor yang disimpan di data-attribute
+    table.on('order.dt search.dt', function () {
+        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
 });
-
-
 
 function notificationBeforeDelete(event, el, dt) {
     event.preventDefault();
-
-
     var user = document.getElementById(dt).innerHTML;
 
     // Menampilkan SweetAlert dengan opsi konfirmasi

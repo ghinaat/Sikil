@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'List Arsip')
 @section('content_header')
-<h1 class="m-0 text-dark">List Arsip</h1>
+<h1 class="m-0 text-dark">Profile : {{ Auth::user()->nama_pegawai }}</h1>
 @stop
 @section('content')
 <div class="row">
@@ -26,7 +26,7 @@
                                 <th>Jenis Arsip</th>
                                 <th>Keterangan</th>
                                 <th>File Arsip</th>
-                                <th>Opsi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,7 +90,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="file">File</label><br>
-                                        <input type="file" class="form-control" id="file" enctype="multipart/form-data" name="file"accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx" required>
+                                        <input type="file" class="form-control" id="file" enctype="multipart/form-data" name="file"accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx">
                                         @error('file') <span class="invalid" role="alert">{{$message}}</span> @enderror
                                         <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                                         @error('file')<span class="text-danger">{{ $message }}</span>@enderror
@@ -120,9 +120,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body form">
-                <form action="{{ route('arsip.update',$ap->id_arsip) }}" method="POST" id="form" class="form-horizontal"
-                    enctype="multipart/form-data">
+            <div class="modal-body">
+                <form action="{{ route('arsip.update',$ap->id_arsip) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="id_users" value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">

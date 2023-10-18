@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id_arsip');
             $table->string('jenis', 20);
             $table->string('keterangan', 100);
-            $table->string('file', 255);
+            $table->string('file', 255)->nullable();
             $table->unsignedInteger('id_users');
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->enum('is_deleted', ['0', '1'])->default('0');

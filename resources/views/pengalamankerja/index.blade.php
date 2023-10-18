@@ -3,7 +3,7 @@
 @section('content_header')
 
 
-<h1 class="m-0 text-dark">List Pengalaman Kerja</h1>
+<h1 class="m-0 text-dark">Profile : {{ Auth::user()->nama_pegawai }}</h1>
 @stop
 @section('content')
 <div class="row">
@@ -34,7 +34,7 @@ table-stripped" id="example2">
                                 <th>Posisi</th>
                                 <th>Surat Pengalaman</th>
 
-                                <th>Opsi</th>
+                                <th>Aksi</th>
 
                             </tr>
                         </thead>
@@ -61,8 +61,8 @@ table-stripped" id="example2">
                                 </td>
 
                             </tr>
-                            <!-- Edit modal -->
 
+                            <!-- Edit modal -->
                             <div class="modal fade" id="editModal{{$pk->id_pengalaman_kerja}}" tabindex="-1"
                                 role="dialog" aria-labelledby="editModalLabel{{$pk->id_pengalaman_kerja}}"
                                 aria-hidden="true">
@@ -87,7 +87,7 @@ table-stripped" id="example2">
                                                     <label class="id_users" for="id_users">Nama Pegawai</label>
                                                     <select id="id_users" name="id_users"
                                                         class="form-select @error('id_users') is-invalid @enderror">
-                                                        @foreach ($user as $us)
+                                                        @foreach ($user->sortByAsc('nama_pegawai') as $us)
                                                         <option value="{{ $us->id_users }}" @if( $pk->id_users ===
                                                             old('id_users', $us->id_users) ) selected @endif>
                                                             {{ $us->nama_pegawai }}
@@ -97,8 +97,7 @@ table-stripped" id="example2">
                                                 </div>
                                                 @endif
                                                 <div class="form-group">
-                                                    <label for="nama_perusahaan" class="form-label">Nama
-                                                        Perusahaan</label>
+                                                    <label for="nama_perusahaan" class="form-label">Nama Perusahaan</label>
                                                     <input type="text"
                                                         class="form-control @error('nama_perusahaan') is-invalid @enderror"
                                                         id="nama_perusahaan" name="nama_perusahaan"
@@ -138,9 +137,7 @@ table-stripped" id="example2">
                                                     @error('file_kerja')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
-                                                    <small class="form-text text-muted">Allow file extensions : .jpeg
-                                                        .jpg .png .pdf
-                                                        .docx</small>
+                                                    <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                                                     @if ($pk->file_kerja)
                                                     <p>Previous File: <a
                                                             href="{{ asset('/storage/pengalaman_kerja/' . $pk->file_kerja) }}"
@@ -167,7 +164,7 @@ table-stripped" id="example2">
     </div>
 </div>
 
-
+<!-- Create Modal -->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="addMeditlLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -189,8 +186,8 @@ table-stripped" id="example2">
                         <label class="id_users" for="id_users">Nama Pegawai</label>
                         <select id="id_users" name="id_users"
                             class="form-select @error('id_users') is-invalid @enderror">
-                            @foreach ($user as $us)
-                            <option value="{{ $us->id_users }}" @if( old('id_users', $us->id_users) ) selected @endif>
+                            @foreach ($user->sortBy('nama_pegawai') as $us)
+                            <option value="{{ $us->id_users }}" @if( old('id_users')==$us->id_users) selected @endif>
                                 {{ $us->nama_pegawai }}
                             </option>
                             @endforeach
@@ -199,33 +196,27 @@ table-stripped" id="example2">
                     @endif
                     <div class="form-group">
                         <label for="nama_perusahaan" class="form-label">Nama Perusahaan</label>
-
                         <input type="text" class="form-control @error('nama_perusahaan') is-invalid @enderror"
                             id="nama_perusahaan" name="nama_perusahaan" value="{{old('nama_perusahaan')}}" required>
                         @error('nama_perusahaan') <span class="text-danger">{{$message}}</span> @enderror
-
                     </div>
                     <div class="form-group">
                         <label for="masa_kerja" class="form-label">Masa Kerja</label>
-
                         <input type="text" class="form-control @error('masa_kerja') is-invalid @enderror"
                             id="masa_kerja" name="masa_kerja" value="{{old('masa_kerja')}}" required>
                         @error('masa_kerja') <span class="text-danger">{{$message}}</span> @enderror
-
                     </div>
                     <div class="form-group">
                         <label for="posisi" class="form-label">Posisi</label>
-
                         <input type="text" class="form-control @error('posisi') is-invalid @enderror" id="posisi"
                             name="posisi" value="{{old('posisi')}}" required>
                         @error('posisi') <span class="text-danger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">
                         <label for="file_kerja">Surat Pengalaman</label>
-
                         <input type="file" name="file_kerja" id="file_kerja"
                             class="form-control @error('file_kerja') is-invalid @enderror"
-                            accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx" required>
+                            accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx">
                         @error('file_kerja')
                         <span class="text-danger">{{$message}}</span> @enderror
                         <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->unsignedInteger('id_jenis_diklat');
             $table->string('nama_diklat', 100);
             $table->string('penyelenggara', 100);
-            $table->date('tanggal_diklat');
+            $table->date('tgl_mulai');
+            $table->date('tgl_selesai'); 
             $table->integer('jp');
-            $table->string('file_sertifikat', 255);
+            $table->string('file_sertifikat', 255)->nullable();
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->foreign('id_jenis_diklat')->references('id_jenis_diklat')->on('jenis_diklat')->onDelete('cascade');
             $table->enum('is_deleted', ['0', '1'])->default('0');
