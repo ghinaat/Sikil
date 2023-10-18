@@ -222,7 +222,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="id_jabatan" class='form-label'>Jabatan</label>
+                                                                <label for="email" class='form-label'>Jabatan</label>
                                                                 <div class="form-input">
                                                                 <select class="form-select @error('id_jabatan') is-invalid @enderror"
                                                                     id="exampleInputJabatan" name="id_jabatan">
@@ -231,11 +231,11 @@
                                                                     @endforeach
                                                                 </select>
                                                                     @error('id_jabatan') <span
-                                                                  class="text-danger">{{$message}}</span> @enderror
+                                                                        class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="email" class='form-label'>Jabatan</label>
+                                                                <label for="email" class='form-label'>Email</label>
                                                                 <div class="form-input">
                                                                     <input type="text"
                                                                         class="form-control @error('email') is-invalid @enderror"
