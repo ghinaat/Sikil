@@ -214,9 +214,9 @@
                                                                 <div class="form-input">
                                                                     <input type="text"
                                                                         class="form-control @error('nama_pegawai') is-invalid @enderror"
-                                                                        id="nama_pegawai" placeholder="nama_pegawai" name="nama_pegawai"
+                                                                        id="nama_pegawai" placeholder="Nama Pegawai" name="nama_pegawai"
 
-                                                                        value="{{$main_user->nama_pegawai ?? old('nama_pegawai')}}">
+                                                                        value="{{$main_user->nama_pegawai ?? old('nama_pegawai')}}" required>
                                                                     @error('nama_pegawai') <span
                                                                         class="text-danger">{{$message}}</span> @enderror
                                                                 </div>
@@ -225,7 +225,7 @@
                                                                 <label for="email" class='form-label'>Jabatan</label>
                                                                 <div class="form-input">
                                                                 <select class="form-select @error('id_jabatan') is-invalid @enderror"
-                                                                    id="exampleInputJabatan" name="id_jabatan">
+                                                                    id="exampleInputJabatan" name="id_jabatan" required>
                                                                     @foreach ($jabatan as $jabatan)
                                                                     <option value="{{ $jabatan->id_jabatan }}" @if(old('id_jabatan',$main_user->id_jabatan) == $jabatan->id_jabatan ) selected @endif>  {{ $jabatan->nama_jabatan }} </option>
                                                                     @endforeach
@@ -240,7 +240,7 @@
                                                                     <input type="text"
                                                                         class="form-control @error('email') is-invalid @enderror"
                                                                         id="nip" placeholder="Email" name="email"
-                                                                        value="{{ old('email', $main_user->email) }}">
+                                                                        value="{{ old('email', $main_user->email) }}"required>
                                                                     @error('email') <span
                                                                         class="text-danger">{{$message}}</span> @enderror
                                                                 </div>

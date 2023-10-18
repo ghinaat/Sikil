@@ -29,7 +29,7 @@
             <div class="small-box bg-gradient-success">
                 <div class="inner">
                     <h3>{{ $staf_dinas_luar }}</h3>
-                    <p>Staff Dinas Luar</p>
+                    <p>Staf Dinas Luar</p>
                 </div>
                 <div class="icon"><i class="fas fa-plane-departure"></i></div>
             </div>
@@ -38,7 +38,7 @@
             <div class="small-box bg-gradient-warning">
                 <div class="inner">
                     <h3>{{ $staf_ijin }}</h3>
-                    <p>Staff Ijin/Cuti</p>
+                    <p>Staf Izin / Cuti</p>
                 </div>
                 <div class="icon"><i class="fas fa-glass-cheers"></i></div>
             </div>
@@ -47,7 +47,7 @@
             <div class="small-box bg-gradient-danger">
                 <div class="inner">
                     <h3>{{ $staf_sakit }}</h3>
-                    <p>Staff Sakit</p>
+                    <p>Staf Sakit</p>
                 </div>
                 <div class="icon"><i class="fas fa-head-side-cough"></i></div>
             </div>
