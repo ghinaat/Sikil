@@ -26,6 +26,7 @@ class KeluargaController extends Controller
             'keluarga' => $keluarga,
             'users' => User::where('is_deleted', '0')->get(),
             'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get(),
+            'main_user' => User::where('id_users', auth()->user()->id_users)->first(),
         ]);
     }
 
@@ -95,7 +96,7 @@ class KeluargaController extends Controller
         $keluarga->status = $request->status;
         $keluarga->save();
 
-        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+        return redirect()->back()->with('success_message', 'Data telah dihapus.');
     }
 
     public function destroy($id_keluarga)
@@ -117,7 +118,7 @@ class KeluargaController extends Controller
         return view('keluarga.index', [
             'id_users' => $id_users,
             'keluarga' => $keluarga,
-            'users' => User::where('id_users', $id_users)->first(),
+            'main_user' => User::where('id_users', $id_users)->first(),
             'hubkel' => HubunganKeluarga::where('is_deleted', '0')->get(),
         ]);
     }
