@@ -270,6 +270,12 @@ class AjuanPerizinanController extends Controller
     
                     // Perulangan untuk mengisi data presensi harian
                     while ($tanggalAwalIzin <= $tanggalAkhirIzin) {
+                        if ($tanggalAwalIzin->isWeekend()) {
+                            // Lewati hari Sabtu dan Minggu
+                            $tanggalAwalIzin->addDay();
+                            continue;
+                        }
+                        
                         // Periksa apakah tanggal izin harian sudah ada dalam tabel presensi
                         $tanggalPresensi = $tanggalAwalIzin->toDateString();
     
@@ -334,7 +340,12 @@ class AjuanPerizinanController extends Controller
     
                     // Perulangan untuk mengisi data presensi harian
                     while ($tanggalAwalIzin <= $tanggalAkhirIzin) {
-                        // Periksa apakah tanggal izin harian sudah ada dalam tabel presensi
+                        if ($tanggalAwalIzin->isWeekend()) {
+                            // Lewati hari Sabtu dan Minggu
+                            $tanggalAwalIzin->addDay();
+                            continue;
+                        }
+
                         $tanggalPresensi = $tanggalAwalIzin->toDateString();
     
                         $presensiHarian = Presensi::where([
@@ -511,6 +522,12 @@ class AjuanPerizinanController extends Controller
     
                     // Perulangan untuk mengisi data presensi harian
                     while ($tanggalAwalIzin <= $tanggalAkhirIzin) {
+                        if ($tanggalAwalIzin->isWeekend()) {
+                            // Lewati hari Sabtu dan Minggu
+                            $tanggalAwalIzin->addDay();
+                            continue;
+                        }
+                        
                         // Periksa apakah tanggal izin harian sudah ada dalam tabel presensi
                         $tanggalPresensi = $tanggalAwalIzin->toDateString();
     
@@ -575,6 +592,13 @@ class AjuanPerizinanController extends Controller
     
                     // Perulangan untuk mengisi data presensi harian
                     while ($tanggalAwalIzin <= $tanggalAkhirIzin) {
+
+                        if ($tanggalAwalIzin->isWeekend()) {
+                            // Lewati hari Sabtu dan Minggu
+                            $tanggalAwalIzin->addDay();
+                            continue;
+                        }
+                        
                         // Periksa apakah tanggal izin harian sudah ada dalam tabel presensi
                         $tanggalPresensi = $tanggalAwalIzin->toDateString();
     
@@ -793,6 +817,12 @@ class AjuanPerizinanController extends Controller
     
                     // Perulangan untuk mengisi data presensi harian
                     while ($tanggalAwalIzin <= $tanggalAkhirIzin) {
+                        if ($tanggalAwalIzin->isWeekend()) {
+                            // Lewati hari Sabtu dan Minggu
+                            $tanggalAwalIzin->addDay();
+                            continue;
+                        }
+                        
                         // Periksa apakah tanggal izin harian sudah ada dalam tabel presensi
                         $tanggalPresensi = $tanggalAwalIzin->toDateString();
     
@@ -857,6 +887,12 @@ class AjuanPerizinanController extends Controller
         
                         // Perulangan untuk mengisi data presensi harian
                         while ($tanggalAwalIzin <= $tanggalAkhirIzin) {
+                            if ($tanggalAwalIzin->isWeekend()) {
+                                // Lewati hari Sabtu dan Minggu
+                                $tanggalAwalIzin->addDay();
+                                continue;
+                            }
+                            
                             // Periksa apakah tanggal izin harian sudah ada dalam tabel presensi
                             $tanggalPresensi = $tanggalAwalIzin->toDateString();
         

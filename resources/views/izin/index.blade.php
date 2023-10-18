@@ -129,6 +129,8 @@
                                 <td>
                                     @if($ap->status_izin_atasan == '1' && $ap->status_izin_ppk == '1' )
                                     Disetujui
+                                    @elseif($ap->jenis_perizinan == 'I' && $ap->status_izin_atasan == '1' )
+                                    Disetujui
                                     @else
                                     <div class="btn-group">
                                         <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"

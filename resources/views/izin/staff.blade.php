@@ -68,6 +68,8 @@
                                 <td>
                                     @if($p->status_izin_atasan == '1' && $p->status_izin_ppk == '1' )
                                     Disetujui
+                                    @elseif($ap->jenis_perizinan == 'I' && $ap->status_izin_atasan == '1' )
+                                    Disetujui
                                     @else
                                     @include('components.action-buttons', ['id' => $p->id_perizinan, 'key' => $key,
                                     'route' => 'perizinan'])
