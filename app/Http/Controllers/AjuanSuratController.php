@@ -168,7 +168,20 @@ class AjuanSuratController extends Controller
             if(isset($request->status)){
                 $surat->status = $request->status;
             }
-            $surat->urutan = 1 + Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
+            $existingSurats = Surat::where('jenis_surat', $request->jenis_surat)
+            ->where('is_deleted', '0')
+            ->orderBy('urutan', 'asc')
+            ->get();
+
+            $urutan = 1;
+
+            foreach ($existingSurats as $existingSurat) {
+            $existingSurat->urutan = $urutan++;
+            $existingSurat->save();
+            }
+
+            // Sekarang, atur urutan surat yang sedang diedit dengan urutan terakhir
+            $surat->urutan = $urutan;
 
             $kode_surat = KodeSurat::find($request->id_kode_surat);
 

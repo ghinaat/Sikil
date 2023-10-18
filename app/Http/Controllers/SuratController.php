@@ -162,7 +162,22 @@ class SuratController extends Controller
             $surat->id_kode_surat = $request->id_kode_surat;
             $surat->keterangan = $request->keterangan;
             $surat->bulan_kegiatan = $request->bulan_kegiatan;
-            $surat->urutan = 1 +  Surat::where('jenis_surat', $request->jenis_surat)->where('is_deleted', '0')->count() + 1;
+            // Hitung ulang urutan surat dengan dimulai dari 1
+            $existingSurats = Surat::where('jenis_surat', $request->jenis_surat)
+            ->where('is_deleted', '0')
+            ->orderBy('urutan', 'asc')
+            ->get();
+
+            $urutan = 1;
+
+            foreach ($existingSurats as $existingSurat) {
+            $existingSurat->urutan = $urutan++;
+            $existingSurat->save();
+            }
+
+            // Sekarang, atur urutan surat yang sedang diedit dengan urutan terakhir
+            $surat->urutan = $urutan;
+        
 
             $kode_surat = KodeSurat::find($request->id_kode_surat);
 
@@ -241,4 +256,5 @@ class SuratController extends Controller
             $surat->save();
         }
     }
+
 }

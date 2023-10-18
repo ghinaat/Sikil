@@ -151,6 +151,7 @@ class PresensiController extends Controller
                 'cutiBersama' => 0,
                 'cutiHaji' => 0,
                 'tugasBelajar' => 0,
+                'prajab' => 0,
             ];
     
             $presensiData = Presensi::where('kode_finger', $user->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
@@ -223,6 +224,8 @@ class PresensiController extends Controller
                         $jenis_perizinan['CAP'] += $jumlahHariIzin;
                     }elseif ($jenisPerizinan == 'CS' && $ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
                         $jenis_perizinan['cutiSakit'] += $jumlahHariIzin;
+                    }elseif ($jenisPerizinan == 'Prajab' && $ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
+                        $jenis_perizinan['prajab'] += $jumlahHariIzin;
                     }
                 }
             }
@@ -242,6 +245,7 @@ class PresensiController extends Controller
                 'cutiBersama' => $jenis_perizinan['cutiBersama'],
                 'cutiHaji' => $jenis_perizinan['cutiHaji'],
                 'tugasBelajar' => $jenis_perizinan['tugasBelajar'],
+                'prajab' => $jenis_perizinan['prajab'],
             ];
 
         }
@@ -279,6 +283,7 @@ class PresensiController extends Controller
                 'cutiBersama' => 0,
                 'cutiHaji' => 0,
                 'tugasBelajar' => 0,
+                'prajab'  => 0,
             ];
     
             $presensiData = Presensi::where('kode_finger', $user->kode_finger)->whereBetween('tanggal', [$start_date, $end_date])->get();
@@ -321,40 +326,85 @@ class PresensiController extends Controller
                 $tglfilterAkhir = new DateTime($end_date);
             
                 // Hitung jumlah hari izin yang berada dalam rentang tanggal filter
-                $tglAwalRelevan = max($tglAbsenAwal, $tglfilterAwal);
-                $tglAkhirRelevan = min($tglAbsenAkhir, $tglfilterAkhir);
+                // $tglAwalRelevan = max($tglAbsenAwal, $tglfilterAwal);
+                // $tglAkhirRelevan = min($tglAbsenAkhir, $tglfilterAkhir);
 
-                if ($tglAbsenAwal <= $tglfilterAkhir && $tglAbsenAkhir >= $tglfilterAwal) {
-                    $interval = $tglAkhirRelevan->diff($tglAwalRelevan);
-                    $jumlahHariIzin = $interval->days + 1;
+                // if ($tglAbsenAwal <= $tglfilterAkhir && $tglAbsenAkhir >= $tglfilterAwal) {
+                //     $interval = $tglAkhirRelevan->diff($tglAwalRelevan);
+                //     $jumlahHariIzin = $interval->days + 1;
             
-                    // Update jumlah izin sesuai jenis
-                    if ($jenisPerizinan == 'I' && $ajuanperizinan->status_izin_atasan == '1') {
-                        $jenis_perizinan['ijin'] += $jumlahHariIzin;
-                    } elseif ($jenisPerizinan == 'S' && $ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
-                        $jenis_perizinan['sakit'] += $jumlahHariIzin;
-                    }elseif ($jenisPerizinan == 'A' && $ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
-                        $jenis_perizinan['alpha'] += $jumlahHariIzin;
-                    }elseif ($jenisPerizinan == 'CB' && $ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
-                        $jenis_perizinan['cutiBersama'] += $jumlahHariIzin;
-                    }elseif ($jenisPerizinan == 'CH' && $ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
-                        $jenis_perizinan['cutiHaji'] += $jumlahHariIzin;
-                    }elseif ($jenisPerizinan == 'CM' && $ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
-                        $jenis_perizinan['cutiMelahirkan'] += $jumlahHariIzin;
-                    }elseif ($jenisPerizinan == 'DL' && $ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
-                        $jenis_perizinan['dinasLuar'] += $jumlahHariIzin;
-                    }elseif ($jenisPerizinan == 'CT' && $ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
-                        $jenis_perizinan['cutiTahunan'] += $jumlahHariIzin;
-                    }elseif ($jenisPerizinan == 'TB' && $ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
-                        $jenis_perizinan['tugasBelajar'] += $jumlahHariIzin;
-                    }elseif ($jenisPerizinan == 'CAP' && $ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
-                        $jenis_perizinan['CAP'] += $jumlahHariIzin;
-                    }elseif ($jenisPerizinan == 'CS' && $ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
-                        $jenis_perizinan['cutiSakit'] += $jumlahHariIzin;
+                $currentDate = clone $tglfilterAwal;
+                while ($currentDate <= $tglfilterAkhir) {
+                    // Periksa apakah tanggal ini termasuk dalam izin
+                    if ($currentDate >= $tglAbsenAwal && $currentDate <= $tglAbsenAkhir) {
+                        // Tambahkan jenis izin yang sesuai ke dalam array jenis_perizinan
+                        switch ($jenisPerizinan) {
+                            case 'I':
+                                if ($ajuanperizinan->status_izin_atasan == '1') {
+                                    $jenis_perizinan['ijin']++;
+                                }
+                                break;
+                            case 'S':
+                                if ($ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
+                                    $jenis_perizinan['sakit']++;
+                                }
+                                break;
+                            case 'A':
+                                if ($ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
+                                    $jenis_perizinan['alpha']++;
+                                }
+                                break;
+                            case 'CB':
+                                if ($ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
+                                    $jenis_perizinan['cutiBersama']++;
+                                }
+                                break;
+                            case 'CH':
+                                if ($ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
+                                    $jenis_perizinan['cutiHaji']++;
+                                }
+                                break;
+                            case 'CM':
+                                if ($ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
+                                    $jenis_perizinan['cutiMelahirkan']++;
+                                }
+                                break;
+                            case 'DL':
+                                if ($ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
+                                    $jenis_perizinan['dinasLuar']++;
+                                }
+                                break;
+                            case 'CT':
+                                if ($ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
+                                    $jenis_perizinan['cutiTahunan']++;
+                                }
+                                break;
+                            case 'TB':
+                                if ($ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
+                                    $jenis_perizinan['tugasBelajar']++;
+                                }
+                                break;
+                            case 'CAP':
+                                if ($ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
+                                    $jenis_perizinan['CAP']++;
+                                }
+                                break;
+                            case 'CS':
+                                if ($ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
+                                    $jenis_perizinan['cutiSakit']++;
+                                }
+                                break;
+                            case 'Prajab':
+                                if ($ajuanperizinan->status_izin_atasan == '1' && $ajuanperizinan->status_izin_ppk == '1') {
+                                    $jenis_perizinan['prajab']++;
+                                }
+                                break;
+                        }
                     }
+                    // Lanjutkan ke hari berikutnya
+                    $currentDate->modify('+1 day');
                 }
-            }
-    
+                            }
             $presensis[] = [
                 'user' => $user->nama_pegawai,
                 'kehadiran' => $kehadiran,
@@ -370,6 +420,7 @@ class PresensiController extends Controller
                 'cutiBersama' => $jenis_perizinan['cutiBersama'],
                 'cutiHaji' => $jenis_perizinan['cutiHaji'],
                 'tugasBelajar' => $jenis_perizinan['tugasBelajar'],
+                'prajab' => $jenis_perizinan['prajab'] 
             ];
         }
     

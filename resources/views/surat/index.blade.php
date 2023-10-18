@@ -70,6 +70,9 @@
                                 @endif
                                 </td>
                             </tr>
+                            @php
+                            $nomor++; // Increment the sequence for the next row
+                            @endphp
                             @endforeach
                         </tbody>
                     </table>
