@@ -23,14 +23,14 @@
                                 <th>Jumlah Jam</th>
                                 <th>Uraian Tugas</th>
                                 <th>Status</th>
-                                <th>Opsi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($lembur as $key => $lr)
                             <tr>
                                 <td id={{$key+1}}>{{$key+1}}</td>
-                                <td id={{$key+1}}>{{date_format( new DateTime($lr->tanggal), 'd F Y')}}</td>
+                                <td id={{$key+1}}>{{date_format( new DateTime($lr->tanggal), 'd M Y')}}</td>
                                 <td id={{$key+1}}>
                                     {{ \Carbon\Carbon::createFromFormat('H:i:s', $lr->jam_mulai)->format('H:i') }}</td>
                                 <td id={{$key+1}}>
@@ -103,7 +103,7 @@
                                                                 <select id="id_atasan" name="id_atasan"
                                                                     class="form-select @error('id_atasan') is-invalid @enderror">
                                                                     @foreach ($users as $us)
-                                                                    <option value="{{ $us->id_users }}" @if( $lr->id_atasan === old('id_atasan', $us->id_users) ) selected @endif>
+                                                                    <option value="{{ $us->id_users }}" @if( $lr->id_atasan == old('id_atasan', $us->id_users) ) selected @endif>
                                                                         {{ $us->nama_pegawai }}
                                                                     </option>
                                                                     @endforeach
@@ -178,7 +178,7 @@
                                     <select id="id_atasan" name="id_atasan"
                                         class="form-select @error('id_atasan') is-invalid @enderror">
                                         @foreach ($users as $us)
-                                        <option value="{{ $us->id_users }}" @if( old('id_atasan') === $us->id_users )
+                                        <option value="{{ $us->id_users }}" @if( old('id_atasan') == $us->id_users )
                                             selected @endif>
                                             {{ $us->nama_pegawai }}
                                         </option>

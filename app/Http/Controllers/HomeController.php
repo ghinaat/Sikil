@@ -46,6 +46,7 @@ class HomeController extends Controller
                 })
                 ->count();
         $staf_dinas_luar = Perizinan::whereDate('tgl_absen_awal', '<=', today())->where('tgl_absen_akhir', '>=', today())->where('jenis_perizinan', 'DL')->where('status_izin_atasan', '1')->where('status_izin_ppk', '1')->count();
+      
         $staf_sakit = Perizinan::whereDate('tgl_absen_awal', '<=', today())->where('tgl_absen_akhir', '>=', today())->where('jenis_perizinan', 'S')->where('status_izin_atasan', '1')->where('status_izin_ppk', '1')->count();
 
 
