@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'List Diklat')
 @section('content_header')
-<h1 class="m-0 text-dark">Profile : {{ Auth::user()->nama_pegawai }}</h1>
+<h1 class="m-0 text-dark">Profile : {{ $main_user->nama_pegawai }}</h1>
 @stop
 @section('content')
 <div class="row">

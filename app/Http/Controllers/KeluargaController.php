@@ -107,7 +107,7 @@ class KeluargaController extends Controller
             $keluarga->save();
         }
 
-        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+        return redirect()->back()->with('success_message', 'Data telah terhapus.');
     }
 
     public function showAdmin(Request $request, $id_users)

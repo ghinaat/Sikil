@@ -8,6 +8,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <div class="table-responsive">
                 @can('isAdmin')
                 <!-- Add button to open the modal for adding educational levels -->
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
@@ -15,7 +16,6 @@
                     Tambah
                 </button>
                 @endcan
-                <div class="table-responsive">
                     <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
                             <tr>

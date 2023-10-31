@@ -31,6 +31,7 @@ class PendidikanController extends Controller
             'pendidikan' => $pendidikan,
             'user' => User::where('is_deleted', '0')->get(),
             'tingpen' => TingkatPendidikan::where('is_deleted', '0')->get(),
+            'main_user' => User::where('id_users', auth()->user()->id_users)->first(),
         ]);
     }
 
@@ -43,6 +44,7 @@ class PendidikanController extends Controller
             'id_users' => $id_users,
             'pendidikan' => $pendidikan,
             'tingpen' => TingkatPendidikan::where('is_deleted', '0')->get(),
+            'main_user' => $user
         ]);
     }
 
