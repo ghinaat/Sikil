@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         return view('users.index', [
             'user' => User::where('is_deleted', '0')->orderBy('nama_pegawai', 'ASC')->get(),
-            'jabatans' => Jabatan::all(),
+            'jabatans' => Jabatan::where('is_deleted', '0')->orderBy('nama_jabatan', 'ASC')->get(),
         ]);
     }
 

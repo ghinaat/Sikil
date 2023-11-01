@@ -48,7 +48,7 @@
                                 <td id={{$key+1}}>
 
                                     <a href="{{ asset('/qrcodes/' . $url->qrcode_image) }}" download>
-                                        <img src="{{ asset('/qrcodes/' . $url->qrcode_image) }}" alt="Gambar Dokumen" width="95%">
+                                        <img src="{{ asset('/qrcodes/' . $url->qrcode_image) }}" alt="Gambar Dokumen" class="img-fluid">
                                     </a>
                                     
                                 </td>

@@ -29,6 +29,7 @@ class PengalamanKerjaController extends Controller
         return view('pengalamankerja.index', [
         'penker' => $penker,
         'user' => User::where('is_deleted', '0')->get(),
+        'main_user' => User::where('id_users', auth()->user()->id_users)->first(),
         ]);
     }
 
@@ -41,6 +42,7 @@ class PengalamanKerjaController extends Controller
         return view('pengalamankerja.index', [
             'id_users' => $id_users,
             'penker' => $penker,
+            'main_user' => $user,
         ]);
     }
 

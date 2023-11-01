@@ -4,28 +4,29 @@
 <h1 class="m-0 text-dark">&nbsp; Data Presensi</h1>
 @stop
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
+
+    <div class="row">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form method="get" action="{{ route('presensi') }}" class="form-inline">
-                        <div class="form-group mb-2">
-                            <label for="tanggal">Tanggal Awal :</label> &nbsp;&nbsp;
-                            <input type="date" class="form-control border-primary @error('tglawal') is-invalid @enderror"
-                                id="tglawal" name="tglawal" value="{{ request()->input('tglawal') }}"> &nbsp; &nbsp;&nbsp;
+                    <div class="table-responsive">
+                        <form method="get" action="{{ route('presensi') }}" class="form-inline">
+                            <div class="form-group mb-2">
+                                <label for="tanggal">Tanggal Awal :</label> &nbsp;&nbsp;
+                                <input type="date" class="form-control border-primary @error('tglawal') is-invalid @enderror"
+                                    id="tglawal" name="tglawal" value="{{ request()->input('tglawal') }}"> &nbsp; &nbsp;&nbsp;
 
-                            <label for="tanggal">Tanggal Akhir :</label> &nbsp;&nbsp;
-                            <input type="date" class="form-control border-primary @error('tglakhir') is-invalid @enderror"
-                                id="tglakhir" name="tglakhir" value="{{ request()->input('tglakhir') }}"> &nbsp; &nbsp;
+                                <label for="tanggal">Tanggal Akhir :</label> &nbsp;&nbsp;
+                                <input type="date" class="form-control border-primary @error('tglakhir') is-invalid @enderror"
+                                    id="tglakhir" name="tglakhir" value="{{ request()->input('tglakhir') }}"> &nbsp; &nbsp;
 
-                            <button type="submit" class="btn btn-primary">
-                                &nbsp;Tampilkan</button>
-                        </div>
-                    </form>
+                                <button type="submit" class="btn btn-primary">
+                                    &nbsp;Tampilkan</button>
+                            </div>
+                        </form>
                     
                     <br>
-                    <div class="table-responsive">
+                    
                         <table class="table table-hover table-bordered table-stripped" id="example2">
                             <thead>
                                 <tr>
@@ -57,7 +58,7 @@
             </div>
         </div>
     </div>
-</div>
+
 @stop
 @push('js')
 <script>
