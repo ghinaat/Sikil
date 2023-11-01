@@ -21,7 +21,7 @@
                                 <th>No.</th>
                                 <th>Divisi</th>
                                 <th>Kode Surat</th>
-                                <th style="width:189px;">Opsi</th>
+                                <th style="width:189px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>

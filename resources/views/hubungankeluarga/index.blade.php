@@ -20,7 +20,7 @@
                                 <th>Urutan</th>
                                 <th>Nama</th>
                                 @can('isAdmin')
-                                <th>Opsi</th>
+                                <th>Aksi</th>
                                 @endcan
                             </tr>
                         </thead>

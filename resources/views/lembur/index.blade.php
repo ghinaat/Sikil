@@ -39,7 +39,7 @@
                                 <td id={{$key+1}}>
                                     {{ \Carbon\Carbon::createFromFormat('H:i:s', $lr->jam_lembur)->format('H:i') }}</td>
                                 <td id={{$key+1}}>{{$lr->tugas}}</td>
-                                <td id={{$key+1}}>       
+                                <td id={{$key+1}}>
                                     @if($lr->status_izin_atasan == '0')
                                     Ditolak
                                     @elseif($lr->status_izin_atasan == '1')
@@ -99,11 +99,14 @@
                                                                     required>{{$lr -> tugas ?? old('tugas')}}</textarea>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="id_atasan" for="id_atasan">Atasan Langsung</label>
+                                                                <label class="id_atasan" for="id_atasan">Atasan
+                                                                    Langsung</label>
                                                                 <select id="id_atasan" name="id_atasan"
                                                                     class="form-select @error('id_atasan') is-invalid @enderror">
                                                                     @foreach ($users as $us)
-                                                                    <option value="{{ $us->id_users }}" @if( $lr->id_atasan == old('id_atasan', $us->id_users) ) selected @endif>
+                                                                    <option value="{{ $us->id_users }}" @if( $lr->
+                                                                        id_atasan == old('id_atasan', $us->id_users) )
+                                                                        selected @endif>
                                                                         {{ $us->nama_pegawai }}
                                                                     </option>
                                                                     @endforeach
@@ -151,37 +154,36 @@
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
-                            <input type="hidden" name="kode_finger" value="{{ Auth::user()->kode_finger}}">
+                                <input type="hidden" name="kode_finger" value="{{ Auth::user()->kode_finger}}">
                                 <div class="form-group">
                                     <label for="tanggal">Tanggal</label>
-                                    <input type="date" name="tanggal" id="tanggal"
-                                        value="{{ old('tanggal')}}" class="form-control" required>
+                                    <input type="date" name="tanggal" id="tanggal" value="{{ old('tanggal')}}"
+                                        class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="jam_mulai">Jam Mulai</label>
-                                    <input type="time" name="jam_mulai" id="jam_mulai"
-                                        value="{{ old('jam_mulai')}}" class="form-control" required>
+                                    <input type="time" name="jam_mulai" id="jam_mulai" value="{{ old('jam_mulai')}}"
+                                        class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="jam_selesai">Jam Selesai</label>
                                     <input type="time" name="jam_selesai" id="jam_selesai"
-                                        value="{{ old('jam_selesai')}}" class="form-control"
-                                        required>
+                                        value="{{ old('jam_selesai')}}" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="tugas">Uraian Tugas</label>
-                                    <textarea name="tugas" id="tugas" class="form-control"
-                                        value="{{ old('tugas')}}" required></textarea>
+                                    <textarea name="tugas" id="tugas" class="form-control" value="{{ old('tugas')}}"
+                                        required></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-6" for="id_atasan">Atasan Langsung</label>
                                     <select id="id_atasan" name="id_atasan"
                                         class="form-select @error('id_atasan') is-invalid @enderror">
                                         @foreach ($users as $us)
-                                        <option value="{{ $us->id_users }}" @if( old('id_atasan') == $us->id_users )
-                                            selected @endif>
-                                            {{ $us->nama_pegawai }}
-                                        </option>
+                                        <option value="{{ $us->id_users }}" @if( old('id_atasan')==$us->
+                                            id_users )selected
+                                            @endif>
+                                            {{ $us->nama_pegawai }}</option>
                                         @endforeach
                                     </select>
                                 </div>

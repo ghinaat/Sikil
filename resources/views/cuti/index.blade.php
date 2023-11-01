@@ -25,7 +25,7 @@
                                 <th>Pegawai</th>
                                 <th>Sisa Jatah Cuti Tahunan</th>
                                 @can('isAdmin')
-                                <th style="width:189px;">Opsi</th>
+                                <th style="width:189px;">Cuti</th>
                                 @endcan
                             </tr>
                         </thead>

@@ -86,7 +86,7 @@
             </div>
             <div class="modal-footer">
                 <a href="{{route('kegiatan.index')}}" class="btn btn-primary ">
-                    Daftar Seluruh Kegiatan
+                    Data seluruh kegiatan
                 </a>
             </div>
         </div>

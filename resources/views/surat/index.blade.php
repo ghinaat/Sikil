@@ -24,7 +24,7 @@
                                 <th>Keterangan</th>
                                 <th>Nomor Surat</th>
                                 <th>Status</th>
-                                <th>Opsi</th>
+                                <th>AKsi</th>
                             </tr>
                         </thead>
                         <tbody>

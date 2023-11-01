@@ -418,7 +418,7 @@
                                 <label for="id_atasan">Atasan Langsung</label>
                                 <select id="id_atasan" name="id_atasan"class="form-select @error('id_atasan') is-invalid @enderror">
                                     @foreach ($users as $us)
-                                    <option value="{{ $us->id_users }}" @if( old('id_users')==$us->
+                                    <option value="{{ $us->id_users }}" @if( old('id_atasan')==$us->
                                         id_users )selected
                                         @endif>
                                         {{ $us->nama_pegawai }}</option>

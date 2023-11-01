@@ -138,13 +138,14 @@ class ProfileController extends Controller
 
         $lastProfile = Profile::where('id_users', $id_users)->first();
 
-        if ($request->file('photo')) {
-            if ($lastProfile->photo) {
-                Storage::delete($lastProfile->photo);
-            }
+        // if ($request->file('photo')) {
+        //     if ($lastProfile->photo) {
+        //         Storage::delete($lastProfile->photo);
+        //     }
 
-            $validatedData['photo'] = str_replace('public/profile/', '', $request->file('photo')->store('public/profile'));
-        }
+        //     $validatedData['photo'] = str_replace('public/profile/', '', $request->file('photo')->store('public/profile'));
+
+        // }
 
         $profile = Profile::where('id_users', $id_users)->first();
 
@@ -168,6 +169,18 @@ class ProfileController extends Controller
             'id_tingkat_pendidikan' => $request->input('id_tingkat_pendidikan'),
         ]);
 
+        if ($request->hasFile('photo')) {
+            // Hapus foto lama jika ada
+            if ($profile->photo) {
+                Storage::delete('public/profile/' . $profile->photo);
+            }
+    
+            // Simpan foto baru dan simpan nama file di database
+            $photoPath = $request->file('photo')->store('public/profile');
+            $profile->update([
+                'photo' => str_replace('public/profile/', '', $photoPath)
+            ]);
+        }
 
         return redirect()->back()->with('success_message', 'Profile berhasil diubah!.');
     }

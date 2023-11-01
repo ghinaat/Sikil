@@ -62,7 +62,7 @@ class LemburController extends Controller
 
         return view('lembur.index', [
             'lembur' => $lembur,
-            'users' => User::where('is_deleted', '0')->get(),
+            'users' => User::where('is_deleted', '0')->orderByRaw("LOWER(nama_pegawai)")->get(),
         ]);
     }
 
@@ -77,7 +77,7 @@ class LemburController extends Controller
 
         return view('lembur.atasan', [
             'lembur' => $lembur,
-            'users' => User::where('is_deleted', '0')->orderBy('nama_pegawai', 'asc')->get(),
+            'users' => User::where('is_deleted', '0')->orderByRaw("LOWER(nama_pegawai)")->get(),
         ]);
 
     }
