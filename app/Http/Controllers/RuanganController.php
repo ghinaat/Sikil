@@ -12,7 +12,10 @@ class RuanganController extends Controller
      */
     public function index()
     {
-        //
+        $ruangan = Ruangan::where('is_deleted', '0');
+        return view('ruangan.index', [
+            'ruangan' => $ruangan,
+        ]);
     }
 
     /**
@@ -28,7 +31,12 @@ class RuanganController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_ruangan' => 'required',
+        ]);
+
+        $ruangan = new Ruangan();
+        $ruangan->nama_ruangan = $request->nama_ruangan
     }
 
     /**

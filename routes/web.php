@@ -18,6 +18,7 @@ use App\Http\Controllers\PengalamanKerjaController;
 use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SuratController;
 use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\UrlController;
@@ -212,3 +213,10 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/email-configuration', [EmailConfigurationController::class, 'show'])->name('emailConfiguration.show');
 Route::post('/email-configuration', [EmailConfigurationController::class, 'update'])->name('emailConfiguration.update');
 Route::get('https://s.qiteplanguage.org/{url_short}', [UrlController::class, 'redirect'])->name('url.redirect');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/ruangan', [RuanganController::class, 'index'])->name('ruangan.index');
+    Route::post('/ruangan', [RuanganController::class, 'store'])->name('ruangan.store');
+    Route::put('/ruangan/update/{id_ruangan}', [RuanganController::class, 'update'])->name('ruangan.update');
+    Route::delete('/ruangan/{id_ruangan}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
+});
