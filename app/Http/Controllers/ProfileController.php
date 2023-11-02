@@ -49,7 +49,7 @@ class ProfileController extends Controller
     {
         $user = User::where('id_users', auth()->user()->id_users)->first();
         $user_profile = Profile::where('id_users', auth()->user()->id_users)->first();
-        $jabatan = Jabatan::all();
+        $jabatan = Jabatan::where('is_deleted', '0')->orderBy('nama_jabatan', 'ASC')->get();
 
         $tingkat_pendidikan = TingkatPendidikan::all();
 
