@@ -25,6 +25,7 @@ class ArsipController extends Controller
         return view('arsip.index', [
             'arsip' => $arsip,
             'users' => User::where('is_deleted', '0')->get(),
+            'main_user' => User::where('id_users', auth()->user()->id_users)->first(),
         ]);
     }
 
@@ -37,6 +38,7 @@ class ArsipController extends Controller
             'id_users' => $id_users,
             'arsip' => $arsip,
             'users' => User::where('is_deleted', '0')->get(), // Tambahkan ini untuk data pegawai
+            'main_user' => $user,
         ]);
     }
 

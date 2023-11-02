@@ -133,13 +133,29 @@
                                     <div class="form-group">
                                         <label for="agama" class='form-label'>Agama</label>
                                         <div class="form-input">
-                                        : {{ $user->agama }}
+                                        @if($user->agama == "islam")
+                                            : Islam                                            
+                                        @elseif($user->agama == "kristen")
+                                            : Kristen
+                                        @elseif($user->agama == "katolik")
+                                            : Katolik
+                                        @elseif($user->agama == "hindu")
+                                            : Hindu
+                                        @elseif($user->agama == "budha")
+                                            : Budha
+                                        @else
+                                            : Konghucu
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="gender" class='form-label'>Gender</label>
+                                        <label for="gender" class='form-label'>Jenis Kelamin</label>
                                         <div class="form-input">
-                                        : {{ $user->gender }}
+                                        @if($user->gender == "laki-laki")
+                                            : Laki-laki
+                                        @else
+                                            : Perempuan
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -388,18 +404,18 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="exampleInputgender"class='form-label'>gender</label>
+                                                                <label for="exampleInputgender"class='form-label'>Jenis Kelamin</label>
                                                                 <div class="form-input">
-                                                                @if (isset($user->gander))
+                                                                @if (isset($user->gender))
                                                                 <select
                                                                     class="form-select @error('gender') isinvalid @enderror"
                                                                     id="exampleInputgender" name="gender">
                                                                     <option value="laki-laki" @if($user->gender ==
                                                                         'laki-laki' || old('gender')=='laki-laki' )
-                                                                        selected @endif>laki-laki</option>
+                                                                        selected @endif>Laki-laki</option>
                                                                     <option value="perempuan" @if($user->gender ==
                                                                         'perempuan' || old('gender')=='perempuan' )
-                                                                        selected @endif>perempuan</option>
+                                                                        selected @endif>Perempuan</option>
                                                                 </select>
                                                                 @error('gender') <span
                                                                     class="text-danger">{{$message}}</span>
@@ -408,8 +424,8 @@
                                                                 <select
                                                                     class="form-select @error('gender') isinvalid @enderror"
                                                                     id="exampleInputgender" name="gender">
-                                                                    <option value="laki-laki">laki-laki</option>
-                                                                    <option value="perempuan">perempuan</option>
+                                                                    <option value="laki-laki">Laki-laki</option>
+                                                                    <option value="perempuan">Perempuan</option>
                                                                 </select>
                                                                 @error('gender') <span
                                                                     class="text-danger">{{$message}}</span>
@@ -449,11 +465,11 @@
                                                                     id="exampleInputstatus_kawin" name="status_kawin">
                                                                     <option value="menikah" @if($user->status_kawin ==
                                                                         'menikah' || old('status_kawin')=='menikah' )
-                                                                        selected @endif>menikah</option>
+                                                                        selected @endif>Menikah</option>
                                                                     <option value="belum_menikah" @if($user->
                                                                         status_kawin == 'belum_menikah' ||
                                                                         old('status_kawin')=='belum_menikah' ) selected
-                                                                        @endif>belum menikah</option>
+                                                                        @endif>Belum menikah</option>
                                                                 </select>
                                                                 @error('status_kawin') <span
                                                                     class="text-danger">{{$message}}</span>
@@ -489,12 +505,9 @@
                                                                         class="form-select @error('tingkat_pendidikan') isinvalid @enderror"
                                                                         id="exampleInputtingkat_pendidikan"
                                                                         name="id_tingkat_pendidikan">
-                                                                        @foreach ($tingkat_pendidikans as $tingkat_pendidikan)
-                                                                        <option
-                                                                            value="{{ $tingkat_pendidikan->id_tingkat_pendidikan }}"
-                                                                            @if(old('id_tingkat_pendidikan')==$tingkat_pendidikan -> id_tingkat_pendidikan )
-                                                                            selected @endif>
-                                                                            {{ $tingkat_pendidikan->nama_tingkat_pendidikan }}
+                                                                        @foreach ($tingkat_pendidikans as $tp)
+                                                                        <option value="{{ $tp->id_tingkat_pendidikan }}" @if($user->id_tingkat_pendidikan == old('id_tingkat_pendidikan', $tp->id_tingkat_pendidikan ) ) selected @endif> 
+                                                                            {{ $tp->nama_tingkat_pendidikan }}
                                                                         </option>
                                                                         @endforeach
                                                                     </select>

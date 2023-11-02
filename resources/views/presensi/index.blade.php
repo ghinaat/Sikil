@@ -8,11 +8,12 @@
 @endif
 @stop
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
+{{-- <div class="container"> --}}
+    <div class="row">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="table-responsive">
                     @if(auth()->user()->level === 'admin')
                     <form action="{{ route('presensi.filter') }}" method="GET" class="form-inline mb-3">
                         <div class="input-group">
@@ -40,7 +41,7 @@
                     @endif
                     
                     <br>
-                    <div class="table-responsive">
+                    
                         <table class="table table-hover table-bordered table-stripped" id="example2">
                             <thead>
                                 <tr>
@@ -73,13 +74,12 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+{{-- </div> --}}
 </section>
 @stop
 @push('js')

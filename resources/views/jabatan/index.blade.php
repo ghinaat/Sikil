@@ -96,7 +96,7 @@
             <div class="modal-header">
                 <h4 class="modal-title" id="exampleModalLabel">Edit Data Jabatan</h4>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body form">

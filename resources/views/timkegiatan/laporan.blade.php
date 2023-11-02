@@ -4,11 +4,12 @@
 <h1 class="m-0 text-dark">&nbsp; Laporan Kegiatan</h1>
 @stop
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
+
+    <div class="row">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="table-responsive">
                     <form method="get" action="{{ route('laporan') }}" class="form-inline">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -51,7 +52,7 @@
                     <br>
 
 
-                    <div class="table-responsive">
+                    
                         <table class="table table-hover table-bordered table-stripped" id="example2">
                             <thead>
                                 <tr>
@@ -81,7 +82,7 @@
     </div>
 
 
-</div>
+
 
 @stop
 @push('js')

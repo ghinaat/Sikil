@@ -26,6 +26,7 @@ class DiklatController extends Controller
             'diklat' => $diklat,
             'users' => User::where('is_deleted', '0')->get(),
             'jenisdiklat' => JenisDiklat::all(),
+            'main_user' => User::where('id_users', auth()->user()->id_users)->first(),
         ]);
     }
 
@@ -39,6 +40,7 @@ class DiklatController extends Controller
             'diklat' => $diklat,
             'users' => User::where('is_deleted', '0')->get(),
             'jenisdiklat' => JenisDiklat::all(),
+            'main_user' => $user,
         ]);
     }
 
@@ -105,7 +107,7 @@ class DiklatController extends Controller
 
     public function update(Request $request, $id_diklat)
     {
-        // dd($request);
+        dd($request);
         $request->validate([
             'id_users' => 'required',
             'id_jenis_diklat' => 'required',
