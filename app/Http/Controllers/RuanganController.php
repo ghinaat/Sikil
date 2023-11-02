@@ -12,7 +12,7 @@ class RuanganController extends Controller
      */
     public function index()
     {
-        $ruangan = Ruangan::where('is_deleted', '0');
+        $ruangan = Ruangan::where('is_deleted', '0')->get();
         return view('ruangan.index', [
             'ruangan' => $ruangan,
         ]);
@@ -36,7 +36,10 @@ class RuanganController extends Controller
         ]);
 
         $ruangan = new Ruangan();
-        $ruangan->nama_ruangan = $request->nama_ruangan
+        $ruangan->nama_ruangan = $request->nama_ruangan;
+        $ruangan->save();
+
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
@@ -58,16 +61,33 @@ class RuanganController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ruangan $ruangan)
+    public function update(Request $request, $id_ruangan)
     {
-        //
+        $request->validate([
+            'nama_ruangan' => 'required',
+        ]);
+
+        $ruangan = Ruangan::find($id_ruangan);
+        $ruangan->nama_ruangan = $request->nama_ruangan;
+        $ruangan->save();
+
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ruangan $ruangan)
+    public function destroy($id_ruangan)
     {
-        //
+     
+        $ruangan = Ruangan::find($id_ruangan);
+        if ($ruangan) {
+            $ruangan->update([
+                'is_deleted' => '1',
+            ]);
+        }
+
+        return redirect()->route('ruangan.index')->with('success_message', 'Data telah terhapus');
     }
+    
 }

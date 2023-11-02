@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AjuanPerizinanController;
 use App\Http\Controllers\ArsipController;
+use App\Http\Controllers\BarangTikController;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\DiklatController;
 use App\Http\Controllers\EmailConfigurationController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\UrlController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AjuanSuratController;
+use App\Models\BarangTik;
 use Illuminate\Support\Facades\Route;
 use Svg\Tag\Group;
 
@@ -219,4 +221,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/ruangan', [RuanganController::class, 'store'])->name('ruangan.store');
     Route::put('/ruangan/update/{id_ruangan}', [RuanganController::class, 'update'])->name('ruangan.update');
     Route::delete('/ruangan/{id_ruangan}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/barangtik', [BarangTikController::class, 'index'])->name('barangtik.index');
+    Route::post('/barangtik', [BarangTikController::class, 'store'])->name('barangtik.store');
+    Route::put('/barangtik/update/{id_barang_tik}', [BarangTikController::class, 'update'])->name('barangtik.update');
+    Route::delete('/barangtik/{id_barang_tik}', [BarangTikController::class, 'destroy'])->name('barangtik.destroy');
 });
