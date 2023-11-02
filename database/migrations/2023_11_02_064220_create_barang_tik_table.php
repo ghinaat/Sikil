@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('merek');
             $table->string('kelengkapan');
             $table->date('tahun_pembelian');
-            $table->enum('kondisi', ['Baik', 'Perlu Perbaika', 'Rusak Total']);
+            $table->enum('kondisi', ['Baik', 'Perlu Perbaikan', 'Rusak Total']);
             $table->enum('status_pinjam', ['Ya', 'Tidak']);
             $table->string('keterangan');
             $table->string('image');

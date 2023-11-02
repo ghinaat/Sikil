@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('peminjaman_barang', function (Blueprint $table) {
             $table->increments('id_peminjaman');
-            $table->unsignedInteger('id_user');
+            $table->unsignedInteger('id_users');
             $table->date('tgl_ajuan');
             $table->date('tgl_peminjaman');
             $table->date('tgl_pengembalian');

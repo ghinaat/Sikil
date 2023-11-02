@@ -464,6 +464,11 @@ return [
                     'can' => 'isAdmin',
                 ],
                 [
+                    'text' => 'Ruangan',
+                    'url' => '/ruangan',
+                    'can' => 'isAdmin',
+                ],
+                [
                     'text' => 'Email Configuration',
                     'route' => 'emailConfiguration.show',
                     'can' => 'isAdmin',
