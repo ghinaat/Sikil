@@ -228,4 +228,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/barangtik', [BarangTikController::class, 'store'])->name('barangtik.store');
     Route::put('/barangtik/update/{id_barang_tik}', [BarangTikController::class, 'update'])->name('barangtik.update');
     Route::delete('/barangtik/{id_barang_tik}', [BarangTikController::class, 'destroy'])->name('barangtik.destroy');
+    Route::get('/barangtik/{id_barang_tik}', [BarangTikController::class, 'show'])->name('barangtik.show');
+
 });
