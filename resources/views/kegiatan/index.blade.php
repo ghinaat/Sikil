@@ -1,9 +1,16 @@
 @extends('adminlte::page')
+@if(auth()->user()->level == 'admin')
 @section('title', 'List kegiatan')
+@else
+@section('title', 'Daftar kegiatan')
+@endif
 @section('content_header')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
+@if(auth()->user()->level == 'admin')
 <h1 class="m-0 text-dark">List kegiatan</h1>
+@else
+<h1 class="m-0 text-dark">Daftar kegiatan</h1>
+@endif
 @stop
 @section('content')
 <div class="row">
@@ -45,7 +52,7 @@ table-stripped" id="example2">
                                 <div class="btn-group">
                                      @endcan
                                 <a href="{{ route('kegiatan' . '.show', $kg->id_kegiatan) }}" class="btn btn-info btn-xs mx-1">
-                                    <i class="fa fa-info"></i>
+                                <i class="fa fa-search" aria-hidden="true"></i>
                                 </a>
                                 <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                     data-target="#editModal{{$kg->id_kegiatan}}" data-id="{{$kg->id_kegiatan}}">

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\peran;
+use App\Models\Peran;
 use Illuminate\Http\Request;
 
 class PeranController extends Controller

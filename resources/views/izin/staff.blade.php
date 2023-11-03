@@ -1,7 +1,7 @@
 @extends('adminlte::page')
-@section('title', 'List Perizinan')
+@section('title', 'Daftar Perizinan')
 @section('content_header')
-<h1 class="m-0 text-dark">List Perizinan</h1>
+<h1 class="m-0 text-dark">Daftar Perizinan</h1>
 @stop
 @section('content')
 <div class="row">
@@ -68,7 +68,7 @@
                                 <td>
                                     @if($p->status_izin_atasan == '1' && $p->status_izin_ppk == '1' )
                                     Disetujui
-                                    @elseif($ap->jenis_perizinan == 'I' && $ap->status_izin_atasan == '1' )
+                                    @elseif($p->jenis_perizinan == 'I' && $p->status_izin_atasan == '1' )
                                     Disetujui
                                     @else
                                     @include('components.action-buttons', ['id' => $p->id_perizinan, 'key' => $key,

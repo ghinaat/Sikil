@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'SIKLIS',
+    'title' => 'SIKLIS ' ,
     'title_prefix' => '',
     'title_postfix' => '',
 
