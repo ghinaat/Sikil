@@ -47,23 +47,25 @@ table-stripped" id="example2">
                                 <td id={{$key+1}}>{{ \Carbon\Carbon::parse($kg->tgl_mulai)->format('d M Y') }}</td>
                                 <td id={{$key+1}}>{{ \Carbon\Carbon::parse($kg->tgl_selesai)->format('d M Y') }}</td>
                                 <td id={{$key+1}}>{{$kg->status}}</td>
-                            <td>
-                                @can('isAdmin')
-                                <div class="btn-group">
-                                     @endcan
-                                <a href="{{ route('kegiatan' . '.show', $kg->id_kegiatan) }}" class="btn btn-info btn-xs mx-1">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                                </a>
-                                <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                    data-target="#editModal{{$kg->id_kegiatan}}" data-id="{{$kg->id_kegiatan}}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                <a href="{{ route('kegiatan' . '.destroy', $kg->id_kegiatan) }}"
-                                    onclick="notificationBeforeDelete(event, this, {{$key+1}})" class="btn btn-danger btn-xs mx-1">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                                </div>
-                            </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ route('kegiatan' . '.show', $kg->id_kegiatan) }}"
+                                            class="btn btn-info btn-xs mx-1">
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                        </a>
+                                        @can('isAdmin')
+                                        <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                            data-target="#editModal{{$kg->id_kegiatan}}" data-id="{{$kg->id_kegiatan}}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="{{ route('kegiatan' . '.destroy', $kg->id_kegiatan) }}"
+                                            onclick="notificationBeforeDelete(event, this, {{$key+1}})"
+                                            class="btn btn-danger btn-xs mx-1">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                        @endcan
+                                    </div>
+                                </td>
                             </tr>
                             @php
                             $nomor++; // Increment the sequence for the next row
@@ -99,7 +101,8 @@ table-stripped" id="example2">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="tgl_mulai" class='form-label'>Tanggal Mulai Acara</label>
+                                                    <label for="tgl_mulai" class='form-label'>Tanggal Mulai
+                                                        Acara</label>
                                                     <div class="form-input">
                                                         <input type="date" class="form-control"
                                                             class="form-control @error('tgl_mulai') is-invalid @enderror"
@@ -144,7 +147,8 @@ table-stripped" id="example2">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                                    <button type="button" class="btn btn-danger"
+                                                        data-dismiss="modal">Batal</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -237,24 +241,26 @@ table-stripped" id="example2">
 $(document).ready(function() {
     var table = $('#example2').DataTable({
         "responsive": true,
-        "columnDefs": [
-            { "orderable": false, 
-                "targets": [2],
-                "type": "date",
-                "render": function (data, type, row) {
-                    if (type === 'sort') {
-                        // Format tanggal untuk sort secara descending ke format ISO 8601
-                        return data.split(' ').reverse().join('-');
-                    }
-                    return data;
-                },
+        "columnDefs": [{
+            "orderable": false,
+            "targets": [2],
+            "type": "date",
+            "render": function(data, type, row) {
+                if (type === 'sort') {
+                    // Format tanggal untuk sort secara descending ke format ISO 8601
+                    return data.split(' ').reverse().join('-');
+                }
+                return data;
             },
-        ],
+        }, ],
     });
 
     // Inisialisasi nomor yang disimpan di data-attribute
-    table.on('order.dt search.dt', function () {
-        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+    table.on('order.dt search.dt', function() {
+        table.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function(cell, i) {
             cell.innerHTML = i + 1;
         });
     }).draw();

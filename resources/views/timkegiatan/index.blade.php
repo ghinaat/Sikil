@@ -87,9 +87,9 @@
                                     <label class="control-label col-md-6" for="id_users">Nama Pegawai</label>
                                     <select id="id_users" name="id_users"
                                         class="form-select @error('id_users') is-invalid @enderror">
-                                        @foreach ($user->sortBy('nama_pegawai') as $us)
+                                        @foreach ($user as $us)
                                         <option value="{{ $us->id_users }}" @if( old('id_users')==$us->id_users )
-                                            selected @endif">
+                                            sePlected @endif">
                                             {{ $us->nama_pegawai }}</option>
                                         @endforeach
                                     </select>
@@ -164,7 +164,7 @@
                                     <label class="control-label col-md-6" for="id_users">Nama Pegawai</label>
                                     <select id="id_users" name="id_users"
                                         class="form-select @error('id_users') is-invalid @enderror">
-                                        @foreach ($user->sortBy('nama_pegawai') as $us)
+                                        @foreach ($user as $us)
                                         <option value="{{ $us->id_users }}" @if( $tk->id_users === old('id_users',
                                             $us->id_users) ) selected @endif>
                                             {{ $us->nama_pegawai }}</option>

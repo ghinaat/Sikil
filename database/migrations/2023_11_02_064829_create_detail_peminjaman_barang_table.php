@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('detail_peminjaman_barang', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id_detail_peminjaman');
+            $table->unsignedInteger('id_peminjaman');
+            $table->unsignedInteger('id_barang_tik');
+            $table->string('keterangan_awal');
+            $table->string('keterangan_akhir')->nullable();
+            $table->date('tgl_kembali')->nullable();
+            $table->enum('status', ['dipinjam','dikembalikan'])->nullable();
             $table->timestamps();
         });
     }

@@ -12,6 +12,8 @@ use App\Models\Kegiatan;
 use App\Models\KodeSurat;
 use App\Models\peran;
 use App\Models\Presensi;
+use App\Models\Ruangan;
+use App\Models\BarangTik;
 use App\Models\TimKegiatan;
 use App\Models\TingkatPendidikan;
 use App\Models\User;
@@ -230,6 +232,27 @@ class DatabaseSeeder extends Seeder
             'is_deleted' => '0',
         ]);
 
+        KodeSurat::create([
+            'divisi' => 'Keuangan',
+            'kode_surat' => 'II.F',
+            'is_deleted' => '0',
+        ]);
+
+        Ruangan::create([
+            'nama_ruangan' => 'Master Control',
+            'is_deleted' => '0',
+        ]);
+        
+        Ruangan::create([
+            'nama_ruangan' => 'Studio',
+            'is_deleted' => '0',
+        ]);
+
+        Ruangan::create([
+            'nama_ruangan' => 'Ruang Rapat',
+            'is_deleted' => '0',
+        ]);
+
         GeneralSetting::create([
             'tahun_aktif' => '2023',
             'id_users' => 4,
@@ -239,6 +262,7 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         Kegiatan::factory(40)->create();
         TimKegiatan::factory(40)->create();
+        BarangTik::factory(40)->create();
         // Presensi::factory(100)->create();
         User::all()->each(function ($user) {
             Cuti::factory()->create([

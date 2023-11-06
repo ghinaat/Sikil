@@ -27,6 +27,7 @@
     float: left;
 }
 
+
 body {
     font-family: Arial, sans-serif;
 }
@@ -39,8 +40,16 @@ body {
     margin-top: 30px;
 }
 
+
+.center-th {
+    text-align: center;
+    vertical-align: middle; 
+    padding: 20px 20px ;
+}
+
 /* Gaya untuk label "Data Tim SEAQIL" */
 .label-title {
     font-size: 18px;
     font-weight: bold;
+   
 }

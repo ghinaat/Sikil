@@ -418,6 +418,12 @@ return [
             'can' => '',
         ],
         [
+            'icon' => 'fas fa-envelope',
+            'text' => 'Peminjaman',
+			'url' => '/peminjaman',
+			'can' => '',
+        ],
+        [
             'icon' => 'fas fa-user-cog',
             'text' => 'Master Data',
             'can' => 'isAdmin',

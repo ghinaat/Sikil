@@ -18,7 +18,7 @@ class GeneralSettingController extends Controller
 
         return view('generalsetting.index', [
             'generalsetting' => $generalsetting,
-            'user' => User::where('is_deleted', '0')->get(),
+            'user' => User::where('is_deleted', '0')->orderByRaw("LOWER(nama_pegawai)")->get(),
         ]);
     }
 

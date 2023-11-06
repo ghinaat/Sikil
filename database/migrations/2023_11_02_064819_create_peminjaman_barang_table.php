@@ -18,9 +18,10 @@ return new class extends Migration
             $table->date('tgl_peminjaman');
             $table->date('tgl_pengembalian');
             $table->string('kegiatan');
-            $table->enum('status', ['dipinjam', 'dikembalikan', 'dikembalikan sebagain']);
+            $table->enum('status', ['diajukan' ,'dipinjam', 'dikembalikan', 'dikembalikan_sebagain']);
+            $table->string('keterangan');
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
-            $table->enum('is_deleted',['0', '1']);
+            $table->enum('is_deleted', ['0', '1'])->default('0');
             $table->timestamps();
         });
     }

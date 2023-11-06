@@ -50,10 +50,13 @@ class DetailPeminjamanBarangController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DetailPeminjamanBarang $detailPeminjamanBarang)
-    {
-        //
-    }
+    public function update(Request $request, $id_detail_peminjaman)
+{
+  
+}
+
+
+   
 
     /**
      * Remove the specified resource from storage.
