@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AjuanPerizinanController;
 use App\Http\Controllers\ArsipController;
+use App\Http\Controllers\BarangTikController;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\DiklatController;
 use App\Http\Controllers\EmailConfigurationController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\UrlController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AjuanSuratController;
+use App\Models\BarangTik;
 use Illuminate\Support\Facades\Route;
 use Svg\Tag\Group;
 
@@ -223,6 +225,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/peminjaman', [PeminjamanBarangController::class, 'index'])->name('peminjaman.index');
     Route::post('/peminjaman', [PeminjamanBarangController::class, 'store'])->name('peminjaman.store');
@@ -232,4 +235,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/peminjaman/detailPeminjaman', [PeminjamanBarangController::class, 'storeDetailPeminjaman'])->name('peminjaman.storeDetailPeminjaman');
     Route::put('/peminjaman/detailPeminjaman/update/{id_detail_peminjaman}', [PeminjamanBarangController::class, 'updateDetailPeminjaman'])->name('peminjaman.updateDetailPeminjaman');
     Route::delete('/peminjaman/detailPeminjaman/{id_detail_peminjaman}', [PeminjamanBarangController::class, 'destroyDetail'])->name('peminjaman.destroyDetail');
+});
+
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/barangtik', [BarangTikController::class, 'index'])->name('barangtik.index');
+    Route::post('/barangtik', [BarangTikController::class, 'store'])->name('barangtik.store');
+    Route::put('/barangtik/update/{id_barang_tik}', [BarangTikController::class, 'update'])->name('barangtik.update');
+    Route::delete('/barangtik/{id_barang_tik}', [BarangTikController::class, 'destroy'])->name('barangtik.destroy');
+    Route::get('/barangtik/{id_barang_tik}', [BarangTikController::class, 'show'])->name('barangtik.show');
+
+
 });

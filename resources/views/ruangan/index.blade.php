@@ -21,9 +21,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Nama Ruangan</th>
-                                @can('isAdmin')
-                                <th style="width:189px;">Opsi</th>
-                                @endcan
+                                <th style="width:189px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,12 +29,10 @@
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$rn->nama_ruangan}}</td>
-                                @can('isAdmin')
                                 <td>
                                     @include('components.action-buttons', ['id' => $rn->id_ruangan, 'key' => $key,
                                     'route' => 'ruangan'])
                                 </td>
-                                @endcan
                             </tr>
                             @endforeach
                         </tbody>
@@ -60,14 +56,13 @@
                 <form action="{{ route('ruangan.store') }}" method="POST" id="form" class="form-horizontal"
                     enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" value="" name="id">
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="nama_ruangan">Nama Ruangan</label>
-                                        <input type="number"
+                                        <input type="text"
                                             class="form-control @error('nama_ruangan') is-invalid @enderror"
                                             id="nama_ruangan" name="nama_ruangan" value="{{ old('nama_ruangan') }}">
                                         @error('nama_ruangan') <span class="text-danger">{{ $message }}</span> @enderror
@@ -86,46 +81,31 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-@foreach($cutis as $cuti)
-<div class="modal fade" id="editModal{{$cuti->id_cuti}}" role="dialog">
+@foreach($ruangan as $rn)
+<div class="modal fade" id="editModal{{$rn->id_ruangan}}" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Edit Data Cuti</h4>
+                <h4 class="modal-title" id="exampleModalLabel">Edit Data Ruangan</h4>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body form">
-                <form action="{{ route('cuti.update',$cuti->id_cuti) }}" method="POST" id="form" class="form-horizontal"
+                <form action="{{ route('ruangan.update',$rn->id_ruangan) }}" method="POST" id="form" class="form-horizontal"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="id" value="{{ $cuti->id_cuti }}">
                     <div class="form-body">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="id_users">Pegawai</label>
-                                        <select class="form-select @error('id_users') is-invalid @enderror"
-                                            id="id_users" name="id_users">
-                                            <option value="">Pilih Pegawai</option>
-                                            @foreach ($users as $user)
-                                            <option value="{{ $user->id_users }}"
-                                                {{ $user->id_users == $cuti->id_users ? 'selected' : '' }}>
-                                                {{ $user->nama_pegawai }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('id_users') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="jatah_cuti">Sisa Jatah Cuti Tahunan</label>
-                                        <input type="number"
-                                            class="form-control @error('jatah_cuti') is-invalid @enderror"
-                                            id="jatah_cuti" name="jatah_cuti"
-                                            value="{{ $cuti->jatah_cuti ?? old('jatah_cuti') }}">
-                                        @error('jatah_cuti') <span class="text-danger">{{ $message }}</span> @enderror
+                                        <label for="nama_ruangan">Nama Ruangan</label>
+                                        <input type="text"
+                                            class="form-control @error('nama_ruangan') is-invalid @enderror"
+                                            id="nama_ruangan" name="nama_ruangan" value="{{ old('nama_ruangan', $rn->nama_ruangan) }}">
+                                        @error('nama_ruangan') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                             </div>
@@ -142,9 +122,6 @@
 </div>
 @endforeach
 
-
-
-@endcan
 
 @stop
 
@@ -163,12 +140,6 @@ $(document).ready(function() {
         ]
     });
 
-    // Inisialisasi nomor yang disimpan di data-attribute
-    table.on('order.dt search.dt', function () {
-        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-            cell.innerHTML = i + 1;
-        });
-    }).draw();
 });
 
 function notificationBeforeDelete(event, el) {

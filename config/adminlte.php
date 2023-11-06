@@ -410,12 +410,16 @@ return [
 			'url' => '/ajuansurat',
 			'can' => 'isAdmin',
         ],
-		
-		[
-            'text' => 'Short Link / QR Code',
-            'url' => '/url',
-            'icon' => 'fas fa-qrcode',
-            'can' => '',
+        [
+            'icon' => 'fas fa-boxes',
+            'text' => 'Inventaris',
+            'submenu' => [
+				[
+                    'text' => 'Barang TIK',
+                    'url' => '/barangtik',
+                    'can' => '',
+                ],
+            ],
         ],
         [
             'icon' => 'fas fa-envelope',
