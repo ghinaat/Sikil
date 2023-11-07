@@ -42,7 +42,7 @@
                                     @if($pj->status == "diajukan")
                                     <a href="{{ route('peminjaman' . '.show', $pj->id_peminjaman) }}"
                                             class="btn btn-info btn-xs mx-1">
-                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
                                     </a>
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                                 data-target="#editModal{{$pj->id_peminjaman}}"
@@ -58,15 +58,15 @@
                                     <!-- @include('components.action-buttons', ['id' => $pj->id_peminjaman, 'key' => $key,
                                     'route' => 'peminjaman']) -->
                                     @else
-                                    <a href="{{ route('peinjaman' . '.show', $pj->id_peminjaman) }}"
+                                    <a href="{{ route('peminjaman' . '.show', $pj->id_peminjaman) }}"
                                             class="btn btn-info btn-xs mx-1">
-                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
                                     </a>
-                                    @can('isAdmin')
-                                    <a href="#" class="btn btn-primary btn-xs edit-button mx-1" data-toggle="modal"
+                                    @can('isAdmin', 'isKadiv')
+                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                                 data-target="#editModal{{$pj->id_peminjaman}}"
                                                 data-id="{{$pj->id_peminjaman}}">
-                                                <i class="fa fa-undo"></i>
+                                                <i class="fa fa-edit"></i>
                                     </a>
                                     <!-- <a href="{{route('peminjaman.destroy', $pj->id_peminjaman)}}"
                                                 onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
@@ -169,8 +169,7 @@
                     class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="id" value="{{ $pj->id_peminjaman }}">
-
+                  
                     <div class="form-body">
                         <input type="hidden" name="id_users"
                             value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
@@ -204,7 +203,7 @@
                                 @enderror
                             </div>
                         </div>
-                        @can('isAdmin')
+                        @can('isAdmin', 'isKadiv')
                         <div class="form-group">
                             <label for="status" class='form-label'>Status</label>
                             <div class="form-input">

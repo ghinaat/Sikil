@@ -94,12 +94,6 @@
                                                 class="btn btn-danger btn-xs">
                                                 <i class="fa fa-trash"></i>
                                             </a>
-                                            &nbsp;
-                                            <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                                data-target="#editModal{{$dpj->id_detail_peminjaman}}"
-                                                data-id="{{$dpj->id_detail_peminjaman}}">
-                                                <i class="fa fa-undo"></i>
-                                            </a>
                                             @elseif($dpj->status == 'dipinjam')
                                             @if(auth()->user()->level != 'admin')
                                             <i class="fas fa-check-circle  fa-2x"

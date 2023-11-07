@@ -16,7 +16,15 @@ class PeminjamanBarangController extends Controller
      */
     public function index()
     {
-        $peminjaman = PeminjamanBarang::where('is_deleted', '0')->get();
+        $user = auth()->user();
+        if (auth()->user()->level == 'kadiv' && auth()->user()->id_jabatan == '8') {
+            $peminjaman = PeminjamanBarang::where('is_deleted', '0')->get();
+        } elseif(auth()->user()->level == 'admin' ) {
+            $peminjaman = PeminjamanBarang::where('is_deleted', '0')->get();
+        }else{
+            $peminjaman = PeminjamanBarang::where('is_deleted', '0')->whereIn('id_users', $user->peminjaman->pluck('id_users'))->get();
+        }
+
 
         return view('peminjamanbarang.index', [
             'peminjaman' => $peminjaman,
@@ -98,7 +106,6 @@ class PeminjamanBarangController extends Controller
     public function update(Request $request,  $id_peminjaman)
     {
         $request->validate([
-            'id_users' => 'required',
             'tgl_peminjaman' => 'required|date',
             'tgl_pengembalian' => 'required|date|after_or_equal:tgl_peminjaman',
             'kegiatan' => 'required',
@@ -108,7 +115,6 @@ class PeminjamanBarangController extends Controller
 
         $peminjaman = PeminjamanBarang::find($id_peminjaman);
 
-        $peminjaman->id_users = $request->id_users;
         $peminjaman->tgl_peminjaman = $request->tgl_peminjaman;
         $peminjaman->tgl_pengembalian = $request->tgl_pengembalian;
         $peminjaman->kegiatan = $request->kegiatan;
