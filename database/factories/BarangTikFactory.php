@@ -15,7 +15,7 @@ class BarangTikFactory extends Factory
     public function definition()
     {
         return [
-            'id_ruangan' => $this->faker->numberBetween(1, 10), // Menggunakan $this->faker
+            'id_ruangan' => $this->faker->numberBetween(1, 3), // Menggunakan $this->faker
             'jenis_aset' => $this->faker->randomElement(['BMN', 'Non-BMN']),
             'kode_barang' => $this->faker->unique()->randomNumber(6),
             'nama_barang' => $this->faker->word,

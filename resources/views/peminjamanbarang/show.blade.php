@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="kegiatan" class="form-label">Tanggal Selesai</label>
+                    <label for="kegiatan" class="form-label">Nama Kegiatan</label>
                     <div class="form-input">
                         : {{$peminjaman-> kegiatan ?? old('kegiatan')}}
                     </div>
@@ -50,7 +50,11 @@
                 <div class="table-container">
                     <div class="table-responsive">
                         <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form">Add</button>
-                        <table class="table table-hover table-bordered table-stripped">
+                        <a href="{{route('peminjaman.notifikasi',$peminjaman->id_peminjaman)}}" onclick="notificationPengajuan(event, this)"
+                            class="btn btn-success mb-2">
+                            <i class="fa fa-phone" aria-hidden="true"></i> &nbsp; Ajukan
+                        </a>
+                        <table class="table table-hover table-bordered table-stripped" id="example3">
                             <thead>
                                 <tr>
                                     <th class="center-th">No.</th>
@@ -64,10 +68,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($detailPeminjaman as $key => $dpj)
+                            @php
+                            $sortedDetailPeminjaman = $detailPeminjaman->sortBy('barang.nama_barang');
+                            $nomor = 1; // Initialize a variable to keep track of the sequence
+                            @endphp
+                                @foreach($sortedDetailPeminjaman as  $key => $dpj)
                                 <tr>
-                                    <td>{{$key+1}}</td>
-                                    <td>{{$dpj->barang->nama_barang}}</td>
+                                    <td>{{$nomor}}</td>
+                                    <td id="{{$nomor}}">{{$dpj->barang->nama_barang}}</td>
                                     <td>{{$dpj->barang->kondisi }}</td>
                                     <td>{{$dpj->keterangan_akhir}}</td>
                                     <td>
@@ -110,6 +118,9 @@
                                         </div>
                                     </td>
                                 </tr>
+                                @php
+                                $nomor++; // Increment the sequence for the next row
+                                @endphp
                                 @endforeach
                             </tbody>
                         </table>
@@ -288,6 +299,11 @@
 $('#example2').DataTable({
     "responsive": true,
 });
+
+$('#example3').DataTable({
+    "responsive": true,
+    "order": [[1, 'asc']],
+});
 </script>
 <script>
 function pilih(id, nama_barang) {
@@ -301,6 +317,37 @@ function pilih(id, nama_barang) {
         behavior: 'smooth'
     });
 }
+function notificationPengajuan(event, el, dt) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Apa Kamu Yakin?',
+        text: 'Untuk Mengajukan Data Ini!',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            location.reload();  
+            
+            $.ajax({
+                url: "{{ route('peminjaman.notifikasi', $peminjaman->id_peminjaman) }}",
+                type: 'GET',
+                success: function(data) {
+                    Swal.fire('Berhasil', 'Pengajuan berhasil dikirim.', 'success');
+                  
+                },
+                error: function(err) {
+                    // Handle kesalahan jika ada kesalahan dalam permintaan
+                    console.error(err); // Contoh: mencetak kesalahan ke konsol
+                }
+            });
+        }
+    });
+}
+
+
 </script>
 
 

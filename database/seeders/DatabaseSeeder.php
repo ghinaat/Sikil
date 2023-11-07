@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             'nama_jabatan' => 'kadiv',
         ]);
 
+
         Jabatan::create([
             'nama_jabatan' => 'dda',
         ]);
@@ -52,6 +53,10 @@ class DatabaseSeeder extends Seeder
 
         Jabatan::create([
             'nama_jabatan' => 'direktur',
+        ]);
+
+        Jabatan::create([
+            'nama_jabatan' => 'Kadiv TIK',
         ]);
 
         TingkatPendidikan::create([
@@ -132,6 +137,17 @@ class DatabaseSeeder extends Seeder
             'level' => 'kadiv',
             'kode_finger' => '989898',
             'id_jabatan' => '2',
+            'is_deleted' => '0',
+        ]);
+
+        User::create([
+            'nama_pegawai' => 'Kadiv Tik',
+            'email' => 'ghina.athaya05@gmail.com',
+            'password' => '12345678',
+            '_password_' => '12345678',
+            'level' => 'kadiv',
+            'kode_finger' => '989898',
+            'id_jabatan' => '8',
             'is_deleted' => '0',
         ]);
 

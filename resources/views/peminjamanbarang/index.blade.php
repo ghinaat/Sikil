@@ -26,23 +26,61 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php $showDetail = true; @endphp
-                            @foreach($peminjaman as $key => $pj)
+                            @php
+                            $sortedPeminjaman = $peminjaman->sortByDesc('tgl_peminjaman');
+                            $nomor = 1; // Initialize a variable to keep track of the sequence
+                            @endphp
+                            @foreach($sortedPeminjaman as $key => $pj)
                             <tr>
-                                <td>{{$key+1}}</td>
-                                <td id={{$key+1}}>{{ \Carbon\Carbon::parse($pj->tgl_pinjam)->format('d M Y') }}</td>
+                                <td >{{ $nomor }}</td>
+                                <td id="{{ $nomor }}">{{ \Carbon\Carbon::parse($pj->tgl_peminjaman)->format('d M Y') }}</td>
                                 <td>{{$pj->kegiatan}}</td>
                                 <td>{{$pj->users->nama_pegawai}}</td>
                                 <td>{{$pj->status}}</td>
                                 <td>
+                                    <div class='btn-group'>
                                     @if($pj->status == "diajukan")
-                                    @include('components.action-buttons', ['id' => $pj->id_peminjaman, 'key' => $key,
-                                    'route' => 'peminjaman'])
+                                    <a href="{{ route('peminjaman' . '.show', $pj->id_peminjaman) }}"
+                                            class="btn btn-info btn-xs mx-1">
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                                data-target="#editModal{{$pj->id_peminjaman}}"
+                                                data-id="{{$pj->id_peminjaman}}">
+                                                <i class="fa fa-edit"></i>
+                                    </a>
+                                    &nbsp;
+                                    <a href="{{route('peminjaman.destroy', $pj->id_peminjaman)}}"
+                                                onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
+                                                class="btn btn-danger btn-xs">
+                                                <i class="fa fa-trash"></i>
+                                    </a>
+                                    <!-- @include('components.action-buttons', ['id' => $pj->id_peminjaman, 'key' => $key,
+                                    'route' => 'peminjaman']) -->
                                     @else
+                                    <a href="{{ route('peinjaman' . '.show', $pj->id_peminjaman) }}"
+                                            class="btn btn-info btn-xs mx-1">
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                    </a>
+                                    @can('isAdmin')
+                                    <a href="#" class="btn btn-primary btn-xs edit-button mx-1" data-toggle="modal"
+                                                data-target="#editModal{{$pj->id_peminjaman}}"
+                                                data-id="{{$pj->id_peminjaman}}">
+                                                <i class="fa fa-undo"></i>
+                                    </a>
+                                    <!-- <a href="{{route('peminjaman.destroy', $pj->id_peminjaman)}}"
+                                                onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
+                                                class="btn btn-danger btn-xs">
+                                                <i class="fa fa-trash"></i>
+                                    </a> -->
+                                    @endcan
                                     @endif
-
+                                    </div>  
                                 </td>
                             </tr>
+                            @php
+                            $nomor++; // Increment the sequence for the next row
+                            @endphp
                             @endforeach
                         </tbody>
                     </table>
@@ -166,6 +204,7 @@
                                 @enderror
                             </div>
                         </div>
+                        @can('isAdmin')
                         <div class="form-group">
                             <label for="status" class='form-label'>Status</label>
                             <div class="form-input">
@@ -191,6 +230,7 @@
                                 @enderror
                             </div>
                         </div>
+                        @endcan
                         <div class="form-group">
                             <label for="keterangan" class='form-label'>Keterangan</label>
                             <div class="form-input">
@@ -225,8 +265,8 @@
 <script>
 $('#example2').DataTable({
     "responsive": true,
+    "order": [[1, 'desc']] // Sort by the second column (index 1) in descending order
 });
-
 function notificationBeforeDelete(event, el) {
     event.preventDefault();
     if (confirm('Apakah anda yakin akan menghapus data ? ')) {
@@ -234,5 +274,6 @@ function notificationBeforeDelete(event, el) {
         $("#delete-form").submit();
     }
 }
+
 </script>
 @endpush

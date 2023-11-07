@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Notifikasi;
 use App\Models\User;
 use App\Models\PeminjamanBarang;
 use App\Models\BarangTik;
@@ -65,12 +66,13 @@ class PeminjamanBarangController extends Controller
     public function show( $id_peminjaman)
     {
         $peminjaman = PeminjamanBarang::findOrFail($id_peminjaman);
-        $barang = BarangTik::where('is_deleted', '0')->get();
-        $barangs = BarangTik::where('is_deleted', '0')->pluck('nama_barang', 'id_barang_tik');
+        $barang = BarangTik::where('is_deleted', '0')->orderByRaw("LOWER(nama_barang)")->get();
+        $barangs = BarangTik::where('is_deleted', '0')->orderByRaw("LOWER(nama_barang)")->pluck('nama_barang', 'id_barang_tik');
 
 
         // Mengambil tim kegiatan yang terkait dengan kegiatan tertentu dengan eager loading untuk relasi user
-        $detailPeminjaman = DetailPeminjamanBarang::with('barang')->where('id_peminjaman', $id_peminjaman)->get();
+        $detailPeminjaman = DetailPeminjamanBarang::with(['barang' ])
+        ->where('id_peminjaman', $id_peminjaman)->get();
 
         return view('peminjamanbarang.show', [
             'peminjaman' => $peminjaman,
@@ -161,6 +163,33 @@ class PeminjamanBarangController extends Controller
         // Redirect atau lakukan tindakan lain setelah data berhasil disimpan
         return redirect()->back()->with('success_message', 'Data telah tersimpan');
     }
+
+    public function notifikasi(Request $request, $id_peminjaman)
+    {
+        $peminjaman = PeminjamanBarang::findOrFail($id_peminjaman);
+        $pengguna = User::where('id_users', $peminjaman->id_users)->first();
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Peminjaman Barang TIK';
+        $notifikasi->pesan = 'Pengajuan peminjaman anda sudah berhasil dikirimkan.  Kami telah mengirimkan notifikasi untuk memproses pengajuanmu.';
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/peminjaman';  
+        $notifikasi->id_users = $pengguna->id_users;
+        $notifikasi->save();
+
+        $notifikasiKadiv = User::where('id_jabatan', '8')->first();
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Peminjaman Barang TIK';
+        $notifikasi->pesan =  'Pengajuan peminjaman dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara menyiapkan barang peminjaman.'; 
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/peminjaman';
+        $notifikasi->id_users = $notifikasiKadiv->id_users;
+        $notifikasi->save();
+
+        // Redirect atau lakukan tindakan lain setelah data berhasil disimpan
+        return redirect()->back()->with('success_message', 'Pengajuan Berhasil Dikirim.');
+    }    
 
     public function updateDetailPeminjaman(Request $request, $id_detail_peminjaman)
     {

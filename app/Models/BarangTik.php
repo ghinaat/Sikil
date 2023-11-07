@@ -22,7 +22,7 @@ class BarangTik extends Model
       'status_pinjam',
       'keterangan',
       'image',
-      'id_deleted',
+      'is_deleted',
     ];
 
     public function ruangan()
