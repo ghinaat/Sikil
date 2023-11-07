@@ -17,7 +17,7 @@ class PeminjamanBarangController extends Controller
     public function index()
     {
         $user = auth()->user();
-        if (auth()->user()->level == 'kadiv' && auth()->user()->id_jabatan == '8') {
+        if (auth()->user()->level == 'kadiv') {
             $peminjaman = PeminjamanBarang::where('is_deleted', '0')->get();
         } elseif(auth()->user()->level == 'admin' ) {
             $peminjaman = PeminjamanBarang::where('is_deleted', '0')->get();
