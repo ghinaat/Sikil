@@ -23,6 +23,7 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\BarangPprController;
 use App\Http\Controllers\SirkulasiBarangController;
 use App\Http\Controllers\SuratController;
+use App\Http\Controllers\PeminjamanBarangController;
 use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\UrlController;
 use App\Http\Controllers\UserController;
@@ -225,11 +226,27 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/ruangan/{id_ruangan}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
 });
 
+
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/peminjaman', [PeminjamanBarangController::class, 'index'])->name('peminjaman.index');
+    Route::post('/peminjaman', [PeminjamanBarangController::class, 'store'])->name('peminjaman.store');
+    Route::put('/peminjaman/update/{id_peminjaman}', [PeminjamanBarangController::class, 'update'])->name('peminjaman.update');
+    Route::delete('/peminjaman/{id_peminjaman}', [PeminjamanBarangController::class, 'destroy'])->name('peminjaman.destroy');
+    Route::get('/peminjaman/{id_peminjaman}', [PeminjamanBarangController::class, 'show'])->name('peminjaman.show');
+    Route::post('/peminjaman/detailPeminjaman', [PeminjamanBarangController::class, 'storeDetailPeminjaman'])->name('peminjaman.storeDetailPeminjaman');
+    Route::put('/peminjaman/detailPeminjaman/update/{id_detail_peminjaman}', [PeminjamanBarangController::class, 'updateDetailPeminjaman'])->name('peminjaman.updateDetailPeminjaman');
+    Route::delete('/peminjaman/detailPeminjaman/{id_detail_peminjaman}', [PeminjamanBarangController::class, 'destroyDetail'])->name('peminjaman.destroyDetail');
+    Route::get('/pengajuan/{id_peminjman}', [PeminjamanBarangController::class, 'notifikasi'])->name('peminjaman.notifikasi');
+});
+
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/barangtik', [BarangTikController::class, 'index'])->name('barangtik.index');
     Route::post('/barangtik', [BarangTikController::class, 'store'])->name('barangtik.store');
     Route::put('/barangtik/update/{id_barang_tik}', [BarangTikController::class, 'update'])->name('barangtik.update');
     Route::delete('/barangtik/{id_barang_tik}', [BarangTikController::class, 'destroy'])->name('barangtik.destroy');
+    Route::get('/barangtik/{id_barang_tik}', [BarangTikController::class, 'show'])->name('barangtik.show');
 });
 
 Route::group(['middleware' => ['auth']], function () {

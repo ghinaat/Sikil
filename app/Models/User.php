@@ -107,6 +107,11 @@ class User extends Authenticatable
         return $this->hasMany(Surat::class, 'id_users', 'id_users');
     }
 
+    public function peminjaman()
+    {
+        return $this->hasMany(PeminjamanBarang::class, 'id_users', 'id_users');
+    }
+
     protected $primaryKey = 'id_users';
 
     /**

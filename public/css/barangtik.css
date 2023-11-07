@@ -1,17 +1,22 @@
 .form-group {
     display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    align-items: flex-start; /* Mengubah align-items menjadi flex-start */
+    margin-bottom: 15px;
 }
 
 .form-label {
     flex: 1;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .form-input {
-    flex: 2;
+    flex: 3;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
 }
+
+
 
 .form-input.input-group {
     display: flex;
@@ -22,11 +27,14 @@
     flex: 2;
 }
 
+.form-input img {
+    width: 400px;
+    height: auto;
+}
 .table-left {
     /* Tambahkan gaya untuk mengatur tata letak tabel menjadi ke kiri */
     float: left;
 }
-
 
 body {
     font-family: Arial, sans-serif;
@@ -40,16 +48,8 @@ body {
     margin-top: 30px;
 }
 
-
-.center-th {
-    text-align: center;
-    vertical-align: middle; 
-    padding: 20px 20px ;
-}
-
 /* Gaya untuk label "Data Tim SEAQIL" */
 .label-title {
     font-size: 18px;
     font-weight: bold;
-   
 }

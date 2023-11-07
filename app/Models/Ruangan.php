@@ -15,4 +15,10 @@ class Ruangan extends Model
         'nama_ruangan',
         'is_deleted',
     ];
+
+    public function barangTik()
+    {
+        return $this->hasMany(BarangTik::class, 'id_ruangan', 'id_ruangan');
+    }
+
 }

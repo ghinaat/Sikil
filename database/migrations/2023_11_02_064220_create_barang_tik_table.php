@@ -15,16 +15,17 @@ return new class extends Migration
             $table->increments('id_barang_tik');
             $table->unsignedInteger('id_ruangan');
             $table->enum('jenis_aset',['BMN', 'Non-BMN']);
-            $table->integer('kode_barang');
+            $table->string('kode_barang');
             $table->string('nama_barang');
             $table->string('merek');
             $table->string('kelengkapan');
-            $table->date('tahun_pembelian');
+            $table->string('tahun_pembelian');
             $table->enum('kondisi', ['Baik', 'Perlu Perbaikan', 'Rusak Total']);
             $table->enum('status_pinjam', ['Ya', 'Tidak']);
+            $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan')->onDelete('cascade');
             $table->string('keterangan');
             $table->string('image');
-            $table->enum('id_deleted', ['0', '1']);
+            $table->enum('is_deleted', ['0', '1'])->default('0');
             $table->timestamps();
         });
     }

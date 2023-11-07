@@ -25,11 +25,10 @@ class TimKegiatanController extends Controller
 
         return view('timkegiatan.index', [
             'timkegiatan' => $timkegiatan,
-            'user' => User::where('is_deleted', '0')->get(),
-            'kegiatan' => $kegiatan,
+            'user' => User::where('is_deleted', '0')->orderByRaw("LOWER(nama_pegawai)")->get(),
+            'kegiatan' => Kegiatan::where('is_deleted', '0')->get(),
             'peran' => Peran::where('is_deleted', '0')->get(),
         ]);
-
     }
 
     public function store(Request $request)

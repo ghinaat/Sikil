@@ -419,6 +419,11 @@ return [
                     'url' => '/barangtik',
                     'can' => '',
                 ],
+                [
+                    'text' => 'Peminjaman Barang TIK',
+                    'url' => '/peminjaman',
+                    'can' => '',
+                ],
             ],
         ],
         [

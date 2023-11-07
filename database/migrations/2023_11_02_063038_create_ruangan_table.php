@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ruangan', function (Blueprint $table) {
             $table->increments('id_ruangan');
             $table->string('nama_ruangan', 100);
-            $table->enum('is_deleted',['0', '1'])->default('0');
+            $table->enum('is_deleted',['0', '1']);  
             $table->timestamps();
         });
     }
