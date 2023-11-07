@@ -20,6 +20,8 @@ use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\BarangPprController;
+use App\Http\Controllers\SirkulasiBarangController;
 use App\Http\Controllers\SuratController;
 use App\Http\Controllers\PeminjamanBarangController;
 use App\Http\Controllers\TingkatPendidikanController;
@@ -245,6 +247,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/barangtik/update/{id_barang_tik}', [BarangTikController::class, 'update'])->name('barangtik.update');
     Route::delete('/barangtik/{id_barang_tik}', [BarangTikController::class, 'destroy'])->name('barangtik.destroy');
     Route::get('/barangtik/{id_barang_tik}', [BarangTikController::class, 'show'])->name('barangtik.show');
+});
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/barangppr', [BarangPprController::class, 'index'])->name('barangppr.index');
+    Route::post('/barangppr', [BarangPprController::class, 'store'])->name('barangppr.store');
+    Route::get('/barangppr/{id_barang_ppr}', [BarangPprController::class, 'show'])->name('barangppr.show');
+    Route::put('/barangppr/update/{id_barang_ppr}', [BarangPprController::class, 'update'])->name('barangppr.update');
+    Route::delete('/barangppr/{id_barang_ppr}', [BarangPprController::class, 'destroy'])->name('barangppr.destroy');
+});
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/sirkulasibarang', [SirkulasiBarangController::class, 'index'])->name('sirkulasibarang.index');
+    Route::post('/sirkulasibarang', [SirkulasiBarangController::class, 'store'])->name('sirkulasibarang.store');
+    Route::get('/sirkulasibarang/{id_sirkulasi_barang}', [SirkulasiBarangController::class, 'show'])->name('sirkulasibarang.show');
+    Route::put('/sirkulasibarang/update/{id_sirkulasi_barang}', [SirkulasiBarangController::class, 'update'])->name('sirkulasibarang.update');
+    Route::delete('/sirkulasibarang/{id_sirkulasi_barang}', [SirkulasiBarangController::class, 'destroy'])->name('sirkulasibarang.destroy');
 });

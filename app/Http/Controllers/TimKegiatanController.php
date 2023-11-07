@@ -29,7 +29,6 @@ class TimKegiatanController extends Controller
             'kegiatan' => Kegiatan::where('is_deleted', '0')->get(),
             'peran' => Peran::where('is_deleted', '0')->get(),
         ]);
-
     }
 
     public function store(Request $request)

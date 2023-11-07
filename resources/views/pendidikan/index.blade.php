@@ -30,7 +30,6 @@
                                 <th>Jurusan</th>
                                 <th>Tahun Lulus</th>
                                 <th>Ijazah</th>
-
                                 <th>Aksi</th>
 
                             </tr>
@@ -47,17 +46,19 @@
                                 <td id={{$key+1}}>{{$pd->jurusan}}</td>
                                 <td id={{$key+1}}>{{$pd->tahun_lulus}}</td>
                                 <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
+                                @if($pd->ijazah)
                                     <a href="{{ asset('/storage/pendidikan/'. $pd->ijazah) }}" download>
                                         <i class="fas fa-download"
                                             style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
                                     </a>
-
+                                @else
+                                    -
+                                @endif
                                 </td>
                                 <td>
                                     @include('components.action-buttons', ['id' => $pd->id_pendidikan, 'key' => $key,
                                     'route' => 'pendidikan'])
                                 </td>
-
                             </tr>
                             
                             <!-- Edit modal -->
@@ -159,7 +160,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             @endforeach
                         </tbody>
                     </table>
@@ -271,5 +271,4 @@ Swal.fire({
 });
 </script>
 @endif
-
 @endpush

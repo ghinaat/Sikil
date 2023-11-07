@@ -135,11 +135,13 @@
     </div>
 </div>
 @endforeach
-
 @endcan
-
 @stop
 @push('js')
+<form action="" id="delete-form" method="post">
+    @method('delete')
+    @csrf
+</form>
 <script>
 $(document).ready(function() {
     var table = $('#example2').DataTable({

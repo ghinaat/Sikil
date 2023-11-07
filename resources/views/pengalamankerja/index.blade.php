@@ -16,13 +16,10 @@
             @endcan
             <div class="card-body">
                 <div class="table-responsive">
-
                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#createModal">
                         Tambah
                     </button>
-
-                    <table class="table table-hover table-bordered
-table-stripped" id="example2">
+                    <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -33,9 +30,7 @@ table-stripped" id="example2">
                                 <th>Masa Kerja</th>
                                 <th>Posisi</th>
                                 <th>Surat Pengalaman</th>
-
                                 <th>Aksi</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -49,11 +44,14 @@ table-stripped" id="example2">
                                 <td id={{$key+1}}>{{$pk->masa_kerja}}</td>
                                 <td id={{$key+1}}>{{$pk->posisi}}</td>
                                 <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
+                                @if($pk->file_kerja)
                                     <a href="{{ asset('/storage/pengalaman_kerja/'. $pk->file_kerja) }}" download>
                                         <i class="fas fa-download"
                                             style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
                                     </a>
-
+                                @else
+                                    -
+                                @endif
                                 </td>
                                 <td>
                                     @include('components.action-buttons', ['id' => $pk->id_pengalaman_kerja, 'key' =>

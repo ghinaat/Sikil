@@ -135,11 +135,7 @@
     </div>
 </div>
 @endforeach
-
 @endcan
-
-
-
 @stop
 @push('js')
 <form action="" id="delete-form" method="post">

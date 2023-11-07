@@ -42,7 +42,7 @@ class PengalamanKerjaController extends Controller
         return view('pengalamankerja.index', [
             'id_users' => $id_users,
             'penker' => $penker,
-            'main_user' => $user,
+            'main_user' => User::where('id_users', $id_users)->first(),
         ]);
     }
 
@@ -151,11 +151,10 @@ class PengalamanKerjaController extends Controller
     {
         $penker = PengalamanKerja::find($id_pengalaman_kerja);
         if ($penker) {
-            $penker->update([
-                'is_deleted' => '1',
-            ]);
+            $penker->is_deleted = '1';
+            $penker->save();
         }
 
-        return redirect()->route('penker.index')->with('success_message', 'Data telah terhapus.');
+        return redirect()->back()->with('success_message', 'Data telah terhapus.');
     }
 }

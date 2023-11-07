@@ -93,9 +93,7 @@
                                         <select class="form-select @error('id_hubungan') isinvalid @enderror"
                                             id="exampleInputHubkel" name="id_hubungan">
                                             @foreach ($hubkel as $hk)
-                                            <option value="{{ $hk->id_hubungan }}" @if( old('id_hubungan')==$hk->
-                                                id_hubungan )
-                                                selected @endif">
+                                            <option value="{{ $hk->id_hubungan }}" @if( old('id_hubungan')==$hk->id_hubungan ) selected @endif">
                                                 {{ $hk->nama }}</option>
                                             @endforeach
                                         </select>

@@ -13,12 +13,10 @@
             @include('partials.nav-pills-profile')
             @endcan
             <div class="card-body">
-
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
                     role="dialog">
                     Tambah
                 </button>
-
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
@@ -49,9 +47,13 @@
                                 <td id={{$key+1}}>{{ \Carbon\Carbon::parse($dk->tgl_mulai)->format('d M Y') }} -- {{ \Carbon\Carbon::parse($dk->tgl_selesai)->format('d M Y') }}</td>
                                 <td id={{$key+1}}>{{$dk->jp}}</td>
                                 <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
+                                @if($dk->file_sertifikat)
                                     <a href="{{ asset('/storage/file_sertifikat/'. $dk->file_sertifikat) }}" download>
                                         <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
                                     </a>
+                                @else
+                                    -
+                                @endif
                                 </td>
                                 <td>
                                     @include('components.action-buttons', ['id' => $dk->id_diklat, 'key' => $key,
@@ -278,11 +280,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 @stop
-
-
-
 @push('js')
 <form action="" id="delete-form" method="post">
     @method('delete')

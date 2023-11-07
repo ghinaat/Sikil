@@ -40,7 +40,7 @@ class DiklatController extends Controller
             'diklat' => $diklat,
             'users' => User::where('is_deleted', '0')->get(),
             'jenisdiklat' => JenisDiklat::all(),
-            'main_user' => $user,
+            'main_user' => User::where('id_users', $id_users)->first(),
         ]);
     }
 
@@ -79,7 +79,7 @@ class DiklatController extends Controller
 
         $diklat->save();
 
-        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan');
     }
 
     /**
@@ -149,7 +149,7 @@ class DiklatController extends Controller
 
         $diklat->save();
 
-        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan');
     }
 
     /**
@@ -159,11 +159,10 @@ class DiklatController extends Controller
     {
         $diklat = Diklat::find($id_diklat);
         if ($diklat) {
-            $diklat->update([
-                'is_deleted' => '1',
-            ]);
+            $diklat->is_deleted = '1';
+            $diklat->save();
         }
 
-        return redirect()->back()->with('success_message', 'Data telah terhapus.');
+        return redirect()->back()->with('success_message', 'Data telah terhapus');
     }
 }
