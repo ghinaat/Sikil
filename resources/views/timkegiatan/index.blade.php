@@ -50,7 +50,6 @@
 </div>
 
 @can('isAdmin')
-
 <!-- Create Modal -->
 <div class="modal fade" id="modal_form" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -101,9 +100,7 @@
                                     <select class="form-select @error('nama') isinvalid @enderror" id="id_peran"
                                         name="id_peran">
                                         @foreach ($peran as $p)
-                                        <option value="{{ $p->id_peran }}" @if( old('id_peran')==$p->
-                                            id_peran )
-                                            selected @endif">
+                                        <option value="{{ $p->id_peran }}" @if( old('id_peran')==$p->id_peran )selected @endif">
                                             {{ $p->nama_peran }}</option>
                                         @endforeach
                                     </select>

@@ -422,6 +422,22 @@ return [
             ],
         ],
         [
+            'icon' => 'fas fa-box',
+            'text' => 'Inventaris PPR',
+            'submenu' => [
+                [
+                    'text' => 'Barang PPR',
+                    'url' => '/barangppr',
+                    'can' => '',
+                ],
+                [
+                    'text' => 'Sirkulasi Inventaris PPR',
+                    'url' => '/sirkulasibarang',
+                    'can' => '',
+                ],        
+            ],
+        ],
+        [
             'icon' => 'fas fa-user-cog',
             'text' => 'Master Data',
             'can' => 'isAdmin',

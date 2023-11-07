@@ -51,19 +51,7 @@
                                     Data Kosong
                                     @endif
                                 </td>
-                                <td id="{{$key+1}}">
-                                    @if($user->level == 'admin')
-                                    Admin
-                                    @elseif($user->level == 'bod')
-                                    BoD
-                                    @elseif($user->level == 'ppk')
-                                    PPK
-                                    @elseif($user->level == 'kadiv')
-                                    Kadiv
-                                    @elseif($user->level == 'staf')
-                                    Staf
-                                    @endif
-                                </td>
+                                <td id="{{$key+1}}">{{$user->level}}</td>
                                 <td>
                                     @can('isAdmin')
                                     @include('components.action-buttons', ['id' => $user->id_users, 'key' => $key,
@@ -77,6 +65,7 @@
                                 </td>
                             </tr>
                             @can('isAdmin')
+
                             <!-- Modal Edit Pegawai -->
                             <div class="modal fade" id="editModal{{$user->id_users}}" tabindex="-1" role="dialog"
                                 aria-labelledby="editModalLabel" aria-hidden="true">
@@ -119,18 +108,18 @@
                                                         <option value="admin" @if($user->level == 'admin' ||
                                                             old('level')=='admin' )selected
                                                             @endif>Admin</option>
-                                                        <option value="bod" @if($user->level ==  'bod' ||
-                                                            old('level')=='bod' )selected @endif>BoD
-                                                        </option>
-                                                        <option value="ppk" @if($user->level == 'ppk' ||
-                                                            old('level')=='ppk' )selected @endif>PPK
-                                                        </option>
                                                         <option value="kadiv" @if($user->level == 'kadiv' ||
                                                             old('level')=='kadiv' )selected
                                                             @endif>Kadiv</option>
+                                                        <option value="dda" @if($user->level == 'dda' ||
+                                                            old('level')=='dda' )selected @endif>DDA
+                                                        </option>
+                                                        <option value="ddo" @if($user->level == 'ddo' ||
+                                                            old('level')=='ddo' )selected @endif>DDO
+                                                        </option>
                                                         <option value="staf" @if($user->level == 'staf' ||
                                                             old('level')=='staf' )selected
-                                                            @endif>Staf</option>
+                                                            @endif>STAF</option>
                                                     </select>
                                                     @error('level')
                                                     <div class="invalid-feedback">
@@ -143,21 +132,11 @@
                                                     <select class="form-select @error('jabatan') is-invalid @enderror"
                                                         id="exampleInputJabatan" name="id_jabatan">
                                                         @foreach ($jabatans as $jabatan)
-                                                        <option value="{{ $jabatan->id_jabatan }}" @if(old('id_jabatan', $user->id_jabatan) == $jabatan->id_jabatan ) selected @endif>  {{ $jabatan->nama_jabatan }} </option>
+                                                        <option value="{{ $jabatan->id_jabatan }}" @if(old('id_jabatan',$user->id_jabatan) === $jabatan->id_jabatan ) selected @endif>  {{ $jabatan->nama_jabatan }} </option>
                                                         @endforeach
 
                                                     </select>
                                                     @error('jabatan')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="kode_finger">Kode Finger</label>
-                                                    <input type="number" name="kode_finger" id="kode_finger" class="form-control 
-                                                    @error('kode_finger') is-invalid @enderror"  value="{{old('kode_finger', $user->kode_finger)}}">
-                                                    @error('kode_finger')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
                                                     </div>
@@ -194,7 +173,6 @@
                                 </div>
                             </div>
                             @endcan
-
                             @endforeach
                         </tbody>
                     </table>
@@ -241,10 +219,10 @@
                         <select class="form-select @error('level') isinvalid @enderror" id="exampleInputlevel"
                             name="level">
                             <option value="admin" @if(old('level')=='admin' )selected @endif>Admin</option>
-                            <option value="bod" @if(old('level')=='bod' )selected @endif>BoD</option>
-                            <option value="ppk" @if(old('level')=='ppk' )selected @endif>PPK</option>
                             <option value="kadiv" @if(old('level')=='kadiv' )selected @endif>Kadiv</option>
-                            <option value="staf" @if(old('level')=='staf' )selected @endif>Staf</option>
+                            <option value="dda" @if(old('level')=='dda' )selected @endif>DDA</option>
+                            <option value="ddo" @if(old('level')=='ddo' )selected @endif>DDO</option>
+                            <option value="staf" @if(old('level')=='staf' )selected @endif>STAF</option>
                         </select>
                         @error('level')
                         <div class="invalid-feedback">
@@ -265,15 +243,6 @@
 
                         </select>
                         @error('jabatan')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="kode_finger">Kode Finger</label>
-                        <input type="number" name="kode_finger" id="kode_finger" class="form-control @error('kode_finger') is-invalid @enderror" required>
-                        @error('kode_finger')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
@@ -308,19 +277,15 @@
     </div>
 </div>
 @endcan
-
-
 @stop
 @push('js')
 <form action="" id="delete-form" method="post">
     @method('delete')
     @csrf
 </form>
-
 <script>
 $('#example2').DataTable({
     "responsive": true,
-    "order": [[1, 'asc']],
 });
 </script>
 
@@ -333,5 +298,4 @@ Swal.fire({
 });
 </script>
 @endif
-
 @endpush

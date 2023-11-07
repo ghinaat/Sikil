@@ -39,9 +39,13 @@
                                 <td>{{$ap->jenis}}</td>
                                 <td>{{$ap->keterangan}}</td>
                                 <td id={{$key+1}} style="text-align: center; vertical-align: middle;">
+                                @if($ap->file)
                                     <a href="{{ asset('/storage/arsip/'. $ap->file) }}" download>
                                         <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
                                     </a>
+                                @else
+                                    -
+                                @endif
                                 </td>
                             <td>
                                 @include('components.action-buttons', ['id' => $ap->id_arsip, 'key' => $key, 'route' => 'arsip'])

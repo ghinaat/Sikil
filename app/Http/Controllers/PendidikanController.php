@@ -44,7 +44,7 @@ class PendidikanController extends Controller
             'id_users' => $id_users,
             'pendidikan' => $pendidikan,
             'tingpen' => TingkatPendidikan::where('is_deleted', '0')->get(),
-            'main_user' => $user
+            'main_user' => User::where('id_users', $id_users)->first(),
         ]);
     }
 
@@ -153,11 +153,10 @@ class PendidikanController extends Controller
     {
         $pendidikan = Pendidikan::find($id_pendidikan);
         if ($pendidikan) {
-            $pendidikan->update([
-                'is_deleted' => '1',
-            ]);
+            $pendidikan->is_deleted = '1';
+            $pendidikan->save();
         }
 
-        return redirect()->route('pendidikan.index')->with('success_message', 'Data telah terhapus.');
+        return redirect()->back()->with('success_message', 'Data telah terhapus.');
     }
 }
