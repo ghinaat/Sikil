@@ -420,7 +420,7 @@ return [
                     'can' => '',
                 ],
                 [
-                    'text' => 'Peminjaman',
+                    'text' => 'Peminjaman Barang TIK',
                     'url' => '/peminjaman',
                     'can' => '',
                 ],
