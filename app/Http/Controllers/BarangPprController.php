@@ -43,7 +43,7 @@ class BarangPprController extends Controller
             'tahun_pembuatan' => 'required',
             'jumlah' => 'required',
             'keterangan' => 'required',
-            'image' => 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg',
+            'image' => 'nullable|mimes:png,jpg,jpeg',
         ]);
 
         $barangppr = new BarangPpr();
@@ -72,11 +72,12 @@ class BarangPprController extends Controller
      */
     public function show(Request $request, $id_barang_ppr)
     {
-        $barangppr = BarangPpr::where('id_barang_ppr', $id_barang_ppr)->where('is_deleted', '0')->get()[0];
+        $barangppr = BarangPpr::findOrFail($id_barang_ppr);
+        $ruangan = Ruangan::where('is_deleted', '0')->get();
 
         return view('barangppr.show', [
             'barangppr' => $barangppr,
-            'ruangan' => Ruangan::where('is_deleted', '0')->get(),
+            'ruangan' => $ruangan,
         ]);
     }
 
@@ -99,7 +100,7 @@ class BarangPprController extends Controller
             'tahun_pembuatan' => 'required',
             'jumlah' => 'required',
             'keterangan' => 'required',
-            'image' => 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg',
+            'image' => 'nullable|mimes:png,jpg,jpeg',
         ]);
 
         $barangppr = BarangPpr::find($id_barang_ppr);

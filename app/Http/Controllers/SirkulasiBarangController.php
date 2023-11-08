@@ -52,7 +52,7 @@ class SirkulasiBarangController extends Controller
     $jumlahSirkulasi = $request->jumlah;
 
     // Validasi tambahan untuk pengurangan
-    if ($request->jenis_sirkulasi === 'pengurangan') {
+    if ($request->jenis_sirkulasi === 'Pengurangan') {
         // Periksa apakah jumlah sirkulasi lebih besar dari jumlah yang ada di BarangPpr
         if ($jumlahSirkulasi > $barangppr->jumlah) {
             return redirect()->back()->with('error', 'Jumlah pengurangan melebihi stok yang tersedia.');
@@ -61,7 +61,7 @@ class SirkulasiBarangController extends Controller
         // Update data di tabel BarangPpr
         $barangppr->jumlah -= $jumlahSirkulasi;
         $barangppr->save();
-    } elseif ($request->jenis_sirkulasi === 'penambahan') {
+    } elseif ($request->jenis_sirkulasi === 'Penambahan') {
         // Update data di tabel BarangPpr
         $barangppr->jumlah += $jumlahSirkulasi;
         $barangppr->save();

@@ -30,11 +30,7 @@
                 <div class="form-group">
                     <label for="id_ruangan" class="form-label">Lokasi Barang</label>
                     <div class="form-input">
-                    @foreach ($ruangan as $pn)
-                        @if($barangppr-> id_ruangan === old('id_ruangan',$pn->id_ruangan ))
-                            : {{ $pn->nama_ruangan }}
-                        @endif              
-                    @endforeach
+                        : {{$barangppr->ruangan->nama_ruangan ?? old('id_ruangan')}}
                     </div>
                 </div>
                 <div class="form-group">
@@ -47,7 +43,9 @@
                     <label for="image" class="form-label">Gambar</label>
                     <div class="form-input">
                         @if(isset($barangppr) && $barangppr->image)
-                            : <img src="{{ asset('storage/image_barangppr/' . $barangppr->image) }}" style="max-width: 100%; max-height: 200px;"">
+                            : <img src="{{ asset('storage/image_barangppr/' . $barangppr->image) }}" style="max-width: 100%; max-height: 200px;">
+                        @else
+                            : -
                         @endif
                     </div>
                 </div>

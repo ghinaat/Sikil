@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('tahun_pembuatan', 4);
             $table->integer('jumlah');
             $table->string('keterangan', 255);
-            $table->string('image', 255);
+            $table->string('image', 255)->nullable();
             $table->enum('is_deleted', ['0', '1'])->default('0');         
             $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan')->onDelete('cascade');
             $table->timestamps();

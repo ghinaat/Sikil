@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedInteger('id_users');
             $table->date('tgl_sirkulasi');
             $table->integer('jumlah');
-            $table->enum('jenis_sirkulasi', ['penambahan', 'pengurangan']);
+            $table->enum('jenis_sirkulasi', ['Penambahan', 'Pengurangan']);
             $table->string('keterangan');
             $table->enum('is_deleted', ['0', '1'])->default('0');  
             $table->foreign('id_users')->references('id_users')->on('users');       
