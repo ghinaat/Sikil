@@ -20,7 +20,7 @@
                                 <th>Nama PPK</th>
                                 <th>Tahun Aktif</th>
                                 <th>Status</th>
-                                <th style="width:189px;">Opsi</th>
+                                <th style="width:189px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>

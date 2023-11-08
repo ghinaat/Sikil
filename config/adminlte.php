@@ -398,6 +398,13 @@ return [
 
             ],
         ],
+
+		[
+            'text' => 'Short Link / QR Code',
+            'url' => '/url',
+            'icon' => 'fas fa-qrcode',
+            'can' => '',
+        ],
 		[
             'icon' => 'fas fa-envelope',
             'text' => 'Nomor Surat',

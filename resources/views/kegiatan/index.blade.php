@@ -51,7 +51,7 @@ table-stripped" id="example2">
                                     <div class="btn-group">
                                         <a href="{{ route('kegiatan' . '.show', $kg->id_kegiatan) }}"
                                             class="btn btn-info btn-xs mx-1">
-                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
                                         </a>
                                         @can('isAdmin')
                                         <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"

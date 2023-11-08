@@ -199,7 +199,7 @@
                                         <label for="id_kode_surat">Kode Surat</label>
                                         <select id="id_kode_surat" name="id_kode_surat"class="form-select @error('id_kode_surat') is-invalid @enderror">
                                             @foreach ($kodesurat as $ks)
-                                            <option value="{{ $ks->id_kode_surat }}" @if($sr->id_kode_surat === $ks->id_kode_surat || old('id_kode_surat') === $ks->id_kode_surat) selected @endif>
+                                            <option value="{{ $ks->id_kode_surat }}" @if($sr->id_kode_surat == $ks->id_kode_surat || old('id_kode_surat') === $ks->id_kode_surat) selected @endif>
                                                 {{ $ks->kode_surat }}</option>
                                             @endforeach
                                         </select>

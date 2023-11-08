@@ -21,7 +21,7 @@
                                 <th>No.</th>
                                 <th>Nama Jabatan</th>
                                 @can('isAdmin')
-                                <th style="width:189px;">Opsi</th>
+                                <th style="width:189px;">Aksi</th>
                                 @endcan
                             </tr>
                         </thead>
