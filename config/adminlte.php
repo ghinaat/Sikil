@@ -412,7 +412,7 @@ return [
         ],
         [
             'icon' => 'fas fa-boxes',
-            'text' => 'Inventaris',
+            'text' => 'Inventaris TIK',
             'submenu' => [
 				[
                     'text' => 'Barang TIK',

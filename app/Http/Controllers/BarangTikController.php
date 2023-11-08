@@ -80,6 +80,8 @@ class BarangTikController extends Controller
             $file->storeAs('imageTIK', $fileName, 'public');
             
             $barangTik->image = $fileName;
+        }else{
+            $barangTik->image = null;
         }
 
         $barangTik->save();
@@ -139,6 +141,8 @@ class BarangTikController extends Controller
             $file->storeAs('imageTIK', $fileName, 'public');
             
             $barangTik->image = $fileName;
+        }else{
+            $barangTik->image = null;
         }
 
         $barangTik->save();

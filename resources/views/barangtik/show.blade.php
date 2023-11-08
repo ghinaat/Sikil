@@ -78,7 +78,11 @@
                 <div class="form-group">
                     <label for="image" class="form-label">Image</label>
                     <div class="form-input">
+                        @if($barangTik->image)
                         : &nbsp;<img src="{{ asset('/storage/imageTIK/'. $barangTik->image)}}">
+                        @else
+                        :&nbsp;-                      
+                        @endif
                     </div>
                 </div>    
             </div>
