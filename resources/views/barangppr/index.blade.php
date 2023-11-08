@@ -43,7 +43,7 @@
                                         @endcan
                                         <a href="{{ route('barangppr' . '.show', $bp->id_barang_ppr) }}"
                                             class="btn btn-info btn-xs mx-1">
-                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
                                         </a>
                                         <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                             data-target="#editModal{{$bp->id_barang_ppr}}"
@@ -127,7 +127,7 @@
                                                     <input type="file" class="form-control @error('image') is-invalid @enderror"
                                                         id="image" name="image" accept="image/jpeg ,image/jpg ,image/png ,application/pdf ,application/docx"> 
                                                         @error('image') <span class="invalid" role="alert">{{$message}}</span> @enderror
-                                                    <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
+                                                    <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png</small>
                                                     @if ($bp->image)
                                                     <p>Previous File: <a href="{{ asset('/storage/image_barangppr/'. $bp->image) }}" target="_blank">{{ $bp->image }}</a></p>
                                                     @endif
@@ -216,8 +216,7 @@
                                             id="image" enctype="multipart/form-data" name="image"
                                             accept="image/jpeg ,image/jpg ,image/png ,application/pdf ,application/docx">
                                         @error('image') <span class="invalid" role="alert">{{$message}}</span> @enderror
-                                        <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf
-                                            .docx</small>
+                                        <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png</small>
                                     </div>
                                 </div>
                             </div>

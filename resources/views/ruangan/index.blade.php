@@ -25,15 +25,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($ruangan as $key => $rn)
+                            @php 
+                            $sortedruangan = $ruangan->sortBy('nama_ruangan');
+                            $nomor = 1; // Inisialisasi variabel untuk nomor urutan
+                            @endphp
+                            @foreach($sortedruangan as $key => $rn)
                             <tr>
-                                <td>{{$key+1}}</td>
+                                <td>{{$nomor}}</td>
                                 <td>{{$rn->nama_ruangan}}</td>
                                 <td>
                                     @include('components.action-buttons', ['id' => $rn->id_ruangan, 'key' => $key,
                                     'route' => 'ruangan'])
                                 </td>
                             </tr>
+                            @php
+                            $nomor++; // Tingkatkan nomor urutan setiap kali iterasi berlangsung
+                            @endphp
                             @endforeach
                         </tbody>
                     </table>

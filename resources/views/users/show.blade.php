@@ -53,7 +53,6 @@
         </div>
     </div>
 </div>
-
 @stop
 @push('js')
 <form action="" id="delete-form" method="post">
