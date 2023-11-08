@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'List Ruangan')
+@section('title', 'List Barang TIK')
 @section('content_header')
 <h1 class="m-0 text-dark">Barang TIK</h1>
 
@@ -31,21 +31,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php $showDetail = true; @endphp
-                            @foreach($barangTik as $key => $bt)
-                            <tr>
-                                <td>{{$key+1}}</td>
-                                <td>{{$bt->nama_barang}}</td>
-                                <td>{{$bt->jenis_aset}}</td>
-                                <td>{{$bt->ruangan->nama_ruangan}}</td>
-                                <td>{{$bt->status_pinjam}}</td>
-                                <td>
-                                    @include('components.action-buttons', ['id' => $bt->id_barang_tik, 'key' => $key,
-                                    'route' => 'barangtik'])
-                                </td>
-                            </tr>
+                            @php 
+                            $showDetail = true; 
+                            $sortedbarangTik = $barangTik->sortBy('nama_barang');
+                            $nomor = 1; // Inisialisasi variabel untuk nomor urutan
+                            @endphp
+                            @foreach($sortedbarangTik as $key => $bt)
+                                <tr>
+                                    <td id={{$key+1}}>{{$nomor}}</td>
+                                    <td id={{$key+1}}>{{$bt->nama_barang}}</td>
+                                    <td id={{$key+1}}>{{$bt->jenis_aset}}</td>
+                                    <td id={{$key+1}}>{{$bt->ruangan->nama_ruangan}}</td>
+                                    <td id={{$key+1}}>{{$bt->status_pinjam}}</td>
+                                    <td>
+                                        @include('components.action-buttons', ['id' => $bt->id_barang_tik, 'key' => $key, 'route' => 'barangtik'])
+                                    </td>
+                                </tr>
+                                @php
+                                $nomor++; // Tingkatkan nomor urutan setiap kali iterasi berlangsung
+                                @endphp
                             @endforeach
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </div>
@@ -289,7 +295,6 @@
                         <div class="form-input">
                             <input type="file" class="form-control @error('image') is-invalid @enderror"
                             id="image" name="image" accept="image/jpg, image/jpeg, image/png">
-                        
                         @error('image') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -297,8 +302,10 @@
                         <label for="image" class="form-label">&nbsp;</label>
                         <div class="form-input">
                             <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png</small>
+                            @if($bt->image)
                             <p>Previous File: <a href="{{ asset('/storage/imageTIK/'. $bt->image) }}"
                                 target="_blank">{{ $bt->image }}</a></p>
+                            @endif
                         </div>
                     </div>
                     <div class="modal-footer">  
@@ -324,10 +331,6 @@
 $(document).ready(function() {
     var table = $('#example2').DataTable({
         "responsive": true,
-        "order": [[1, 'asc']],
-        "columnDefs": [
-            { "orderable": false, "targets": [0] }
-        ]
     });
 
 });

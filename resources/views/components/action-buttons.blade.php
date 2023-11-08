@@ -6,7 +6,7 @@
     @endif
     @if(isset($showDetail))
     <a href="{{ route($route . '.show', $id) }}" class="btn btn-info btn-xs mx-1">
-        <i class="fa fa-info"></i>
+        <i class="fa fa-info-circle"></i>
     </a>
     @endif
     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"

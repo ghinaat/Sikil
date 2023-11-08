@@ -24,7 +24,7 @@ return new class extends Migration
             $table->enum('status_pinjam', ['Ya', 'Tidak']);
             $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan')->onDelete('cascade');
             $table->string('keterangan');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->enum('is_deleted', ['0', '1'])->default('0');
             $table->timestamps();
         });
