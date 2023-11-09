@@ -11,7 +11,7 @@
                 @can('isAdmin')
                 <div class="mb-2">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_form">
-                        Tambah
+                        Tambah Sirkulasi
                     </button>
                 </div>
                 @endcan
@@ -73,10 +73,12 @@
                                         <label class="control-label col-md-6" for="id_barang_ppr">Nama Barang</label>
                                         <select id="id_barang_ppr" name="id_barang_ppr"
                                             class="form-select @error('id_barang_ppr') is-invalid @enderror" required>
-                                            @foreach ($barangppr as $bp)
-                                            <option value="{{ $bp->id_barang_ppr }}" @if( old('id_barang_ppr')==$bp->id_barang_ppr )selected @endif>
-                                                {{ $bp->nama_barang }}</option>
-                                            @endforeach
+                                            @foreach ($barangppr->sortBy(function($bp) {
+                                                return strtolower($bp->nama_barang);}) as $bp)
+                                                <option value="{{ $bp->id_barang_ppr }}" @if( old('id_barang_ppr')==$bp->id_barang_ppr )selected @endif>
+                                                    {{ $bp->nama_barang }}
+                                                </option>
+                                            @endforeach                                        
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -90,14 +92,14 @@
                                         <div class="row">
                                             <div class="col-auto">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="jenis_sirkulasi" value="penambahan" id="penambahanRadio">
-                                                    <label class="form-check-label" for="penambahanRadio">Penambahan</label>
+                                                    <input class="form-check-input" type="radio" name="jenis_sirkulasi" value="Penambahan" id="PenambahanRadio">
+                                                    <label class="form-check-label" for="PenambahanRadio">Penambahan</label>
                                                 </div>
                                             </div>
                                             <div class="col-auto">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="jenis_sirkulasi" value="pengurangan" id="penguranganRadio">
-                                                    <label class="form-check-label" for="penguranganRadio">Pengurangan</label>
+                                                    <input class="form-check-input" type="radio" name="jenis_sirkulasi" value="Pengurangan" id="PenguranganRadio">
+                                                    <label class="form-check-label" for="PenguranganRadio">Pengurangan</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,13 +136,6 @@
     $(document).ready(function () {
         var table = $('#example2').DataTable({
             "responsive": true,
-            "order": [
-                [1, 'asc']
-            ],
-            "columnDefs": [{
-                "orderable": false,
-                "targets": [0]
-            }]
         });
 
         // Inisialisasi nomor yang disimpan di data-attribute

@@ -18,12 +18,12 @@ class SirkulasiBarangController extends Controller
     public function index()
     {
         $users = auth()->user();
-        $sirkulasibarang = SirkulasiBarang::where('is_deleted', '0')->get();
+        $sirkulasibarang = SirkulasiBarang::where('is_deleted', '0')->orderByDesc('id_sirkulasi_barang')->get();
 
         return view('sirkulasibarang.index', [
             'sirkulasibarang' => $sirkulasibarang,
             'barangppr' => BarangPpr::where('is_deleted', '0')->get(),
-            'users' => User::where('is_deleted', '0')->get(),
+            'users' => User::where('is_deleted', '0')->orderByRaw("LOWER(nama_pegawai)")->get(),
         ]);
     }
 
