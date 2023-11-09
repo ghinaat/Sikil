@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('kelengkapan');
             $table->string('tahun_pembelian');
             $table->enum('kondisi', ['Baik', 'Perlu Perbaikan', 'Rusak Total']);
-            $table->enum('status_pinjam', ['Ya', 'Tidak']);
+            $table->enum('status_pinjam', ['Ada', 'Dipinjam']);
             $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangan')->onDelete('cascade');
             $table->string('keterangan');
             $table->string('image')->nullable();

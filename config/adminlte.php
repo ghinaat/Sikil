@@ -411,35 +411,29 @@ return [
 			'can' => 'isAdmin',
         ],
         [
-            'icon' => 'fas fa-boxes',
-            'text' => 'Inventaris TIK',
+            'icon' => 'fas fa-box',
+            'text' => 'Inventaris TIK & PPR',
             'submenu' => [
 				[
-                    'text' => 'Barang TIK',
+                    'text' => 'Data Peralatan TIK',
                     'url' => '/barangtik',
                     'can' => '',
                 ],
                 [
-                    'text' => 'Peminjaman Barang TIK',
+                    'text' => 'Peminjaman Alat TIK',
                     'url' => '/peminjaman',
                     'can' => '',
                 ],
-            ],
-        ],
-        [
-            'icon' => 'fas fa-box',
-            'text' => 'Inventaris PPR',
-            'submenu' => [
                 [
-                    'text' => 'Barang PPR',
+                    'text' => 'Data Barang PPR',
                     'url' => '/barangppr',
                     'can' => '',
                 ],
                 [
-                    'text' => 'Sirkulasi Inventaris PPR',
+                    'text' => 'Sirkulasi Barang PPR',
                     'url' => '/sirkulasibarang',
                     'can' => '',
-                ],        
+                ],   
             ],
         ],
         [
