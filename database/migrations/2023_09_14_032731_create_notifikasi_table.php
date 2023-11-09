@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('label');
             $table->string('link');
             $table->enum('is_dibaca', ['dibaca', 'tidak_dibaca'])->default('tidak_dibaca');
+            $table->enum('send_email', ['yes', 'no'])->default('yes');
             $table->unsignedInteger('id_users')->nullable();
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->timestamps();
