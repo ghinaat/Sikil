@@ -14,6 +14,7 @@ use App\Models\peran;
 use App\Models\Presensi;
 use App\Models\Ruangan;
 use App\Models\BarangTik;
+use App\Models\BarangPpr;
 use App\Models\TimKegiatan;
 use App\Models\TingkatPendidikan;
 use App\Models\User;
@@ -279,6 +280,7 @@ class DatabaseSeeder extends Seeder
         Kegiatan::factory(40)->create();
         TimKegiatan::factory(40)->create();
         BarangTik::factory(40)->create();
+        BarangPPR::factory(40)->create();
         // Presensi::factory(100)->create();
         User::all()->each(function ($user) {
             Cuti::factory()->create([

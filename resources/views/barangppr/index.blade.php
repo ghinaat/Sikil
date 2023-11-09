@@ -24,9 +24,7 @@
                                 <th>Tahun</th>
                                 <th>Jumlah</th>
                                 <th>Keterangan</th>
-                                <!-- @can('isAdmin') -->
                                 <th style="width:189px;">Aksi</th>
-                                <!-- @endcan -->
                             </tr>
                         </thead>
                         <tbody>
@@ -38,9 +36,7 @@
                                 <td>{{$bp->jumlah}}</td>
                                 <td>{{$bp->keterangan}}</td>
                                 <td>
-                                    @can('isAdmin')
                                     <div class="btn-group">
-                                        @endcan
                                         <a href="{{ route('barangppr' . '.show', $bp->id_barang_ppr) }}"
                                             class="btn btn-info btn-xs mx-1">
                                             <i class="fa fa-info-circle" aria-hidden="true"></i>
