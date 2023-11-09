@@ -2,6 +2,23 @@
 @section('title', 'Data Tim Kegiatan')
 @section('content_header')
 <h1 class="m-0 text-dark">Data Tim Kegiatan</h1>
+<style>
+    /* Gaya untuk mode desktop */
+.tgl-span {
+    display: none;
+}
+
+/* Gaya untuk mode responsif */
+@media (max-width: 767px) {
+    .tgl-td {
+        white-space: nowrap;
+    }
+
+    .tgl-span {
+        display: inline;
+    }
+}
+</style>
 @stop
 @section('content')
 <div class="row">
@@ -14,36 +31,39 @@
                     Tambah
                 </button>
                 @endcan
-                <table class="table table-hover table-bordered table-stripped" id="example2">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Nama Kegiatan</th>
-                            <td></td>
-                            <th>Nama pegawai</th>
-                            <th>Peran</th>
-                            @can('isAdmin')
-                            <th>Aksi</th> @endcan
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($timkegiatan as $key => $tk)
-                        <tr>
-                            <td>{{$key+1}}</td>
-                            <td>{{$tk->kegiatan->nama_kegiatan }}</td>
-                            <td>{{ \Carbon\Carbon::parse($tk->kegiatan->tgl_mulai)->format('d M Y') }}</td>
-                            <td>{{$tk->user->nama_pegawai}}</td>
-                            <td>{{$tk->peran->nama_peran}}</td>
-                            @can('isAdmin')
-                            <td>
-                                @include('components.action-buttons', ['id' => $tk->id_tim, 'key' => $key, 'route' =>
-                                'timkegiatan'])
-                            </td>
-                            @endcan
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-stripped" id="example2">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Nama Kegiatan</th>
+                                <th>Nama pegawai</th>
+                                <th>Peran</th>
+                                @can('isAdmin')
+                                <th>Aksi</th> @endcan
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($timkegiatan as $key => $tk)
+                            <tr>
+                                <td>{{$key+1}}</td>
+                                <td class="tgl-td" data-order="{{ \Carbon\Carbon::parse($tk->kegiatan->tgl_mulai)->format('Ymd') }}">
+                                    {{$tk->kegiatan->nama_kegiatan }} <br>
+                                    <span class="tgl-span">{{ \Carbon\Carbon::parse($tk->kegiatan->tgl_mulai)->format('d M Y') }}</span>
+                                </td>
+                                <td>{{$tk->user->nama_pegawai}}</td>
+                                <td>{{$tk->peran->nama_peran}}</td>
+                                @can('isAdmin')
+                                <td>
+                                    @include('components.action-buttons', ['id' => $tk->id_tim, 'key' => $key, 'route' =>
+                                    'timkegiatan'])
+                                </td>
+                                @endcan
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -208,16 +228,7 @@ $(document).ready(function() {
     var table = $('#example2').DataTable({
         "responsive": true,
         "order": [
-            [2, 'desc']
-        ],
-        "columnDefs": [{
-                type: 'date',
-                targets: 2
-            },
-            {
-                "visible": false,
-                "targets": [2]
-            }
+            [1, 'desc'],
         ],
     });
 

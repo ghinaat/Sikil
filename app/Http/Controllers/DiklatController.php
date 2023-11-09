@@ -59,6 +59,7 @@ class DiklatController extends Controller
             'file_sertifikat' => 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg',
         ]);
 
+
         $diklat = new Diklat();
 
         if($request->hasFile('file_sertifikat')) {
@@ -107,14 +108,14 @@ class DiklatController extends Controller
 
     public function update(Request $request, $id_diklat)
     {
-        dd($request);
+        // dd($request);
         $request->validate([
             'id_users' => 'required',
             'id_jenis_diklat' => 'required',
             'nama_diklat' => 'required',
             'penyelenggara' => 'required',
             'tgl_mulai' => 'required',
-            'tgl_selesai' => 'required',
+            'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
             'jp' => 'required',
             'file_sertifikat' => 'mimes:pdf,doc,docx,png,jpg,jpeg',
         ]);
