@@ -23,7 +23,7 @@ class BarangTikFactory extends Factory
             'kelengkapan' => $this->faker->sentence,
             'tahun_pembelian' => $this->faker->date,
             'kondisi' => $this->faker->randomElement(['Baik', 'Perlu Perbaikan', 'Rusak Total']),
-            'status_pinjam' => $this->faker->randomElement(['Ya', 'Tidak']),
+            'status_pinjam' => $this->faker->randomElement(['Ada', 'Dipinjam']),
             'keterangan' => $this->faker->word,
             'image' => null,
             'is_deleted' => $this->faker->randomElement(['0', '1']),

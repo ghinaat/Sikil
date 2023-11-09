@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BarangTik;
+use App\Models\DetailPeminjamanBarang;
 use App\Models\Ruangan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -13,15 +14,24 @@ class BarangTikController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $barangTik = BarangTik::where('is_deleted', '0')->get();
-        $ruangan = Ruangan::where('is_deleted', '0')->get();
+{
+    $barangTik = BarangTik::where('is_deleted', '0')->get();
+    $ruangan = Ruangan::where('is_deleted', '0')->get();
 
-        return view('barangtik.index',[
-            'barangTik' => $barangTik,
-            'ruangan' => $ruangan,
-        ]);
+    $detailPeminjaman = collect();
+
+    foreach ($barangTik as $barang) {
+        $detail = DetailPeminjamanBarang::where('id_barang_tik', $barang->id_barang_tik)->first();
+        $detailPeminjaman->push($detail);
     }
+
+    return view('barangtik.index', [
+        'barangTik' => $barangTik,
+        'ruangan' => $ruangan,
+        'detailPeminjaman' => $detailPeminjaman,
+    ]);
+}
+
 
     public function show($id_barang_tik)
     {

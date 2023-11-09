@@ -29,4 +29,9 @@ class BarangTik extends Model
     {
         return $this->belongsTo(Ruangan::class, 'id_ruangan', 'id_ruangan');
     }
+
+    public function detailPeminjaman()
+    {
+        return $this->hasMany(DetailPeminjamanBarang::class, 'id_barang_tik', 'id_barang_tik');
+    }
 }
