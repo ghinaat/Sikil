@@ -108,18 +108,18 @@
                                                         <option value="admin" @if($user->level == 'admin' ||
                                                             old('level')=='admin' )selected
                                                             @endif>Admin</option>
+                                                            <option value="bod" @if($user->level == 'bod' ||
+                                                            old('level')=='bod' )selected @endif>BOD
+                                                        </option>
+                                                        <option value="ppk" @if($user->level == 'ppk' ||
+                                                            old('level')=='ppk' )selected @endif>PPK
+                                                        </option>
                                                         <option value="kadiv" @if($user->level == 'kadiv' ||
                                                             old('level')=='kadiv' )selected
                                                             @endif>Kadiv</option>
-                                                        <option value="dda" @if($user->level == 'dda' ||
-                                                            old('level')=='dda' )selected @endif>DDA
-                                                        </option>
-                                                        <option value="ddo" @if($user->level == 'ddo' ||
-                                                            old('level')=='ddo' )selected @endif>DDO
-                                                        </option>
                                                         <option value="staf" @if($user->level == 'staf' ||
                                                             old('level')=='staf' )selected
-                                                            @endif>STAF</option>
+                                                            @endif>Staf</option>
                                                     </select>
                                                     @error('level')
                                                     <div class="invalid-feedback">
@@ -137,6 +137,16 @@
 
                                                     </select>
                                                     @error('jabatan')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="kode_finger">Kode Finger</label>
+                                                    <input type="number" name="kode_finger" id="kode_finger"
+                                                        class="form-control @error('kode_finger') is-invalid @enderror" value="{{ old('kode_finger', $user->kode_finger) }}">
+                                                    @error('kode_finger')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
                                                     </div>
@@ -219,9 +229,9 @@
                         <select class="form-select @error('level') isinvalid @enderror" id="exampleInputlevel"
                             name="level">
                             <option value="admin" @if(old('level')=='admin' )selected @endif>Admin</option>
+                            <option value="bod" @if(old('level')=='bod' )selected @endif>BOD</option>
+                            <option value="ppk" @if(old('level')=='ppk' )selected @endif>PPK</option>
                             <option value="kadiv" @if(old('level')=='kadiv' )selected @endif>Kadiv</option>
-                            <option value="dda" @if(old('level')=='dda' )selected @endif>DDA</option>
-                            <option value="ddo" @if(old('level')=='ddo' )selected @endif>DDO</option>
                             <option value="staf" @if(old('level')=='staf' )selected @endif>STAF</option>
                         </select>
                         @error('level')
@@ -243,6 +253,16 @@
 
                         </select>
                         @error('jabatan')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="kode_finger">Kode Finger</label>
+                        <input type="number" name="kode_finger" id="kode_finger"
+                            class="form-control @error('kode_finger') is-invalid @enderror">
+                        @error('kode_finger')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
