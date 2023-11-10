@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'List Peminjaman Barang TIK')
 @section('content_header')
+<link rel="stylesheet" href="{{asset('fontawesome-free-6.4.2\css\all.min.css')}}">
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <h1 class="m-0 text-dark">Peminjaman Barang TIK</h1>
 @stop
@@ -22,6 +23,7 @@
                                 <th>Kegiatan</th>
                                 <th>PIC</th>
                                 <th>Status</th>
+                                <th style="width:115px;">Detail Barang</th>
                                 <th style="width:189px;">Aksi</th>
                             </tr>
                         </thead>
@@ -38,12 +40,14 @@
                                 <td>{{$pj->users->nama_pegawai}}</td>
                                 <td>{{$pj->status}}</td>
                                 <td>
-                                    <div class='btn-group'>
-                                    @if($pj->status == "diajukan")
-                                    <a href="{{ route('peminjaman' . '.show', $pj->id_peminjaman) }}"
+                                <a href="{{ route('peminjaman' . '.show', $pj->id_peminjaman) }}"
                                             class="btn btn-info btn-xs mx-1">
-                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                    </a>
+                                            <i class="fa fa-rectangle-list"></i>
+                                </a>
+                                </td>
+                                <td>
+                                    <div class='btn-group'>
+                                    @if($pj->status == "belum_diajukan" )
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                                 data-target="#editModal{{$pj->id_peminjaman}}"
                                                 data-id="{{$pj->id_peminjaman}}">
@@ -58,10 +62,6 @@
                                     <!-- @include('components.action-buttons', ['id' => $pj->id_peminjaman, 'key' => $key,
                                     'route' => 'peminjaman']) -->
                                     @else
-                                    <a href="{{ route('peminjaman' . '.show', $pj->id_peminjaman) }}"
-                                            class="btn btn-info btn-xs mx-1">
-                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                    </a>
                                     @can('isAdmin', 'isKadiv')
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                                 data-target="#editModal{{$pj->id_peminjaman}}"
