@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'List Peminjaman Barang TIK')
 @section('content_header')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.6.0/css/all.min.css">
+<link rel="stylesheet" href="{{asset('fontawesome-free-6.4.2\css\all.min.css')}}">
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <h1 class="m-0 text-dark">Peminjaman Barang TIK</h1>
 @stop
@@ -23,7 +23,7 @@
                                 <th>Kegiatan</th>
                                 <th>PIC</th>
                                 <th>Status</th>
-                                <th>Detail Barang</th>
+                                <th style="width:115px;">Detail Barang</th>
                                 <th style="width:189px;">Aksi</th>
                             </tr>
                         </thead>
@@ -43,7 +43,6 @@
                                 <a href="{{ route('peminjaman' . '.show', $pj->id_peminjaman) }}"
                                             class="btn btn-info btn-xs mx-1">
                                             <i class="fa fa-rectangle-list"></i>
-
                                 </a>
                                 </td>
                                 <td>
