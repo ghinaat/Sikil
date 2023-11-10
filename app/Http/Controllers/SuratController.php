@@ -88,6 +88,7 @@ class SuratController extends Controller
         $notifikasi->judul = 'Pengajuan Nomor Surat';
         $notifikasi->pesan = 'Pengajuan nomor surat anda sudah berhasil dikirimkan.  Kami telah mengirimkan notifikasi untuk memproses nomor surat mu..';
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/surat';
         $notifikasi->id_users = $request->id_users;
@@ -98,6 +99,7 @@ class SuratController extends Controller
         $notifikasi->judul = 'Pengajuan Nomor Surat';
         $notifikasi->pesan = 'Pengajuan nomor surat dari '.$pengguna->nama_pegawai.'. mohon memberikan persetujuan..';
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuansurat';
         $notifikasi->id_users = $notifikasiAdmin->id_users;

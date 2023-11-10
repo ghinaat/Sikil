@@ -17,7 +17,7 @@ class PeminjamanBarangController extends Controller
     public function index()
     {
         $user = auth()->user();
-        if (auth()->user()->level == 'kadiv') {
+        if (auth()->user()->level == 'kadiv' && auth()->user()->id_jabatan == '8' ) {
             $peminjaman = PeminjamanBarang::where('is_deleted', '0')->get();
         } elseif(auth()->user()->level == 'admin' ) {
             $peminjaman = PeminjamanBarang::where('is_deleted', '0')->get();
@@ -61,7 +61,7 @@ class PeminjamanBarangController extends Controller
         $peminjaman->tgl_pengembalian = $request->tgl_pengembalian;
         $peminjaman->kegiatan = $request->kegiatan;
         $peminjaman->keterangan = $request->keterangan;
-        $peminjaman->status = 'diajukan';
+        $peminjaman->status = 'belum_diajukan';
       
         $peminjaman->save();
 
@@ -71,26 +71,31 @@ class PeminjamanBarangController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( $id_peminjaman)
+    public function show($id_peminjaman)
     {
         $peminjaman = PeminjamanBarang::findOrFail($id_peminjaman);
-        $barang = BarangTik::where('is_deleted', '0')->orderByRaw("LOWER(nama_barang)")->get();
-        $barangs = BarangTik::where('is_deleted', '0')->orderByRaw("LOWER(nama_barang)")->pluck('nama_barang', 'id_barang_tik');
-
-
-        // Mengambil tim kegiatan yang terkait dengan kegiatan tertentu dengan eager loading untuk relasi user
-        $detailPeminjaman = DetailPeminjamanBarang::with(['barang' ])
-        ->where('id_peminjaman', $id_peminjaman)->get();
-
+    
+        // Mengambil semua data BarangTik yang tersedia
+        $barangTIK = BarangTik::where('status_pinjam', 'Ada')->where('is_deleted', '0')->orderByRaw("LOWER(nama_barang)")->with(['detailPeminjaman'])->get();
+    
+        // Mengambil seluruh detail peminjaman yang terkait dengan peminjaman ini
+        $detailPeminjaman = DetailPeminjamanBarang::with(['barang'])
+            ->where('id_peminjaman', $id_peminjaman)
+            ->get();
+    
+        
+    
+        $barangs = BarangTik::where('is_deleted', '0')->where('status_pinjam', 'Ada')->orderByRaw("LOWER(nama_barang)")->pluck('nama_barang', 'id_barang_tik');
+    
         return view('peminjamanbarang.show', [
             'peminjaman' => $peminjaman,
-            'barang' => $barang,
+            'barangTIK' => $barangTIK,
             'detailPeminjaman' => $detailPeminjaman,
-            'barangs' => $barangs
-          
+            'barangs' => $barangs,
+           
         ]);
-        
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -156,7 +161,7 @@ class PeminjamanBarangController extends Controller
         $request->validate([
             'id_peminjaman' => 'required',
             'id_barang_tik' => 'required',
-            'keterangan_awal' => 'required',
+          
         ]);
 
         // Simpan data ke dalam tabel tim_kegiatan
@@ -172,13 +177,19 @@ class PeminjamanBarangController extends Controller
 
     public function notifikasi(Request $request, $id_peminjaman)
     {
+        
         $peminjaman = PeminjamanBarang::findOrFail($id_peminjaman);
+
+        $peminjaman->status = 'diajukan';
+        $peminjaman->save();
+
         $pengguna = User::where('id_users', $peminjaman->id_users)->first();
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Peminjaman Barang TIK';
         $notifikasi->pesan = 'Pengajuan peminjaman anda sudah berhasil dikirimkan.  Kami telah mengirimkan notifikasi untuk memproses pengajuanmu.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
+        $notifikasi->send_email = 'yes';
         $notifikasi->link = '/peminjaman';  
         $notifikasi->id_users = $pengguna->id_users;
         $notifikasi->save();
@@ -190,7 +201,19 @@ class PeminjamanBarangController extends Controller
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->link = '/peminjaman';
+        $notifikasi->send_email = 'yes';
         $notifikasi->id_users = $notifikasiKadiv->id_users;
+        $notifikasi->save();
+
+        $notifikasiAdmin = User::where('level', 'admin')->first();
+        $notifikasi = new Notifikasi();
+        $notifikasi->judul = 'Pengajuan Peminjaman Barang TIK';
+        $notifikasi->pesan =  'Pengajuan peminjaman dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara menyiapkan barang peminjaman.'; 
+        $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->label = 'info';
+        $notifikasi->link = '/peminjaman';
+        $notifikasi->send_email = 'no';
+        $notifikasi->id_users = $notifikasiAdmin->id_users;
         $notifikasi->save();
 
         // Redirect atau lakukan tindakan lain setelah data berhasil disimpan
@@ -201,10 +224,7 @@ class PeminjamanBarangController extends Controller
     {
     
         $request->validate([
-            'id_barang_tik' => 'required',
-            'keterangan_awal' => 'required',
-            'keterangan_akhir' => 'required',
-          
+            'id_barang_tik' => 'required',  
           
         ]);
         // Simpan data ke dalam tabel tim_kegiatan
@@ -212,7 +232,24 @@ class PeminjamanBarangController extends Controller
         $detailPeminjaman->id_barang_tik = $request->input('id_barang_tik');
         $detailPeminjaman->keterangan_awal = $request->input('keterangan_awal');
         $detailPeminjaman->keterangan_akhir = $request->input('keterangan_akhir');
+        $detailPeminjaman->tgl_kembali = now();
         $detailPeminjaman->status = 'dikembalikan';
+        $detailPeminjaman->save();
+
+        // Redirect atau lakukan tindakan lain setelah data berhasil disimpan
+        return redirect()->back()->with('success_message', 'Data telah tersimpan');
+    }
+
+    public function editDetailPeminjaman(Request $request, $id_detail_peminjaman)
+    {
+    
+        $request->validate([
+            'keterangan_awal' => 'required',
+        ]);
+        // Simpan data ke dalam tabel tim_kegiatan
+        $detailPeminjaman = DetailPeminjamanBarang::find($id_detail_peminjaman);
+        $detailPeminjaman->keterangan_awal = $request->input('keterangan_awal');
+        
         $detailPeminjaman->save();
 
         // Redirect atau lakukan tindakan lain setelah data berhasil disimpan

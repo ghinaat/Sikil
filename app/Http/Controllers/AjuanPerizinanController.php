@@ -146,6 +146,7 @@ class AjuanPerizinanController extends Controller
         $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil dikirimkan.  Kami telah mengirimkan notifikasi untuk memproses pengajuanmu..';
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
+        $notifikasi->send_email = 'yes';
         $notifikasi->link = '/perizinan';
         $notifikasi->id_users = $pengguna->id_users;
         $notifikasi->save();
@@ -155,6 +156,7 @@ class AjuanPerizinanController extends Controller
             $notifikasi->judul = 'Pengajuan Izin ';
             $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
             $notifikasi->is_dibaca = 'tidak_dibaca';
+            $notifikasi->send_email = 'yes';
             $notifikasi->label = 'info';
             $notifikasi->link = '/ajuanperizinan';
             $notifikasi->id_users = $request->id_atasan;
@@ -169,6 +171,7 @@ class AjuanPerizinanController extends Controller
             $notifikasi->is_dibaca = 'tidak_dibaca';
             $notifikasi->label = 'info';
             $notifikasi->link = '/ajuanperizinan';
+            $notifikasi->send_email = 'yes';
             $notifikasi->id_users = $ppk->id_users;
             $notifikasi->save();
         }
@@ -178,6 +181,7 @@ class AjuanPerizinanController extends Controller
         $notifikasi->judul = 'Pengajuan Izin ';
         $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanperizinan';
         $notifikasi->id_users = $notifikasiAdmin->id_users;
@@ -306,6 +310,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -318,6 +323,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -375,6 +381,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -386,6 +393,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui oleh atasan. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -398,6 +406,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan oleh atasan. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -409,6 +418,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui oleh ppk. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -421,6 +431,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan oleh ppk. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -433,6 +444,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -558,6 +570,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -570,6 +583,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -629,6 +643,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -640,6 +655,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui oleh atasan. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -652,6 +668,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan oleh atasan. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -663,6 +680,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui oleh ppk. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -675,6 +693,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan oleh ppk. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -687,6 +706,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -853,6 +873,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -865,6 +886,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -924,6 +946,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -935,6 +958,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui oleh atasan. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -947,6 +971,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan oleh atasan. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -958,6 +983,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui oleh ppk. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -970,6 +996,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan oleh ppk. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -982,6 +1009,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil disetujui oleh kadiv. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;
@@ -994,6 +1022,7 @@ class AjuanPerizinanController extends Controller
                     $notifikasi->judul = 'Persetujuan Izin ';
                     $notifikasi->pesan = 'Pengajuan perizinan anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/perizinan';
                     $notifikasi->id_users = $pengguna->id_users;

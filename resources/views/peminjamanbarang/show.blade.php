@@ -4,7 +4,7 @@
 <style>
 /* Gaya umum */
 </style>
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/show.css') }}">
 <h1 class="m-0 text-dark">Detail Peminjaman Barang TIK</h1>
 @stop
 @section('content')
@@ -46,14 +46,16 @@
                 </div>
 
                 <div style="margin-top: 30px;"></div>
-                <label>Data Barang</label>
+                <label class="form-label">Data Barang</label>
                 <div class="table-container">
                     <div class="table-responsive">
+                        @if($peminjaman->status == "belum_diajukan")
                         <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form">Add</button>
-                        <a href="{{route('peminjaman.notifikasi',$peminjaman->id_peminjaman)}}" onclick="notificationPengajuan(event, this)"
+                        <a href= "{{route('peminjaman.notifikasi',$peminjaman->id_peminjaman)}}" onclick="notificationPengajuan(event, this)"
                             class="btn btn-success mb-2">
                             <i class="fa fa-phone" aria-hidden="true"></i> &nbsp; Ajukan
                         </a>
+                        @endif
                         <table class="table table-hover table-bordered table-stripped" id="example3">
                             <thead>
                                 <tr>
@@ -62,20 +64,18 @@
                                     <th class="center-th">Kondisi Awal</th>
                                     <th class="center-th">Kondisi Akhir</th>
                                     <th class="center-th">Tanggal Kembali</th>
-                                    <th class="center-th">Keterangan</th>
                                     <th class="center-th" style='width: 50px;'>Aksi</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                            @php
-                            $sortedDetailPeminjaman = $detailPeminjaman->sortBy('barang.nama_barang');
-                            $nomor = 1; // Initialize a variable to keep track of the sequence
+                           @php
+                                $nomor = 1;
                             @endphp
-                                @foreach($sortedDetailPeminjaman as  $key => $dpj)
+                            @foreach($detailPeminjaman as  $key => $dpj)
                                 <tr>
-                                    <td>{{$nomor}}</td>
-                                    <td id="{{$nomor}}">{{$dpj->barang->nama_barang}}</td>
+                                    <td></td>
+                                    <td>{{ $dpj->barang->nama_barang }}</td>
                                     <td>{{$dpj->barang->kondisi }}</td>
                                     <td>{{$dpj->keterangan_akhir}}</td>
                                     <td>
@@ -85,7 +85,6 @@
                                         -
                                         @endif
                                     </td>
-                                    <td>{{$dpj->keterangan_awal}}</td>
                                     <td>
                                         <div class="btn-group">
                                             @if($dpj->status == null)
@@ -94,6 +93,14 @@
                                                 class="btn btn-danger btn-xs">
                                                 <i class="fa fa-trash"></i>
                                             </a>
+                                            &nbsp;
+                                            @can('isAdmin')
+                                            <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                                data-target="#editPeminjaman{{$dpj->id_detail_peminjaman}}"
+                                                data-id="{{$dpj->id_detail_peminjaman}}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            @endcan
                                             @elseif($dpj->status == 'dipinjam')
                                             @if(auth()->user()->level != 'admin')
                                             <i class="fas fa-check-circle  fa-2x"
@@ -112,7 +119,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                @php
+                               @php
                                 $nomor++; // Increment the sequence for the next row
                                 @endphp
                                 @endforeach
@@ -160,30 +167,36 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($barang as $index => $barang)
-                                        <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ $barang->nama_barang }}</td>
-                                            <td>{{ $barang->kondisi }}</td>
-                                            <td>{{ $barang->kelengkapan }}</td>
-                                            <td>
-                                                @php
-                                                // Check if the user is already selected for the current $id_kegiatan
-                                                $isBarangSelected = $detailPeminjaman->contains('barang.id_barang_tik',
-                                                $barang->id_barang_tik);
-                                                @endphp
-                                                @if (!$isBarangSelected)
-                                                <button type="button" class="btn btn-primary btn-xs"
-                                                    onclick="pilih('{{ $barang->id_barang_tik }}','{{ $barang->nama_barang }}', '{{ $barang->kondisi }}', '{{ $barang->kelengkapan }}' )"
-                                                    data-bs-dismiss="modal">
-                                                    Pilih
-                                                </button>
-                                                @else
-                                                <p>Sudah dipilih</p>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        @endforeach
+                                    @foreach ($barangTIK as $key => $item)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $item->nama_barang }}</td>
+                                        <td>{{ $item->kondisi }}</td>
+                                        <td>{{ $item->kelengkapan }}</td>
+                                        <td>
+                                         
+                                         @php
+                                            // Mengecek apakah barang ini telah dipilih pada peminjaman tertentu
+                                            $isBarangSelected = $detailPeminjaman->contains('barang.id_barang_tik', $item->id_barang_tik);
+                                        @endphp
+
+                                        @if($item->detailPeminjaman->where('id_barang_tik', $item->id_barang_tik)->first() && $item->detailPeminjaman->where('id_barang_tik', $item->id_barang_tik)->first()->status == 'dipinjam')
+                                        Sudah dipinjam
+                                            
+                                        @elseif(!$isBarangSelected)
+                                        <button type="button" class="btn btn-primary btn-xs"
+                                                onclick="pilih('{{ $item->id_barang_tik }}','{{ $item->nama_barang }}', '{{ $item->kondisi }}', '{{ $item->kelengkapan }}' )"
+                                                data-bs-dismiss="modal">
+                                                Pilih
+                                            </button>
+                                        @else
+                                        Sudah dipilih 
+                                        @endif
+                                       
+                                        </td>
+                                    </tr>
+                                @endforeach
+
                                     </tbody>
                                 </table>
                                 <div class="col-md-12 mt-4" id="scroll-target">
@@ -222,6 +235,45 @@
     </div>
 </div>
 <!-- /.modal -->
+
+@foreach($detailPeminjaman as $dpj)
+<div class="modal fade" id="editPeminjaman{{$dpj->id_detail_peminjaman}}" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Edit Peminjaman Barang TIK</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body form">
+                <form action="{{ route('peminjaman.editDetailPeminjaman', $dpj->id_detail_peminjaman) }}"
+                    method="POST" id="form" class="form-horizontal" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="form-group">
+                        <label for="keterangan_awal" class="form-label">Keterangan Awal</label>
+                        <div class="form-input">
+                            <input type="text" class="form-control @error('keterangan_awal') is-invalid @enderror"
+                                id="keterangan_awal" name="keterangan_awal"
+                                value="{{ $dpj->keterangan_awal ?? old('keterangan_awal') }}">
+                            @error('keterangan_awal') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+                
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
+
 
 @foreach($detailPeminjaman as $dpj)
 <div class="modal fade" id="editModal{{$dpj->id_detail_peminjaman}}" role="dialog">
@@ -294,10 +346,20 @@ $('#example2').DataTable({
     "responsive": true,
 });
 
-$('#example3').DataTable({
-    "responsive": true,
-    "order": [[1, 'asc']],
+$(document).ready(function() {
+    var table = $('#example3').DataTable({
+        "responsive": true,
+        "order": [[1, 'asc']]
+    });
+
+    table.on('order.dt search.dt', function() {
+        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function(cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
 });
+
+
 </script>
 <script>
 function pilih(id, nama_barang) {
