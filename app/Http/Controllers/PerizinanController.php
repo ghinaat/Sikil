@@ -122,6 +122,7 @@ class PerizinanController extends Controller
         $notifikasi->judul = 'Pengajuan Izin';
         $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil dikirimkan. Kami telah mengirimkan notifikasi untuk memproses pengajuanmu.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/perizinan';
         $notifikasi->id_users = $pengguna->id_users;
@@ -132,6 +133,7 @@ class PerizinanController extends Controller
             $notifikasi->judul = 'Pengajuan Izin ';
             $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
             $notifikasi->is_dibaca = 'tidak_dibaca';
+            $notifikasi->send_email = 'yes';
             $notifikasi->label = 'info';
             $notifikasi->link = '/ajuanperizinan';
             $notifikasi->id_users = $request->id_atasan;
@@ -144,6 +146,7 @@ class PerizinanController extends Controller
             $notifikasi->judul = 'Pengajuan Izin ';
             $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
             $notifikasi->is_dibaca = 'tidak_dibaca';
+            $notifikasi->send_email = 'yes';
             $notifikasi->label = 'info';
             $notifikasi->link = '/ajuanperizinan';
             $notifikasi->id_users = $ppk->id_users;
@@ -155,6 +158,7 @@ class PerizinanController extends Controller
         $notifikasi->judul = 'Pengajuan Izin ';
         $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanperizinan';
         $notifikasi->id_users = $notifikasiAdmin->id_users;
@@ -248,6 +252,7 @@ class PerizinanController extends Controller
         $notifikasi->judul = 'Pengajuan Izin';
         $notifikasi->pesan = 'Pengajuan perizinan anda sudah berhasil dikirimkan. Kami telah mengirimkan notifikasi untuk memproses pengajuanmu.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/perizinan';
         $notifikasi->id_users = $pengguna->id_users;
@@ -257,6 +262,7 @@ class PerizinanController extends Controller
         $notifikasi->judul = 'Pengajuan Izin ';
         $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanperizinan';
         $notifikasi->id_users = $request->id_atasan;
@@ -269,6 +275,7 @@ class PerizinanController extends Controller
             $notifikasi->judul = 'Pengajuan Izin ';
             $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
             $notifikasi->is_dibaca = 'tidak_dibaca';
+            $notifikasi->send_email = 'yes';
             $notifikasi->label = 'info';
             $notifikasi->link = '/ajuanperizinan';
             $notifikasi->id_users = $ppk->id_users;
@@ -280,6 +287,7 @@ class PerizinanController extends Controller
         $notifikasi->judul = 'Pengajuan Izin ';
         $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanperizinan';
         $notifikasi->id_users = $notifikasiAdmin->id_users;

@@ -27,14 +27,6 @@ class DetailPeminjamanBarang extends Model
 
     protected $guarded = ['id_detail_peminjaman'];
 
-    protected static function boot()
-{
-    parent::boot();
-
-    static::updating(function ($model) {
-        $model->tgl_kembali = now();
-    });
-}
 
 
 }

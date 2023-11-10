@@ -13,7 +13,9 @@ class NotifikasiObserver
      */
     public function created(Notifikasi $notifikasi): void
     {
-        Mail::to($notifikasi->user)->send(new NotifikasiMail($notifikasi));
+        if ($notifikasi->send_email == 'yes') {
+            Mail::to($notifikasi->user)->send(new NotifikasiMail($notifikasi));
+        }
     }
 
     /**

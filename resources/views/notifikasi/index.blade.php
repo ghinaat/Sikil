@@ -189,7 +189,7 @@
                                                         @endif
                                                         <small class="float-right text-muted"><time class="hidden-sm-down" datetime="{{ $notifikasi->created_at->tz('Asia/Jakarta')->format('d M Y, H:i:s') }}">{{ $notifikasi->created_at->tz('Asia/Jakarta')->format('d M Y, H:i:s') }}</time><i class="zmdi zmdi-attachment-alt"></i> </small>
                                                     </div>
-                                                    <p class="msg">{{ substr($notifikasi->pesan, 0, 40)  }}.</p>
+                                                    <p class="msg">{{ substr($notifikasi->pesan, 0, 40)  }}.        `</p>
                                                 </div>
                                             </div>
                                         </li>

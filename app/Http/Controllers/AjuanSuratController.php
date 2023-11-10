@@ -87,6 +87,7 @@ class AjuanSuratController extends Controller
         $notifikasi->judul = 'Pengajuan Izin ';
         $notifikasi->pesan = 'Pengajuan perizinan dari '.$surat->user->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuansurat';
         $notifikasi->id_users = $notifikasiAdmin->id_users;
@@ -151,6 +152,7 @@ class AjuanSuratController extends Controller
                     $notifikasi->judul = 'Pengajuan Nomor Surat';
                     $notifikasi->pesan = 'Pengajuan nomor surat anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/surat';
                     $notifikasi->id_users = $surat->id_users;
@@ -205,6 +207,7 @@ class AjuanSuratController extends Controller
                     $notifikasi->judul = 'Pengajuan Nomor Surat';
                     $notifikasi->pesan = 'Pengajuan nomor surat anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
                     $notifikasi->is_dibaca = 'tidak_dibaca';
+                    $notifikasi->send_email = 'yes';
                     $notifikasi->label = 'info';
                     $notifikasi->link = '/surat';
                     $notifikasi->id_users = $surat->id_users;

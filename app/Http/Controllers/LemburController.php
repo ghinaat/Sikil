@@ -118,6 +118,7 @@ class LemburController extends Controller
             $notifikasi->judul = 'Persetujuan Lembur';
             $notifikasi->pesan = 'Pengajuan Lembur anda sudah berhasil disetujui. Klik link di bawah ini untuk melihat info lebih lanjut.';
             $notifikasi->is_dibaca = 'tidak_dibaca';
+            $notifikasi->send_email = 'yes';
             $notifikasi->label = 'info';
             $notifikasi->link = '/lembur';
             $notifikasi->id_users = $pengguna->id_users;
@@ -131,6 +132,7 @@ class LemburController extends Controller
             $notifikasi->judul = 'Persetujuan Lembur ';
             $notifikasi->pesan = 'Pengajuan lembur anda gagal mendapatkan persetujuan. Klik link di bawah ini untuk melihat info lebih lanjut.';
             $notifikasi->is_dibaca = 'tidak_dibaca';
+            $notifikasi->send_email = 'yes';
             $notifikasi->label = 'info';
             $notifikasi->link = '/lembur';
             $notifikasi->id_users = $pengguna->id_users;
@@ -213,6 +215,7 @@ class LemburController extends Controller
         $notifikasi->judul = 'Pengajuan Lembur';
         $notifikasi->pesan = 'Pengajuan Lembur anda sudah berhasil dikirimkan. Kami telah mengirimkan notifikasi untuk memproses pengajuanmu.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/lembur';
         $notifikasi->id_users = $pengguna->id_users;
@@ -222,6 +225,7 @@ class LemburController extends Controller
         $notifikasi->judul = 'Pengajuan Lembur ';
         $notifikasi->pesan = 'Pengajuan Lembur dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanlembur';
         $notifikasi->id_users = $request->id_atasan;
@@ -232,6 +236,7 @@ class LemburController extends Controller
         $notifikasi->judul = 'Pengajuan Lembur ';
         $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanlembur';
         $notifikasi->id_users = $notifikasiAdmin->id_users;
@@ -307,6 +312,7 @@ class LemburController extends Controller
         $notifikasi->judul = 'Pengajuan Lembur';
         $notifikasi->pesan = 'Pengajuan Lembur anda sudah berhasil dikirimkan. Kami telah mengirimkan notifikasi untuk memproses pengajuanmu.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/lembur';
         $notifikasi->id_users = $pengguna->id_users;
@@ -316,6 +322,7 @@ class LemburController extends Controller
         $notifikasi->judul = 'Pengajuan Lembur ';
         $notifikasi->pesan = 'Pengajuan Lembur dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanlembur';
         $notifikasi->id_users = $request->id_atasan;
@@ -326,6 +333,7 @@ class LemburController extends Controller
         $notifikasi->judul = 'Pengajuan Lembur ';
         $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
         $notifikasi->is_dibaca = 'tidak_dibaca';
+        $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanlembur';
         $notifikasi->id_users = $notifikasiAdmin->id_users;

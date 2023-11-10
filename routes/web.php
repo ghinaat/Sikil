@@ -236,6 +236,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/peminjaman/{id_peminjaman}', [PeminjamanBarangController::class, 'show'])->name('peminjaman.show');
     Route::post('/peminjaman/detailPeminjaman', [PeminjamanBarangController::class, 'storeDetailPeminjaman'])->name('peminjaman.storeDetailPeminjaman');
     Route::put('/peminjaman/detailPeminjaman/update/{id_detail_peminjaman}', [PeminjamanBarangController::class, 'updateDetailPeminjaman'])->name('peminjaman.updateDetailPeminjaman');
+    Route::put('/peminjaman/detailPeminjaman/edit/{id_detail_peminjaman}', [PeminjamanBarangController::class, 'editDetailPeminjaman'])->name('peminjaman.editDetailPeminjaman');
     Route::delete('/peminjaman/detailPeminjaman/{id_detail_peminjaman}', [PeminjamanBarangController::class, 'destroyDetail'])->name('peminjaman.destroyDetail');
     Route::get('/pengajuan/{id_peminjman}', [PeminjamanBarangController::class, 'notifikasi'])->name('peminjaman.notifikasi');
 });
