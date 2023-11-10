@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'List Peminjaman Barang TIK')
 @section('content_header')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.6.0/css/all.min.css">
+<link rel="stylesheet" href="{{asset('fontawesome-free-6.4.2\css\all.min.css')}}">
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <h1 class="m-0 text-dark">Peminjaman Barang TIK</h1>
 @stop
@@ -23,7 +23,7 @@
                                 <th>Kegiatan</th>
                                 <th>PIC</th>
                                 <th>Status</th>
-                                <th>Detail Barang</th>
+                                <th style="width:115px;">Detail Barang</th>
                                 <th style="width:189px;">Aksi</th>
                             </tr>
                         </thead>
@@ -38,12 +38,21 @@
                                 <td id="{{ $nomor }}">{{ \Carbon\Carbon::parse($pj->tgl_peminjaman)->format('d M Y') }}</td>
                                 <td>{{$pj->kegiatan}}</td>
                                 <td>{{$pj->users->nama_pegawai}}</td>
-                                <td>{{$pj->status}}</td>
+                                <td>@if($pj->status == 'belum_diajukan')
+                                    Belum Diajukan
+                                    @elseif($pj->status == 'dikembalikan_sebagian')
+                                    Dikembalikan Sebagian
+                                    @elseif($pj->status == 'dikembalikan')
+                                    Dikembalikan
+                                    @elseif($pj->status == 'dipinjam')
+                                    Dipinjam
+                                    @else
+                                    Diajukan
+                                    @endif</td>
                                 <td>
                                 <a href="{{ route('peminjaman' . '.show', $pj->id_peminjaman) }}"
                                             class="btn btn-info btn-xs mx-1">
                                             <i class="fa fa-rectangle-list"></i>
-
                                 </a>
                                 </td>
                                 <td>
@@ -63,6 +72,10 @@
                                     <!-- @include('components.action-buttons', ['id' => $pj->id_peminjaman, 'key' => $key,
                                     'route' => 'peminjaman']) -->
                                     @else
+                                        @if(auth()->user()->level != 'admin')
+                                    <i class="fas fa-check-circle  fa-2x"
+                                                style="color: #42e619; align-items: center;"></i>
+                                    @endif
                                     @can('isAdmin', 'isKadiv')
                                     <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                                 data-target="#editModal{{$pj->id_peminjaman}}"

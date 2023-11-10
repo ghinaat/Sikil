@@ -35,7 +35,21 @@
                 <div class="form-group">
                     <label for="status" class="form-label">Status</label>
                     <div class="form-input">
-                        : {{$peminjaman-> status ?? old('status')}}
+                        :  @if ($peminjaman)
+                            @if ($peminjaman->status == 'belum_diajukan')
+                                Belum Diajukan
+                            @elseif ($peminjaman->status == 'dikembalikan_sebagian')
+                                Dikembalikan Sebagian
+                            @elseif ($peminjaman->status == 'dikembalikan')
+                                Dikembalikan
+                            @elseif($peminjaman->status == 'dipinjam')
+                            Dipinjam
+                            @else
+                                Diajukan
+                            @endif
+                        @else
+                            {{ old('status') }}
+                        @endif
                     </div>
                 </div>
                 <div class="form-group">
@@ -61,8 +75,8 @@
                                 <tr>
                                     <th class="center-th">No.</th>
                                     <th class="center-th">Nama Barang</th>
-                                    <th class="center-th">Kondisi Awal</th>
-                                    <th class="center-th">Kondisi Akhir</th>
+                                    <th class="center-th">Keterangan Awal</th>
+                                    <th class="center-th">Keterangan Akhir</th>
                                     <th class="center-th">Tanggal Kembali</th>
                                     <th class="center-th" style='width: 50px;'>Aksi</th>
 
@@ -76,7 +90,7 @@
                                 <tr>
                                     <td></td>
                                     <td>{{ $dpj->barang->nama_barang }}</td>
-                                    <td>{{$dpj->barang->kondisi }}</td>
+                                    <td>{{$dpj->keterangan_awal }}</td>
                                     <td>{{$dpj->keterangan_akhir}}</td>
                                     <td>
                                         @if($dpj->tgl_kembali )
@@ -86,21 +100,37 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <div class="btn-group">
-                                            @if($dpj->status == null)
-                                            <a href="{{route('peminjaman.destroyDetail', $dpj->id_detail_peminjaman)}}"
-                                                onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                                class="btn btn-danger btn-xs">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                            &nbsp;
-                                            @can('isAdmin')
-                                            <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                                data-target="#editPeminjaman{{$dpj->id_detail_peminjaman}}"
-                                                data-id="{{$dpj->id_detail_peminjaman}}">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            @endcan
+                                       <div class="btn-group">
+                                         @if($dpj->status == null)
+                                            @if(auth()->user()->level != 'admin')
+                                                @if($peminjaman->status == 'diajukan')
+                                                    <i class="fas fa-check-circle  fa-2x" style="color: #42e619; align-items: center;"></i>
+                                                @else
+                                                    <a href="{{ route('peminjaman.destroyDetail', $dpj->id_detail_peminjaman) }}"
+                                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
+                                                        class="btn btn-danger btn-xs">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                    &nbsp;
+                                                @endif
+                                            @else
+                                                @if($peminjaman->status == 'diajukan')
+                                                <a href="{{ route('peminjaman.destroyDetail', $dpj->id_detail_peminjaman) }}"
+                                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
+                                                        class="btn btn-danger btn-xs">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                     &nbsp;
+                                                    @can('isAdmin')
+                                                        <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                                            data-target="#editPeminjaman{{$dpj->id_detail_peminjaman}}"
+                                                            data-id="{{$dpj->id_detail_peminjaman}}">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                    @endcan
+                                                @endif
+                                            @endif
+                                         
                                             @elseif($dpj->status == 'dipinjam')
                                             @if(auth()->user()->level != 'admin')
                                             <i class="fas fa-check-circle  fa-2x"
@@ -112,10 +142,12 @@
                                                 <i class="fa fa-undo"></i>
                                             </a>
                                             @endif
+                                          
                                             @else
                                             <i class="fas fa-check-circle  fa-2x"
                                                 style="color: #42e619; align-items: center;"></i>
                                             @endif
+                                         
                                         </div>
                                     </td>
                                 </tr>
@@ -386,7 +418,7 @@ function notificationPengajuan(event, el, dt) {
     }).then((result) => {
         if (result.isConfirmed) {
             location.reload();  
-            
+
             $.ajax({
                 url: "{{ route('peminjaman.notifikasi', $peminjaman->id_peminjaman) }}",
                 type: 'GET',
