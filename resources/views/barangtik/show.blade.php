@@ -70,11 +70,22 @@
                     </div>
                 </div>    
                 <div class="form-group">
-                    <label for="status_pinjam" class="form-label">Status Peminjaman</label>
+                    <label for="status_pinjam" class="form-label">Ketersediaan</label>
                     <div class="form-input">
-                        : &nbsp;{{old('status_pinjam', $barangTik->status_pinjam)}}
+                        @if ($detailPeminjaman)
+                            @if ($detailPeminjaman->status == 'dipinjam')
+                                : &nbsp;Dipinjam
+                            @elseif ($detailPeminjaman->status == 'dikembalikan')
+                                : &nbsp;Ada
+                            @else
+                                : &nbsp;Ada
+                            @endif
+                        @else
+                            : &nbsp;Ada
+                        @endif
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label for="image" class="form-label">Image</label>
                     <div class="form-input">
