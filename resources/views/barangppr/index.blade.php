@@ -24,7 +24,9 @@
                                 <th>Tahun</th>
                                 <th>Jumlah</th>
                                 <th>Keterangan</th>
+                                @can('isAdmin')
                                 <th style="width:189px;">Aksi</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -35,6 +37,7 @@
                                 <td>{{$bp->tahun_pembuatan}}</td>
                                 <td>{{$bp->jumlah}}</td>
                                 <td>{{$bp->keterangan}}</td>
+                                @can('isAdmin')
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('barangppr' . '.show', $bp->id_barang_ppr) }}"
@@ -53,6 +56,7 @@
                                         </a>
                                     </div>
                                 </td>
+                                @endcan
                             </tr>
 
                             <!-- Edit Modal -->
