@@ -13,9 +13,11 @@
             <div class="card-body">
                 @can('isAdmin')
                 <div class="mb-2">
+                    @can('isAdmin')
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_form">
                         Tambah
                     </button>
+                    @endcan
                 </div>
                 @endcan
                 <div class="table-responsive">
@@ -27,7 +29,7 @@
                                 <th>Jenis</th>
                                 <th>Lokasi</th>
                                 <th>Ketersediaan</th>
-                                <th style="width:189px;">Aksi</th>
+                                <th style="width:180px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,18 +45,39 @@
                                     <td id={{$key+1}}>{{$bt->jenis_aset}}</td>
                                     <td id={{$key+1}}>{{$bt->ruangan->nama_ruangan}}</td>
                                     <td id={{$key+1}}>
-                                            @php
-                                            $detailPeminjamanBarang = $detailPeminjaman->where('id_barang_tik', $bt->id_barang_tik)->first();
-                                            @endphp
-                                            @if($detailPeminjamanBarang && $detailPeminjamanBarang->status == 'dipinjam')
+                                        @php
+                                        $detailPeminjamanBarang = $detailPeminjaman->where('id_barang_tik', $bt->id_barang_tik)->first();
+                                        @endphp
+
+                                        @if ($detailPeminjamanBarang)
+                                            @if ($detailPeminjamanBarang->status == 'dipinjam')
                                                 <p>Dipinjam</p>
-                                            @elseif($detailPeminjamanBarang && $detailPeminjamanBarang->status == 'Ada')
+                                            @elseif ($detailPeminjamanBarang->status == 'dikembalikan')
                                                 <p>Ada</p>
                                             @else
-                                                <p>{{$bt->status_pinjam}}</p>
+                                                <p>Ada</p>
                                             @endif
+                                        @else
+                                            <p>Ada</p>
+                                        @endif
                                     <td>
-                                        @include('components.action-buttons', ['id' => $bt->id_barang_tik, 'key' => $key, 'route' => 'barangtik'])
+                                        <div class="btn-group">
+                                            <a href="{{ route('barangtik' . '.show', $bt->id_barang_tik) }}" class="btn btn-info btn-xs">
+                                                <i class="fa fa-info-circle"></i>
+                                            </a>
+                                            @can('isAdmin')
+                                                <a href="#" class="btn btn-primary btn-xs edit-button mx-1" data-toggle="modal"
+                                                        data-target="#editModal{{$bt->id_barang_tik}}"
+                                                        data-id="{{$bt->id_barang_tik}}">
+                                                        <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="{{route('barangtik.destroy', $bt->id_barang_tik)}}"
+                                                    onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
+                                                    class="btn btn-danger btn-xs">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            @endcan
+                                        </div>
                                     </td>
                                 </tr>
                                 @php
@@ -150,8 +173,8 @@
                         <label for="status_pinjam" class="form-label">Status Boleh Pinjam</label>
                         <div class="form-input">
                             <div class="form-inline">
-                                <input type="radio" name="status_pinjam" value="Ada"  checked>&nbsp;Ada&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                                <input type="radio" name="status_pinjam" value="Dipinjam" checked >&nbsp;Dipinjam<br>
+                                <input type="radio" name="status_pinjam" value="Ya"  checked>&nbsp;Ya&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                <input type="radio" name="status_pinjam" value="Tidak" checked >&nbsp;Tidak<br>
                             </div>
                         </div>
                     </div>
@@ -276,8 +299,8 @@
                         <label for="status_pinjam" class="form-label">Status Boleh Pinjam</label>
                         <div class="form-input">
                             <div class="form-inline">
-                                <input type="radio" name="status_pinjam" value="Ada"  @if ($bt->status_pinjam === 'Ada') checked @endif>&nbsp;Ada&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                                <input type="radio" name="status_pinjam" value="Dipinjam"  @if ($bt->status_pinjam === 'Dipinjam') checked @endif >&nbsp;Dipinjam<br>
+                                <input type="radio" name="status_pinjam" value="Ya"  @if ($bt->status_pinjam === 'Ya') checked @endif>&nbsp;Ya&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                <input type="radio" name="status_pinjam" value="Tidak"  @if ($bt->status_pinjam === 'Tidak') checked @endif >&nbsp;Tidak<br>
                             </div>
                         </div>
                     </div>

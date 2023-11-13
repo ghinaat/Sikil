@@ -24,7 +24,7 @@ class BarangTikController extends Controller
         $detail = DetailPeminjamanBarang::where('id_barang_tik', $barang->id_barang_tik)->first();
         $detailPeminjaman->push($detail);
     }
-
+    // dd($detailPeminjaman);
     return view('barangtik.index', [
         'barangTik' => $barangTik,
         'ruangan' => $ruangan,
@@ -37,10 +37,14 @@ class BarangTikController extends Controller
     {
         $barangTik = BarangTik::findOrFail($id_barang_tik);
         $ruangan = Ruangan::where('is_deleted', '0')->get();
+       
+        $detailPeminjaman = DetailPeminjamanBarang::where('id_barang_tik', $barangTik->id_barang_tik)->first();
+           
 
         return view('barangtik.show',[
             'barangTik' => $barangTik,
             'ruangan' => $ruangan,
+            'detailPeminjaman' => $detailPeminjaman,
         ]);
     }
 

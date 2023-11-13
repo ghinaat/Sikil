@@ -76,7 +76,7 @@ class PeminjamanBarangController extends Controller
         $peminjaman = PeminjamanBarang::findOrFail($id_peminjaman);
     
         // Mengambil semua data BarangTik yang tersedia
-        $barangTIK = BarangTik::where('status_pinjam', 'Ada')->where('is_deleted', '0')->orderByRaw("LOWER(nama_barang)")->with(['detailPeminjaman'])->get();
+        $barangTIK = BarangTik::where('status_pinjam', 'Ya')->where('is_deleted', '0')->orderByRaw("LOWER(nama_barang)")->with(['detailPeminjaman'])->get();
     
         // Mengambil seluruh detail peminjaman yang terkait dengan peminjaman ini
         $detailPeminjaman = DetailPeminjamanBarang::with(['barang'])
@@ -85,7 +85,7 @@ class PeminjamanBarangController extends Controller
     
         
     
-        $barangs = BarangTik::where('is_deleted', '0')->where('status_pinjam', 'Ada')->orderByRaw("LOWER(nama_barang)")->pluck('nama_barang', 'id_barang_tik');
+        $barangs = BarangTik::where('is_deleted', '0')->where('status_pinjam', 'Ya')->orderByRaw("LOWER(nama_barang)")->pluck('nama_barang', 'id_barang_tik');
     
         return view('peminjamanbarang.show', [
             'peminjaman' => $peminjaman,
