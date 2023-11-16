@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'Detail Pengajuan Blast Email')
 @section('content_header')
-<link rel="stylesheet" href="{{ asset('css/barangtik.css') }}">
+<link rel="stylesheet" href="{{ asset('css/show.css') }}">
 <h1 class="m-0 text-dark">Detail Pengajuan Blast Email</h1>
 @stop
 @section('content')
@@ -12,29 +12,28 @@
                 <div class="form-group">
                     <label for="nama_barang" class="form-label">Tanggal Pengajuan</label>
                     <div class="form-input">
-                        : &nbsp;{{ date_format( new DateTime($BlastEmail->tgl_pengajuan), 'd F Y') ?? old('tgl_pengajuan')}}
+                        :{{ date_format( new DateTime($BlastEmail->tgl_pengajuan), 'd F Y') ?? old('tgl_pengajuan')}}
                     </div>    
                 </div>
                 <div class="form-group">
                     <label for="kode_barang" class="form-label">Pemohon</label>
                     <div class="form-input">
-                        : &nbsp;{{old('id_users', $BlastEmail->user->nama_pegawai)}}
+                        : {{old('id_users', $BlastEmail->user->nama_pegawai)}}
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="nama_barang" class="form-label">Nama Kegiatan</label>
                     <div class="form-input">
-                        : &nbsp;{{old('nama_kegiatan', $BlastEmail->nama_kegiatan)}}
+                        : {{old('nama_kegiatan', $BlastEmail->nama_kegiatan)}}
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="merek" class="form-label"  style="flex: 1; min-width: 150px;">Keterangan</label>
-                    <div class="form-input"  style="display: flex;">
+                    <label for="merek" class="form-label">Keterangan</label>
+                    <div class="form-input"  style="margin-right: 10px;">
                         <span style="margin-right: 5px;">:</span>
                         <span style="white-space: pre-line;">{{$BlastEmail->keterangan_pemohon ?? old('keterangan_pemohon')}}</span>         
                     </div>
                 </div>
-                <br>
                 <div class="form-group">
                     <label for="kelengkapan" class="form-label">Lampiran Dokumen</label>
                     <div class="form-input">
@@ -48,9 +47,9 @@
                     <div class="form-input">
                         @if($BlastEmail->status)
                             @if($BlastEmail->status == 'diajukan')
-                            : &nbsp;Diajukan
+                            : Diajukan
                             @else
-                            : &nbsp;Diajukan
+                            : Diajukan
                             @endif
                         @else
                         :&nbsp;-
@@ -61,26 +60,25 @@
                     <label for="tahun_pembelian" class="form-label" >Nama Operator</label>
                     <div class="form-input">
                         @if($BlastEmail->nama_operator)
-                        : &nbsp;{{old('nama_operator', $BlastEmail->nama_operator)}}
+                        : {{old('nama_operator', $BlastEmail->nama_operator)}}
                         @else
                         :&nbsp;-
                         @endif
                     </div>
                 </div>
-                
                 <div class="form-group">
-                    <label for="kondisi" class="form-label">Tanggal Pengiriman</label>
+                    <label for="tgl_kirim" class="form-label">Tanggal Pengiriman</label>
                     <div class="form-input">
                         @if($BlastEmail->tgl_kirim)
-                        : &nbsp;{{ date_format( new DateTime($BlastEmail->tgl_kirim), 'd F Y') ?? old('tgl_kirim')}}
+                        : {{ date_format( new DateTime($BlastEmail->tgl_kirim), 'd F Y') ?? old('tgl_kirim')}}
                         @else
                         :&nbsp;-
                         @endif
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="status_pinjam" class="form-label" style="flex: 1; min-width: 150px;">Keterangan Operator</label>
-                    <div class="form-input" style="display: flex;">
+                    <label for="status_pinjam" class="form-label">Keterangan Operator</label>
+                    <div class="form-input" style="margin-right: 10px;">
                         @if($BlastEmail->keterangan_operator)
                         <span style="margin-right: 6px;">:</span>
                         <span style="white-space: pre-line;">{{$BlastEmail->keterangan_operator ?? old('keterangan_operator')}}</span> 

@@ -428,16 +428,16 @@ return [
                 ],
                 [
 
-                    'text' => 'Pengajuan Blast Email',
+                    'text' => 'Blast Email',
                     'url' => '/ajuanblastemail',
                     'can' => '',
                 ],  
-
+                [
                     'text' => 'Single Link',
                     'url' => '/ajuansinglelink',
                     'can' => '',
                 ], 
-            ]
+            ],
         ],
         [
             'icon' => 'fas fa-box',

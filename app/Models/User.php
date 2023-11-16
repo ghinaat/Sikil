@@ -122,6 +122,7 @@ class User extends Authenticatable
     public function ajuansinglelink()
     {
         return $this->hasMany(PengajuanSingleLink::class, 'id_users', 'id_users');
+    }
 
     public function zoom()
     {
