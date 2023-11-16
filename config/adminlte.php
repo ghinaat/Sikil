@@ -426,6 +426,11 @@ return [
                     'url' => '/ajuanzoom',
                     'can' => '',
                 ],
+                [
+                    'text' => 'Single Link',
+                    'url' => '/ajuansinglelink',
+                    'can' => '',
+                ],           
             ]
         ],
         [
@@ -454,11 +459,6 @@ return [
                 ],   
             ],
         ],
-        [
-            'text' => 'Single Link',
-            'url' => '/ajuansinglelink',
-            'can' => '',
-        ],   
         [
             'icon' => 'fas fa-user-cog',
             'text' => 'Master Data',

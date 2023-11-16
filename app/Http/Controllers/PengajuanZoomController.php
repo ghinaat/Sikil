@@ -92,7 +92,7 @@ class PengajuanZoomController extends Controller
         $notifikasiAdmin = User::where('level', 'admin')->first();
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Zoom Meeting';
-        $notifikasi->pesan =  'PengajuanZoom Meeting dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara menyiapkan room zoom meeting.'; 
+        $notifikasi->pesan =  'Pengajuan Zoom Meeting dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara menyiapkan room zoom meeting.'; 
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanzoom';
