@@ -25,6 +25,7 @@ use App\Http\Controllers\BarangPprController;
 use App\Http\Controllers\SirkulasiBarangController;
 use App\Http\Controllers\SuratController;
 use App\Http\Controllers\PeminjamanBarangController;
+use App\Http\Controllers\PengajuanSingleLinkController;
 use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\UrlController;
 use App\Http\Controllers\UserController;
@@ -266,6 +267,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/sirkulasibarang/update/{id_sirkulasi_barang}', [SirkulasiBarangController::class, 'update'])->name('sirkulasibarang.update');
     Route::delete('/sirkulasibarang/{id_sirkulasi_barang}', [SirkulasiBarangController::class, 'destroy'])->name('sirkulasibarang.destroy');
 });
+
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/ajuansinglelink', [PengajuanSingleLinkController::class, 'index'])->name('ajuansinglelink.index');
+    Route::post('/ajuansinglelink', [PengajuanSingleLinkController::class, 'store'])->name('ajuansinglelink.store');
+    Route::get('/ajuansinglelink/{id_pengajuan_singlelink}', [PengajuanSingleLinkController::class, 'show'])->name('ajuansinglelink.show');
+    Route::put('/ajuansinglelink/update/{id_pengajuan_singlelink}', [PengajuanSingleLinkController::class, 'update'])->name('ajuansinglelink.update');
+    Route::delete('/ajuansinglelink/{id_pengajuan_singlelink}', [PengajuanSingleLinkController::class, 'destroy'])->name('ajuansinglelink.destroy');
+});
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/ajuanzoom', [PengajuanZoomController::class, 'index'])->name('ajuanzoom.index');
     Route::post('/ajuanzoom', [PengajuanZoomController::class, 'store'])->name('ajuanzoom.store');
@@ -273,3 +284,4 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/ajuanzoom/{id_pengajuan_zoom}', [PengajuanZoomController::class, 'destroy'])->name('ajuanzoom.destroy');
     Route::get('/ajuanzoom/{id_pengajuan_zoom}', [PengajuanZoomController::class, 'show'])->name('ajuanzoom.show');
 });
+

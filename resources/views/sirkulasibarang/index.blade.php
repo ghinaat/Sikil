@@ -31,13 +31,13 @@
                         <tbody>
                             @foreach($sirkulasibarang as $key => $sb)
                             <tr>
-                                <td>{{$key+1}}</td>
-                                <td>{{$sb->barangppr->nama_barang}}</td>
-                                <td>{{$sb->jumlah}}</td>
-                                <td>{{$sb->jenis_sirkulasi}}</td>
-                                <td>{{ \Carbon\Carbon::parse($sb->tgl_sirkulasi)->format('d M Y') }}</td>
-                                <td>{{$sb->users->nama_pegawai}}</td>
-                                <td>{{$sb->keterangan}}</td>
+                                <td id={{$key+1}}>{{$key+1}}</td>
+                                <td id={{$key+1}}>{{$sb->barangppr->nama_barang}}</td>
+                                <td id={{$key+1}}>{{$sb->jumlah}}</td>
+                                <td id={{$key+1}}>{{$sb->jenis_sirkulasi}}</td>
+                                <td id={{$key+1}}>{{ \Carbon\Carbon::parse($sb->tgl_sirkulasi)->format('d M Y') }}</td>
+                                <td id={{$key+1}}>{{$sb->users->nama_pegawai}}</td>
+                                <td id={{$key+1}}>{{$sb->keterangan}}</td>
                             </tr>
                             @endforeach
                         </tbody>

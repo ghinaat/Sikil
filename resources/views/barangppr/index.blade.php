@@ -32,11 +32,11 @@
                         <tbody>
                             @foreach($barangppr as $key => $bp)
                             <tr>
-                                <td>{{$key+1}}</td>
-                                <td>{{$bp->nama_barang}}</td>
-                                <td>{{$bp->tahun_pembuatan}}</td>
-                                <td>{{$bp->jumlah}}</td>
-                                <td>{{$bp->keterangan}}</td>
+                                <td id={{$key+1}}>{{$key+1}}</td>
+                                <td id={{$key+1}}>{{$bp->nama_barang}}</td>
+                                <td id={{$key+1}}>{{$bp->tahun_pembuatan}}</td>
+                                <td id={{$key+1}}>{{$bp->jumlah}}</td>
+                                <td id={{$key+1}}>{{$bp->keterangan}}</td>
                                 @can('isAdmin')
                                 <td>
                                     <div class="btn-group">
