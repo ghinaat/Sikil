@@ -418,6 +418,17 @@ return [
 			'can' => 'isAdmin',
         ],
         [
+            'icon' => 'fas fa-link',
+            'text' => 'Pengajuan',
+			'submenu' => [
+                [
+                    'text' => 'Zoom Meeting',
+                    'url' => '/ajuanzoom',
+                    'can' => '',
+                ],
+            ]
+        ],
+        [
             'icon' => 'fas fa-box',
             'text' => 'Inventaris TIK & PPR',
             'submenu' => [

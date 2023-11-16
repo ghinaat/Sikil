@@ -19,6 +19,7 @@ use App\Http\Controllers\PengalamanKerjaController;
 use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PengajuanZoomController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\BarangPprController;
 use App\Http\Controllers\SirkulasiBarangController;
@@ -267,6 +268,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/sirkulasibarang/{id_sirkulasi_barang}', [SirkulasiBarangController::class, 'destroy'])->name('sirkulasibarang.destroy');
 });
 
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/ajuansinglelink', [PengajuanSingleLinkController::class, 'index'])->name('ajuansinglelink.index');
     Route::post('/ajuansinglelink', [PengajuanSingleLinkController::class, 'store'])->name('ajuansinglelink.store');
@@ -274,3 +276,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/ajuansinglelink/update/{id_pengajuan_singlelink}', [PengajuanSingleLinkController::class, 'update'])->name('ajuansinglelink.update');
     Route::delete('/ajuansinglelink/{id_pengajuan_singlelink}', [PengajuanSingleLinkController::class, 'destroy'])->name('ajuansinglelink.destroy');
 });
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/ajuanzoom', [PengajuanZoomController::class, 'index'])->name('ajuanzoom.index');
+    Route::post('/ajuanzoom', [PengajuanZoomController::class, 'store'])->name('ajuanzoom.store');
+    Route::put('/ajuanzoom/update/{id_pengajuan_zoom}', [PengajuanZoomController::class, 'update'])->name('ajuanzoom.update');
+    Route::delete('/ajuanzoom/{id_pengajuan_zoom}', [PengajuanZoomController::class, 'destroy'])->name('ajuanzoom.destroy');
+    Route::get('/ajuanzoom/{id_pengajuan_zoom}', [PengajuanZoomController::class, 'show'])->name('ajuanzoom.show');
+});
+

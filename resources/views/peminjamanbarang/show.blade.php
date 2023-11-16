@@ -64,7 +64,7 @@
                 <div class="table-container">
                     <div class="table-responsive">
                         @if($peminjaman->status == "belum_diajukan")
-                        <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form">Add</button>
+                        <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form">Tambah Barang</button>
                         <a href= "{{route('peminjaman.notifikasi',$peminjaman->id_peminjaman)}}" onclick="notificationPengajuan(event, this)"
                             class="btn btn-success mb-2">
                             <i class="fa fa-phone" aria-hidden="true"></i> &nbsp; Ajukan
@@ -102,6 +102,7 @@
                                     <td>
                                        <div class="btn-group">
                                          @if($dpj->status == null)
+
                                             @if(auth()->user()->level != 'admin')
                                                 @if($peminjaman->status == 'diajukan')
                                                     <i class="fas fa-check-circle  fa-2x" style="color: #42e619; align-items: center;"></i>
@@ -114,7 +115,7 @@
                                                     &nbsp;
                                                 @endif
                                             @else
-                                                @if($peminjaman->status == 'diajukan')
+                                               
                                                 <a href="{{ route('peminjaman.destroyDetail', $dpj->id_detail_peminjaman) }}"
                                                         onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
                                                         class="btn btn-danger btn-xs">
@@ -128,7 +129,8 @@
                                                             <i class="fa fa-edit"></i>
                                                         </a>
                                                     @endcan
-                                                @endif
+                                                    
+                                                
                                             @endif
                                          
                                             @elseif($dpj->status == 'dipinjam')
@@ -213,7 +215,7 @@
                                         @endphp
 
                                         @if($item->detailPeminjaman->where('id_barang_tik', $item->id_barang_tik)->first() && $item->detailPeminjaman->where('id_barang_tik', $item->id_barang_tik)->first()->status == 'dipinjam')
-                                        Sudah dipinjam
+                                        Sedang Dipinjam
                                             
                                         @elseif(!$isBarangSelected)
                                         <button type="button" class="btn btn-primary btn-xs"
@@ -222,7 +224,7 @@
                                                 Pilih
                                             </button>
                                         @else
-                                        Sudah dipilih 
+                                        Sudah Dipilih 
                                         @endif
                                        
                                         </td>
