@@ -421,17 +421,31 @@ return [
             'icon' => 'fas fa-link',
             'text' => 'Pengajuan',
 			'submenu' => [
+
                 [
                     'text' => 'Zoom Meeting',
                     'url' => '/ajuanzoom',
                     'can' => '',
                 ],
                 [
+
                     'text' => 'Single Link',
                     'url' => '/ajuansinglelink',
                     'can' => '',
                 ],           
             ]
+          
+                    'text' => 'Pengajuan Blast Email',
+                    'url' => '/ajuanblastemail',
+                    'can' => '',
+                ],  
+                [
+
+                    'text' => 'Single Link',
+                    'url' => '/ajuansinglelink',
+                    'can' => '',
+                ], 
+            ],
         ],
         [
             'icon' => 'fas fa-box',

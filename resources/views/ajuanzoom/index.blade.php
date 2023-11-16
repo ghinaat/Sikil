@@ -32,8 +32,8 @@
                             @endphp
                             @foreach($sortedZoom as $key => $pz)
                             <tr>
-                                <td>{{ $nomor }}</td>
-                                <td id="{{ $nomor }}">{{ \Carbon\Carbon::parse($pz->tgl_pengajuan)->format('d M Y') }}
+                                <td></td>
+                                <td id="">{{ \Carbon\Carbon::parse($pz->tgl_pengajuan)->format('d M Y') }}
                                 </td>
                                 <td>{{$pz->users->nama_pegawai}}</td>
                                 <td>{{$pz->nama_kegiatan}}</td>
@@ -185,7 +185,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Edit Peminjaman</h4>
+                <h4 class="modal-title" id="exampleModalLabel">Edit Pengajuan Zoom</h4>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -255,17 +255,19 @@
                     </div>
                     <div class="form-group">
                         <label for="tgl_pelaksanaan" class='form-label'>Waktu Pelaksanaan (WIB)</label>
-                        <div class="form-input-time">
+                        <div class="form-input">
+                        <div class="form-inline">
                             <input type="time" class="form-control @error('jam_mulai') is-invalid @enderror"
                                 id="jam_mulai" name="jam_mulai" value="{{ $pz->jam_mulai ?? old('jam_mulai')}}">
                             @error('jam_mulai') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                         <small><b>s/d</b></small>
-                        <div class="form-input-time" style="margin-left: 10px;">
+                        <div class="form-input">
                             <input type="time" class="form-control @error('jam_selesai') is-invalid @enderror"
                                 id="jam_selesai" name="jam_selesai" value="{{$pz->jam_selesai ?? old('jam_selesai')}}">
                             @error('jam_selesai') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
+                    </div>
                     </div>
                     <div class="form-group">
                         <label for="keterangan_pemohon" class='form-label'>Keterangan Tambahan</label>
@@ -329,7 +331,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="keterangan_operator" class='form-label'>Keterangan Tambahan</label>
+                        <label for="keterangan_operator" class='form-label'>Keterangan Operator</label>
                         <div class="form-input">
                             <input type="text" class="form-control @error('keterangan_operator') is-invalid @enderror"
                                 id="keterangan_operator" name="keterangan_operator"
@@ -359,11 +361,17 @@
     @csrf
 </form>
 <script>
-$('#example2').DataTable({
-    "responsive": true,
-    "order": [
-        [1, 'desc']
-    ] // Sort by the second column (index 1) in descending order
+$(document).ready(function() {
+    var table = $('#example2').DataTable({
+        "responsive": true,
+        "order": [[1, 'desc']]
+    });
+
+    table.on('order.dt search.dt', function() {
+        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function(cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
 });
 
 function notificationBeforeDelete(event, el) {

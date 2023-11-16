@@ -15,6 +15,7 @@ use App\Http\Controllers\KeluargaController;
 use App\Http\Controllers\LemburController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\PendidikanController;
+use App\Http\Controllers\PengajuanBlastemailController;
 use App\Http\Controllers\PengalamanKerjaController;
 use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\PresensiController;
@@ -270,6 +271,15 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('/ajuanblastemail', [PengajuanBlastemailController::class, 'index'])->name('ajuanblastemail.index');
+    Route::post('/ajuanblastemail', [PengajuanBlastemailController::class, 'store'])->name('ajuanblastemail.store');
+    Route::get('/ajuanblastemail/{id_pengajuan_blastemail}', [PengajuanBlastemailController::class, 'show'])->name('ajuanblastemail.show');
+    Route::put('/ajuanblastemail/update/{id_pengajuan_blastemail}', [PengajuanBlastemailController::class, 'update'])->name('ajuanblastemail.update');
+    Route::delete('/ajuanblastemail/{id_pengajuan_blastemail}', [PengajuanBlastemailController::class, 'destroy'])->name('ajuanblastemail.destroy');
+});
+
+
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/ajuansinglelink', [PengajuanSingleLinkController::class, 'index'])->name('ajuansinglelink.index');
     Route::post('/ajuansinglelink', [PengajuanSingleLinkController::class, 'store'])->name('ajuansinglelink.store');
     Route::get('/ajuansinglelink/{id_pengajuan_singlelink}', [PengajuanSingleLinkController::class, 'show'])->name('ajuansinglelink.show');
@@ -284,4 +294,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/ajuanzoom/{id_pengajuan_zoom}', [PengajuanZoomController::class, 'destroy'])->name('ajuanzoom.destroy');
     Route::get('/ajuanzoom/{id_pengajuan_zoom}', [PengajuanZoomController::class, 'show'])->name('ajuanzoom.show');
 });
+
 
