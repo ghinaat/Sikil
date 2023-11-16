@@ -418,6 +418,28 @@ return [
 			'can' => 'isAdmin',
         ],
         [
+            'icon' => 'fas fa-link',
+            'text' => 'Pengajuan',
+			'submenu' => [
+                [
+                    'text' => 'Zoom Meeting',
+                    'url' => '/ajuanzoom',
+                    'can' => '',
+                ],
+                [
+
+                    'text' => 'Pengajuan Blast Email',
+                    'url' => '/ajuanblastemail',
+                    'can' => '',
+                ],  
+
+                    'text' => 'Single Link',
+                    'url' => '/ajuansinglelink',
+                    'can' => '',
+                ], 
+            ]
+        ],
+        [
             'icon' => 'fas fa-box',
             'text' => 'Inventaris TIK & PPR',
             'submenu' => [
@@ -443,11 +465,8 @@ return [
                 ],   
             ],
         ],
-        [
-            'text' => 'Pengajuan Blast Email',
-            'url' => '/ajuanblastemail',
-            'can' => '',
-        ],  
+          
+
         [
             'icon' => 'fas fa-user-cog',
             'text' => 'Master Data',

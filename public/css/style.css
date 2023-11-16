@@ -19,6 +19,16 @@
     flex: 2;
 }
 
+.form-input-time input[type="time"] {
+    width: 225px; /* Sesuaikan lebar input field sesuai kebutuhan */
+    
+}
+
+.form-input-time {
+    margin-right: 10px; /* Optional: Sesuaikan margin antara dua input field */
+
+}
+
 .form-input.input-group {
     display: flex;
 }

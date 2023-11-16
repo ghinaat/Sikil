@@ -234,7 +234,7 @@ class LemburController extends Controller
         $notifikasiAdmin = User::where('level', 'admin')->first();
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Lembur ';
-        $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->pesan = 'Pengajuan Lembur dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
@@ -331,7 +331,7 @@ class LemburController extends Controller
         $notifikasiAdmin = User::where('level', 'admin')->first();
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Lembur ';
-        $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
+        $notifikasi->pesan = 'Pengajuan Lembur dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';

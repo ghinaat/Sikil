@@ -112,10 +112,24 @@ class User extends Authenticatable
         return $this->hasMany(PeminjamanBarang::class, 'id_users', 'id_users');
     }
 
+
     public function pengajualBlastemail()
     {
         return $this->hasMany(PengajuanBlastemail::class, 'id_users', 'id_users');
     }
+
+
+    public function ajuansinglelink()
+    {
+        return $this->hasMany(PengajuanSingleLink::class, 'id_users', 'id_users');
+
+    public function zoom()
+    {
+        return $this->hasMany(PengajuanZoom::class, 'id_users', 'id_users');
+
+    }
+
+
     protected $primaryKey = 'id_users';
 
     /**

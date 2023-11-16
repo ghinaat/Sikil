@@ -4,7 +4,7 @@
 <style>
 /* Gaya umum */
 </style>
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/show.css') }}">
 <h1 class="m-0 text-dark">Detail Kegiatan</h1>
 @stop
 @section('content')
@@ -48,9 +48,9 @@
                 <div class="table-container">
                     <div class="table-responsive">
                         @can('isAdmin')
-                        <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form">Add</button>
+                        <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form">Tambah</button>
                         @endcan
-                        <table class="table table-hover table-bordered table-stripped">
+                        <table class="table table-hover table-bordered table-stripped" id="example3">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -73,7 +73,7 @@
                                     <td> <a href="{{route('timkegiatan.destroy', $tk->id_tim)}}"
                                             onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
                                             class="btn btn-danger btn-xs">
-                                            Delete
+                                            Hapus
                                         </a></td>
                                     @endcan
                                 </tr>
@@ -242,8 +242,16 @@
     @method('delete')
     @csrf
 </form>
+
 <script>
+    
 $('#example2').DataTable({
+    "responsive": true,
+});
+</script>
+<script>
+    
+$('#example3').DataTable({
     "responsive": true,
 });
 </script>
