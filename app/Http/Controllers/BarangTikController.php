@@ -24,7 +24,7 @@ class BarangTikController extends Controller
         $detail = DetailPeminjamanBarang::where('id_barang_tik', $barang->id_barang_tik)->first();
         $detailPeminjaman->push($detail);
     }
-    // dd($detailPeminjaman);
+
     return view('barangtik.index', [
         'barangTik' => $barangTik,
         'ruangan' => $ruangan,

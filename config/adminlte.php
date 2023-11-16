@@ -426,6 +426,17 @@ return [
                     'url' => '/ajuanzoom',
                     'can' => '',
                 ],
+                [
+
+                    'text' => 'Pengajuan Blast Email',
+                    'url' => '/ajuanblastemail',
+                    'can' => '',
+                ],  
+
+                    'text' => 'Single Link',
+                    'url' => '/ajuansinglelink',
+                    'can' => '',
+                ], 
             ]
         ],
         [
@@ -454,11 +465,8 @@ return [
                 ],   
             ],
         ],
-        [
-            'text' => 'Single Link',
-            'url' => '/ajuansinglelink',
-            'can' => '',
-        ],   
+          
+
         [
             'icon' => 'fas fa-user-cog',
             'text' => 'Master Data',
