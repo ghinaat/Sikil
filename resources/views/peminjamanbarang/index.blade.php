@@ -223,6 +223,9 @@
                             <div class="form-input">
                                 <select class="form-select @error('status') is-invalid @enderror" id="status"
                                     name="status">
+                                    <option value="belum_diajukan" @if($pj->status == 'belum_diajukan' ||
+                                        old('status')=='belum_diajukan' )selected
+                                        @endif>Belum Diajukan</option>
                                     <option value="diajukan" @if($pj->status == 'diajukan' ||
                                         old('status')=='diajukan' )selected
                                         @endif>Diajukan</option>
