@@ -429,6 +429,12 @@ return [
                 ],
                 [
 
+                    'text' => 'Single Link',
+                    'url' => '/ajuansinglelink',
+                    'can' => '',
+                ],           
+            ]
+          
                     'text' => 'Pengajuan Blast Email',
                     'url' => '/ajuanblastemail',
                     'can' => '',
@@ -467,8 +473,6 @@ return [
                 ],   
             ],
         ],
-          
-
         [
             'icon' => 'fas fa-user-cog',
             'text' => 'Master Data',
