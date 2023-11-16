@@ -34,8 +34,8 @@
                             @endphp
                             @foreach($sortedPeminjaman as $key => $pj)
                             <tr>
-                                <td >{{ $nomor }}</td>
-                                <td id="{{ $nomor }}">{{ \Carbon\Carbon::parse($pj->tgl_peminjaman)->format('d M Y') }}</td>
+                                <td ></td>
+                                <td >{{ \Carbon\Carbon::parse($pj->tgl_peminjaman)->format('d M Y') }}</td>
                                 <td>{{$pj->kegiatan}}</td>
                                 <td>{{$pj->users->nama_pegawai}}</td>
                                 <td>@if($pj->status == 'belum_diajukan')
@@ -279,10 +279,20 @@
     @csrf
 </form>
 <script>
-$('#example2').DataTable({
-    "responsive": true,
-    "order": [[1, 'desc']] // Sort by the second column (index 1) in descending order
+$(document).ready(function() {
+    var table = $('#example2').DataTable({
+        "responsive": true,
+        "order": [[1, 'desc']]
+    });
+
+    table.on('order.dt search.dt', function() {
+        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function(cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
 });
+
+
 function notificationBeforeDelete(event, el) {
     event.preventDefault();
     if (confirm('Apakah anda yakin akan menghapus data ? ')) {
