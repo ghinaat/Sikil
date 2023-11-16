@@ -444,6 +444,11 @@ return [
             ],
         ],
         [
+            'text' => 'Single Link',
+            'url' => '/ajuansinglelink',
+            'can' => '',
+        ],   
+        [
             'icon' => 'fas fa-user-cog',
             'text' => 'Master Data',
             'can' => 'isAdmin',

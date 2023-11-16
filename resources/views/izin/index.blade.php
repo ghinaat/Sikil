@@ -8,7 +8,6 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-
                 <form action="{{ route('ajuanperizinan.index') }}" method="GET" class="form-inline mb-3">
                     <div class="col-md-12">
                         <div class="form-group mb-2">
