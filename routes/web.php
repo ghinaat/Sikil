@@ -15,6 +15,7 @@ use App\Http\Controllers\KeluargaController;
 use App\Http\Controllers\LemburController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\PendidikanController;
+use App\Http\Controllers\PengajuanBlastemailController;
 use App\Http\Controllers\PengalamanKerjaController;
 use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\PresensiController;
@@ -264,4 +265,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/sirkulasibarang/{id_sirkulasi_barang}', [SirkulasiBarangController::class, 'show'])->name('sirkulasibarang.show');
     Route::put('/sirkulasibarang/update/{id_sirkulasi_barang}', [SirkulasiBarangController::class, 'update'])->name('sirkulasibarang.update');
     Route::delete('/sirkulasibarang/{id_sirkulasi_barang}', [SirkulasiBarangController::class, 'destroy'])->name('sirkulasibarang.destroy');
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/ajuanblastemail', [PengajuanBlastemailController::class, 'index'])->name('ajuanblastemail.index');
+    Route::post('/ajuanblastemail', [PengajuanBlastemailController::class, 'store'])->name('ajuanblastemail.store');
+    Route::get('/ajuanblastemail/{id_pengajuan_blastemail}', [PengajuanBlastemailController::class, 'show'])->name('ajuanblastemail.show');
+    Route::put('/ajuanblastemail/update/{id_pengajuan_blastemail}', [PengajuanBlastemailController::class, 'update'])->name('ajuanblastemail.update');
+    Route::delete('/ajuanblastemail/{id_pengajuan_blastemail}', [PengajuanBlastemailController::class, 'destroy'])->name('ajuanblastemail.destroy');
 });

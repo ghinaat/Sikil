@@ -45,20 +45,19 @@
                                     <td id={{$key+1}}>{{$bt->jenis_aset}}</td>
                                     <td id={{$key+1}}>{{$bt->ruangan->nama_ruangan}}</td>
                                     <td id={{$key+1}}>
-                                        @php
-                                        $detailPeminjamanBarang = $detailPeminjaman->where('id_barang_tik', $bt->id_barang_tik)->first();
+                                       @php
+                                            $detail = $detailPeminjaman->where('id_barang_tik', $bt->id_barang_tik)->first();
                                         @endphp
-
-                                        @if ($detailPeminjamanBarang)
-                                            @if ($detailPeminjamanBarang->status == 'dipinjam')
-                                                <p>Dipinjam</p>
-                                            @elseif ($detailPeminjamanBarang->status == 'dikembalikan')
-                                                <p>Ada</p>
+                                        @if ($detail)
+                                             @if ($detail->status == 'dipinjam')
+                                                Dipinjam
+                                             @elseif($detail->status == 'dikembalikan')
+                                                Ada
                                             @else
-                                                <p>Ada</p>
-                                            @endif
+                                                Ada
+                                             @endif
                                         @else
-                                            <p>Ada</p>
+                                            Ada
                                         @endif
                                     <td>
                                         <div class="btn-group">
@@ -198,11 +197,12 @@
                         @error('keterangan') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>    
-                    <div class="form-group">
+                    <div class="form-group-page">
                         <label for="image" class="form-label">Image</label>
                         <div class="form-input">
                             <input type="file" class="form-control @error('image') is-invalid @enderror"
                             id="image" name="image" accept="image/jpg, image/jpeg, image/png">
+                            <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png </small>
                         @error('image') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -222,7 +222,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Edit Data Ruangan</h4>
+                <h4 class="modal-title" id="exampleModalLabel">Edit Data Barang Tik</h4>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -323,22 +323,16 @@
                         @error('keterangan') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>    
-                    <div class="form-group mb-0">
+                    <div class="form-group-page">
                         <label for="image" class="form-label">Image</label>
                         <div class="form-input">
                             <input type="file" class="form-control @error('image') is-invalid @enderror"
                             id="image" name="image" accept="image/jpg, image/jpeg, image/png">
-                        @error('image') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="image" class="form-label">&nbsp;</label>
-                        <div class="form-input">
-                            <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png</small>
                             @if($bt->image)
                             <p>Previous File: <a href="{{ asset('/storage/imageTIK/'. $bt->image) }}"
                                 target="_blank">{{ $bt->image }}</a></p>
                             @endif
+                        @error('image') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="modal-footer">  

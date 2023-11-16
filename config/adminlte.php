@@ -444,6 +444,11 @@ return [
             ],
         ],
         [
+            'text' => 'Pengajuan Blast Email',
+            'url' => '/ajuanblastemail',
+            'can' => '',
+        ],  
+        [
             'icon' => 'fas fa-user-cog',
             'text' => 'Master Data',
             'can' => 'isAdmin',

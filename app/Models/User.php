@@ -112,6 +112,10 @@ class User extends Authenticatable
         return $this->hasMany(PeminjamanBarang::class, 'id_users', 'id_users');
     }
 
+    public function pengajualBlastemail()
+    {
+        return $this->hasMany(PengajuanBlastemail::class, 'id_users', 'id_users');
+    }
     protected $primaryKey = 'id_users';
 
     /**
