@@ -466,8 +466,6 @@ return [
                 ],   
             ],
         ],
-          
-
         [
             'icon' => 'fas fa-user-cog',
             'text' => 'Master Data',

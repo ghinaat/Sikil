@@ -82,7 +82,7 @@ class PengajuanSingleLinkController extends Controller
             $notifikasiKadiv = User::where('id_jabatan', '8')->first();
             $notifikasi = new Notifikasi();
             $notifikasi->judul = 'Pengajuan Single Link';
-            $notifikasi->pesan =  'Pengajuan Single Link dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara menyiapkan barang peminjaman.'; 
+            $notifikasi->pesan =  'Pengajuan Single Link dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara menyiapkan single link.'; 
             $notifikasi->is_dibaca = 'tidak_dibaca';
             $notifikasi->label = 'info';
             $notifikasi->link = '/ajuansinglelink';
@@ -93,7 +93,7 @@ class PengajuanSingleLinkController extends Controller
     
             $notifikasiAdmin = User::where('level', 'admin')->first();
             $notifikasi = new Notifikasi();
-            $notifikasi->judul = 'Pengajuan Single Link ';
+            $notifikasi->judul = 'Pengajuan Single Link';
             $notifikasi->pesan = 'Pengajuan Single Link dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
             $notifikasi->is_dibaca = 'tidak_dibaca';
             $notifikasi->send_email = 'no';
@@ -149,6 +149,19 @@ class PengajuanSingleLinkController extends Controller
         $ajuansinglelink->status =  $request->status;
         $ajuansinglelink->save();
 
+        if($ajuansinglelink->status == 'ready'){
+            $pengguna = User::where('id_users', $ajuansinglelink->id_users)->first();
+            $notifikasi = new Notifikasi();
+            $notifikasi->judul = 'Pengajuan Single Link';
+            $notifikasi->pesan = 'Pengajuan Single Link anda sudah dibuat. Silahkan cek detail pengajuan single link anda.';
+            $notifikasi->is_dibaca = 'tidak_dibaca';
+            $notifikasi->label = 'info';
+            $notifikasi->send_email = 'yes';
+            $notifikasi->link = '/ajuansinglelink';  
+            $notifikasi->id_users = $pengguna->id_users;
+            $notifikasi->save();
+        }
+
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
 
         } else {
@@ -165,17 +178,19 @@ class PengajuanSingleLinkController extends Controller
             $ajuansinglelink->keterangan_pemohon = $request->keterangan_pemohon;
             $ajuansinglelink->save();
 
-            $pengguna = User::where('id_users', $request->id_users)->first();
-            $notifikasi = new Notifikasi();
-            $notifikasi->judul = 'Pengajuan Single Link';
-            $notifikasi->pesan = 'Pengajuan Single link anda sudah berhasil dikirimkan. Kami telah mengirimkan notifikasi untuk memproses pengajuanmu.';
-            $notifikasi->is_dibaca = 'tidak_dibaca';
-            $notifikasi->send_email = 'yes';
-            $notifikasi->label = 'info';
-            $notifikasi->link = '/ajuansinglelink';
-            $notifikasi->id_users = $pengguna->id_users;
-            $notifikasi->save();
-
+            if($ajuansinglelink->status == 'ready'){
+                $pengguna = User::where('id_users', $ajuansinglelink->id_users)->first();
+                $notifikasi = new Notifikasi();
+                $notifikasi->judul = 'Pengajuan Single Link';
+                $notifikasi->pesan = 'Pengajuan Single Link anda sudah dibuat. Silahkan cek detail pengajuan single link anda.';
+                $notifikasi->is_dibaca = 'tidak_dibaca';
+                $notifikasi->label = 'info';
+                $notifikasi->send_email = 'yes';
+                $notifikasi->link = '/ajuansinglelink';  
+                $notifikasi->id_users = $pengguna->id_users;
+                $notifikasi->save();
+            }
+    
             return redirect()->back()->with('success_message', 'Data telah tersimpan.');
         }
     }
