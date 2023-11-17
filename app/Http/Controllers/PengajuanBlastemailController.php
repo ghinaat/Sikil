@@ -58,7 +58,7 @@ class PengajuanBlastemailController extends Controller
             'jenis_blast' => 'required',
             'nama_kegiatan' => 'required',
             'keterangan_pemohon' => 'required',
-            'lampiran' => 'required',
+            'lampiran' => 'required|mimes:doc,docx,xlsx,zip',
             
         ]);
         
@@ -141,11 +141,11 @@ class PengajuanBlastemailController extends Controller
             'jenis_blast' => 'required',
             'nama_kegiatan' => 'required',
             'keterangan_pemohon' => 'required',
-            'lampiran' => 'nullable|mimes:docx,xlsx,zip',
+            'lampiran' => 'nullable|mimes:doc,docx,xlsx,zip',
             'nama_operator' => 'required',
             'status' => 'required',
             'keterangan_operator'=> 'required',
-            'tgl_kirim' => 'required|date|after_or_equal:ajuanBlast.tgl_pengajuan',
+            'tgl_kirim' => 'required|date|after_or_equal:tgl_pengajuan',
 
         ]);
 
@@ -228,7 +228,9 @@ class PengajuanBlastemailController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id_pengajuan_blastemail)
+
+    public function destroy($id_pengajuan_blastemail)
+
     {
         $ajuanBlast = PengajuanBlastemail::find($id_pengajuan_blastemail);
         if($ajuanBlast){
@@ -238,7 +240,7 @@ class PengajuanBlastemailController extends Controller
         }
 
         return redirect()->back()->with('success_message', 'Data telah terhapus.');
-        }
+    }
     
         //
     

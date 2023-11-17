@@ -147,6 +147,7 @@
                             <input type="file" class="form-control @error('lampiran') is-invalid @enderror"
                             id="lampiran" name="lampiran" accept=".doc,.docx,.xlsx,.zip">
                             <small class="form-text text-muted">Allow file extensions : .doc .docx .xlsx .zip </small>
+
                         @error('lampiran') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -235,11 +236,11 @@
                         <label for="nama_operator" class="form-label">Nama Operator</label>
                         <div class="form-input">
                             <select id="nama_operator" name="nama_operator" class="form-select @error('nama_operator') is-invalid @enderror">
-                                <option value="Hana">Hana</option>
-                                <option value="Bayu">Bayu</option>
-                                <option value="Wendy" selected >Wendy</option>
-                                <option value="Siswa Magang">Siswa Magang</option>
-                                <option value="Lainnya">Lainnya</option>
+                                <option value="Hana" @if($email->nama_operator == 'Hana' || old('Hana') == 'Hana') selected @endif>Hana</option>
+                                <option value="Bayu"@if($email->nama_operator == 'Bayu' || old('Bayu') == 'Bayu') selected @endif>Bayu</option>
+                                <option value="Wendy" @if($email->nama_operator == 'Wendy' || old('Wendy') == 'Wendy') selected @endif>Wendy</option>
+                                <option value="Siswa Magang" @if($email->nama_operator == 'Siswa Magang' || old('Siswa Magang') == 'Siswa Magang') selected @endif>Siswa Magang</option>
+                                <option value="Lainnya" @if($email->nama_operator == 'Lainnya' || old('Lainnya') == 'Lainnya') selected @endif>Lainnya</option>
                             </select>
                         </div>
                         @error('kode_finger') <span class="textdanger">{{$message}}</span> @enderror
@@ -248,22 +249,24 @@
                         <label for="Status" class="form-label">Status</label>
                         <div class="form-input">
                             <div class="form-inline">
-                                <input type="radio" name="status" id="status" value="selesai" checked>&nbsp;Selesai&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                                <input type="radio" name="status" id="status" value="diajukan">&nbsp;Diajukan<br>
+                                <input type="radio" name="status" id="status" value="selesai"  @if ($email->status === 'selesai') checked @endif>&nbsp;Selesai&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                <input type="radio" name="status" id="status" value="diajukan" @if ($email->status === 'diajukan') checked @endif>&nbsp;Diajukan<br>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="tgl_kirim" class="form-label">Tanggal Kirim</label>
                         <div class="form-input">
-                            <input type="date" name="tgl_kirim" id="tgl_kirim" class="form-control" required>                            
+                            <input type="date" name="tgl_kirim" id="tgl_kirim" class="form-control @error('keterangan_operator') is-invalid @enderror"
+                            value="{{old('tgl_kirim', $email->tgl_kirim)}}" required>
+                            @error('tgl_kirim') <span class="text-danger">{{ $message }}</span> @enderror                            
                         </div>
                     </div>
                     <div class="form-group-page">
                         <label for="keterangan_operator" class="form-label">Keterangan Operator</label>
                         <div class="form-input">
                             <textarea rows="5" name="keterangan_operator" id="keterangan_operator" class="form-control 
-                            @error('keterangan_operator') is-invalid @enderror" required></textarea>
+                            @error('keterangan_operator') is-invalid @enderror" required>{{old('keterangan_operator', $email->keterangan_operator)}}</textarea>
                         @error('keterangan_operator') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -304,4 +307,14 @@ function notificationBeforeDelete(event, el) {
     }
 }
 </script>
+
+@if(count($errors))
+<script>
+Swal.fire({
+    title: 'Input tidak sesuai!',
+    text: 'Pastikan inputan sudah sesuai',
+    icon: 'error',
+});
+</script>
+@endif
 @endpush

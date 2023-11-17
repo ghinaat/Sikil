@@ -429,6 +429,7 @@ return [
                 ],
                 [
 
+
                     'text' => 'Single Link',
                     'url' => '/ajuansinglelink',
                     'can' => '',
