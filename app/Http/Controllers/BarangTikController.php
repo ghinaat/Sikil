@@ -18,13 +18,22 @@ class BarangTikController extends Controller
     $barangTik = BarangTik::where('is_deleted', '0')->get();
     $ruangan = Ruangan::where('is_deleted', '0')->get();
 
+    // Kumpulkan detail peminjaman untuk setiap barang
     $detailPeminjaman = collect();
 
     foreach ($barangTik as $barang) {
-        $detail = DetailPeminjamanBarang::where('id_barang_tik', $barang->id_barang_tik)->first();
-        $detailPeminjaman->push($detail);
-    }
+        // Ambil semua detail peminjaman terkait dengan barang ini
+        $details = DetailPeminjamanBarang::where('id_barang_tik', $barang->id_barang_tik)->get();
 
+        // Ambil hanya satu detail peminjaman dengan status 'dipinjam'
+        $dipinjamDetail = $details->firstWhere('status', 'dipinjam');
+
+        // Jika ada yang dipinjam, masukkan ke dalam koleksi
+        if ($dipinjamDetail) {
+            $detailPeminjaman->push($dipinjamDetail);
+        }
+    }
+    // dd($detailPeminjaman);
     return view('barangtik.index', [
         'barangTik' => $barangTik,
         'ruangan' => $ruangan,
