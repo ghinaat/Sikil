@@ -146,7 +146,8 @@
                         <div class="form-input">
                             <input type="file" class="form-control @error('lampiran') is-invalid @enderror"
                             id="lampiran" name="lampiran" accept=".doc,.docx,.xlsx,.zip">
-                            <small class="form-text text-muted">Allow file extensions : .docx .xlsx .zip </small>
+                            <small class="form-text text-muted">Allow file extensions : .doc .docx .xlsx .zip </small>
+
                         @error('lampiran') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -221,8 +222,8 @@
                         <label for="lampiran" class="form-label">Lampiran Dokumen</label>
                         <div class="form-input">
                             <input type="file" class="form-control @error('lampiran') is-invalid @enderror"
-                            id="lampiran" name="lampiran" accept=".docx,.doc,.xlsx,.zip">
-                            <small class="form-text text-muted">Allow file extensions : .docx .xlsx .zip</small>
+                            id="lampiran" name="lampiran" accept=".doc,.docx,.xlsx,.zip">
+                            <small class="form-text text-muted">Allow file extensions : .doc .docx .xlsx .zip</small>
                             Previous File: 
                                 <a href="{{ asset('/storage/lampiran_blast_email/'. $email->lampiran) }}"
                                 target="_blank">{{ $email->lampiran }}</a>

@@ -37,7 +37,7 @@
                 <div class="form-group">
                     <label for="kelengkapan" class="form-label">Lampiran Dokumen</label>
                     <div class="form-input">
-                        : &nbsp;<a href="{{ asset('/storage/lampiran_blast_email/'. $BlastEmail->lampiran) }}" download>
+                        : &nbsp;&nbsp;<a href="{{ asset('/storage/lampiran_blast_email/'. $BlastEmail->lampiran) }}" download>
                                     <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
                                 </a>
                     </div>
@@ -49,7 +49,7 @@
                             @if($BlastEmail->status == 'diajukan')
                             : Diajukan
                             @else
-                            : Diajukan
+                            : Selesai
                             @endif
                         @else
                         :&nbsp;-
@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="status_pinjam" class="form-label">Keterangan Operator</label>
+                    <label for="status_pinjam" class="form-label" >Keterangan Operator</label>
                     <div class="form-input" style="margin-right: 10px;">
                         @if($BlastEmail->keterangan_operator)
                         <span style="margin-right: 6px;">:</span>

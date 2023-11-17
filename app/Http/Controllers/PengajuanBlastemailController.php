@@ -228,7 +228,9 @@ class PengajuanBlastemailController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy($id_pengajuan_blastemail)
+
     {
         $ajuanBlast = PengajuanBlastemail::find($id_pengajuan_blastemail);
         if($ajuanBlast){
