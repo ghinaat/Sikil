@@ -45,17 +45,16 @@
                                     <td id={{$key+1}}>{{$bt->jenis_aset}}</td>
                                     <td id={{$key+1}}>{{$bt->ruangan->nama_ruangan}}</td>
                                     <td id={{$key+1}}>
-                                       @php
-                                            $detail = $detailPeminjaman->where('id_barang_tik', $bt->id_barang_tik)->first();
+                                        @php
+                                            // Ambil detail peminjaman untuk barang ini
+                                            $detail = $detailPeminjaman->firstWhere('id_barang_tik', $bt->id_barang_tik);
                                         @endphp
-                                        @if ($detail)
-                                             @if ($detail->status == 'dipinjam')
-                                                Dipinjam
-                                             @elseif($detail->status == 'dikembalikan')
-                                                Ada
-                                            @else
-                                                Ada
-                                             @endif
+                                            @if ($detail)
+                                                @if ($detail->status == 'dipinjam')
+                                                    Dipinjam
+                                                @else
+                                                    Ada              
+                                                @endif
                                         @else
                                             Ada
                                         @endif

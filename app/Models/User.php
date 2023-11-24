@@ -113,7 +113,7 @@ class User extends Authenticatable
     }
 
 
-    public function pengajualBlastemail()
+    public function blastemail()
     {
         return $this->hasMany(PengajuanBlastemail::class, 'id_users', 'id_users');
     }
@@ -123,9 +123,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(PengajuanSingleLink::class, 'id_users', 'id_users');
     }
-
     
-
     public function zoom()
     {
         return $this->hasMany(PengajuanZoom::class, 'id_users', 'id_users');

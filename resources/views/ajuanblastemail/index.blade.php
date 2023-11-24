@@ -50,42 +50,20 @@
                                         @endif
                                     <td>
                                         <div class="btn-group">
-                                            @if(auth()->user()->level == 'admin' ) 
-                                                <a href="{{ route('ajuanblastemail' . '.show', $email->id_pengajuan_blastemail) }}" class="btn btn-info btn-xs">
-                                                    <i class="fa fa-info-circle"></i>
+                                            <a href="{{ route('ajuanblastemail' . '.show', $email->id_pengajuan_blastemail)}}" class="btn btn-info btn-xs mx-1">
+                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                            </a>
+    
+                                            @if(auth()->user()->level === 'admin' || (auth()->user()->id_users == $email->id_users && $email->status !== 'selesai'))
+                                                <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal" data-target="#editModal{{$email->id_pengajuan_blastemail}}" data-id="{{$email->id_pengajuan_blastemail}}">
+                                                    <i class="fa fa-edit"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-primary btn-xs edit-button mx-1" data-toggle="modal"
-                                                        data-target="#editModal{{$email->id_pengajuan_blastemail}}"
-                                                        data-id="{{$email->id_pengajuan_blastemail}}">
-                                                        <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="{{route('ajuanblastemail.destroy', $email->id_pengajuan_blastemail)}}"
-                                                    onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                                    class="btn btn-danger btn-xs">
+                                                <a href="{{ route('ajuanblastemail' . '.destroy',$email->id_pengajuan_blastemail) }}" onclick="notificationBeforeDelete(event, this, {{$key+1}})" class="btn btn-danger btn-xs mx-1">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
-                                            @else
-                                                @if($email->status == 'diajukan')
-                                                    <a href="{{ route('ajuanblastemail' . '.show', $email->id_pengajuan_blastemail) }}" class="btn btn-info btn-xs">
-                                                        <i class="fa fa-info-circle"></i>
-                                                    </a>
-                                                    <a href="#" class="btn btn-primary btn-xs edit-button mx-1" data-toggle="modal"
-                                                            data-target="#editModal{{$email->id_pengajuan_blastemail}}"
-                                                            data-id="{{$email->id_pengajuan_blastemail}}">
-                                                            <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <a href="{{route('ajuanblastemail.destroy', $email->id_pengajuan_blastemail)}}"
-                                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                                        class="btn btn-danger btn-xs">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                @else
-                                                    <a href="{{ route('ajuanblastemail' . '.show', $email->id_pengajuan_blastemail) }}" class="btn btn-info btn-xs">
-                                                        <i class="fa fa-info-circle"></i>
-                                                    </a>
-                                                @endif
                                             @endif
                                         </div>
+    
                                     </td>
                                 </tr>
                                 @php
@@ -133,7 +111,7 @@
                         @error('nama_kegiatan') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
-                    <div class="form-group-page">
+                    <div class="form-group" style="align-items: flex-start;">
                         <label for="keterangan_pemohon" class="form-label">Keterangan</label>
                         <div class="form-input">
                             <textarea rows="5" name="keterangan_pemohon" id="keterangan_pemohon" class="form-control 
@@ -141,12 +119,13 @@
                         @error('keterangan_pemohon') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div> 
-                    <div class="form-group-page">
+                    <div class="form-group" style="align-items: flex-start;">
                         <label for="lampiran" class="form-label">Lampiran Dokumen</label>
                         <div class="form-input">
                             <input type="file" class="form-control @error('lampiran') is-invalid @enderror"
-                            id="lampiran" name="lampiran" accept="aplication/docx, aplication/xlsx, aplication/zip">
-                            <small class="form-text text-muted">Allow file extensions : .docx .xlsx .zip </small>
+                            id="lampiran" name="lampiran" accept=".doc,.docx,.xlsx,.zip">
+                            <small class="form-text text-muted">Allow file extensions : .doc .docx .xlsx .zip </small>
+
                         @error('lampiran') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -209,7 +188,7 @@
                         @error('nama_kegiatan') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
-                    <div class="form-group-page">
+                    <div class="form-group" style="align-items: flex-start;">
                         <label for="keterangan_pemohon" class="form-label">Keterangan</label>
                         <div class="form-input">
                             <textarea rows="5" name="keterangan_pemohon" id="keterangan_pemohon" class="form-control 
@@ -217,12 +196,12 @@
                         @error('keterangan_pemohon') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div> 
-                    <div class="form-group-page">
+                    <div class="form-group" style="align-items: flex-start;">
                         <label for="lampiran" class="form-label">Lampiran Dokumen</label>
                         <div class="form-input">
                             <input type="file" class="form-control @error('lampiran') is-invalid @enderror"
-                            id="lampiran" name="lampiran" accept="aplication/docx, aplication/xlsx, aplication/zip, ">
-                            <small class="form-text text-muted">Allow file extensions : .docx .xlsx .zip</small>
+                            id="lampiran" name="lampiran" accept=".doc,.docx,.xlsx,.zip">
+                            <small class="form-text text-muted">Allow file extensions : .doc .docx .xlsx .zip</small>
                             Previous File: 
                                 <a href="{{ asset('/storage/lampiran_blast_email/'. $email->lampiran) }}"
                                 target="_blank">{{ $email->lampiran }}</a>
@@ -235,11 +214,11 @@
                         <label for="nama_operator" class="form-label">Nama Operator</label>
                         <div class="form-input">
                             <select id="nama_operator" name="nama_operator" class="form-select @error('nama_operator') is-invalid @enderror">
-                                <option value="Hana">Hana</option>
-                                <option value="Bayu">Bayu</option>
-                                <option value="Wendy" selected >Wendy</option>
-                                <option value="Siswa Magang">Siswa Magang</option>
-                                <option value="Lainnya">Lainnya</option>
+                                <option value="Hana" @if($email->nama_operator == 'Hana' || old('Hana') == 'Hana') selected @endif>Hana</option>
+                                <option value="Bayu"@if($email->nama_operator == 'Bayu' || old('Bayu') == 'Bayu') selected @endif>Bayu</option>
+                                <option value="Wendy" @if($email->nama_operator == 'Wendy' || old('Wendy') == 'Wendy') selected @endif>Wendy</option>
+                                <option value="Siswa Magang" @if($email->nama_operator == 'Siswa Magang' || old('Siswa Magang') == 'Siswa Magang') selected @endif>Siswa Magang</option>
+                                <option value="Lainnya" @if($email->nama_operator == 'Lainnya' || old('Lainnya') == 'Lainnya') selected @endif>Lainnya</option>
                             </select>
                         </div>
                         @error('kode_finger') <span class="textdanger">{{$message}}</span> @enderror
@@ -248,22 +227,24 @@
                         <label for="Status" class="form-label">Status</label>
                         <div class="form-input">
                             <div class="form-inline">
-                                <input type="radio" name="status" id="status" value="selesai" checked>&nbsp;Selesai&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                                <input type="radio" name="status" id="status" value="diajukan">&nbsp;Diajukan<br>
+                                <input type="radio" name="status" id="status" value="diajukan" @if ($email->status === 'diajukan') checked @endif>&nbsp;Diajukan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                <input type="radio" name="status" id="status" value="selesai"  @if ($email->status === 'selesai') checked @endif>&nbsp;Selesai<br>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="tgl_kirim" class="form-label">Tanggal Kirim</label>
                         <div class="form-input">
-                            <input type="date" name="tgl_kirim" id="tgl_kirim" class="form-control" required>                            
+                            <input type="date" name="tgl_kirim" id="tgl_kirim" class="form-control @error('keterangan_operator') is-invalid @enderror"
+                            value="{{old('tgl_kirim', $email->tgl_kirim)}}" required>
+                            @error('tgl_kirim') <span class="text-danger">{{ $message }}</span> @enderror                            
                         </div>
                     </div>
-                    <div class="form-group-page">
+                    <div class="form-group" style="align-items: flex-start;">
                         <label for="keterangan_operator" class="form-label">Keterangan Operator</label>
                         <div class="form-input">
                             <textarea rows="5" name="keterangan_operator" id="keterangan_operator" class="form-control 
-                            @error('keterangan_operator') is-invalid @enderror" required></textarea>
+                            @error('keterangan_operator') is-invalid @enderror" required>{{old('keterangan_operator', $email->keterangan_operator)}}</textarea>
                         @error('keterangan_operator') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -304,4 +285,14 @@ function notificationBeforeDelete(event, el) {
     }
 }
 </script>
+
+@if(count($errors))
+<script>
+Swal.fire({
+    title: 'Input tidak sesuai!',
+    text: 'Pastikan inputan sudah sesuai',
+    icon: 'error',
+});
+</script>
+@endif
 @endpush

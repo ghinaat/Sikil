@@ -17,17 +17,10 @@ class PengajuanBlastemailController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        if (auth()->user()->level == 'kadiv' && auth()->user()->id_jabatan == '8' ) {
-            $BlastEmail = PengajuanBlastemail::where('is_deleted', '0')->get();
-        } elseif(auth()->user()->level == 'admin' ) {
-            $BlastEmail = PengajuanBlastemail::where('is_deleted', '0')->get();
-        }else{
-            $BlastEmail = PengajuanBlastemail::where('is_deleted', '0')->whereIn('id_users', $user->pengajualBlastemail->pluck('id_users'))->get();
-        }        
+        $BlastEmail = PengajuanBlastemail::where('is_deleted', '0')->get();
         
         return view('ajuanblastemail.index', [
-            'BlastEmail' => $BlastEmail
+            'BlastEmail' => $BlastEmail,
         ]);
     }
     public function show($id_pengajuan_blastemail)
@@ -58,7 +51,7 @@ class PengajuanBlastemailController extends Controller
             'jenis_blast' => 'required',
             'nama_kegiatan' => 'required',
             'keterangan_pemohon' => 'required',
-            'lampiran' => 'required',
+            'lampiran' => 'required|mimes:doc,docx,xlsx,zip',
             
         ]);
         
@@ -92,7 +85,10 @@ class PengajuanBlastemailController extends Controller
         $notifikasi->id_users = $pengguna->id_users;
         $notifikasi->save();
 
-        $notifikasiKadiv = User::where('id_jabatan', '8')->first();
+        $notifikasiKadiv = User::where('id_jabatan', '8')->get();
+
+
+        foreach($notifikasiKadiv as $nk){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Blast Email';
         $notifikasi->pesan =  'Pengajuan blast email '.$jenisBlast.' dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara mengirimkan blast email.'; 
@@ -100,10 +96,13 @@ class PengajuanBlastemailController extends Controller
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanblastemail';
         $notifikasi->send_email = 'yes';
-        $notifikasi->id_users = $notifikasiKadiv->id_users;
+        $notifikasi->id_users = $nk->id_users;
         $notifikasi->save();
+        } 
 
-        $notifikasiAdmin = User::where('level', 'admin')->first();
+        $notifikasiAdmin = User::where('level', 'admin')->get();
+        
+        foreach($notifikasiAdmin as $na){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Blast Email';
         $notifikasi->pesan =  'Pengajuan blast email '.$jenisBlast.' dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara mengirimkan blast email.'; 
@@ -111,10 +110,10 @@ class PengajuanBlastemailController extends Controller
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanblastemail';
         $notifikasi->send_email = 'no';
-        $notifikasi->id_users = $notifikasiAdmin->id_users;
+        $notifikasi->id_users = $na->id_users;
         $notifikasi->save();
+        }
        
-
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
 
     }
@@ -141,11 +140,11 @@ class PengajuanBlastemailController extends Controller
             'jenis_blast' => 'required',
             'nama_kegiatan' => 'required',
             'keterangan_pemohon' => 'required',
-            'lampiran' => 'nullable|mimes:docx,xlsx,zip',
+            'lampiran' => 'nullable|mimes:doc,docx,xlsx,zip',
             'nama_operator' => 'required',
             'status' => 'required',
             'keterangan_operator'=> 'required',
-            'tgl_kirim' => 'required|date|after_or_equal:ajuanBlast.tgl_pengajuan',
+            'tgl_kirim' => 'required|date|after_or_equal:tgl_pengajuan',
 
         ]);
 
@@ -228,7 +227,10 @@ class PengajuanBlastemailController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PengajuanBlastemail $id_pengajuan_blastemail)
+
+    public function destroy($id_pengajuan_blastemail)
+
+
     {
         $ajuanBlast = PengajuanBlastemail::find($id_pengajuan_blastemail);
         if($ajuanBlast){
@@ -238,7 +240,7 @@ class PengajuanBlastemailController extends Controller
         }
 
         return redirect()->back()->with('success_message', 'Data telah terhapus.');
-        }
+    }
     
         //
     
