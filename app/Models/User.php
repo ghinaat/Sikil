@@ -113,7 +113,7 @@ class User extends Authenticatable
     }
 
 
-    public function pengajualBlastemail()
+    public function blastemail()
     {
         return $this->hasMany(PengajuanBlastemail::class, 'id_users', 'id_users');
     }
