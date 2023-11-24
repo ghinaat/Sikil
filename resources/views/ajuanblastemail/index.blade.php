@@ -50,42 +50,20 @@
                                         @endif
                                     <td>
                                         <div class="btn-group">
-                                            @if(auth()->user()->level == 'admin' ) 
-                                                <a href="{{ route('ajuanblastemail' . '.show', $email->id_pengajuan_blastemail) }}" class="btn btn-info btn-xs">
-                                                    <i class="fa fa-info-circle"></i>
+                                            <a href="{{ route('ajuanblastemail' . '.show', $email->id_pengajuan_blastemail)}}" class="btn btn-info btn-xs mx-1">
+                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                            </a>
+    
+                                            @if(auth()->user()->level === 'admin' || (auth()->user()->id_users == $email->id_users && $email->status !== 'selesai'))
+                                                <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal" data-target="#editModal{{$email->id_pengajuan_blastemail}}" data-id="{{$email->id_pengajuan_blastemail}}">
+                                                    <i class="fa fa-edit"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-primary btn-xs edit-button mx-1" data-toggle="modal"
-                                                        data-target="#editModal{{$email->id_pengajuan_blastemail}}"
-                                                        data-id="{{$email->id_pengajuan_blastemail}}">
-                                                        <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="{{route('ajuanblastemail.destroy', $email->id_pengajuan_blastemail)}}"
-                                                    onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                                    class="btn btn-danger btn-xs">
+                                                <a href="{{ route('ajuanblastemail' . '.destroy',$email->id_pengajuan_blastemail) }}" onclick="notificationBeforeDelete(event, this, {{$key+1}})" class="btn btn-danger btn-xs mx-1">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
-                                            @else
-                                                @if($email->status == 'diajukan')
-                                                    <a href="{{ route('ajuanblastemail' . '.show', $email->id_pengajuan_blastemail) }}" class="btn btn-info btn-xs">
-                                                        <i class="fa fa-info-circle"></i>
-                                                    </a>
-                                                    <a href="#" class="btn btn-primary btn-xs edit-button mx-1" data-toggle="modal"
-                                                            data-target="#editModal{{$email->id_pengajuan_blastemail}}"
-                                                            data-id="{{$email->id_pengajuan_blastemail}}">
-                                                            <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <a href="{{route('ajuanblastemail.destroy', $email->id_pengajuan_blastemail)}}"
-                                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                                        class="btn btn-danger btn-xs">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                @else
-                                                    <a href="{{ route('ajuanblastemail' . '.show', $email->id_pengajuan_blastemail) }}" class="btn btn-info btn-xs">
-                                                        <i class="fa fa-info-circle"></i>
-                                                    </a>
-                                                @endif
                                             @endif
                                         </div>
+    
                                     </td>
                                 </tr>
                                 @php
@@ -133,7 +111,7 @@
                         @error('nama_kegiatan') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
-                    <div class="form-group-page">
+                    <div class="form-group" style="align-items: flex-start;">
                         <label for="keterangan_pemohon" class="form-label">Keterangan</label>
                         <div class="form-input">
                             <textarea rows="5" name="keterangan_pemohon" id="keterangan_pemohon" class="form-control 
@@ -141,7 +119,7 @@
                         @error('keterangan_pemohon') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div> 
-                    <div class="form-group-page">
+                    <div class="form-group" style="align-items: flex-start;">
                         <label for="lampiran" class="form-label">Lampiran Dokumen</label>
                         <div class="form-input">
                             <input type="file" class="form-control @error('lampiran') is-invalid @enderror"
@@ -210,7 +188,7 @@
                         @error('nama_kegiatan') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
-                    <div class="form-group-page">
+                    <div class="form-group" style="align-items: flex-start;">
                         <label for="keterangan_pemohon" class="form-label">Keterangan</label>
                         <div class="form-input">
                             <textarea rows="5" name="keterangan_pemohon" id="keterangan_pemohon" class="form-control 
@@ -218,7 +196,7 @@
                         @error('keterangan_pemohon') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div> 
-                    <div class="form-group-page">
+                    <div class="form-group" style="align-items: flex-start;">
                         <label for="lampiran" class="form-label">Lampiran Dokumen</label>
                         <div class="form-input">
                             <input type="file" class="form-control @error('lampiran') is-invalid @enderror"
@@ -249,8 +227,8 @@
                         <label for="Status" class="form-label">Status</label>
                         <div class="form-input">
                             <div class="form-inline">
-                                <input type="radio" name="status" id="status" value="selesai"  @if ($email->status === 'selesai') checked @endif>&nbsp;Selesai&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                                <input type="radio" name="status" id="status" value="diajukan" @if ($email->status === 'diajukan') checked @endif>&nbsp;Diajukan<br>
+                                <input type="radio" name="status" id="status" value="diajukan" @if ($email->status === 'diajukan') checked @endif>&nbsp;Diajukan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                <input type="radio" name="status" id="status" value="selesai"  @if ($email->status === 'selesai') checked @endif>&nbsp;Selesai<br>
                             </div>
                         </div>
                     </div>
@@ -262,7 +240,7 @@
                             @error('tgl_kirim') <span class="text-danger">{{ $message }}</span> @enderror                            
                         </div>
                     </div>
-                    <div class="form-group-page">
+                    <div class="form-group" style="align-items: flex-start;">
                         <label for="keterangan_operator" class="form-label">Keterangan Operator</label>
                         <div class="form-input">
                             <textarea rows="5" name="keterangan_operator" id="keterangan_operator" class="form-control 

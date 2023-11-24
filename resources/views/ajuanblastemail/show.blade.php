@@ -12,7 +12,7 @@
                 <div class="form-group">
                     <label for="nama_barang" class="form-label">Tanggal Pengajuan</label>
                     <div class="form-input">
-                        :{{ date_format( new DateTime($BlastEmail->tgl_pengajuan), 'd F Y') ?? old('tgl_pengajuan')}}
+                        : {{ date_format( new DateTime($BlastEmail->tgl_pengajuan), 'd F Y') ?? old('tgl_pengajuan')}}
                     </div>    
                 </div>
                 <div class="form-group">
@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label for="merek" class="form-label">Keterangan</label>
-                    <div class="form-input"  style="margin-right: 10px;">
+                    <div class="form-input" style="margin-right: 10px;">
                         <span style="margin-right: 5px;">:</span>
                         <span style="white-space: pre-line;">{{$BlastEmail->keterangan_pemohon ?? old('keterangan_pemohon')}}</span>         
                     </div>
@@ -66,8 +66,9 @@
                         @endif
                     </div>
                 </div>
+                
                 <div class="form-group">
-                    <label for="tgl_kirim" class="form-label">Tanggal Pengiriman</label>
+                    <label for="kondisi" class="form-label">Tanggal Pengiriman</label>
                     <div class="form-input">
                         @if($BlastEmail->tgl_kirim)
                         : {{ date_format( new DateTime($BlastEmail->tgl_kirim), 'd F Y') ?? old('tgl_kirim')}}
