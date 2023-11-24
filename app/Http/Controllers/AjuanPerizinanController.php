@@ -176,7 +176,9 @@ class AjuanPerizinanController extends Controller
             $notifikasi->save();
         }
 
-        $notifikasiAdmin = User::where('level', 'admin')->first();
+        $notifikasiAdmin = User::where('level', 'admin')->get();
+        
+        foreach($notifikasiAdmin as $na){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Izin ';
         $notifikasi->pesan = 'Pengajuan perizinan dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
@@ -184,8 +186,9 @@ class AjuanPerizinanController extends Controller
         $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanperizinan';
-        $notifikasi->id_users = $notifikasiAdmin->id_users;
+        $notifikasi->id_users = $na->id_users;
         $notifikasi->save();
+        }
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
 

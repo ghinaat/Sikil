@@ -1,12 +1,12 @@
 .form-group {
     display: flex;
     align-items: flex-start; /* Mengubah align-items menjadi flex-start */
-    margin-bottom: 15px;
+    margin-bottom: 1px;
 }
 
 .form-label {
     flex: 1;
-    margin-right: 5px;
+    margin-right: 4px;
 }
 
 .form-input {

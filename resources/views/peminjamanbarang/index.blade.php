@@ -58,17 +58,21 @@
                                 <td>
                                     <div class='btn-group'>
                                     @if($pj->status == "belum_diajukan" )
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                                data-target="#editModal{{$pj->id_peminjaman}}"
-                                                data-id="{{$pj->id_peminjaman}}">
-                                                <i class="fa fa-edit"></i>
-                                    </a>
-                                    &nbsp;
-                                    <a href="{{route('peminjaman.destroy', $pj->id_peminjaman)}}"
-                                                onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                                class="btn btn-danger btn-xs">
-                                                <i class="fa fa-trash"></i>
-                                    </a>
+                                       @if(auth()->user()->id_users == $pj->id_users || auth()->user()->level == 'admin')
+                                        <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                                    data-target="#editModal{{$pj->id_peminjaman}}"
+                                                    data-id="{{$pj->id_peminjaman}}">
+                                                    <i class="fa fa-edit"></i>
+                                        </a>
+                                        &nbsp;
+                                        <a href="{{route('peminjaman.destroy', $pj->id_peminjaman)}}"
+                                                    onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
+                                                    class="btn btn-danger btn-xs">
+                                                    <i class="fa fa-trash"></i>
+                                        </a>
+                                        @else
+                                        -
+                                        @endif
                                     <!-- @include('components.action-buttons', ['id' => $pj->id_peminjaman, 'key' => $key,
                                     'route' => 'peminjaman']) -->
                                     @else

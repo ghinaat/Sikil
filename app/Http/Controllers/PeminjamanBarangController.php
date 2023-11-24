@@ -16,14 +16,9 @@ class PeminjamanBarangController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        if (auth()->user()->level == 'kadiv' && auth()->user()->id_jabatan == '8' ) {
+       
             $peminjaman = PeminjamanBarang::where('is_deleted', '0')->get();
-        } elseif(auth()->user()->level == 'admin' ) {
-            $peminjaman = PeminjamanBarang::where('is_deleted', '0')->get();
-        }else{
-            $peminjaman = PeminjamanBarang::where('is_deleted', '0')->whereIn('id_users', $user->peminjaman->pluck('id_users'))->get();
-        }
+       
 
 
         return view('peminjamanbarang.index', [
@@ -82,7 +77,22 @@ class PeminjamanBarangController extends Controller
         $detailPeminjaman = DetailPeminjamanBarang::with(['barang'])
             ->where('id_peminjaman', $id_peminjaman)
             ->get();
-    
+        
+        //   // Kumpulkan detail peminjaman untuk setiap barang
+        //      $detailPeminjaman = collect();
+
+            foreach ($barangTIK as $barang) {
+                // Ambil semua detail peminjaman terkait dengan barang ini
+                $details = DetailPeminjamanBarang::where('id_barang_tik', $barang->id_barang_tik)->get();
+        
+                // Ambil hanya satu detail peminjaman dengan status 'dipinjam'
+                $dipinjamDetail = $details->firstWhere('status', 'dipinjam');
+        
+                // Jika ada yang dipinjam, masukkan ke dalam koleksi
+                if ($dipinjamDetail) {
+                    $detailPeminjaman->push($dipinjamDetail);
+                }
+            }
         
     
         $barangs = BarangTik::where('is_deleted', '0')->where('status_pinjam', 'Ya')->orderByRaw("LOWER(nama_barang)")->pluck('nama_barang', 'id_barang_tik');
@@ -194,7 +204,10 @@ class PeminjamanBarangController extends Controller
         $notifikasi->id_users = $pengguna->id_users;
         $notifikasi->save();
 
-        $notifikasiKadiv = User::where('id_jabatan', '8')->first();
+        
+         $notifikasiKadiv = User::where('id_jabatan', '8')->get();
+
+        foreach($notifikasiKadiv as $nk){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Peminjaman Barang TIK';
         $notifikasi->pesan =  'Pengajuan peminjaman dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara menyiapkan barang peminjaman.'; 
@@ -202,10 +215,13 @@ class PeminjamanBarangController extends Controller
         $notifikasi->label = 'info';
         $notifikasi->link = '/peminjaman';
         $notifikasi->send_email = 'yes';
-        $notifikasi->id_users = $notifikasiKadiv->id_users;
+        $notifikasi->id_users = $nk->id_users;
         $notifikasi->save();
+        }
 
-        $notifikasiAdmin = User::where('level', 'admin')->first();
+        $notifikasiAdmin = User::where('level', 'admin')->get();
+        
+        foreach($notifikasiAdmin as $na){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Peminjaman Barang TIK';
         $notifikasi->pesan =  'Pengajuan peminjaman dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara menyiapkan barang peminjaman.'; 
@@ -213,8 +229,9 @@ class PeminjamanBarangController extends Controller
         $notifikasi->label = 'info';
         $notifikasi->link = '/peminjaman';
         $notifikasi->send_email = 'no';
-        $notifikasi->id_users = $notifikasiAdmin->id_users;
+        $notifikasi->id_users = $na->id_users;
         $notifikasi->save();
+        }
 
         // Redirect atau lakukan tindakan lain setelah data berhasil disimpan
         return redirect()->back()->with('success_message', 'Pengajuan Berhasil Dikirim.');

@@ -433,18 +433,13 @@ return [
                     'url' => '/ajuansinglelink',
                     'can' => '',
                 ],           
-            ]
+            [
           
                     'text' => 'Pengajuan Blast Email',
                     'url' => '/ajuanblastemail',
                     'can' => '',
                 ],  
-                [
-
-                    'text' => 'Single Link',
-                    'url' => '/ajuansinglelink',
-                    'can' => '',
-                ], 
+           
             ],
         ],
         [

@@ -94,7 +94,9 @@ class SuratController extends Controller
         $notifikasi->id_users = $request->id_users;
         $notifikasi->save();
 
-        $notifikasiAdmin = User::where('level', 'admin')->first();
+        $notifikasiAdmin = User::where('level', 'admin')->get();
+        
+        foreach($notifikasiAdmin as $na){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Nomor Surat';
         $notifikasi->pesan = 'Pengajuan nomor surat dari '.$pengguna->nama_pegawai.'. mohon memberikan persetujuan..';
@@ -102,8 +104,9 @@ class SuratController extends Controller
         $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuansurat';
-        $notifikasi->id_users = $notifikasiAdmin->id_users;
+        $notifikasi->id_users = $na->id_users;
         $notifikasi->save();
+        }
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
 

@@ -52,8 +52,7 @@
                 <div class="form-group">
                     <label for="tgl_pelaksanaan" class='form-label'>Waktu Pelaksanaan (WIB)</label>
                     <div class="form-input">
-                        : {{old('jam_mulai', $zoom->jam_mulai)}} &nbsp; s/d &nbsp; {{old('jam_selesai', $zoom->jam_selesai)}} 
-
+                      : {{ \Carbon\Carbon::parse($zoom->jam_mulai)->format('H:i') }} &nbsp; s.d.  &nbsp; {{ \Carbon\Carbon::parse($zoom->jam_selesai)->format('H:i') }} WIB
                     </div>
               
                 </div>

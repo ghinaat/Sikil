@@ -64,11 +64,13 @@
                 <div class="table-container">
                     <div class="table-responsive">
                         @if($peminjaman->status == "belum_diajukan")
+                           @if(auth()->user()->id_users == $peminjaman->id_users || auth()->user()->level == 'admin')
                         <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form">Tambah Barang</button>
                         <a href= "{{route('peminjaman.notifikasi',$peminjaman->id_peminjaman)}}" onclick="notificationPengajuan(event, this)"
                             class="btn btn-success mb-2">
                             <i class="fa fa-phone" aria-hidden="true"></i> &nbsp; Ajukan
                         </a>
+                            @endif
                         @endif
                         <table class="table table-hover table-bordered table-stripped" id="example3">
                             <thead>
@@ -103,7 +105,7 @@
                                        <div class="btn-group">
                                          @if($dpj->status == null)
 
-                                            @if(auth()->user()->level != 'admin')
+                                            @if(auth()->user()->id_users == $peminjaman->id_users && auth()->user()->level != 'admin')
                                                 @if($peminjaman->status == 'diajukan')
                                                     <i class="fas fa-check-circle  fa-2x" style="color: #42e619; align-items: center;"></i>
                                                 @else
@@ -115,14 +117,15 @@
                                                     &nbsp;
                                                 @endif
                                             @else
-                                               
+                                                -
+                                                @can('isAdmin')
                                                 <a href="{{ route('peminjaman.destroyDetail', $dpj->id_detail_peminjaman) }}"
                                                         onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
                                                         class="btn btn-danger btn-xs">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                      &nbsp;
-                                                    @can('isAdmin')
+                                                   
                                                         <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                                             data-target="#editPeminjaman{{$dpj->id_detail_peminjaman}}"
                                                             data-id="{{$dpj->id_detail_peminjaman}}">
@@ -134,7 +137,7 @@
                                             @endif
                                          
                                             @elseif($dpj->status == 'dipinjam')
-                                            @if(auth()->user()->level != 'admin')
+                                           @if(auth()->user()->id_users == $peminjaman->id_users && auth()->user()->level != 'admin')
                                             <i class="fas fa-check-circle  fa-2x"
                                                 style="color: #42e619; align-items: center;"></i>
                                             @else
@@ -213,9 +216,17 @@
                                             // Mengecek apakah barang ini telah dipilih pada peminjaman tertentu
                                             $isBarangSelected = $detailPeminjaman->contains('barang.id_barang_tik', $item->id_barang_tik);
                                         @endphp
+                                        @php
+                                            // Ambil detail peminjaman untuk barang ini
+                                            $detail = $detailPeminjaman->firstWhere('id_barang_tik', $item->id_barang_tik);
+                                        @endphp
+                                           
+                                         @if ($detail)
+                                                @if ($detail->status == 'dipinjam')
+                                                   Sedang Dipinjam
+                                                 @endif
 
-                                        @if($item->detailPeminjaman->where('id_barang_tik', $item->id_barang_tik)->first() && $item->detailPeminjaman->where('id_barang_tik', $item->id_barang_tik)->first()->status == 'dipinjam')
-                                        Sedang Dipinjam
+                                      
                                             
                                         @elseif(!$isBarangSelected)
                                         <button type="button" class="btn btn-primary btn-xs"
@@ -419,14 +430,15 @@ function notificationPengajuan(event, el, dt) {
         confirmButtonText: 'Yes!'
     }).then((result) => {
         if (result.isConfirmed) {
-            location.reload();  
-
+              setTimeout(function() {
+                        location.reload();
+                       
+                    }, 500); // Tunggu 500ms (0.5 detik) sebelum memanggil kembali fungsi
             $.ajax({
                 url: "{{ route('peminjaman.notifikasi', $peminjaman->id_peminjaman) }}",
                 type: 'GET',
                 success: function(data) {
                     Swal.fire('Berhasil', 'Pengajuan berhasil dikirim.', 'success');
-                  
                 },
                 error: function(err) {
                     // Handle kesalahan jika ada kesalahan dalam permintaan
@@ -436,6 +448,7 @@ function notificationPengajuan(event, el, dt) {
         }
     });
 }
+
 
 
 </script>

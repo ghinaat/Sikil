@@ -13,14 +13,9 @@ class PengajuanZoomController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        if (auth()->user()->level == 'kadiv' && auth()->user()->id_jabatan == '8' ) {
+      
             $zoom = PengajuanZoom::where('is_deleted', '0')->get();
-        } elseif(auth()->user()->level == 'admin' ) {
-            $zoom = PengajuanZoom::where('is_deleted', '0')->get();
-        }else{
-            $zoom = PengajuanZoom::where('is_deleted', '0')->whereIn('id_users', $user->zoom->pluck('id_users'))->get();
-        }
+      
 
         return view('ajuanzoom.index', [
             'zoom' => $zoom,
@@ -51,7 +46,7 @@ class PengajuanZoomController extends Controller
             'jam_selesai' => 'required',
             'nama_kegiatan' => 'required',
             'jumlah_peserta' => 'required',
-            'keterangan_pemohon' => 'required',
+            'keterangan_pemohon' => 'nullable',
         ]);
        
         $zoom = new PengajuanZoom();
@@ -78,7 +73,10 @@ class PengajuanZoomController extends Controller
         $notifikasi->id_users = $pengguna->id_users;
         $notifikasi->save();
 
-        $notifikasiKadiv = User::where('id_jabatan', '8')->first();
+           $notifikasiKadiv = User::where('id_jabatan', '8')->get();
+
+
+        foreach($notifikasiKadiv as $nk){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Zoom Meeting';
         $notifikasi->pesan =  'Pengajuan Zoom Meeting dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara menyiapkan room zoom meeting.'; 
@@ -86,10 +84,13 @@ class PengajuanZoomController extends Controller
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanzoom';
         $notifikasi->send_email = 'yes';
-        $notifikasi->id_users = $notifikasiKadiv->id_users;
+        $notifikasi->id_users = $nk->id_users;
         $notifikasi->save();
+        }
 
-        $notifikasiAdmin = User::where('level', 'admin')->first();
+        $notifikasiAdmin = User::where('level', 'admin')->get();
+        
+        foreach($notifikasiAdmin as $na){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Zoom Meeting';
         $notifikasi->pesan =  'Pengajuan Zoom Meeting dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara menyiapkan room zoom meeting.'; 
@@ -97,9 +98,9 @@ class PengajuanZoomController extends Controller
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanzoom';
         $notifikasi->send_email = 'no';
-        $notifikasi->id_users = $notifikasiAdmin->id_users;
+        $notifikasi->id_users = $na->id_users;
         $notifikasi->save();
-        
+        }
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
@@ -140,7 +141,7 @@ class PengajuanZoomController extends Controller
                 'jam_selesai' => 'required',
                 'nama_kegiatan' => 'required',
                 'jumlah_peserta' => 'required',
-                'keterangan_pemohon' => 'required',
+                'keterangan_pemohon' => 'nullable',
                 'nama_operator' => 'required',
                 'akun_zoom' => 'nullable',
                 'status' =>'required',

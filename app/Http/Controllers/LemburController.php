@@ -231,7 +231,9 @@ class LemburController extends Controller
         $notifikasi->id_users = $request->id_atasan;
         $notifikasi->save();
 
-        $notifikasiAdmin = User::where('level', 'admin')->first();
+         $notifikasiAdmin = User::where('level', 'admin')->get();
+        
+        foreach($notifikasiAdmin as $na){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Lembur ';
         $notifikasi->pesan = 'Pengajuan Lembur dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
@@ -239,8 +241,9 @@ class LemburController extends Controller
         $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanlembur';
-        $notifikasi->id_users = $notifikasiAdmin->id_users;
+        $notifikasi->id_users = $na->id_users;
         $notifikasi->save();
+        }
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
@@ -328,7 +331,9 @@ class LemburController extends Controller
         $notifikasi->id_users = $request->id_atasan;
         $notifikasi->save();
 
-        $notifikasiAdmin = User::where('level', 'admin')->first();
+        $notifikasiAdmin = User::where('level', 'admin')->get();
+        
+        foreach($notifikasiAdmin as $na){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Lembur ';
         $notifikasi->pesan = 'Pengajuan Lembur dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
@@ -336,8 +341,9 @@ class LemburController extends Controller
         $notifikasi->send_email = 'yes';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanlembur';
-        $notifikasi->id_users = $notifikasiAdmin->id_users;
+        $notifikasi->id_users = $na->id_users;
         $notifikasi->save();
+        }
 
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
         
