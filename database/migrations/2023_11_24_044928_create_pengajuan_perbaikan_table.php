@@ -22,9 +22,9 @@ return new class extends Migration
             $table->date('tgl_pengecekan')->nullable();
             $table->date('tgl_selesai')->nullable();
             $table->enum('status', ['diajukan', 'diproses', 'selesai'])->default('diajukan');
-            $table->enum('is_deleted',['0', '1']);
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->foreign('id_barang_tik')->references('id_barang_tik')->on('barang_tik')->onDelete('cascade');
+            $table->enum('is_deleted',['0', '1'])->default('0');
             $table->timestamps();
         });
     }
