@@ -42,27 +42,21 @@
                                 </td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="{{ route('ajuansinglelink' . '.show', $as->id_pengajuan_singlelink)}}"
-                                            class="btn btn-info btn-xs mx-1">
+                                        <a href="{{ route('ajuansinglelink' . '.show', $as->id_pengajuan_singlelink)}}" class="btn btn-info btn-xs mx-1">
                                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                                         </a>
 
-                                        @if(auth()->user()->level === 'admin' || $as->status !== 'ready')
-                                        <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                            data-target="#editModal{{$as->id_pengajuan_singlelink}}"
-                                            data-id="{{$as->id_pengajuan_singlelink}}">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a href="{{ route('ajuansinglelink' . '.destroy', $as->id_pengajuan_singlelink) }}"
-                                            onclick="notificationBeforeDelete(event, this, {{$key+1}})"
-                                            class="btn btn-danger btn-xs mx-1">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                        @if(auth()->user()->level === 'admin' || (auth()->user()->id_users === $as->id_users && $as->status !== 'ready'))
+                                            <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal" data-target="#editModal{{$as->id_pengajuan_singlelink}}" data-id="{{$as->id_pengajuan_singlelink}}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="{{ route('ajuansinglelink' . '.destroy', $as->id_pengajuan_singlelink) }}" onclick="notificationBeforeDelete(event, this, {{$key+1}})" class="btn btn-danger btn-xs mx-1">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        @endif
                                     </div>
-                                    @endif
                                 </td>
                             </tr>
-
                             <!-- Edit Modal -->
                             <div class="modal fade" id="editModal{{$as->id_pengajuan_singlelink}}" tabindex="-1" role="dialog"
                                 aria-labelledby="editModalLabel{{$as->id_pengajuan_singlelink}}" aria-hidden="true">
@@ -123,12 +117,12 @@
                                                     <label for="status" class="col-sm-3 col-form-label">Status</label>
                                                     <div class="col-sm-9">
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="status" value="ready" id="readyRadio" {{ old('status', $as->status) == 'ready' ? 'checked' : '' }}>
-                                                            <label class="form-check-label" for="readyRadio">Ready</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
                                                             <input class="form-check-input" type="radio" name="status" value="diajukan" id="diajukanRadio" {{ old('status', $as->status) == 'diajukan' ? 'checked' : '' }}>
                                                             <label class="form-check-label" for="diajukanRadio">Diajukan</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="status" value="ready" id="readyRadio" {{ old('status', $as->status) == 'ready' ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="readyRadio">Ready</label>
                                                         </div>
                                                     </div>
                                                     @error('status')<span class="textdanger">{{$message}}</span>@enderror

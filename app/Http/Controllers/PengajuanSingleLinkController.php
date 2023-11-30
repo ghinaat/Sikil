@@ -16,22 +16,7 @@ class PengajuanSingleLinkController extends Controller
     public function index()
     {
         $user = auth()->user();
-        if (auth()->user()->level == 'kadiv' && auth()->user()->id_jabatan == '8' ) {
-            $ajuansinglelink = PengajuanSingleLink::where('is_deleted', '0')
-            ->orderByDesc('id_pengajuan_singlelink')
-            ->get();
-
-        } elseif(auth()->user()->level == 'admin' ) {
-            $ajuansinglelink = PengajuanSingleLink::where('is_deleted', '0')
-            ->orderByDesc('id_pengajuan_singlelink')
-            ->get();
-
-        }else{
-            $ajuansinglelink = PengajuanSingleLink::where('is_deleted', '0')
-            ->whereIn('id_users', $user->ajuansinglelink->pluck('id_users'))
-            ->orderByDesc('id_pengajuan_singlelink')
-            ->get();        
-        }
+        $ajuansinglelink = PengajuanSingleLink::where('is_deleted', '0')->orderByDesc('id_pengajuan_singlelink')->get();
 
         return view('ajuansinglelink.index', [
             'ajuansinglelink' => $ajuansinglelink,
@@ -79,7 +64,8 @@ class PengajuanSingleLinkController extends Controller
             $notifikasi->id_users = $pengguna->id_users;
             $notifikasi->save();
 
-            $notifikasiKadiv = User::where('id_jabatan', '8')->first();
+            $notifikasiKadiv = User::where('id_jabatan', '8')->get();
+            foreach($notifikasiKadiv as $nk){
             $notifikasi = new Notifikasi();
             $notifikasi->judul = 'Pengajuan Single Link';
             $notifikasi->pesan =  'Pengajuan Single Link dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara menyiapkan single link.'; 
@@ -87,11 +73,13 @@ class PengajuanSingleLinkController extends Controller
             $notifikasi->label = 'info';
             $notifikasi->link = '/ajuansinglelink';
             $notifikasi->send_email = 'yes';
-            $notifikasi->id_users = $notifikasiKadiv->id_users;
+            $notifikasi->id_users = $nk->id_users;
             $notifikasi->save();
+            }
     
     
-            $notifikasiAdmin = User::where('level', 'admin')->first();
+            $notifikasiAdmin = User::where('level', 'admin')->get();
+            foreach($notifikasiAdmin as $na){
             $notifikasi = new Notifikasi();
             $notifikasi->judul = 'Pengajuan Single Link';
             $notifikasi->pesan = 'Pengajuan Single Link dari '.$pengguna->nama_pegawai.'. Mohon berikan persetujan kepada pemohon.'; // Sesuaikan pesan notifikasi sesuai kebutuhan Anda.
@@ -99,10 +87,11 @@ class PengajuanSingleLinkController extends Controller
             $notifikasi->send_email = 'no';
             $notifikasi->label = 'info';
             $notifikasi->link = '/ajuansinglelink';
-            $notifikasi->id_users = $notifikasiAdmin->id_users;
+            $notifikasi->id_users = $na->id_users;
             $notifikasi->save();
+            }
     
-            return redirect()->back()->with('success_message', 'Data telah tersimpan');
+            return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
@@ -206,6 +195,6 @@ class PengajuanSingleLinkController extends Controller
             $ajuansinglelink->save();
         }
 
-        return redirect()->back()->with('success_message', 'Data telah terhapus');
+        return redirect()->back()->with('success_message', 'Data telah terhapus.');
     }
 }
