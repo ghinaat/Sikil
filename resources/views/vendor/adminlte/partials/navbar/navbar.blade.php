@@ -45,7 +45,7 @@
         {{-- Custom left links --}}
         @yield('content_top_nav_left')
     </ul>
-    <h2 id="navbar-navbar">Sistem Informasi Kepegawaian & Layanan Internal SEAQIL</h2>
+    <h2 id="navbar-navbar" style="white-space: nowrap">Sistem Informasi Kepegawaian & Layanan Internal SEAQIL</h2>
     <h2 id="navbar-navbar-navbar">SIKLIS</h2>
 
     {{-- Navbar right links --}}
