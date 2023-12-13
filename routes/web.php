@@ -16,6 +16,7 @@ use App\Http\Controllers\LemburController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\PendidikanController;
 use App\Http\Controllers\PengajuanBlastemailController;
+use App\Http\Controllers\PengajuanFormController;
 use App\Http\Controllers\PengalamanKerjaController;
 use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\PresensiController;
@@ -295,4 +296,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/ajuanzoom/{id_pengajuan_zoom}', [PengajuanZoomController::class, 'show'])->name('ajuanzoom.show');
 });
 
-
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/ajuanform', [PengajuanFormController::class, 'index'])->name('ajuanform.index');
+    Route::post('/ajuanform', [PengajuanFormController::class, 'store'])->name('ajuanform.store');
+    Route::get('/ajuanform/{id_pengajuan_form}', [PengajuanFormController::class, 'show'])->name('ajuanform.show');
+    Route::put('/ajuanform/update/{id_pengajuan_form}', [PengajuanFormController::class, 'update'])->name('ajuanform.update');
+    Route::delete('/ajuanform/{id_pengajuan_form}', [PengajuanFormController::class, 'destroy'])->name('ajuanform.destroy');
+});

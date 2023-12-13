@@ -129,6 +129,12 @@ class User extends Authenticatable
         return $this->hasMany(PengajuanZoom::class, 'id_users', 'id_users');
 
     }
+    public function form()
+    {
+        return $this->hasMany(PengajuanForm::class, 'id_users', 'id_users');
+
+    }
+    
 
 
     protected $primaryKey = 'id_users';

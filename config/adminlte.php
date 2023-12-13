@@ -439,7 +439,12 @@ return [
                     'text' => 'Blast Email',
                     'url' => '/ajuanblastemail',
                     'can' => '',
-                ],  
+                ],
+                [
+                    'text' => 'Google Form',
+                    'url' => '/ajuanform',
+                    'can' => '',
+                ],
 
             ],
         ],

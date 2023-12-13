@@ -79,55 +79,91 @@
                                     <div class="form-group">
                                         <label for="nip" class='form-label'>NIP</label>
                                         <div class="form-input">
+                                        @if (isset($user->nip))
                                         : {{ $user->nip }}
+                                        @else
+                                        :
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="nik" class='form-label'>NIK</label>
                                         <div class="form-input">
+                                        @if (isset($user->nik))
                                         : {{ $user->nik }}
+                                        @else
+                                        :
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="kk" class='form-label'>KK</label>
                                         <div class="form-input">
+                                        @if (isset($user->kk))
                                         : {{ $user->kk }}
+                                        @else
+                                        :
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="gelar_depan" class='form-label'>Gelar Depan</label>
                                         <div class="form-input">
+                                        @if (isset($user->gelar_depan))
                                         : {{ $user->gelar_depan }}
+                                        @else
+                                        :
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="gelar_belakang" class='form-label'>Gelar Belakang</label>
                                         <div class="form-input">
+                                        @if (isset($user->gelar_belakang))
                                         : {{ $user->gelar_belakang }}
+                                        @else
+                                        :
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="tempat_lahir" class='form-label'>Tempat Lahir</label>
                                         <div class="form-input">
+                                        @if (isset($user->tempat_lahir))
                                         : {{ $user->tempat_lahir }}
+                                        @else
+                                        :
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="tanggal_lahir" class='form-label'>Tanggal Lahir</label>
                                         <div class="form-input">
+                                        @if (isset($user->tanggal_lahir))
                                         : {{ date_format( new DateTime($user->tanggal_lahir), 'd F Y')}}
+                                        @else
+                                        :
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="alamat" class='form-label'>Alamat</label>
                                         <div class="form-input">
+                                        @if (isset($user->alamat))
                                         : {{ $user->alamat }}
+                                        @else
+                                        :
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="no_hp" class='form-label'>No HP</label>
                                         <div class="form-input">
+                                        @if (isset($user->no_hp))
                                         : {{ $user->no_hp }}
+                                        @else
+                                        :
+                                        @endif
                                        </div>
                                     </div>
                                     <div class="form-group">
@@ -143,8 +179,10 @@
                                             : Hindu
                                         @elseif($user->agama == "budha")
                                             : Budha
-                                        @else
+                                        @elseif($user->agama == "konghucu")
                                             : Konghucu
+                                        @else
+                                            :
                                         @endif
                                         </div>
                                     </div>
@@ -153,21 +191,31 @@
                                         <div class="form-input">
                                         @if($user->gender == "laki-laki")
                                             : Laki-laki
-                                        @else
+                                        @elseif($user->gender == "perempuan")
                                             : Perempuan
+                                        @else
+                                            :
                                         @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="pendidikan" class='form-label'>Pendidikan</label>
                                         <div class="form-input">
+                                        @if(isset($user->pendidikan))
                                         : {{ $user->pendidikan }}
+                                        @else
+                                        :
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="tmt" class='form-label'>Tanggal Mulai Tugas</label>
                                         <div class="form-input">
-                                        : {{ date_format( new DateTime($user->tmt), 'd F Y')}}
+                                        @if (isset($user->tmt))
+                                        : {{ \Carbon\Carbon::parse($user->tmt)->format('d F Y') ?? old('tmt')}}
+                                        @else
+                                        :
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -186,21 +234,31 @@
                                         <div class="form-input">
                                         @if($user->status_kawin == 'belum_menikah')
                                         : Belum menikah
-                                        @else
+                                        @elseif ($user->status_kawin == 'menikah')
                                         : Menikah
+                                        @else
+                                        : 
                                         @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="bpjs" class='form-label'>BPJS</label>
                                         <div class="form-input">
+                                        @if (isset($user->bpjs))
                                         : {{ $user->bpjs }}
+                                        @else
+                                        :
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="tingkat_pendidikan" class='form-label'>Tingkat Pendidikan</label>
                                         <div class="form-input">
+                                        @if (isset($user->id_tingkat_pendidikan))
                                         : {{ $user->tingkat_pendidikan?->nama_tingkat_pendidikan }}
+                                        @else
+                                        :
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -331,7 +389,8 @@
                                                             <div class="form-group">
                                                                 <label for="tanggal_lahir" class='form-label'>Tanggal Lahir</label>
                                                                 <div class="form-input">
-                                                                 <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" placeholder="Tanggal Lahir" name="tanggal_lahir" value="{{$user -> tanggal_lahir ?? old('tanggal_lahir')}}" >
+                                                                 <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" 
+                                                                id="tanggal_lahir" placeholder="Tanggal Lahir" name="tanggal_lahir" value="{{$user -> tanggal_lahir ?? old('tanggal_lahir')}}" >
                                                                     @error('tanggal_lahir') <span class="text-danger">{{ $message }}</span> @enderror
                                                                 </div>
                                                             </div>
@@ -469,7 +528,7 @@
                                                                     <option value="belum_menikah" @if($user->
                                                                         status_kawin == 'belum_menikah' ||
                                                                         old('status_kawin')=='belum_menikah' ) selected
-                                                                        @endif>Belum menikah</option>
+                                                                        @endif>Belum Menikah</option>
                                                                 </select>
                                                                 @error('status_kawin') <span
                                                                     class="text-danger">{{$message}}</span>
@@ -478,8 +537,8 @@
                                                                 <select
                                                                     class="form-select @error('status_kawin') isinvalid @enderror"
                                                                     id="exampleInputstatus_kawin" name="status_kawin">
-                                                                    <option value="menikah">menikah</option>
-                                                                    <option value="belum_menikah">belum menikah</option>
+                                                                    <option value="menikah">Menikah</option>
+                                                                    <option value="belum_menikah">Belum Menikah</option>
                                                                 </select>
                                                                 @error('status_kawin') <span
                                                                     class="text-danger">{{$message}}</span>
@@ -523,7 +582,7 @@
                                                                 @enderror
                                                                 @if ($user->photo === 'no_pp.png')
                                                                 <p>Previous File: <a
-                                                                        href="{{ asset('/public/' . $user->photo) }}"
+                                                                        href="{{ asset('/images/' . $user->photo) }}"
                                                                         target="_blank">{{ $user->photo }}</a></p>
                                                                 @elseif ( isset($user->photo) )
                                                                 <p>Previous File: <a
