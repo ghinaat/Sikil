@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('nama_operator', 100)->nullable();
             $table->string('tautan_form')->nullable();
             $table->enum('status',['diajukan', 'diproses', 'ready'])->default('diajukan');
-            $table->enum('is_deleted',['0', '1']);
+            $table->enum('is_deleted',['0', '1'])->default('0');
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
