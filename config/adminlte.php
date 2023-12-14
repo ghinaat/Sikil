@@ -441,6 +441,12 @@ return [
                     'can' => '',
                 ],  
 
+                [
+                    'text' => 'Perbaikan Alat TIK',
+                    'url' => '/perbaikanBarang',
+                    'can' => '',
+                ],  
+
             ],
         ],
         [

@@ -31,6 +31,7 @@ use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\UrlController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AjuanSuratController;
+use App\Http\Controllers\PengajuanPerbaikanController;
 use App\Models\BarangTik;
 use Illuminate\Support\Facades\Route;
 use Svg\Tag\Group;
@@ -296,3 +297,10 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/perbaikanBarang', [PengajuanPerbaikanController::class, 'index'])->name('ajuanperbaikan.index');
+    Route::post('/perbaikanBarang', [PengajuanPerbaikanController::class, 'store'])->name('ajuanperbaikan.store');
+    Route::get('/perbaikanBarang/{id_pengajuan_perbaikan}', [PengajuanPerbaikanController::class, 'show'])->name('ajuanperbaikan.show');
+    Route::put('/perbaikanBarang/update/{id_pengajuan_perbaikan}', [PengajuanPerbaikanController::class, 'update'])->name('ajuanperbaikan.update');
+    Route::delete('/perbaikanBarang/{id_pengajuan_perbaikan}', [PengajuanPerbaikanController::class, 'destroy'])->name('ajuanperbaikan.destroy');
+});
