@@ -167,7 +167,7 @@ class PengajuanPerbaikanController extends Controller
         $pengguna = User::where('id_users', $perbaikanBarang->id_users)->first();
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Perbaikan Alat TIK';
-        $notifikasi->pesan = 'Pengajuan Perbaikan Alat TIK anda sudah diperbaiki. Harap menunggu barang segera diantarkan.';
+        $notifikasi->pesan = 'Pengajuan Perbaikan Alat TIK anda sudah diperbaiki. Harap menunggu alat segera diantarkan.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->send_email = 'yes';
@@ -181,7 +181,7 @@ class PengajuanPerbaikanController extends Controller
         foreach($notifikasiKadiv as $nk){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Perbaikan Alat TIK';
-        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.' sudah diperbaiki. Dimohon untuk segera mengantarkan barang.'; 
+        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.' sudah diperbaiki. Dimohon untuk segera mengantarkan alat.'; 
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanperbaikan';
@@ -195,7 +195,7 @@ class PengajuanPerbaikanController extends Controller
         foreach($notifikasiAdmin as $na){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Perbaikan Alat TIK';
-        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.' sudah diperbaiki. Dimohon untuk segera mengantarkan barang.';
+        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.' sudah diperbaiki. Dimohon untuk segera mengantarkan alat.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanperbaikan';
