@@ -71,7 +71,7 @@ class PengajuanPerbaikanController extends Controller
         foreach($notifikasiKadiv as $nk){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Perbaikan Alat TIK';
-        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara memperbaiki Alat TIK.'; 
+        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.'. Dimohon untuk segera memperbaiki Alat TIK.'; 
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanperbaikan';
@@ -85,7 +85,7 @@ class PengajuanPerbaikanController extends Controller
         foreach($notifikasiAdmin as $na){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Perbaikan Alat TIK';
-        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.'. Dimohon untuk segara memperbaiki Alat TIK.'; 
+        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.'. Dimohon untuk segera memperbaiki Alat TIK.'; 
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanperbaikan';
@@ -181,7 +181,7 @@ class PengajuanPerbaikanController extends Controller
         foreach($notifikasiKadiv as $nk){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Perbaikan Alat TIK';
-        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.' sudah diperbaiki. Dimohon untuk segara mengatarkan barang.'; 
+        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.' sudah diperbaiki. Dimohon untuk segera mengantarkan barang.'; 
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanperbaikan';
@@ -195,7 +195,7 @@ class PengajuanPerbaikanController extends Controller
         foreach($notifikasiAdmin as $na){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Perbaikan Alat TIK';
-        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.' sudah diperbaiki. Dimohon untuk segara mengatarkan barang.';
+        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.' sudah diperbaiki. Dimohon untuk segera mengantarkan barang.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanperbaikan';
