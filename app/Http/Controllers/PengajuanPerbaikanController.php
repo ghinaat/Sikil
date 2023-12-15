@@ -195,7 +195,7 @@ class PengajuanPerbaikanController extends Controller
         foreach($notifikasiAdmin as $na){
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Perbaikan Alat TIK';
-        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.' sudah diperbaki. Dimohon untuk segara mengatarkan barang.';
+        $notifikasi->pesan =  'Pengajuan Perbaikan Alat TIK dari '.$pengguna->nama_pegawai.' sudah diperbaiki. Dimohon untuk segara mengatarkan barang.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->link = '/ajuanperbaikan';
