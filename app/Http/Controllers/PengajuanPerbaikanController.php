@@ -57,7 +57,7 @@ class PengajuanPerbaikanController extends Controller
         $pengguna = User::where('id_users', $perbaikanBarang->id_users)->first();
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Perbaikan Alat TIK';
-        $notifikasi->pesan = 'Pengajuan Perbaikan Alat TIK anda sudah berhasil dikirimkan.  Kami telah mengirimkan notifikasi untuk memproses pengajuanmu.';
+        $notifikasi->pesan = 'Pengajuan Perbaikan Alat TIK anda sudah berhasil dikirimkan.  Kami telah mengirimkan notifikasi untuk memproses pengajuan anda.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->send_email = 'yes';
@@ -159,7 +159,7 @@ class PengajuanPerbaikanController extends Controller
             $notifikasi->pesan = 'Permintaan perbaikan perangkat TIK Anda sedang diproses. Harap menunggu pemberitahuan selanjutnya.';
             $notifikasi->is_dibaca = 'tidak_dibaca';
             $notifikasi->label = 'info';
-            $notifikasi->send_email = 'yes';
+            $notifikasi->send_email = 'no';
             $notifikasi->link = '/ajuanperbaikan';  
             $notifikasi->id_users = $pengguna->id_users;
             $notifikasi->save();
@@ -167,7 +167,7 @@ class PengajuanPerbaikanController extends Controller
         $pengguna = User::where('id_users', $perbaikanBarang->id_users)->first();
         $notifikasi = new Notifikasi();
         $notifikasi->judul = 'Pengajuan Perbaikan Alat TIK';
-        $notifikasi->pesan = 'Pengajuan Perbaikan Alat TIK anda sudah diperbaiki. Harap menunggu barang segera diantarkan';
+        $notifikasi->pesan = 'Pengajuan Perbaikan Alat TIK anda sudah diperbaiki. Harap menunggu barang segera diantarkan.';
         $notifikasi->is_dibaca = 'tidak_dibaca';
         $notifikasi->label = 'info';
         $notifikasi->send_email = 'yes';

@@ -242,9 +242,9 @@
                     <div class="form-group">
                         <label for="keterangan_operator" class='form-label'>Keterangan Operator</label>
                         <div class="form-input">
-                            <textarea row="3" name="keterangan_operator" id="keterangan_operator" class="form-control 
-                            @error('keterangan_operator') is-invalid @enderror"
-                                required>{{old('keterangan_operator', $pk->keterangan_operator)}}</textarea>
+                            <textarea row="3" name="keterangan_operator" id="keterangan_operator"
+                                class="form-control 
+                            @error('keterangan_operator') is-invalid @enderror">{{old('keterangan_operator', $pk->keterangan_operator)}}</textarea>
                             @error('keterangan_operator') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                     </div>
