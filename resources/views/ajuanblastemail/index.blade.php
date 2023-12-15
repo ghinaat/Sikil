@@ -259,11 +259,7 @@
     </div>
 </div>
 @endforeach
-
-
-
 @stop
-
 @push('js')
 <form action="" id="delete-form" method="post">
     @method('delete')

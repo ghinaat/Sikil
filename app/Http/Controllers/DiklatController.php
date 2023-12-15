@@ -80,7 +80,7 @@ class DiklatController extends Controller
 
         $diklat->save();
 
-        return redirect()->back()->with('success_message', 'Data telah tersimpan');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
@@ -124,7 +124,7 @@ class DiklatController extends Controller
         $diklat = Diklat::find($id_diklat);
 
         if (! $diklat) {
-            return redirect()->route('diklat.index')->with('error_message', 'Data tidak ditemukan');
+            return redirect()->route('diklat.index')->with('error_message', 'Data tidak ditemukan.');
         }
 
         $diklat->id_users = $request->id_users;
@@ -150,7 +150,7 @@ class DiklatController extends Controller
 
         $diklat->save();
 
-        return redirect()->back()->with('success_message', 'Data telah tersimpan');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     /**
@@ -164,6 +164,6 @@ class DiklatController extends Controller
             $diklat->save();
         }
 
-        return redirect()->back()->with('success_message', 'Data telah terhapus');
+        return redirect()->back()->with('success_message', 'Data telah terhapus.');
     }
 }

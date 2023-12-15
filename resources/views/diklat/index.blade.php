@@ -159,8 +159,7 @@
                                                     @enderror
                                                     <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
                                                     @if ($dk->file_sertifikat)
-                                                    <p>Previous File: <a
-                                                            href="{{ asset('/storage/file_sertifikat/' . $dk->file_sertifikat) }}"
+                                                    <p>Previous File: <a href="{{ asset('/storage/file_sertifikat/' . $dk->file_sertifikat) }}"
                                                             target="_blank">{{ $dk->file_sertifikat }}</a></p>
                                                     @endif
                                                 </div>

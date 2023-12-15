@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('keterangan_operator', 255)->nullable();
             $table->enum('status', ['diajukan', 'ready']);
             $table->enum('is_deleted', ['0', '1'])->default('0');  
-            $table->foreign('id_users')->references('id_users')->on('users');       
+            $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');       
             $table->timestamps();
         });
     }

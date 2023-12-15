@@ -94,10 +94,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="file">File</label><br>
-                                        <input type="file" class="form-control" id="file" enctype="multipart/form-data" name="file"accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx">
+                                        <input type="file" class="form-control @error('file_sertifikat') is-invalid @enderror" 
+                                        id="file" enctype="multipart/form-data" name="file" 
+                                        accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx">
                                         @error('file') <span class="invalid" role="alert">{{$message}}</span> @enderror
                                         <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
-                                        @error('file')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                             </div>
@@ -149,11 +150,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="file">File</label><br>
-                                            <input type="file" name="file" id="file" class="form-control" accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx">
+                                            <input type="file" name="file" id="file" class="form-control @error('file_sertifikat') is-invalid @enderror" 
+                                            accept="image/jpeg, image/jpg, image/png, application/pdf, application/docx">
                                             @error('file') <span class="text-danger">{{ $message }}</span> @enderror
                                         <small class="form-text text-muted">Allow file extensions : .jpeg .jpg .png .pdf .docx</small>
+                                        @if ($ap->file)
                                         <p>Previous File: <a href="{{ asset('/storage/arsip/'. $ap->file) }}"
                                                 target="_blank">{{ $ap->file }}</a></p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

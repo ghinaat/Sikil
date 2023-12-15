@@ -96,7 +96,7 @@ class KeluargaController extends Controller
         $keluarga->status = $request->status;
         $keluarga->save();
 
-        return redirect()->back()->with('success_message', 'Data telah dihapus.');
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }
 
     public function destroy($id_keluarga)

@@ -433,13 +433,16 @@ return [
                     'url' => '/ajuansinglelink',
                     'can' => '',
                 ],           
-           
-            
                 [
                     'text' => 'Blast Email',
                     'url' => '/ajuanblastemail',
                     'can' => '',
-                ],  
+                ], 
+                [
+                    'text' => 'Desain',
+                    'url' => '/ajuandesain',
+                    'can' => '',
+                ],   
 
             ],
         ],
