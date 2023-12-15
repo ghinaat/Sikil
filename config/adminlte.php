@@ -433,8 +433,6 @@ return [
                     'url' => '/ajuansinglelink',
                     'can' => '',
                 ],           
-           
-            
                 [
                     'text' => 'Blast Email',
                     'url' => '/ajuanblastemail',
@@ -445,13 +443,16 @@ return [
                     'url' => '/ajuanform',
                     'can' => '',
                 ],
-
                 [
                     'text' => 'Perbaikan Alat TIK',
                     'url' => '/perbaikanBarang',
                     'can' => '',
                 ],  
-
+                [
+                    'text' => 'Desain',
+                    'url' => '/ajuandesain',
+                    'can' => '',
+                ],   
             ],
         ],
         [

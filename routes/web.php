@@ -22,6 +22,7 @@ use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PengajuanZoomController;
+use App\Http\Controllers\PengajuanDesainController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\BarangPprController;
 use App\Http\Controllers\SirkulasiBarangController;
@@ -297,8 +298,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/ajuanzoom/{id_pengajuan_zoom}', [PengajuanZoomController::class, 'show'])->name('ajuanzoom.show');
 });
 
-
-
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/perbaikanBarang', [PengajuanPerbaikanController::class, 'index'])->name('ajuanperbaikan.index');
     Route::post('/perbaikanBarang', [PengajuanPerbaikanController::class, 'store'])->name('ajuanperbaikan.store');
@@ -314,4 +313,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/ajuanform/update/{id_pengajuan_form}', [PengajuanFormController::class, 'update'])->name('ajuanform.update');
     Route::delete('/ajuanform/{id_pengajuan_form}', [PengajuanFormController::class, 'destroy'])->name('ajuanform.destroy');
 
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/ajuandesain', [PengajuanDesainController::class, 'index'])->name('ajuandesain.index');
+    Route::post('/ajuandesain', [PengajuanDesainController::class, 'store'])->name('ajuandesain.store');
+    Route::put('/ajuandesain/update/{id_pengajuan_desain}', [PengajuanDesainController::class, 'update'])->name('ajuandesain.update');
+    Route::delete('/ajuandesain/{id_pengajuan_desain}', [PengajuanDesainController::class, 'destroy'])->name('ajuandesain.destroy');
+    Route::get('/ajuandesain/{id_pengajuan_desain}', [PengajuanDesainController::class, 'show'])->name('ajuandesain.show');
 });

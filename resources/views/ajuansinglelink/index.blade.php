@@ -1,7 +1,7 @@
 @extends('adminlte::page')
-@section('title', 'List Single Link')
+@section('title', 'List Pengajuan Single Link')
 @section('content_header')
-<h1 class="m-0 text-dark">Single Link</h1>
+<h1 class="m-0 text-dark">Pengajuan Single Link</h1>
 @stop
 @section('content')
 <div class="row">
@@ -57,6 +57,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            
                             <!-- Edit Modal -->
                             <div class="modal fade" id="editModal{{$as->id_pengajuan_singlelink}}" tabindex="-1" role="dialog"
                                 aria-labelledby="editModalLabel{{$as->id_pengajuan_singlelink}}" aria-hidden="true">
@@ -117,12 +118,12 @@
                                                     <label for="status" class="col-sm-3 col-form-label">Status</label>
                                                     <div class="col-sm-9">
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="status" value="diajukan" id="diajukanRadio" {{ old('status', $as->status) == 'diajukan' ? 'checked' : '' }}>
-                                                            <label class="form-check-label" for="diajukanRadio">Diajukan</label>
+                                                            <input class="form-input" type="radio" name="status" value="diajukan" id="diajukanRadio" {{ old('status', $as->status) == 'diajukan' ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="diajukanRadio">&nbsp;Diajukan</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="status" value="ready" id="readyRadio" {{ old('status', $as->status) == 'ready' ? 'checked' : '' }}>
-                                                            <label class="form-check-label" for="readyRadio">Ready</label>
+                                                            <input class="form-input" type="radio" name="status" value="ready" id="readyRadio" {{ old('status', $as->status) == 'ready' ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="readyRadio">&nbsp;Ready</label>
                                                         </div>
                                                     </div>
                                                     @error('status')<span class="textdanger">{{$message}}</span>@enderror
@@ -242,4 +243,14 @@
         }
     }
 </script>
+@if(count($errors))
+<script>
+    Swal.fire({
+        title: 'Input tidak sesuai!',
+        text: 'Pastikan inputan sudah sesuai',
+        icon: 'error',
+    });
+
+</script>
+@endif
 @endpush
