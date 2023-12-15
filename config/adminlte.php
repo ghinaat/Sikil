@@ -437,13 +437,22 @@ return [
                     'text' => 'Blast Email',
                     'url' => '/ajuanblastemail',
                     'can' => '',
-                ], 
+                ],
+                [
+                    'text' => 'Google Form',
+                    'url' => '/ajuanform',
+                    'can' => '',
+                ],
+                [
+                    'text' => 'Perbaikan Alat TIK',
+                    'url' => '/perbaikanBarang',
+                    'can' => '',
+                ],  
                 [
                     'text' => 'Desain',
                     'url' => '/ajuandesain',
                     'can' => '',
                 ],   
-
             ],
         ],
         [

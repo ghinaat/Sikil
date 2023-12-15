@@ -51,19 +51,20 @@
                                             class="btn btn-info btn-xs mx-1">
                                             <i class="fa fa-info-circle"></i>
                                         </a>
-                                          @if(auth()->user()->id_users == $pz->id_users || auth()->user()->level == 'admin')
-                                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                                        data-target="#editModal{{$pz->id_pengajuan_zoom}}"
-                                                        data-id="{{$pz->id_pengajuan_zoom}}">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    &nbsp;
-                                                    <a href="{{route('ajuanzoom.destroy', $pz->id_pengajuan_zoom)}}"
-                                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                                        class="btn btn-danger btn-xs">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                            @endif
+                                        @if(auth()->user()->id_users == $pz->id_users || auth()->user()->level ==
+                                        'admin')
+                                        <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                            data-target="#editModal{{$pz->id_pengajuan_zoom}}"
+                                            data-id="{{$pz->id_pengajuan_zoom}}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        &nbsp;
+                                        <a href="{{route('ajuanzoom.destroy', $pz->id_pengajuan_zoom)}}"
+                                            onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
+                                            class="btn btn-danger btn-xs">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                        @endif
                                         @elseif($pz->status == "ready" )
                                         <a href="{{ route('ajuanzoom' . '.show', $pz->id_pengajuan_zoom) }}"
                                             class="btn btn-info btn-xs mx-1">
@@ -152,18 +153,20 @@
                                 @error('tgl_pelaksanaan') <span class="textdanger">{{$message}}</span> @enderror
                             </div>
                         </div>
-                       <div class="form-group">
+                        <div class="form-group">
                             <label for="tgl_pelaksanaan" class='form-label'>Waktu Pelaksanaan (WIB)</label>
                             <div class="form-input">
-                            <div class="form-inline">
-                                <input type="time" class="form-control @error('jam_mulai') is-invalid @enderror custom-time-input mr-2"
-                                    id="jam_mulai" name="jam_mulai" value="{{ old('jam_mulai')}}">
-                                @error('jam_mulai') <span class="text-danger">{{$message}}</span> @enderror
-                                <small><b>s/d</b></small>
-                                <input type="time" class="form-control @error('jam_selesai') is-invalid @enderror custom-time-input ml-2"
-                                    id="jam_selesai" name="jam_selesai" value="{{ old('jam_selesai')}}">
-                                @error('jam_selesai') <span class="text-danger">{{$message}}</span> @enderror
-                            </div>
+                                <div class="form-inline">
+                                    <input type="time"
+                                        class="form-control @error('jam_mulai') is-invalid @enderror custom-time-input mr-2"
+                                        id="jam_mulai" name="jam_mulai" value="{{ old('jam_mulai')}}">
+                                    @error('jam_mulai') <span class="text-danger">{{$message}}</span> @enderror
+                                    <small><b>s/d</b></small>
+                                    <input type="time"
+                                        class="form-control @error('jam_selesai') is-invalid @enderror custom-time-input ml-2"
+                                        id="jam_selesai" name="jam_selesai" value="{{ old('jam_selesai')}}">
+                                    @error('jam_selesai') <span class="text-danger">{{$message}}</span> @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -263,16 +266,19 @@
                     </div>
                     <div class="form-group">
                         <label for="tgl_pelaksanaan" class='form-label'>Waktu Pelaksanaan (WIB)</label>
-                           <div class="form-input">
+                        <div class="form-input">
                             <div class="form-inline">
-                            <input type="time" class="form-control @error('jam_mulai') is-invalid @enderror custom-time-input mr-2"
-                                id="jam_mulai" name="jam_mulai" value="{{ $pz->jam_mulai ?? old('jam_mulai')}}">
-                            @error('jam_mulai') <span class="textdanger">{{$message}}</span> @enderror
-                        <small><b>s/d</b></small>
-                            <input type="time" class="form-control @error('jam_selesai') is-invalid @enderror custom-time-input ml-2"
-                                id="jam_selesai" name="jam_selesai" value="{{$pz->jam_selesai ?? old('jam_selesai')}}">
-                            @error('jam_selesai') <span class="textdanger">{{$message}}</span> @enderror
-                        </div>
+                                <input type="time"
+                                    class="form-control @error('jam_mulai') is-invalid @enderror custom-time-input mr-2"
+                                    id="jam_mulai" name="jam_mulai" value="{{ $pz->jam_mulai ?? old('jam_mulai')}}">
+                                @error('jam_mulai') <span class="textdanger">{{$message}}</span> @enderror
+                                <small><b>s/d</b></small>
+                                <input type="time"
+                                    class="form-control @error('jam_selesai') is-invalid @enderror custom-time-input ml-2"
+                                    id="jam_selesai" name="jam_selesai"
+                                    value="{{$pz->jam_selesai ?? old('jam_selesai')}}">
+                                @error('jam_selesai') <span class="textdanger">{{$message}}</span> @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -322,7 +328,10 @@
                     <div class="form-group">
                         <label for="tautan_zoom" class='form-label'>Tautan Zoom</label>
                         <div class="form-input">
-                            <textarea name="tautan_zoom" id="" cols="60" rows="5">{{$pz->tautan_zoom}}</textarea>
+                            <textarea row="3" name="tautan_zoom" id="tautan_zoom" class="form-control 
+                            @error('tautan_zoom') is-invalid @enderror"
+                                required>{{old('tautan_zoom', $pz->tautan_zoom)}}</textarea>
+                            @error('tautan_zoom') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -370,11 +379,16 @@
 $(document).ready(function() {
     var table = $('#example2').DataTable({
         "responsive": true,
-        "order": [[1, 'desc']]
+        "order": [
+            [1, 'desc']
+        ]
     });
 
     table.on('order.dt search.dt', function() {
-        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function(cell, i) {
+        table.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function(cell, i) {
             cell.innerHTML = i + 1;
         });
     }).draw();

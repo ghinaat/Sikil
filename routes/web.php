@@ -16,6 +16,7 @@ use App\Http\Controllers\LemburController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\PendidikanController;
 use App\Http\Controllers\PengajuanBlastemailController;
+use App\Http\Controllers\PengajuanFormController;
 use App\Http\Controllers\PengalamanKerjaController;
 use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\PresensiController;
@@ -32,6 +33,7 @@ use App\Http\Controllers\TingkatPendidikanController;
 use App\Http\Controllers\UrlController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AjuanSuratController;
+use App\Http\Controllers\PengajuanPerbaikanController;
 use App\Models\BarangTik;
 use Illuminate\Support\Facades\Route;
 use Svg\Tag\Group;
@@ -294,6 +296,23 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/ajuanzoom/update/{id_pengajuan_zoom}', [PengajuanZoomController::class, 'update'])->name('ajuanzoom.update');
     Route::delete('/ajuanzoom/{id_pengajuan_zoom}', [PengajuanZoomController::class, 'destroy'])->name('ajuanzoom.destroy');
     Route::get('/ajuanzoom/{id_pengajuan_zoom}', [PengajuanZoomController::class, 'show'])->name('ajuanzoom.show');
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/perbaikanBarang', [PengajuanPerbaikanController::class, 'index'])->name('ajuanperbaikan.index');
+    Route::post('/perbaikanBarang', [PengajuanPerbaikanController::class, 'store'])->name('ajuanperbaikan.store');
+    Route::get('/perbaikanBarang/{id_pengajuan_perbaikan}', [PengajuanPerbaikanController::class, 'show'])->name('ajuanperbaikan.show');
+    Route::put('/perbaikanBarang/update/{id_pengajuan_perbaikan}', [PengajuanPerbaikanController::class, 'update'])->name('ajuanperbaikan.update');
+    Route::delete('/perbaikanBarang/{id_pengajuan_perbaikan}', [PengajuanPerbaikanController::class, 'destroy'])->name('ajuanperbaikan.destroy');
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/ajuanform', [PengajuanFormController::class, 'index'])->name('ajuanform.index');
+    Route::post('/ajuanform', [PengajuanFormController::class, 'store'])->name('ajuanform.store');
+    Route::get('/ajuanform/{id_pengajuan_form}', [PengajuanFormController::class, 'show'])->name('ajuanform.show');
+    Route::put('/ajuanform/update/{id_pengajuan_form}', [PengajuanFormController::class, 'update'])->name('ajuanform.update');
+    Route::delete('/ajuanform/{id_pengajuan_form}', [PengajuanFormController::class, 'destroy'])->name('ajuanform.destroy');
+
 });
 
 Route::group(['middleware' => ['auth']], function () {

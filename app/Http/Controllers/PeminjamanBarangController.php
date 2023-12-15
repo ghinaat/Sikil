@@ -138,7 +138,7 @@ class PeminjamanBarangController extends Controller
 
 
         $peminjaman->save();
-        if ($peminjaman->status === 'dipinjam') {
+        if ($peminjaman->status == 'dipinjam') {
             // Update status peminjaman
             $peminjaman->status = 'dipinjam';
             $peminjaman->save();
@@ -146,6 +146,13 @@ class PeminjamanBarangController extends Controller
             // Update status detail peminjaman yang terkait
             $detailPeminjaman = DetailPeminjamanBarang::where('id_peminjaman', $id_peminjaman)->update(['status' => 'dipinjam']);
       
+        }elseif ($peminjaman->status == 'belum_diajukan'){
+            $peminjaman->status = 'belum_diajukan';
+            $peminjaman->save();
+        
+            // Update status detail peminjaman yang terkait
+            $detailPeminjaman = DetailPeminjamanBarang::where('id_peminjaman', $id_peminjaman)->update(['status' => null]);
+            
         }
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
     }

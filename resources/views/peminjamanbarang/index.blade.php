@@ -34,8 +34,8 @@
                             @endphp
                             @foreach($sortedPeminjaman as $key => $pj)
                             <tr>
-                                <td ></td>
-                                <td >{{ \Carbon\Carbon::parse($pj->tgl_peminjaman)->format('d M Y') }}</td>
+                                <td></td>
+                                <td>{{ \Carbon\Carbon::parse($pj->tgl_peminjaman)->format('d M Y') }}</td>
                                 <td>{{$pj->kegiatan}}</td>
                                 <td>{{$pj->users->nama_pegawai}}</td>
                                 <td>@if($pj->status == 'belum_diajukan')
@@ -50,50 +50,51 @@
                                     Diajukan
                                     @endif</td>
                                 <td>
-                                <a href="{{ route('peminjaman' . '.show', $pj->id_peminjaman) }}"
-                                            class="btn btn-info btn-xs mx-1">
-                                            <i class="fa fa-rectangle-list"></i>
-                                </a>
+                                    <a href="{{ route('peminjaman' . '.show', $pj->id_peminjaman) }}"
+                                        class="btn btn-info btn-xs mx-1">
+
+                                    </a>
                                 </td>
                                 <td>
                                     <div class='btn-group'>
-                                    @if($pj->status == "belum_diajukan" )
-                                       @if(auth()->user()->id_users == $pj->id_users || auth()->user()->level == 'admin')
+                                        @if($pj->status == "belum_diajukan" )
+                                        @if(auth()->user()->id_users == $pj->id_users || auth()->user()->level ==
+                                        'admin')
                                         <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                                    data-target="#editModal{{$pj->id_peminjaman}}"
-                                                    data-id="{{$pj->id_peminjaman}}">
-                                                    <i class="fa fa-edit"></i>
+                                            data-target="#editModal{{$pj->id_peminjaman}}"
+                                            data-id="{{$pj->id_peminjaman}}">
+                                            <i class="fa fa-edit"></i>
                                         </a>
                                         &nbsp;
                                         <a href="{{route('peminjaman.destroy', $pj->id_peminjaman)}}"
-                                                    onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                                    class="btn btn-danger btn-xs">
-                                                    <i class="fa fa-trash"></i>
+                                            onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
+                                            class="btn btn-danger btn-xs">
+                                            <i class="fa fa-trash"></i>
                                         </a>
                                         @else
                                         -
                                         @endif
-                                    <!-- @include('components.action-buttons', ['id' => $pj->id_peminjaman, 'key' => $key,
+                                        <!-- @include('components.action-buttons', ['id' => $pj->id_peminjaman, 'key' => $key,
                                     'route' => 'peminjaman']) -->
-                                    @else
+                                        @else
                                         @if(auth()->user()->level != 'admin')
-                                    <i class="fas fa-check-circle  fa-2x"
-                                                style="color: #42e619; align-items: center;"></i>
-                                    @endif
-                                    @can('isAdmin', 'isKadiv')
-                                    <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                                data-target="#editModal{{$pj->id_peminjaman}}"
-                                                data-id="{{$pj->id_peminjaman}}">
-                                                <i class="fa fa-edit"></i>
-                                    </a>
-                                    <!-- <a href="{{route('peminjaman.destroy', $pj->id_peminjaman)}}"
+                                        <i class="fas fa-check-circle  fa-2x"
+                                            style="color: #42e619; align-items: center;"></i>
+                                        @endif
+                                        @can('isAdmin', 'isKadiv')
+                                        <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                            data-target="#editModal{{$pj->id_peminjaman}}"
+                                            data-id="{{$pj->id_peminjaman}}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <!-- <a href="{{route('peminjaman.destroy', $pj->id_peminjaman)}}"
                                                 onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
                                                 class="btn btn-danger btn-xs">
                                                 <i class="fa fa-trash"></i>
                                     </a> -->
-                                    @endcan
-                                    @endif
-                                    </div>  
+                                        @endcan
+                                        @endif
+                                    </div>
                                 </td>
                             </tr>
                             @php
@@ -187,7 +188,7 @@
                     class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                  
+
                     <div class="form-body">
                         <input type="hidden" name="id_users"
                             value="@if(isset($id_users)) {{ $id_users }} @else {{ Auth::user()->id_users }} @endif">
@@ -286,11 +287,16 @@
 $(document).ready(function() {
     var table = $('#example2').DataTable({
         "responsive": true,
-        "order": [[1, 'desc']]
+        "order": [
+            [1, 'desc']
+        ]
     });
 
     table.on('order.dt search.dt', function() {
-        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function(cell, i) {
+        table.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function(cell, i) {
             cell.innerHTML = i + 1;
         });
     }).draw();
@@ -304,7 +310,6 @@ function notificationBeforeDelete(event, el) {
         $("#delete-form").submit();
     }
 }
-
 </script>
 
 @if(count($errors))
