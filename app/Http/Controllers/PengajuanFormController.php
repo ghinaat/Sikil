@@ -170,7 +170,7 @@ class PengajuanFormController extends Controller
                 $form->tautan_form = null ;   
             }
         
-            if($request->hasFile('template_form')) {
+            if($request->hasFile('template')) {
                 if ($form->template) {
                     Storage::disk('public')->delete('template_form/'.$form->template);
                 }
@@ -178,7 +178,7 @@ class PengajuanFormController extends Controller
                 $fileName = Str::random(10).'.'.$file->getClientOriginalExtension();
                 $file->storeAs('template_form', $fileName, 'public');
                 
-                $form->lampiran = $fileName;
+                $form->template = $fileName;
             }
             
         if($request->status == 'ready'){
@@ -218,7 +218,7 @@ class PengajuanFormController extends Controller
             $form->shortlink = $request->shortlink ;
             $form->kolaborator = $request->kolaborator ;
             $form->keterangan_pemohon = $request->keterangan_pemohon ;
-            if($request->hasFile('template_form')) {
+            if($request->hasFile('template')) {
 
                 if ($form->template) {
                     Storage::disk('public')->delete('template_form/'.$form->template);
@@ -227,7 +227,7 @@ class PengajuanFormController extends Controller
                 $fileName = Str::random(10).'.'.$file->getClientOriginalExtension();
                 $file->storeAs('template_form', $fileName, 'public');
                 
-                $form->lampiran = $fileName;
+                $form->template = $fileName;
             }
             $form->save();
 

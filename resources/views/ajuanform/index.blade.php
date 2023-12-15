@@ -4,7 +4,23 @@
 <h1 class="m-0 text-dark">Pengajuan Google Form</h1>
 
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<style>
+    @media (max-width: 767px) {
+    .modal-header .modal-title {
+        white-space: nowrap; /* Mencegah teks untuk tidak wrap ke baris berikutnya */
+        font-size: 17px;
+    }
 
+    .form-input .radioInd {
+        margin-right: 15px;
+    }
+    
+    .form-input .radioInd label {
+        font-weight: normal;
+        margin-right: 0; /* Menghilangkan margin-right sebelumnya */
+    }
+}
+</style>    
 @stop
 @section('content')
 <div class="row">
@@ -87,7 +103,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addModalLabel">Tambah Pengajuan Google Form</h5>
+                <h5 class="modal-title" id="addModalLabel" style="">Tambah Pengajuan Google Form</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -114,8 +130,8 @@
                     <div class="form-group" style="align-items: flex-start;">
                         <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
                         <div class="form-input">
-                            <textarea rows="3" type="text" class="form-control @error('nama_kegiatan') is-invalid @enderror"
-                                id="nama_kegiatan" name="nama_kegiatan"  required></textarea>
+                            <input rows="3" type="text" class="form-control @error('nama_kegiatan') is-invalid @enderror"
+                                id="nama_kegiatan" name="nama_kegiatan"  required></input>
                         @error('nama_kegiatan') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -129,13 +145,18 @@
                     </div>
                     <div class="form-group">
                         <label for="bahasa" class="form-label">Bahasa</label>
-                        <div class="form-input">
-                            <div class="form-inline">
-                                <input type="radio" name="bahasa" id="bahasa" value="Indonesia" >&nbsp;Indonesia&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                                <input type="radio" name="bahasa" id="bahasa" value="Inggris"  >&nbsp;Inggris<br>
-                            </div>
+                        <div class="form-input form-inline">
+                            <label style="font-weight: normal;  margin-right: 25px;" class="radioInd">
+                                <input type="radio" name="bahasa" id="bahasa" value="Indonesia">
+                                    &nbsp;Indonesia
+                            </label>
+                            <label style="font-weight: normal;">
+                                <input type="radio" name="bahasa" id="bahasa" value="Inggris">
+                                &nbsp;Inggris
+                            </label>
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <label for="shortlink" class="form-label">Nama Shortlink</label>
                         <div class="form-input">
@@ -241,17 +262,17 @@
                     <div class="form-group " style="align-items: flex-start;">
                         <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
                         <div class="form-input">
-                            <textarea rows="3" type="text" class="form-control @error('nama_kegiatan') is-invalid @enderror"
-                                id="nama_kegiatan" name="nama_kegiatan" value="" required>{{old('nama_kegiatan', $form->nama_kegiatan)}}</textarea>
+                            <input type="text" class="form-control @error('nama_kegiatan') is-invalid @enderror"
+                                id="nama_kegiatan" name="nama_kegiatan" value="{{old('nama_kegiatan', $form->nama_kegiatan)}}" required>
                         @error('nama_kegiatan') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="bahasa" class="form-label">Bahasa</label>
-                        <div class="form-check form-check-inline">
-                            <label style="display: inline-flex; align-items: center; margin-right: 50px; font-weight: normal;">
+                        <div class="form-input form-inline">
+                            <label style="font-weight: normal;  margin-right: 25px;" class="radioInd">
                                 <input type="radio" name="bahasa" id="bahasa" value="Indonesia" @if ($form->bahasa === 'Indonesia') checked @endif>
-                                &nbsp;Indonesia
+                                    &nbsp;Indonesia
                             </label>
                             <label style="font-weight: normal;">
                                 <input type="radio" name="bahasa" id="bahasa" value="Inggris" @if ($form->bahasa === 'Inggris') checked @endif>
