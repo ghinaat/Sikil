@@ -2,6 +2,8 @@
 @section('title', 'Detail Pengajuan Blast Email')
 @section('content_header')
 <link rel="stylesheet" href="{{ asset('css/show.css') }}">
+<link rel="stylesheet" href="{{asset('fontawesome-free-6.4.2\css\all.min.css')}}">
+
 <h1 class="m-0 text-dark">Detail Pengajuan Blast Email</h1>
 @stop
 @section('content')
@@ -37,8 +39,10 @@
                 <div class="form-group">
                     <label for="kelengkapan" class="form-label">Lampiran Dokumen</label>
                     <div class="form-input">
-                        : &nbsp;&nbsp;<a href="{{ asset('/storage/lampiran_blast_email/'. $BlastEmail->lampiran) }}" download>
-                                    <i class="fas fa-download" style="display: inline-block; line-height: normal; vertical-align: middle;"></i>
+                        : &nbsp;<a href="{{ asset('/storage/lampiran_blast_email/'. $BlastEmail->lampiran) }}" download>
+                                    <i class="fas fa-download" >
+                                        <span style="font-size: 12px; font-family: Arial, sans-serif;">Download</span>
+                                    </i>
                                 </a>
                     </div>
                 </div>

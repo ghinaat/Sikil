@@ -59,7 +59,9 @@
                     <div class="form-input">
                         @if ($form->template)
                             :&nbsp;<a href="{{ asset('/storage/template_form/'.$form->template) }}" download>
-                                        <i class="fa-solid fa-download" ></i>
+                                        <i class="fas fa-download" >
+                                            <span style="font-size: 12px; font-family: Arial, sans-serif;">Download</span>
+                                        </i>
                                     </a>
                         @else
                             :&nbsp; -
