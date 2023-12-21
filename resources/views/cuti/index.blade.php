@@ -1,7 +1,10 @@
 @extends('adminlte::page')
 @section('title', 'List Cuti')
 @section('content_header')
-<h1 class="m-0 text-dark">Jatah Cuti</h1>
+<?php
+$tahunAktif = now()->year;
+?>
+<h1 class="m-0 text-dark">Jatah Cuti: {{$tahunAktif}}</h1>
 @stop
 @section('content')
 <div class="row">
@@ -14,7 +17,6 @@
                         Tambah
                     </button>
                     <a href="{{ route('cuti.xlsx') }}" class="btn btn-primary">Unduh Excel</a>
-                              
                 </div>
                 @endcan
                 <div class="table-responsive">

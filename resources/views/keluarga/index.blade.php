@@ -53,7 +53,7 @@
                                     @endif
                                 </td>
 
-                                <td>{{$kel->status}}</td>
+                                <td>{{ucfirst(strtolower($kel->status))}}</td>
                                 <td>
                                     @include('components.action-buttons', ['id' => $kel->id_keluarga, 'key' => $key,
                                     'route' => 'keluarga'])

@@ -24,9 +24,7 @@
                                 <th>Tahun</th>
                                 <th>Jumlah</th>
                                 <th>Keterangan</th>
-                                @can('isAdmin')
                                 <th style="width:189px;">Aksi</th>
-                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -37,13 +35,13 @@
                                 <td id={{$key+1}}>{{$bp->tahun_pembuatan}}</td>
                                 <td id={{$key+1}}>{{$bp->jumlah}}</td>
                                 <td id={{$key+1}}>{{$bp->keterangan}}</td>
-                                @can('isAdmin')
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('barangppr' . '.show', $bp->id_barang_ppr) }}"
                                             class="btn btn-info btn-xs mx-1">
                                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                                         </a>
+                                        @if(auth()->user()->level === 'admin')
                                         <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
                                             data-target="#editModal{{$bp->id_barang_ppr}}"
                                             data-id="{{$bp->id_barang_ppr}}">
@@ -54,9 +52,9 @@
                                             class="btn btn-danger btn-xs mx-1">
                                             <i class="fa fa-trash"></i>
                                         </a>
+                                        @endif
                                     </div>
                                 </td>
-                                @endcan
                             </tr>
 
                             <!-- Edit Modal -->

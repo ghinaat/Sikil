@@ -51,7 +51,7 @@ class PengajuanBlastemailController extends Controller
             'jenis_blast' => 'required',
             'nama_kegiatan' => 'required',
             'keterangan_pemohon' => 'required',
-            'lampiran' => 'required|mimes:doc,docx,xlsx,zip',
+            'lampiran' => 'required|mimes:doc,docx,xlsx,zip,rar',
             
         ]);
         
@@ -140,7 +140,7 @@ class PengajuanBlastemailController extends Controller
             'jenis_blast' => 'required',
             'nama_kegiatan' => 'required',
             'keterangan_pemohon' => 'required',
-            'lampiran' => 'nullable|mimes:doc,docx,xlsx,zip',
+            'lampiran' => 'nullable|mimes:doc,docx,xlsx,zip,rar',
             'nama_operator' => 'required',
             'status' => 'required',
             'keterangan_operator'=> 'required',

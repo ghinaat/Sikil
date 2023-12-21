@@ -76,10 +76,14 @@ class CutiController extends Controller
         return redirect()->route('cuti.index')->with('success_message', 'Data telah tersimpan');
     }
 
-    public function destroy(Cuti $cuti)
+    public function destroy($id_cuti)
     {
-        $cuti->delete();
+        $cuti = Cuti::find($id_cuti);
+        if ($cuti) {
+            $cuti->is_deleted = '1';
+            $cuti->save();
+        }
 
-        return redirect()->route('cuti.index')->with('success_message', 'Data telah tersimpan');
+        return redirect()->back()->with('success_message', 'Data telah terhapus.');
     }
 }

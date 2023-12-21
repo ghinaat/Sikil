@@ -56,7 +56,7 @@
 
     <hr>
 
-    <h2 class="mb-4">Kegiatan Yang Sedang Berlangsung</h2>
+    <h2 class="mb-4">Kegiatan Sedang Berlangsung</h2>
     @foreach ($kegiatans as $kegiatan)
     <div class="row">
         <div class="col">

@@ -42,7 +42,7 @@
                 <div class="box-1 mt-md-0 mt-5">
                     <img src="https://source.unsplash.com/random/600x1000?nature" class="image" alt="Random Image">
                     <div class="text">
-                        <p>"Ing Ngarso Sung Tulodo, Ing Madyo Mangun Karsa, Tut Wuri Handayani"</p>
+                        <p>"SEAMEO QITEP in Language: Prioritising Language, Advancing Education"</p>
                     </div>
                 </div>
 
@@ -50,8 +50,8 @@
 
                 <div class=" box-2 d-flex flex-column h-100">
                     <div class="mt-auto mb-auto">
-                        <p class="heading mb-3 h-1 text-black">Holla!</p>
-                        <p class="desc p-color-2 mb-3 text-black">Selamat datang kembali, di siklis.</p>
+                        <img src="images\qitep.png" alt="Logo" class="logo mb-3">
+                        <p class="desc p-color-2 mb-3 text-black">Sistem Informasi Kepegawaian & Layanan Internal SEAQIL.</p>
                         <div class="d-flex flex-column">
                             <div class="mt-5">
                                 @if (session()->has('error'))
