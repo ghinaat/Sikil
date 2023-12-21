@@ -10,11 +10,11 @@
         font-size: 24px;
     }
 
-    h2{
+    h2 {
         font-size: 24px;
     }
 
-    h3{
+    h3 {
         font-size: 20px;
     }
 }
@@ -29,7 +29,7 @@
             <div class="small-box bg-gradient-success">
                 <div class="inner">
                     <h3>{{ $staf_dinas_luar }}</h3>
-                    <p>Staf Dinas Luar</p>
+                    <p>Pegawai Dinas Luar</p>
                 </div>
                 <div class="icon"><i class="fas fa-plane-departure"></i></div>
             </div>
@@ -38,7 +38,7 @@
             <div class="small-box bg-gradient-warning">
                 <div class="inner">
                     <h3>{{ $staf_ijin }}</h3>
-                    <p>Staf Izin / Cuti</p>
+                    <p>Pegawai Izin / Cuti</p>
                 </div>
                 <div class="icon"><i class="fas fa-glass-cheers"></i></div>
             </div>
@@ -47,7 +47,7 @@
             <div class="small-box bg-gradient-danger">
                 <div class="inner">
                     <h3>{{ $staf_sakit }}</h3>
-                    <p>Staf Sakit</p>
+                    <p>Pegawai Sakit</p>
                 </div>
                 <div class="icon"><i class="fas fa-head-side-cough"></i></div>
             </div>
@@ -84,7 +84,7 @@
 
     <hr>
 
-    <h2 class="mb-4">Acara Tahun Ini</h2>
+    <h2 class="mb-4">Kegiatan Selanjutnya</h2>
     <table class="table">
         <thead>
             <tr>
@@ -97,7 +97,7 @@
         </thead>
         <tbody>
             @php
-                $nomor_urutan = 1;
+            $nomor_urutan = 1;
             @endphp
             @foreach ($all_kegiatan->where('tgl_mulai', '>', now())->sortBy('tgl_mulai') as $kegiatan)
             @if ($kegiatan->tgl_mulai > now())
@@ -106,10 +106,11 @@
                 <td>{{ $kegiatan->nama_kegiatan }}</td>
                 <td>{{ \Carbon\Carbon::parse($kegiatan->tgl_mulai)->format('d M Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($kegiatan->tgl_selesai)->format('d M Y') }}</td>
-                <td><a href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}" class="btn btn-primary">Detail</a></td>
+                <td><a href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}" class="btn btn-primary">Detail</a>
+                </td>
             </tr>
             @php
-                $nomor_urutan++;
+            $nomor_urutan++;
             @endphp
             @endif
             @endforeach

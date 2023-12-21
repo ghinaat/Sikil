@@ -1,7 +1,7 @@
 @extends('adminlte::page')
-@section('title', 'List Url')
+@section('title', 'Pengajuan Shortlink & QR-Code')
 @section('content_header')
-<h1 class="m-0 text-dark">List Url</h1>
+<h1 class="m-0 text-dark">Pengajuan Shortlink & QR-Code</h1>
 @stop
 @section('content')
 <div class="row">
@@ -9,18 +9,18 @@
         <div class="card">
             <div class="card-body">
                 @if (session()->has('success_message'))
-                    <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
-                        {{ session('success_message') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                    {{ session('success_message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 @endif
                 @if (session()->has('error_message'))
-                    <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
-                        {{ session('error_message') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                    {{ session('error_message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 @endif
-                
+
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form"
                     role="dialog">
                     Tambah
@@ -47,10 +47,11 @@
                                 <td>{{$url->url_address}}</td>
                                 <td id={{$key+1}}>
 
-                                    <a href="{{ asset('/qrcodes/' . $url->qrcode_image) }}" download>
-                                        <img src="{{ asset('/qrcodes/' . $url->qrcode_image) }}" alt="Gambar Dokumen" class="img-fluid">
-                                    </a>
-                                    
+                                    <a href="{{ asset('/laravel/public/qrcodes/' . $url->qrcode_image) }}" download>
+                                        <img src="{{ asset('/laravel/public/qrcodes/' . $url->qrcode_image) }}"
+                                            alt="Gambar Dokumen" width="95%">
+                                                    </a>
+
                                 </td>
                                 <td>
                                     @include('components.action-buttons', ['id' => $url->id_url, 'key' => $key, 'route'
@@ -62,7 +63,7 @@
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="editModalLabel">Edit Perizinan</h5>
+                                            <h5 class="modal-title" id="editModalLabel">Edit Shortlink</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -77,32 +78,32 @@
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="form-group">
-                                                            <label for="jenis">Jenis URL</label>
+                                                            <label for="jenis">Jenis Shortlink</label>
                                                             <select
                                                                 class="form-select  @error('jenis') is-invalid @enderror"
                                                                 id="jenis" name="jenis">
                                                                 <option value="Form" @if(old('jenis', $url->
                                                                     jenis)=='Form')selected
                                                                     @endif>Form</option>
+                                                                <option value="Leaflet" @if(old('jenis', $url->
+                                                                    jenis)=='Leaflet')selected
+                                                                    @endif>Leaflet</option>
                                                                 <option value="Sertifikat" @if(old('jenis', $url->
                                                                     jenis)=='Sertifikat')selected
                                                                     @endif>Seritfikat</option>
                                                                 <option value="Laporan" @if(old('jenis', $url->
                                                                     jenis)=='Laporan')selected
                                                                     @endif>Laporan</option>
-                                                                <option value="Multiplelink" @if(old('jenis', $url->
-                                                                    jenis)=='Multiplelink')selected
-                                                                    @endif>Multiplelink</option>
+                                                                <option value="Single-link" @if(old('jenis', $url->
+                                                                    jenis)=='Single-link')selected
+                                                                    @endif>Single-link</option>
                                                                 <option value="Zoom" @if(old('jenis', $url->
                                                                     jenis)=='Zoom')selected
                                                                     @endif>Zoom</option>
-                                                                <option value="Leaflet" @if(old('jenis', $url->
-                                                                    jenis)=='Leaflet')selected
-                                                                    @endif>Leaflet</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="url_short">Nama Shortlink  </label>
+                                                            <label for="url_short">Nama Shortlink </label>
                                                             <input type="text" class="form-control" id="url_short"
                                                                 name="url_short"
                                                                 value="{{ str_replace(url('') . '/s/', '',  $url -> url_short) ??  str_replace(url('') . '/s/', '',  old('url_short')) }}"
@@ -140,7 +141,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Tambah Url</h4>
+                <h4 class="modal-title" id="exampleModalLabel">Tambah Shortlink</h4>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -153,13 +154,13 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="form-group">
-                                <label for="jenis">Jenis URL</label>
+                                <label for="jenis">Jenis Shortlink</label>
                                 <select class="form-select  @error('jenis') is-invalid @enderror" id="jenis"
                                     name="jenis" required>
                                     <option value="Form">Form</option>
-                                    <option value="Sertifikat">Seritfikat</option>
+                                    <option value="Sertifikat">Sertifikat</option>
                                     <option value="Laporan">Laporan</option>
-                                    <option value="Multiplelink">Multiplelink</option>
+                                    <option value="Single-link">Single-link</option>
                                     <option value="Zoom">Zoom</option>
                                     <option value="Leaflet">Leaflet</option>
                                 </select>
@@ -199,8 +200,8 @@
 </script>    
 @endif --}}
 <script>
-    $('#example2').DataTable({
-        "responsive": true,
+$('#example2').DataTable({
+    "responsive": true,
 });
 
 function notificationBeforeDelete(event, el) {

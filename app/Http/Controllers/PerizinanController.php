@@ -6,6 +6,7 @@ use App\Models\GeneralSetting;
 use App\Models\Notifikasi;
 use App\Models\Perizinan;
 use App\Models\User;
+use App\Models\Cuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -15,17 +16,26 @@ class PerizinanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function indexStaff()
-    {
-        $user = auth()->user();
+   public function indexStaff()
+{
+   $user = auth()->user();
+
+    // Mendapatkan data pengguna
+    $pengguna = User::where('id_users', $user->id_users)->first();
+
+    // Mendapatkan data jatah cuti terkait dengan pengguna
+    $jatahCuti = $pengguna->cutis->first();
+
         $perizinan = Perizinan::where('is_deleted', '0')
             ->whereIn('kode_finger', $user->ajuanperizinans->pluck('kode_finger'))->orderBy('id_perizinan','desc')
             ->get();
+        
 
         return view('izin.staff', [
             'perizinan' => $perizinan,
             'users' => User::where('is_deleted', '0')->orderByRaw("LOWER(nama_pegawai)")->get(),
             'settingperizinan' => User::with(['setting'])->get(),
+            'jatahCuti' => $jatahCuti
         ]);
     }
 

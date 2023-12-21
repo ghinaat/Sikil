@@ -42,15 +42,13 @@ class AjuanPerizinanController extends Controller
 
         if ($request->input('kode_finger') != null) {
             if ($request->input('kode_finger') != 'all') {
-                $ajuanperizinan = $ajuanperizinan->where('kode_finger', '=', $request->input('kode_finger'))->orderBy('id_perizinan','desc')
-                ->get();
+                $ajuanperizinan = $ajuanperizinan->where('kode_finger', '=', $request->input('kode_finger'));
             }
         }
 
         if ($request->input('jenis_perizinan') != null) {
             if ($request->input('jenis_perizinan') != 'all') {
-                $ajuanperizinan = $ajuanperizinan->where('jenis_perizinan', '=', $request->input('jenis_perizinan'))->orderBy('id_perizinan','desc')
-                ->get();    
+                $ajuanperizinan = $ajuanperizinan->where('jenis_perizinan', '=', $request->input('jenis_perizinan'));    
             }
         }
 
