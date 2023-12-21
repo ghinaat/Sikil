@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('url_short');
             $table->string('url_address');
             $table->string('qrcode_image');
-            $table->enum('jenis', ['Form', 'Sertifikat', 'Laporan', 'Multiplelink', 'Zoom', 'Leaflet']);
+            $table->enum('jenis', ['Form', 'Sertifikat', 'Laporan', 'Single-link', 'Zoom', 'Leaflet']);
             $table->unsignedInteger('id_users');
             $table->foreign('id_users')->references('id_users')->on('users')->onDelete('cascade');
             $table->timestamps();

@@ -57,6 +57,11 @@ class User extends Authenticatable
         return $this->hasMany(Arsip::class, 'id_users', 'id_users');
     }
 
+       public function cutis()
+    {
+        return $this->hasMany(Cuti::class, 'id_users', 'id_users');
+    }
+    
     public function cuti()
     {
         return $this->hasOne(Cuti::class, 'id_users'); // Assuming 'id_users' is the foreign key in the 'cuti' table

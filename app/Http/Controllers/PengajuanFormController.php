@@ -239,8 +239,18 @@ class PengajuanFormController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PengajuanForm $pengajuanForm)
+    public function destroy($id_pengajuan_form)
+
+
     {
-        //
+        $form = PengajuanForm::find($id_pengajuan_form);
+        if($form){
+            $form->update([
+                'is_deleted' => '1',
+            ]);
+        }
+
+        return redirect()->back()->with('success_message', 'Data telah terhapus.');
     }
+    
 }

@@ -1,15 +1,15 @@
 @extends('adminlte::page')
-@section('title', 'Laporan Kegiatan')
+@section('title', 'Peran dalam Kegiatan')
 @section('content_header')
-<h1 class="m-0 text-dark">&nbsp; Laporan Kegiatan</h1>
+<h1 class="m-0 text-dark">&nbsp; Peran dalam Kegiatan</h1>
 @stop
 @section('content')
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
                     <form method="get" action="{{ route('laporan') }}" class="form-inline">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -52,34 +52,34 @@
                     <br>
 
 
-                    
-                        <table class="table table-hover table-bordered table-stripped" id="example2">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Nama Kegiatan</th>
-                                    <th>Nama pegawai</th>
-                                    <th>Peran</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($timkegiatan as $key => $tk)
-                                <tr>
-                                    <td>{{$key+1}}</td>
-                                    <td>{{$tk->kegiatan->nama_kegiatan }}</td>
-                                    <td>{{$tk->user->nama_pegawai}}</td>
-                                    <td>{{$tk->peran->nama_peran}}</td>
+                    <table class="table table-hover table-bordered table-stripped" id="example2">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Nama Kegiatan</th>
+                                <th>Nama pegawai</th>
+                                <th>Peran</th>
 
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($timkegiatan as $key => $tk)
+                            <tr>
+                                <td>{{$key+1}}</td>
+                                <td>{{$tk->kegiatan->nama_kegiatan }}</td>
+                                <td>{{$tk->user->nama_pegawai}}</td>
+                                <td>{{$tk->peran->nama_peran}}</td>
+
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 

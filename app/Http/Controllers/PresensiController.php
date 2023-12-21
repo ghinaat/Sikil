@@ -19,8 +19,7 @@ class PresensiController extends Controller
 
         if ($user->level == 'admin') {
             // Fetch all work experiences for admin
-            $presensi = Presensi::where('is_deleted', '0')->whereMonth('tanggal', '=', date('m'))
-                ->whereYear('tanggal', '=', date('Y'))
+            $presensi = Presensi::where('is_deleted', '0')
                 ->get();
         } else {
             // Fetch user's own work experiences using the relationship

@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 use PDF;
 
 class ProfileController extends Controller
@@ -169,16 +171,17 @@ class ProfileController extends Controller
             'id_tingkat_pendidikan' => $request->input('id_tingkat_pendidikan'),
         ]);
 
-        if ($request->hasFile('photo')) {
-            // Hapus foto lama jika ada
+        if($request->hasFile('photo')) {
+
             if ($profile->photo) {
-                Storage::delete('public/profile/' . $profile->photo);
+                Storage::disk('public')->delete('profile/'.$profile->photo);
             }
-    
-            // Simpan foto baru dan simpan nama file di database
-            $photoPath = $request->file('photo')->store('public/profile');
+            $file = $request->file('photo');
+            $fileName = Str::random(10).'.'.$file->getClientOriginalExtension();
+            $file->storeAs('profile', $fileName, 'public');
+            
             $profile->update([
-                'photo' => str_replace('public/profile/', '', $photoPath)
+                'photo' => $fileName,
             ]);
         }
 

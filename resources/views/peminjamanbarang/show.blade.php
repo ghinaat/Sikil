@@ -35,20 +35,20 @@
                 <div class="form-group">
                     <label for="status" class="form-label">Status</label>
                     <div class="form-input">
-                        :  @if ($peminjaman)
-                            @if ($peminjaman->status == 'belum_diajukan')
-                                Belum Diajukan
-                            @elseif ($peminjaman->status == 'dikembalikan_sebagian')
-                                Dikembalikan Sebagian
-                            @elseif ($peminjaman->status == 'dikembalikan')
-                                Dikembalikan
-                            @elseif($peminjaman->status == 'dipinjam')
-                            Dipinjam
-                            @else
-                                Diajukan
-                            @endif
+                        : @if ($peminjaman)
+                        @if ($peminjaman->status == 'belum_diajukan')
+                        Belum Diajukan
+                        @elseif ($peminjaman->status == 'dikembalikan_sebagian')
+                        Dikembalikan Sebagian
+                        @elseif ($peminjaman->status == 'dikembalikan')
+                        Dikembalikan
+                        @elseif($peminjaman->status == 'dipinjam')
+                        Dipinjam
                         @else
-                            {{ old('status') }}
+                        Diajukan
+                        @endif
+                        @else
+                        {{ old('status') }}
                         @endif
                     </div>
                 </div>
@@ -64,13 +64,14 @@
                 <div class="table-container">
                     <div class="table-responsive">
                         @if($peminjaman->status == "belum_diajukan")
-                           @if(auth()->user()->id_users == $peminjaman->id_users || auth()->user()->level == 'admin')
-                        <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form">Tambah Barang</button>
-                        <a href= "{{route('peminjaman.notifikasi',$peminjaman->id_peminjaman)}}" onclick="notificationPengajuan(event, this)"
-                            class="btn btn-success mb-2">
+                        @if(auth()->user()->id_users == $peminjaman->id_users || auth()->user()->level == 'admin')
+                        <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal_form">Tambah
+                            Barang</button>
+                        <a href="{{route('peminjaman.notifikasi',$peminjaman->id_peminjaman)}}"
+                            onclick="notificationPengajuan(event, this)" class="btn btn-success mb-2">
                             <i class="fa fa-phone" aria-hidden="true"></i> &nbsp; Ajukan
                         </a>
-                            @endif
+                        @endif
                         @endif
                         <table class="table table-hover table-bordered table-stripped" id="example3">
                             <thead>
@@ -85,10 +86,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                           @php
+                                @php
                                 $nomor = 1;
-                            @endphp
-                            @foreach($detailPeminjaman as  $key => $dpj)
+                                @endphp
+                                @foreach($detailPeminjaman as $key => $dpj)
                                 <tr>
                                     <td></td>
                                     <td>{{ $dpj->barang->nama_barang }}</td>
@@ -102,42 +103,47 @@
                                         @endif
                                     </td>
                                     <td>
-                                       <div class="btn-group">
-                                         @if($dpj->status == null)
+                                        <div class="btn-group">
+                                            @if($dpj->status == null)
 
-                                            @if(auth()->user()->id_users == $peminjaman->id_users && auth()->user()->level != 'admin')
-                                                @if($peminjaman->status == 'diajukan')
-                                                    <i class="fas fa-check-circle  fa-2x" style="color: #42e619; align-items: center;"></i>
-                                                @else
-                                                    <a href="{{ route('peminjaman.destroyDetail', $dpj->id_detail_peminjaman) }}"
-                                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                                        class="btn btn-danger btn-xs">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                    &nbsp;
-                                                @endif
+                                            @if(auth()->user()->id_users == $peminjaman->id_users &&
+                                            auth()->user()->level != 'admin')
+                                            @if($peminjaman->status == 'diajukan')
+                                            <i class="fas fa-check-circle  fa-2x"
+                                                style="color: #42e619; align-items: center;"></i>
                                             @else
-                                                -
-                                                @can('isAdmin')
-                                                <a href="{{ route('peminjaman.destroyDetail', $dpj->id_detail_peminjaman) }}"
-                                                        onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
-                                                        class="btn btn-danger btn-xs">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                     &nbsp;
-                                                   
-                                                        <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
-                                                            data-target="#editPeminjaman{{$dpj->id_detail_peminjaman}}"
-                                                            data-id="{{$dpj->id_detail_peminjaman}}">
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
-                                                    @endcan
-                                                    
-                                                
+                                            <a href="{{ route('peminjaman.destroyDetail', $dpj->id_detail_peminjaman) }}"
+                                                onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
+                                                class="btn btn-danger btn-xs">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                            &nbsp;
                                             @endif
-                                         
+                                            @else
+                                            @if(auth()->user()->level != 'admin')
+                                            -
+                                            @endif
+                                            @can('isAdmin')
+                                            <a href="{{ route('peminjaman.destroyDetail', $dpj->id_detail_peminjaman) }}"
+                                                onclick="notificationBeforeDelete(event, this, <?php echo $key+1; ?>)"
+                                                class="btn btn-danger btn-xs">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                            &nbsp;
+
+                                            <a href="#" class="btn btn-primary btn-xs edit-button" data-toggle="modal"
+                                                data-target="#editPeminjaman{{$dpj->id_detail_peminjaman}}"
+                                                data-id="{{$dpj->id_detail_peminjaman}}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            @endcan
+
+
+                                            @endif
+
                                             @elseif($dpj->status == 'dipinjam')
-                                           @if(auth()->user()->id_users == $peminjaman->id_users && auth()->user()->level != 'admin')
+                                            @if(auth()->user()->id_users == $peminjaman->id_users &&
+                                            auth()->user()->level != 'admin')
                                             <i class="fas fa-check-circle  fa-2x"
                                                 style="color: #42e619; align-items: center;"></i>
                                             @else
@@ -147,19 +153,20 @@
                                                 <i class="fa fa-undo"></i>
                                             </a>
                                             @endif
-                                          
+
                                             @else
                                             <i class="fas fa-check-circle  fa-2x"
                                                 style="color: #42e619; align-items: center;"></i>
                                             @endif
-                                         
+
                                         </div>
                                     </td>
                                 </tr>
-                               @php
+                                @php
                                 $nomor++; // Increment the sequence for the next row
                                 @endphp
                                 @endforeach
+                                @dd($detailPeminjaman)
                             </tbody>
                         </table>
                     </div>
@@ -204,43 +211,44 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($barangTIK as $key => $item)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->nama_barang }}</td>
-                                        <td>{{ $item->kondisi }}</td>
-                                        <td>{{ $item->kelengkapan }}</td>
-                                        <td>
-                                         
-                                         @php
-                                            // Mengecek apakah barang ini telah dipilih pada peminjaman tertentu
-                                            $isBarangSelected = $detailPeminjaman->contains('barang.id_barang_tik', $item->id_barang_tik);
-                                        @endphp
-                                        @php
-                                            // Ambil detail peminjaman untuk barang ini
-                                            $detail = $detailPeminjaman->firstWhere('id_barang_tik', $item->id_barang_tik);
-                                        @endphp
-                                           
-                                         @if ($detail)
-                                                @if ($detail->status == 'dipinjam')
-                                                   Sedang Dipinjam
-                                                 @endif
+                                        @foreach ($barangTIK as $key => $item)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $item->nama_barang }}</td>
+                                            <td>{{ $item->kondisi }}</td>
+                                            <td>{{ $item->kelengkapan }}</td>
+                                            <td>
 
-                                      
-                                            
-                                        @elseif(!$isBarangSelected)
-                                        <button type="button" class="btn btn-primary btn-xs"
-                                                onclick="pilih('{{ $item->id_barang_tik }}','{{ $item->nama_barang }}', '{{ $item->kondisi }}', '{{ $item->kelengkapan }}' )"
-                                                data-bs-dismiss="modal">
-                                                Pilih
-                                            </button>
-                                        @else
-                                        Sudah Dipilih 
-                                        @endif
-                                       
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                @php
+                                                // Mengecek apakah barang ini telah dipilih pada peminjaman tertentu
+                                                $isBarangSelected = $peminjamanDetail->contains('barang.id_barang_tik',
+                                                $item->id_barang_tik);
+                                                @endphp
+                                                @php
+                                                // Ambil detail peminjaman untuk barang ini
+                                                $detail = $peminjamanDetail->firstWhere('id_barang_tik',
+                                                $item->id_barang_tik);
+                                                @endphp
+
+                                                @if($detail)
+                                                @if ($detail->status == 'dipinjam')
+                                                Sedang Dipinjam
+                                                @else
+                                                Sudah Dipilih
+                                                @endif
+
+
+                                                @elseif(!$isBarangSelected)
+                                                <button type="button" class="btn btn-primary btn-xs"
+                                                    onclick="pilih('{{ $item->id_barang_tik }}','{{ $item->nama_barang }}', '{{ $item->kondisi }}', '{{ $item->kelengkapan }}' )"
+                                                    data-bs-dismiss="modal">
+                                                    Pilih
+                                                </button>
+                                                @endif
+
+                                            </td>
+                                        </tr>
+                                        @endforeach
 
                                     </tbody>
                                 </table>
@@ -292,8 +300,8 @@
                 </button>
             </div>
             <div class="modal-body form">
-                <form action="{{ route('peminjaman.editDetailPeminjaman', $dpj->id_detail_peminjaman) }}"
-                    method="POST" id="form" class="form-horizontal" enctype="multipart/form-data">
+                <form action="{{ route('peminjaman.editDetailPeminjaman', $dpj->id_detail_peminjaman) }}" method="POST"
+                    id="form" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -306,7 +314,7 @@
                             @error('keterangan_awal') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
-                
+
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -348,7 +356,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mt-2">
                         <label for="keterangan_awal" class="form-label">Keterangan Awal</label>
                         <div class="form-input">
                             <input type="text" class="form-control @error('keterangan_awal') is-invalid @enderror"
@@ -357,7 +365,7 @@
                             @error('keterangan_awal') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mt-2">
                         <label for="keterangan_akhir" class="form-label">Keterangan Akhir</label>
                         <div class="form-input">
                             <input type="text" class="form-control @error('keterangan_akhir') is-invalid @enderror"
@@ -394,17 +402,20 @@ $('#example2').DataTable({
 $(document).ready(function() {
     var table = $('#example3').DataTable({
         "responsive": true,
-        "order": [[1, 'asc']]
+        "order": [
+            [1, 'asc']
+        ]
     });
 
     table.on('order.dt search.dt', function() {
-        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function(cell, i) {
+        table.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function(cell, i) {
             cell.innerHTML = i + 1;
         });
     }).draw();
 });
-
-
 </script>
 <script>
 function pilih(id, nama_barang) {
@@ -418,6 +429,7 @@ function pilih(id, nama_barang) {
         behavior: 'smooth'
     });
 }
+
 function notificationPengajuan(event, el, dt) {
     event.preventDefault();
     Swal.fire({
@@ -430,10 +442,10 @@ function notificationPengajuan(event, el, dt) {
         confirmButtonText: 'Yes!'
     }).then((result) => {
         if (result.isConfirmed) {
-              setTimeout(function() {
-                        location.reload();
-                       
-                    }, 500); // Tunggu 500ms (0.5 detik) sebelum memanggil kembali fungsi
+            setTimeout(function() {
+                location.reload();
+
+            }, 500); // Tunggu 500ms (0.5 detik) sebelum memanggil kembali fungsi
             $.ajax({
                 url: "{{ route('peminjaman.notifikasi', $peminjaman->id_peminjaman) }}",
                 type: 'GET',
@@ -448,9 +460,6 @@ function notificationPengajuan(event, el, dt) {
         }
     });
 }
-
-
-
 </script>
 
 

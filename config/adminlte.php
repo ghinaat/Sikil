@@ -398,6 +398,12 @@ return [
 
             ],
         ],
+        [
+            'text' => 'Pengajuan 2',
+            'url' => '/pengajuan',
+            'icon' => 'fas fa-qrcode',
+            'can' => '',
+        ],
 
 		[
             'text' => 'Short Link / QR Code',
