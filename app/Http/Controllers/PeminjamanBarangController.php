@@ -78,6 +78,10 @@ class PeminjamanBarangController extends Controller
             ->where('id_peminjaman', $id_peminjaman)
             ->get();
         
+         $peminjamanDetail = DetailPeminjamanBarang::with(['barang'])
+            ->where('id_peminjaman', $id_peminjaman)
+            ->get();
+        
         //   // Kumpulkan detail peminjaman untuk setiap barang
         //      $detailPeminjaman = collect();
 
@@ -90,7 +94,7 @@ class PeminjamanBarangController extends Controller
         
                 // Jika ada yang dipinjam, masukkan ke dalam koleksi
                 if ($dipinjamDetail) {
-                    $detailPeminjaman->push($dipinjamDetail);
+                    $peminjamanDetail->push($dipinjamDetail);
                 }
             }
         
@@ -102,6 +106,7 @@ class PeminjamanBarangController extends Controller
             'barangTIK' => $barangTIK,
             'detailPeminjaman' => $detailPeminjaman,
             'barangs' => $barangs,
+            'peminjamanDetail' => $peminjamanDetail
            
         ]);
     }
@@ -120,6 +125,7 @@ class PeminjamanBarangController extends Controller
      */
     public function update(Request $request,  $id_peminjaman)
     {
+        if(auth()->user()->level == 'admin'){
         $request->validate([
             'tgl_peminjaman' => 'required|date',
             'tgl_pengembalian' => 'required|date|after_or_equal:tgl_peminjaman',
@@ -139,9 +145,6 @@ class PeminjamanBarangController extends Controller
 
         $peminjaman->save();
         if ($peminjaman->status == 'dipinjam') {
-            // Update status peminjaman
-            $peminjaman->status = 'dipinjam';
-            $peminjaman->save();
         
             // Update status detail peminjaman yang terkait
             $detailPeminjaman = DetailPeminjamanBarang::where('id_peminjaman', $id_peminjaman)->update(['status' => 'dipinjam']);
@@ -155,6 +158,28 @@ class PeminjamanBarangController extends Controller
             
         }
         return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+        }else{
+              $request->validate([
+            'tgl_peminjaman' => 'required|date',
+            'tgl_pengembalian' => 'required|date|after_or_equal:tgl_peminjaman',
+            'kegiatan' => 'required',
+            'keterangan' => 'required',
+           
+        ]);
+
+        $peminjaman = PeminjamanBarang::find($id_peminjaman);
+
+        $peminjaman->tgl_peminjaman = $request->tgl_peminjaman;
+        $peminjaman->tgl_pengembalian = $request->tgl_pengembalian;
+        $peminjaman->kegiatan = $request->kegiatan;
+        $peminjaman->keterangan = $request->keterangan;
+        $peminjaman->save();
+      
+        
+        return redirect()->back()->with('success_message', 'Data telah tersimpan.');
+
+        }
+        
     }
 
     /**

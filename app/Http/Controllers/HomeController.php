@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
+use App\Models\Surat;
 use App\Models\Perizinan;
 use Carbon\Carbon;
 
@@ -56,6 +57,16 @@ class HomeController extends Controller
             'staf_ijin' => $staf_ijin,
             'staf_dinas_luar' => $staf_dinas_luar,
             'staf_sakit' => $staf_sakit,
+        ]);
+    }
+    
+    public function Pengajuan()
+    {
+        $surat = Surat::where('is_deleted', '0')->orderBy('id_surat', 'desc')
+        ->get();
+
+        return view('pengajuan', [
+            'surat' => $surat,
         ]);
     }
 }
