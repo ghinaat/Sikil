@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'Detail Inventaris PPR')
 @section('content_header')
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/show.css') }}">
 <h1 class="m-0 text-dark">Detail Inventaris PPR</h1>
 @stop
 @section('content')
@@ -43,7 +43,8 @@
                     <label for="image" class="form-label">Gambar</label>
                     <div class="form-input">
                         @if(isset($barangppr) && $barangppr->image)
-                            : <img src="{{ asset('storage/image_barangppr/' . $barangppr->image) }}" style="max-width: 100%; max-height: 200px;">
+                            <span style="margin-right: 5px;">:</span>
+                            <img src="{{ asset('storage/image_barangppr/' . $barangppr->image) }}" style="max-width: 20%; max-height: 20%;" alt="Deskripsi Gambar">
                         @else
                             : -
                         @endif

@@ -37,7 +37,8 @@
                     <div class="form-group">
                         <label for="keterangan_pemohon" class="form-label">Keterangan</label>
                         <div class="form-input">
-                            : {{$ajuansinglelink -> keterangan_pemohon ?? old('keterangan_pemohon')}} 
+                            <span style="margin-right: 5px;">:</span>
+                            <span style="white-space: pre-line;">{{$ajuansinglelink -> keterangan_pemohon ?? old('keterangan_pemohon')}}</span>    
                         </div>
                     </div>
                     <div class="form-group">

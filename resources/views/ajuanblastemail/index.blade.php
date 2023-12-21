@@ -123,8 +123,8 @@
                         <label for="lampiran" class="form-label">Lampiran Dokumen</label>
                         <div class="form-input">
                             <input type="file" class="form-control @error('lampiran') is-invalid @enderror"
-                            id="lampiran" name="lampiran" accept=".doc,.docx,.xlsx,.zip" required>
-                            <small class="form-text text-muted">Allow file extensions : .doc .docx .xlsx .zip </small>
+                            id="lampiran" name="lampiran" accept=".doc,.docx,.xlsx,.zip,.rar" required>
+                            <small class="form-text text-muted">Allow file extensions : .doc .docx .xlsx .zip .rar </small>
 
                         @error('lampiran') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
@@ -200,8 +200,8 @@
                         <label for="lampiran" class="form-label">Lampiran Dokumen</label>
                         <div class="form-input">
                             <input type="file" class="form-control @error('lampiran') is-invalid @enderror"
-                            id="lampiran" name="lampiran" accept=".doc,.docx,.xlsx,.zip">
-                            <small class="form-text text-muted">Allow file extensions : .doc .docx .xlsx .zip</small>
+                            id="lampiran" name="lampiran" accept=".doc,.docx,.xlsx,.zip,.rar">
+                            <small class="form-text text-muted">Allow file extensions : .doc .docx .xlsx .zip .rar</small>
                             Previous File: 
                                 <a href="{{ asset('/storage/lampiran_blast_email/'. $email->lampiran) }}"
                                 target="_blank">{{ $email->lampiran }}</a>
@@ -228,7 +228,7 @@
                         <div class="form-input form-inline">
                             <label style="display: inline-flex; align-items: center; margin-right: 50px; font-weight: normal;">
                                 <input type="radio" name="status" id="status" value="diajukan" @if ($email->status === 'diajukan') checked @endif>
-                                &nbsp;diajukan
+                                &nbsp;Diajukan
                             </label>
                             <label style="font-weight: normal;">
                                 <input type="radio" name="status" id="status" value="selesai"  @if ($email->status === 'selesai') checked @endif>

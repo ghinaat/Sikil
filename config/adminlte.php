@@ -508,7 +508,7 @@ return [
                 ],
                 [
 
-                    'text' => 'Peran',
+                    'text' => 'Peran Kegiatan',
                     'url' => '/peran',
                     'can' => '',
                 ],

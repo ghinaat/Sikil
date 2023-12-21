@@ -258,9 +258,13 @@
                     <div class="form-group">
                         <label for="tgl_pelaksanaan" class='form-label'>Tanggal Pelaksanaan</label>
                         <div class="form-input">
+                        @if(auth()->user()->level == 'admin' && isset($pz) && $pz->tgl_pelaksanaan)
+                            <input type="text" class="form-control" id="tgl_pelaksanaan" name="tgl_pelaksanaan"
+                                value="{{ \Carbon\Carbon::parse($pz->tgl_pelaksanaan)->format('d M Y') }} " readonly>
+                        @else
                             <input type="date" class="form-control @error('tgl_pelaksanaan') is-invalid @enderror"
-                                id="tgl_pelaksanaan" name="tgl_pelaksanaan"
-                                value="{{ $pz->tgl_pelaksanaan ?? old('tgl_pelaksanaan')}}">
+                                id="tgl_pelaksanaan" name="tgl_pelaksanaan" value="{{ $pz->tgl_pelaksanaan ?? old('tgl_pelaksanaan') }}">
+                        @endif
                             @error('tgl_pelaksanaan') <span class="textdanger">{{$message}}</span> @enderror
                         </div>
                     </div>

@@ -44,7 +44,7 @@
 
 .box-1 .text {
     color: var(--white);
-    font-size: 1.2rem;
+    font-size: 1.7rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -61,8 +61,16 @@
 .box-2 {
     background-color: var(--white);
     display: flex;
-    width: 100%;
+    width: 50%;
     padding: 5%;
+}
+
+.logo {
+    display: block;
+    margin: auto; /* Menengahkan horizontal */
+    width: 100px; /* Sesuaikan lebar logo sesuai kebutuhan */
+    height: auto;
+    margin-bottom: 10px; 
 }
 
 .heading {
@@ -75,6 +83,7 @@
 
 .desc {
     color: var(--black);
+    text-align: center;
 }
 
 .btn.btn-primary {
