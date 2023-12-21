@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'List Lembur')
 @section('content_header')
-<h1 class="m-0 text-dark">List Lembur</h1>
+<h1 class="m-0 text-dark">Data Rekap Lembur</h1>
 @stop
 @section('content')
 <div class="row">

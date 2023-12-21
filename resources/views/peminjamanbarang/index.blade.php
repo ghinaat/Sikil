@@ -52,7 +52,7 @@
                                 <td>
                                     <a href="{{ route('peminjaman' . '.show', $pj->id_peminjaman) }}"
                                         class="btn btn-info btn-xs mx-1">
-                                        <i class=" fa fa-rectangle-list"></i>
+                                        <i class="fa-solid fa-rectangle-list"></i>
                                     </a>
                                 </td>
                                 <td>
