@@ -77,6 +77,7 @@ class PeminjamanBarangController extends Controller
         $detailPeminjaman = DetailPeminjamanBarang::with(['barang'])
             ->where('id_peminjaman', $id_peminjaman)
             ->get();
+        //  dd($detailPeminjaman);
         
         //   // Kumpulkan detail peminjaman untuk setiap barang
         //      $detailPeminjaman = collect();

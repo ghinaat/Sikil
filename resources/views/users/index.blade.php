@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'List Pegawai')
 @section('content_header')
-<h1 class="m-0 text-dark">List Pegawai</h1>
+<h1 class="m-0 text-dark">Daftar Pegawai</h1>
 @stop
 @section('content')
 <div class="row">
@@ -132,7 +132,7 @@
                                                     <select class="form-select @error('jabatan') is-invalid @enderror"
                                                         id="exampleInputJabatan" name="id_jabatan">
                                                         @foreach ($jabatans as $jabatan)
-                                                        <option value="{{ $jabatan->id_jabatan }}" @if(old('id_jabatan',$user->id_jabatan) === $jabatan->id_jabatan ) selected @endif>  {{ $jabatan->nama_jabatan }} </option>
+                                                        <option value="{{ $jabatan->id_jabatan }}" @if(old('id_jabatan',$user->id_jabatan) == $jabatan->id_jabatan ) selected @endif>  {{ $jabatan->nama_jabatan }} </option>
                                                         @endforeach
 
                                                     </select>
@@ -232,7 +232,7 @@
                             <option value="bod" @if(old('level')=='bod' )selected @endif>BOD</option>
                             <option value="ppk" @if(old('level')=='ppk' )selected @endif>PPK</option>
                             <option value="kadiv" @if(old('level')=='kadiv' )selected @endif>Kadiv</option>
-                            <option value="staf" @if(old('level')=='staf' )selected @endif>STAF</option>
+                            <option value="staf" @if(old('level')=='staf' )selected @endif>Staf</option>
                         </select>
                         @error('level')
                         <div class="invalid-feedback">

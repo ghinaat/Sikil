@@ -254,7 +254,7 @@ class SuratController extends Controller
                 }else if($surat->jenis_surat == 'sertifikat_magang'){
                     $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/' . $surat->bulan_kegiatan . '/' . date('Y', strtotime($surat->tgl_surat));
                 }else if($surat->jenis_surat == 'surat_keluar'){
-                    $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . date('Y', strtotime($surat->tgl_surat));
+                    $surat->no_surat = $surat->urutan . '/' . $kode_surat->kode_surat . '/' . date('Y', strtotime($surat->tgl_surat));
                 }
             }
 

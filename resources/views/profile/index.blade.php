@@ -16,14 +16,13 @@
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                            @if ($user->photo === 'no_pp.png')
+                            @if ($user->photo == 'no_pp.png')
                             <img class="profile-user-img img-fluid img-rounded"
-                                src="{{ asset( 'images/' . $user->photo)  }}" alt="User profile picture">
+                                src="{{ asset( '/images/' . $user->photo)  }}" alt="User profile picture">
                             @else
                             <img class="profile-user-img img-fluid img-rounded"
-                                src="{{ asset( '/storage/profile/' . $user->photo)  }}" alt="User profile picture">
+                                src="{{ asset('/storage/profile/' . $user->photo) }}" alt="User profile picture">
                             @endif
-
                             <h3 class="profile-username text-center">{{ $main_user->nama_pegawai }}</h3>
                             <p class="text-muted text-center">      @if(isset($main_user?->jabatan))
                                             {{ $main_user->jabatan->nama_jabatan }}
@@ -56,7 +55,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="jabatan" class='form-label'>jabatan</label>
+                                        <label for="jabatan" class='form-label'>Jabatan</label>
                                         <div class="form-input">
                                         @if(isset($main_user?->jabatan))
                                             : {{ $main_user->jabatan->nama_jabatan }}
@@ -580,7 +579,7 @@
                                                                 @error('photo')
                                                                 <span class="text-danger">{{ $message }}</span>
                                                                 @enderror
-                                                                @if ($user->photo === 'no_pp.png')
+                                                                @if ($user->photo == 'no_pp.png')
                                                                 <p>Previous File: <a
                                                                         href="{{ asset('/images/' . $user->photo) }}"
                                                                         target="_blank">{{ $user->photo }}</a></p>
