@@ -16,7 +16,7 @@
 }
 
 .circle-background {
-    background-color: #052134; /* Adjust the background color as needed */
+    background-color: #f7a445; /* Adjust the background color as needed */
     border-radius: 100%; /* Make it circular */
     padding: 20px; /* Adjust the padding as needed */
     z-index: 2;
